@@ -1,11 +1,36 @@
 # Session 5 — Data Mixture & Curriculum
 
+![budget](https://img.shields.io/badge/budget-3.00T%20tokens-3B4CC0?style=flat-square&labelColor=1E2230)
+![data gate](https://img.shields.io/badge/data%20gate-93.0M%20cleaned-0ca30c?style=flat-square&labelColor=1E2230)
+![lanes](https://img.shields.io/badge/lanes-9-2a78d6?style=flat-square&labelColor=1E2230)
+![invariants](https://img.shields.io/badge/invariants-all%20passing-0ca30c?style=flat-square&labelColor=1E2230)
+![proxy](https://img.shields.io/badge/proxy-3%20arms%20%C3%97%202%20seeds%20run-0ca30c?style=flat-square&labelColor=1E2230)
+![deps](https://img.shields.io/badge/dependencies-stdlib%20only-6C7385?style=flat-square&labelColor=1E2230)
+
 The deliverable is **[`MIXTURE_PLAN.md`](MIXTURE_PLAN.md)** — the V5 mixture-and-curriculum
 specification for Drishtikon-40B.
 
 It is generated, not written. Every number in it comes out of the three files in
 [`plan/`](plan/), and the build refuses to emit the document if the arithmetic
 does not close.
+
+> [!TIP]
+> An interactive view — sticky contents, full-text search, cross-links, and
+> figures drawn from the same audit data — is generated as
+> [`site.html`](site.html) by [`plan/build_site.py`](plan/build_site.py).
+
+<details open>
+<summary><b>Contents</b></summary>
+
+- [Invariants enforced](#invariants-enforced)
+- [Budget](#budget)
+- [Review round 2](#review-round-2) · [3](#review-round-3) · [4](#review-round-4)
+- [Review round 5 — decontamination, measured](#review-round-5--decontamination-measured)
+- [Review round 6 — a proxy was actually run](#review-round-6--a-proxy-was-actually-run)
+- [Review round 7 — the priority-1 cleaning job was run](#review-round-7--the-priority-1-cleaning-job-was-run)
+- [Not yet done](#not-yet-done)
+
+</details>
 
 ```
 plan/spec.py         declarative: budget, phases, lanes, inventory, floor,
@@ -71,15 +96,16 @@ trillion tokens" for what V5 actually trains on. `audit.sweep()` runs the same
 mixture across all four and reports which survive:
 
 | Budget | Feasible | `GENERATE` lanes | Manufacturing |
-|---|---|---|---|
+|---:|---|---:|---:|
 | 2.4T | ✅ | 2 | $13,100 |
 | **3.0T** (primary) | ✅ | 2 | $28,105 |
 | 4.0T | ✅ | 3 | $53,136 |
 | 14.0T | ❌ build refused | — | — |
 
-14T fails on the **web** lane, not agentic or Indic — there is not enough
-high-quality English web in existence to feed it once counts are converted to
-one tokenizer and doubled for the selector's discard rate.
+> [!CAUTION]
+> 14T fails on the **web** lane, not agentic or Indic — there is not enough
+> high-quality English web in existence to feed it once counts are converted to
+> one tokenizer and doubled for the selector's discard rate.
 
 ```bash
 python -c "import audit; print(audit.run(4e12)['audited'])"   # any scenario
@@ -140,7 +166,7 @@ scans the corpora we hold. Stdlib only; n-grams are over whitespace tokens, so
 they are comparable across scripts.
 
 | Corpus | Docs | 12-gram hits | Rate | Detection floor |
-|---|---|---|---|---|
+|---|---:|---|---:|---:|
 | Sangraha unverified / Telugu | 11,607 | none | 0.0000% | 0.0258% |
 | Reasoning / SFT mix | 9,553 | mbpp: 2 | 0.0209% | 0.0314% |
 
@@ -193,7 +219,7 @@ python analyse.py     # -> ../microproxy_results.json
 ```
 
 | Arm | Indic by phase | Crossfade | Spike rate (transition) | Peak grad-norm | Final bpb indic | Final bpb reasoning |
-|---|---|---|---|---|---|---|
+|---|---:|---:|---:|---:|---:|---:|
 | A0 baseline | 10/30/60/80 | 15% | 0.0028 | 0.786 | 1.4245 | 3.1213 |
 | A2 no floor | 0/37/68/86 | 15% | 0.0028 | 1.038 | **1.4102** | 3.1564 |
 | A6 sharp | 10/30/60/80 | 0% | 0.0046 | 0.966 | 1.4355 | 3.1145 |
@@ -201,7 +227,13 @@ python analyse.py     # -> ../microproxy_results.json
 A2's total indic share is matched to A0's (33.3% vs 33.0%), so it isolates
 *ordering*, not budget.
 
-**Both verdicts: INCONCLUSIVE.** Not because the mixture is fine, but because
+> [!IMPORTANT]
+> **Both verdicts: INCONCLUSIVE** — not because the mixture is fine, but because
+> both pre-registered decision rules turned out to be untestable at a scale we
+> could afford. That is the run's most useful output, and a finding about the
+> plan itself.
+
+In detail, because
 **both pre-registered decision rules turned out to be untestable at a scale we
 could afford** — which is the run's most useful output and a finding about the
 plan itself:
@@ -241,7 +273,7 @@ python run_verified.py                # full 8 stages + determinism re-run
 ```
 
 | | Session 4 | + this session | Cumulative |
-|---|---|---|---|
+|---|---:|---:|---:|
 | Cleaned tokens | 53,781,200 | **+39,238,266** | **93,019,466** |
 | Documents | 18,478 | +11,554 | 30,032 |
 

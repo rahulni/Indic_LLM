@@ -27,8 +27,16 @@ def slugify(text):
     return re.sub(r"[\s_]+", "-", s).strip("-")
 
 
+_IMG = re.compile(r"!\[([^\]]*)\]\(([^)]+)\)")
+
+
 def inline(text):
     """Escape first, then re-introduce only the markup we permit."""
+    # Images are dropped rather than rendered. The only images in these
+    # documents are shields.io badges, and a published artifact's CSP blocks
+    # every external host - they would render as broken-image icons. The stat
+    # row at the top of the HTML view carries the same figures natively.
+    text = _IMG.sub("", text)
     out = html.escape(text, quote=False)
     holds = []
 
@@ -99,6 +107,12 @@ def render(md):
     while i < n:
         line = lines[i]
 
+        # raw HTML block (the <details> contents block) - passed through as-is
+        if re.match(r"^\s*</?(details|summary)\b", line, re.I):
+            out.append(line)
+            i += 1
+            continue
+
         # fenced code
         if line.startswith("```"):
             lang = line[3:].strip()
@@ -109,8 +123,12 @@ def render(md):
                 i += 1
             i += 1
             code = html.escape("\n".join(body), quote=False)
-            out.append(f'<pre class="code" data-lang="{html.escape(lang)}">'
-                       f"<code>{code}</code></pre>")
+            if lang.lower() == "mermaid":
+                # Artifacts render mermaid natively from <pre class="mermaid">.
+                out.append(f'<pre class="mermaid">{code}</pre>')
+            else:
+                out.append(f'<pre class="code" data-lang="{html.escape(lang)}">'
+                           f"<code>{code}</code></pre>")
             continue
 
         # heading
@@ -132,18 +150,32 @@ def render(md):
         # table
         if line.strip().startswith("|") and i + 1 < n and _is_divider(lines[i + 1]):
             head = _cells(line)
+            # Carry the Markdown alignment markers into the HTML, so the
+            # right-aligned numeric columns polish.py produces line up here too.
+            aligns = []
+            for spec_cell in _cells(lines[i + 1]):
+                right = spec_cell.endswith(":")
+                left = spec_cell.startswith(":")
+                aligns.append("right" if (right and not left)
+                              else ("center" if (right and left) else "left"))
             i += 2
             rows = []
             while i < n and lines[i].strip().startswith("|"):
                 rows.append(_cells(lines[i]))
                 i += 1
-            th = "".join(f"<th>{inline(c)}</th>" for c in head)
+
+            def _al(idx):
+                a = aligns[idx] if idx < len(aligns) else "left"
+                return "" if a == "left" else f' class="ta-{a}"'
+
+            th = "".join(f"<th{_al(k)}>{inline(c)}</th>"
+                         for k, c in enumerate(head))
             body = []
             for r in rows:
                 tds = []
-                for c in r:
+                for k, c in enumerate(r):
                     chip = _verdict_chip(c)
-                    tds.append(f"<td>{chip if chip else inline(c)}</td>")
+                    tds.append(f"<td{_al(k)}>{chip if chip else inline(c)}</td>")
                 body.append("<tr>" + "".join(tds) + "</tr>")
             out.append(
                 '<div class="tablewrap" tabindex="0" role="region" '
@@ -152,13 +184,26 @@ def render(md):
                 f'<tbody>{"".join(body)}</tbody></table></div>')
             continue
 
-        # blockquote
+        # blockquote, incl. GitHub alert callouts
         if line.startswith(">"):
             body = []
             while i < n and lines[i].startswith(">"):
                 body.append(lines[i].lstrip(">").strip())
                 i += 1
-            out.append(f'<blockquote>{inline(" ".join(body))}</blockquote>')
+            joined = " ".join(x for x in body if x)
+            am = re.match(r"^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*(.*)$",
+                          joined, re.S)
+            if am:
+                kind = am.group(1)
+                glyph = {"NOTE": "i", "TIP": "✦", "IMPORTANT": "!",
+                         "WARNING": "▲", "CAUTION": "✕"}[kind]
+                out.append(
+                    f'<div class="alert alert-{kind.lower()}">'
+                    f'<div class="alert-h"><span class="alert-g" aria-hidden="true">'
+                    f'{glyph}</span>{kind.title()}</div>'
+                    f"<div>{inline(am.group(2))}</div></div>")
+            else:
+                out.append(f"<blockquote>{inline(joined)}</blockquote>")
             continue
 
         # lists

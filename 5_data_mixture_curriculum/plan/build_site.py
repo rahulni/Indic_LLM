@@ -231,6 +231,46 @@ td code { font-size:.9em; }
 .stat-delta.up { color:var(--ok); }
 .stat-n { font-size:11.5px; color:var(--ink-3); margin-top:3px; line-height:1.4; }
 
+
+/* --- alerts, details, mermaid ------------------------------------------- */
+.alert { display:flex; flex-direction:column; gap:5px; margin:0 0 18px;
+  padding:12px 15px; border-radius:9px; border:1px solid; border-left-width:3px;
+  background:var(--surface); max-width:var(--measure); }
+.alert-h { display:flex; align-items:center; gap:7px; font-family:var(--mono);
+  font-size:11px; font-weight:660; letter-spacing:.07em; text-transform:uppercase; }
+.alert-g { display:inline-grid; place-items:center; width:15px; height:15px;
+  border-radius:50%; font-size:9px; color:var(--ground); }
+.alert-note      { border-color:var(--info); }
+.alert-note .alert-h, .alert-note .alert-g   { color:var(--info); }
+.alert-note .alert-g   { background:var(--info); color:var(--surface); }
+.alert-important { border-color:var(--accent); }
+.alert-important .alert-h { color:var(--accent); }
+.alert-important .alert-g { background:var(--accent); color:var(--surface); }
+.alert-warning   { border-color:var(--warn); }
+.alert-warning .alert-h { color:var(--warn); }
+.alert-warning .alert-g { background:var(--warn); color:#151823; }
+.alert-caution   { border-color:var(--critical); }
+.alert-caution .alert-h { color:var(--critical); }
+.alert-caution .alert-g { background:var(--critical); color:var(--surface); }
+.alert-tip       { border-color:var(--ok); }
+.alert-tip .alert-h { color:var(--ok); }
+.alert-tip .alert-g { background:var(--ok); color:var(--surface); }
+
+details { margin:0 0 20px; border:1px solid var(--rule); border-radius:10px;
+  background:var(--surface); padding:0 15px; max-width:var(--measure); }
+details[open] { padding-bottom:10px; }
+summary { cursor:pointer; padding:11px 0; font-family:var(--mono); font-size:12px;
+  letter-spacing:.04em; text-transform:uppercase; color:var(--ink-2); }
+details ul { margin:4px 0 0; padding-left:18px; font-size:13.5px; }
+details li { margin:2px 0; }
+
+pre.mermaid { background:var(--surface); border:1px solid var(--rule);
+  border-radius:10px; padding:16px; margin:0 0 20px; overflow-x:auto;
+  text-align:center; }
+
+td.ta-right, th.ta-right { text-align:right; }
+td.ta-center, th.ta-center { text-align:center; }
+
 /* --- search highlight ---------------------------------------------------- */
 mark.hit { background:color-mix(in srgb,var(--warn) 55%,transparent);
            color:var(--ink); border-radius:2px; padding:0 1px; }
