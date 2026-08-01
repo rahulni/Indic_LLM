@@ -1,0 +1,34 @@
+{
+  "engine": "huggingface tokenizers (BPE + Metaspace + NFKC), sanity check",
+  "weights": {
+    "en": 3,
+    "hi": 4,
+    "te": 4,
+    "mr": 2
+  },
+  "vocab_size": 10000,
+  "rows": {
+    "en": {
+      "tokens": 114739,
+      "faithful_units": 186367,
+      "faithful_ratio": 0.6156615709862797
+    },
+    "hi": {
+      "tokens": 51275,
+      "faithful_units": 88359,
+      "faithful_ratio": 0.5803030817460587
+    },
+    "te": {
+      "tokens": 24747,
+      "faithful_units": 36293,
+      "faithful_ratio": 0.6818670266993635
+    },
+    "mr": {
+      "tokens": 23912,
+      "faithful_units": 29766,
+      "faithful_ratio": 0.8033326614257879
+    }
+  },
+  "faithful_spread": 0.22302957967972914,
+  "faithful_score": 4483.710194118653
+}

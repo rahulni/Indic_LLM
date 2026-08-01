@@ -1,0 +1,132 @@
+{
+  "reasoning_sft": {
+    "corpus_id": "reasoning_sft",
+    "docs_sharing_a_prefix": 5959,
+    "documents_analysed": 8517,
+    "interpretation": "The sweep is the evidence that a zero at the operating threshold means the corpus is clean rather than the detector being blind. Where the curve stays flat at zero well below the operating threshold, there is genuinely nothing there to remove. Where it climbs steeply just under the threshold, the threshold - not the corpus - is deciding the outcome, and that is a tuning decision someone has to own. Shared opening lines are counted separately on purpose: documents that begin identically and then diverge are templated leads, not duplicates, and a prefix check would wrongly delete them.",
+    "operating_threshold": 0.75,
+    "shared_prefix_examples": [
+      {
+        "documents": 22,
+        "prefix": "<|system|>\nYou are a helpful AI assistant.<|end|>\n<|user|>\n<|user|> Please look at how you"
+      },
+      {
+        "documents": 20,
+        "prefix": "<|system|>\nYou are a helpful AI assistant.<|end|>\n<|user|>\n<|user|> Make this UI mobile fr"
+      },
+      {
+        "documents": 20,
+        "prefix": "<|system|>\nYou are a helpful AI assistant.<|end|>\n<|user|>\n<|user|> Make it use https://hu"
+      },
+      {
+        "documents": 16,
+        "prefix": "<|system|>\nYou are an assistant that responds to the User<|end|>\n<|user|>\nIn a room with a"
+      },
+      {
+        "documents": 16,
+        "prefix": "<|system|>\nYou are a helpful AI assistant.<|end|>\n<|user|>\n<|user|> Make a new one, it sho"
+      }
+    ],
+    "shared_prefix_groups": 2794,
+    "stage_analysed": "stage 4 survivors (post quality filter, pre dedup)",
+    "threshold_sweep": [
+      {
+        "documents_flagged": 631,
+        "threshold": 0.9
+      },
+      {
+        "documents_flagged": 642,
+        "threshold": 0.8
+      },
+      {
+        "documents_flagged": 656,
+        "threshold": 0.75
+      },
+      {
+        "documents_flagged": 680,
+        "threshold": 0.7
+      },
+      {
+        "documents_flagged": 759,
+        "threshold": 0.6
+      },
+      {
+        "documents_flagged": 1068,
+        "threshold": 0.5
+      },
+      {
+        "documents_flagged": 1395,
+        "threshold": 0.4
+      },
+      {
+        "documents_flagged": 1886,
+        "threshold": 0.3
+      }
+    ]
+  },
+  "telugu_web": {
+    "corpus_id": "telugu_web",
+    "docs_sharing_a_prefix": 36,
+    "documents_analysed": 10677,
+    "interpretation": "The sweep is the evidence that a zero at the operating threshold means the corpus is clean rather than the detector being blind. Where the curve stays flat at zero well below the operating threshold, there is genuinely nothing there to remove. Where it climbs steeply just under the threshold, the threshold - not the corpus - is deciding the outcome, and that is a tuning decision someone has to own. Shared opening lines are counted separately on purpose: documents that begin identically and then diverge are templated leads, not duplicates, and a prefix check would wrongly delete them.",
+    "operating_threshold": 0.75,
+    "shared_prefix_examples": [
+      {
+        "documents": 13,
+        "prefix": "హాయ్, మీరు NBT ను IE11 వెర్షన్లో చూస్తున్నట్టు ఉంది. NBT సైట్ మార్చబడింది కాబట్టి Edge మరి"
+      },
+      {
+        "documents": 8,
+        "prefix": "SenaDaily Provides Today News, Latest And Breaking News, Headlines, AP And Telangana News,"
+      },
+      {
+        "documents": 5,
+        "prefix": "Product Compare (0)\nSort By: Default Name (A - Z) Name (Z - A) Price (Low > High) Price (H"
+      },
+      {
+        "documents": 2,
+        "prefix": "బ్రిటిష్ దమనకాండకి వ్యతిరేకంగా కొండకోనలలో అడవిబిడ్డలు చేసిన త్యాగాలనీ, రక్త తర్పణలనీ గౌరవి"
+      },
+      {
+        "documents": 2,
+        "prefix": "ఆర్టిఫిషియల్ ఇంటెలిజెన్స్ ఆధారంగా పనిచేసే డివైజ్లలో చాలా వరకు యూజర్ డేటాను సేకరిస్తున్నట్ల"
+      }
+    ],
+    "shared_prefix_groups": 8,
+    "stage_analysed": "stage 4 survivors (post quality filter, pre dedup)",
+    "threshold_sweep": [
+      {
+        "documents_flagged": 0,
+        "threshold": 0.9
+      },
+      {
+        "documents_flagged": 0,
+        "threshold": 0.8
+      },
+      {
+        "documents_flagged": 0,
+        "threshold": 0.75
+      },
+      {
+        "documents_flagged": 0,
+        "threshold": 0.7
+      },
+      {
+        "documents_flagged": 0,
+        "threshold": 0.6
+      },
+      {
+        "documents_flagged": 6,
+        "threshold": 0.5
+      },
+      {
+        "documents_flagged": 9,
+        "threshold": 0.4
+      },
+      {
+        "documents_flagged": 30,
+        "threshold": 0.3
+      }
+    ]
+  }
+}

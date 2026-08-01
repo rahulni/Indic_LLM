@@ -1,0 +1,50 @@
+{
+  "actual_doc_count": 11607,
+  "actual_tokens_cl100k": 50002626,
+  "corpus_id": "telugu_web",
+  "corpus_name": "AI4Bharat Sangraha — unverified tier — Telugu",
+  "determinism_note": "No random draw is involved. The slice is contiguous from a fixed offset, so re-running this stage against the same upstream revision reproduces the same documents in the same order.",
+  "elapsed_s": 1027.85,
+  "heldout": {
+    "data_files": "verified/tel/*.parquet",
+    "docs_after_removing_any_train_overlap": 300,
+    "docs_dropped_because_also_in_training_pool": 0,
+    "docs_taken": 300,
+    "draw_strategy": "contiguous_from_head",
+    "first_row_index": 0,
+    "hf_id": "ai4bharat/sangraha",
+    "last_row_index": 299,
+    "license_agrees": false,
+    "license_declared_in_registry": null,
+    "license_reported_by_hf_api": "cc-by-4.0",
+    "license_status": "declared",
+    "note": "Disjoint verified/tel slice - the Golden Proxy role, never in the training pool.",
+    "rows_scanned": 300,
+    "rows_skipped_empty": 0,
+    "source_key": "heldout",
+    "tokens_cl100k": 999399
+  },
+  "heldout_file": "telugu_heldout.jsonl",
+  "raw_file": "telugu_raw.jsonl",
+  "sampling_reason": "A uniform random sub-sample destroys duplicate pairs by construction. Deduplication is the session's headline topic, so the sample has to be drawn in a way that can actually contain duplicates.",
+  "sampling_strategy": "contiguous_slice",
+  "sources": [
+    {
+      "data_files": "unverified/tel/data-0.parquet",
+      "docs_taken": 11607,
+      "draw_strategy": "contiguous_from_head",
+      "first_row_index": 0,
+      "hf_id": "ai4bharat/sangraha",
+      "last_row_index": 11606,
+      "license_agrees": false,
+      "license_declared_in_registry": "CC-BY-4.0",
+      "license_reported_by_hf_api": "cc-by-4.0",
+      "license_status": "declared",
+      "rows_scanned": 11607,
+      "rows_skipped_empty": 0,
+      "source_key": "sangraha_unverified_tel",
+      "tokens_cl100k": 50002626
+    }
+  ],
+  "target_tokens_cl100k": 50000000
+}

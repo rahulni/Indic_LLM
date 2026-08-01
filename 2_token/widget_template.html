@@ -1,0 +1,496 @@
+<style>
+  :root {
+    --paper:#FAF7F1; --panel:#FFFFFF; --panel-2:#F4EFE6;
+    --ink:#211C16; --muted:#6E655A; --faint:#948a7c; --line:#E7DFD3;
+    --accent:#0E7C74; --accent-soft:#0e7c7418;
+    --gold:#B8850F; --gold-soft:#b8850f1f;
+    --good:#2E9E6B; --warn:#C08320; --bad:#C24E3B;
+    --mono: ui-monospace, "Cascadia Code", "JetBrains Mono", "SF Mono", Consolas, monospace;
+    --sans: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --shadow: 0 1px 2px rgba(40,30,15,.05), 0 6px 24px rgba(40,30,15,.06);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#141210; --panel:#1E1A15; --panel-2:#252017;
+      --ink:#ECE5D8; --muted:#A09584; --faint:#8a8072; --line:#2F2820;
+      --accent:#3CBBB0; --accent-soft:#3cbbb01f;
+      --gold:#E3B04A; --gold-soft:#e3b04a24;
+      --good:#57C48E; --warn:#DBA04C; --bad:#E27458;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 30px rgba(0,0,0,.35);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper:#141210; --panel:#1E1A15; --panel-2:#252017;
+    --ink:#ECE5D8; --muted:#A09584; --faint:#8a8072; --line:#2F2820;
+    --accent:#3CBBB0; --accent-soft:#3cbbb01f;
+    --gold:#E3B04A; --gold-soft:#e3b04a24;
+    --good:#57C48E; --warn:#DBA04C; --bad:#E27458;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 30px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+  :root[data-theme="light"] {
+    --paper:#FAF7F1; --panel:#FFFFFF; --panel-2:#F4EFE6;
+    --ink:#211C16; --muted:#6E655A; --faint:#948a7c; --line:#E7DFD3;
+    --accent:#0E7C74; --accent-soft:#0e7c7418;
+    --gold:#B8850F; --gold-soft:#b8850f1f;
+    --good:#2E9E6B; --warn:#C08320; --bad:#C24E3B;
+    --shadow: 0 1px 2px rgba(40,30,15,.05), 0 6px 24px rgba(40,30,15,.06);
+    color-scheme: light;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:var(--sans);
+         line-height:1.5; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:1080px; margin:0 auto; padding:32px 22px 72px; }
+
+  .eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+             color:var(--accent); font-weight:600; }
+  h1 { font-size:clamp(26px,4vw,38px); line-height:1.08; margin:.28em 0 .1em; letter-spacing:-.02em;
+       text-wrap:balance; font-weight:750; }
+  h2 { font-size:15px; letter-spacing:.02em; margin:0; font-weight:700; }
+  .lede { color:var(--muted); max-width:64ch; font-size:15px; }
+  .mono { font-family:var(--mono); }
+  .num { font-family:var(--mono); font-variant-numeric:tabular-nums; }
+
+  header { border-bottom:1px solid var(--line); padding-bottom:22px; margin-bottom:26px; }
+  .metarow { display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:14px; font-size:12.5px; color:var(--faint); }
+  .metarow b { color:var(--muted); font-weight:600; }
+
+  /* summary hero */
+  .hero { display:grid; grid-template-columns:1.1fr 1fr; gap:18px; margin-bottom:26px; }
+  @media (max-width:760px){ .hero{ grid-template-columns:1fr; } }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px;
+          box-shadow:var(--shadow); }
+  .winner { background:linear-gradient(180deg,var(--gold-soft),transparent 70%); border-color:var(--gold); }
+  .winner .eyebrow { color:var(--gold); }
+  .bigscore { font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:clamp(40px,7vw,60px);
+              font-weight:700; line-height:1; letter-spacing:-.02em; color:var(--gold); }
+  .bigscore small { font-size:14px; color:var(--muted); font-weight:500; letter-spacing:0; }
+  .formula { font-family:var(--mono); font-size:12.5px; color:var(--muted); background:var(--panel-2);
+             border:1px solid var(--line); border-radius:9px; padding:9px 11px; margin-top:14px;
+             overflow-x:auto; white-space:nowrap; }
+  .formula b { color:var(--ink); }
+
+  /* tabs */
+  .tabs { display:flex; flex-wrap:wrap; gap:8px; margin:4px 0 6px; }
+  .tab { font-family:var(--mono); font-size:13px; padding:9px 14px; border-radius:10px; cursor:pointer;
+         border:1px solid var(--line); background:var(--panel); color:var(--muted); display:flex; gap:9px;
+         align-items:center; transition:.14s; }
+  .tab:hover { border-color:var(--accent); color:var(--ink); }
+  .tab[aria-selected="true"] { background:var(--accent); border-color:var(--accent); color:#fff; }
+  :root[data-theme="dark"] .tab[aria-selected="true"],
+  .tab[aria-selected="true"] { color:#fff; }
+  .tab .pill { font-size:11px; padding:1px 7px; border-radius:20px; background:var(--accent-soft);
+               color:var(--accent); font-variant-numeric:tabular-nums; }
+  .tab[aria-selected="true"] .pill { background:rgba(255,255,255,.22); color:#fff; }
+  .tab .crown { font-size:11px; }
+  .tabhint { font-size:12px; color:var(--faint); margin:0 0 22px; }
+
+  .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  @media (max-width:760px){ .grid2{ grid-template-columns:1fr; } }
+  .section-h { display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin-bottom:14px; }
+  .section-h p { margin:0; font-size:12px; color:var(--faint); }
+
+  /* calc panel */
+  .calc { display:flex; flex-direction:column; gap:12px; }
+  .sortrow { display:flex; flex-wrap:wrap; align-items:center; gap:8px; font-family:var(--mono); font-size:14px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:9px;
+          border:1px solid var(--line); background:var(--panel-2); font-variant-numeric:tabular-nums; }
+  .chip .lab { color:var(--muted); font-size:11px; }
+  .chip.max { border-color:var(--bad); background:color-mix(in srgb,var(--bad) 12%,transparent); }
+  .chip.min { border-color:var(--good); background:color-mix(in srgb,var(--good) 12%,transparent); }
+  .op { color:var(--faint); }
+  .result-line { font-family:var(--mono); font-size:14px; padding-top:12px; border-top:1px dashed var(--line);
+                 display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+  .result-line .score { color:var(--gold); font-weight:700; font-size:18px; }
+
+  /* bars */
+  .bars { display:flex; flex-direction:column; gap:13px; }
+  .bar { display:grid; grid-template-columns:96px 1fr 58px; align-items:center; gap:10px; }
+  .bar .name { font-size:13px; display:flex; flex-direction:column; }
+  .bar .name .xid { font-family:var(--mono); font-size:10px; color:var(--faint); letter-spacing:.05em; }
+  .track { position:relative; height:22px; background:var(--panel-2); border:1px solid var(--line);
+           border-radius:7px; overflow:hidden; }
+  .fill { position:absolute; inset:0 auto 0 0; border-radius:6px 0 0 6px; background:var(--accent);
+          transition:width .5s cubic-bezier(.2,.7,.2,1); }
+  .fill.max { background:var(--bad); }
+  .fill.min { background:var(--good); }
+  .target { position:absolute; top:-3px; bottom:-3px; width:0; border-left:2px dashed var(--gold); }
+  .ghost { position:absolute; top:0; bottom:0; width:0; border-left:2px dotted var(--faint); opacity:.7; }
+  .bar .val { font-family:var(--mono); font-variant-numeric:tabular-nums; font-size:13px; text-align:right;
+              display:flex; flex-direction:column; line-height:1.15; }
+  .bar .val .was { font-size:10px; color:var(--faint); }
+  .target-key { font-size:11px; color:var(--faint); margin-top:6px; font-family:var(--mono); }
+  .target-key b { color:var(--gold); }
+  .delta { font-family:var(--mono); font-variant-numeric:tabular-nums; font-weight:600; }
+  .delta.down { color:var(--good); } /* fertility fell = better compression */
+  .delta.up { color:var(--bad); }
+  .delta.flat { color:var(--faint); }
+
+  /* table */
+  .tablewrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
+  table { border-collapse:collapse; width:100%; font-size:13px; }
+  th,td { padding:9px 12px; text-align:right; white-space:nowrap; }
+  th:first-child, td:first-child { text-align:left; }
+  thead th { font-family:var(--mono); font-size:10.5px; letter-spacing:.06em; text-transform:uppercase;
+             color:var(--muted); font-weight:600; background:var(--panel-2); border-bottom:1px solid var(--line); }
+  tbody td { border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; }
+  tbody tr:last-child td { border-bottom:0; }
+  tbody tr:hover td { background:var(--accent-soft); }
+  td.xcell { font-family:var(--mono); font-weight:600; }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:7px; vertical-align:middle; }
+  .ktag { font-family:var(--mono); font-size:9.5px; letter-spacing:.04em; text-transform:uppercase;
+          padding:1px 6px; border-radius:20px; margin-left:8px; border:1px solid var(--line); vertical-align:middle; }
+  .ktag.honest { color:var(--accent); border-color:var(--accent); }
+  .ktag.linguistic { color:var(--good); border-color:var(--good); }
+  .ktag.realistic { color:var(--muted); }
+  .ktag.gamed { color:var(--bad); border-color:var(--bad); background:color-mix(in srgb,var(--bad) 12%,transparent); }
+  .ktag.overfit { color:var(--warn); border-color:var(--warn); background:color-mix(in srgb,var(--warn) 12%,transparent); }
+  .ktag.leakage { color:var(--bad); border-color:var(--bad); background:color-mix(in srgb,var(--bad) 12%,transparent); }
+  tr.primaryrow td { background:var(--accent-soft); }
+  tr.primaryrow td:first-child { font-weight:700; }
+  td.score-cell { font-family:var(--mono); font-weight:700; }
+  .legend { font-size:11px; color:var(--faint); margin-top:10px; font-family:var(--mono); display:flex;
+            flex-wrap:wrap; gap:6px 14px; }
+
+  /* token browser */
+  .browser { margin-top:26px; }
+  .toolbar { display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-bottom:14px; }
+  .search { flex:1; min-width:200px; font-family:var(--mono); font-size:13px; padding:10px 12px;
+            border:1px solid var(--line); border-radius:10px; background:var(--panel); color:var(--ink); }
+  .search:focus { outline:2px solid var(--accent); outline-offset:1px; border-color:var(--accent); }
+  .segmented { display:flex; border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+  .segmented button { font-family:var(--mono); font-size:12px; padding:9px 13px; border:0; cursor:pointer;
+                      background:var(--panel); color:var(--muted); }
+  .segmented button[aria-pressed="true"] { background:var(--accent); color:#fff; }
+  .tokgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:8px; }
+  .tok { font-family:var(--mono); font-size:12.5px; border:1px solid var(--line); border-radius:8px;
+         padding:7px 9px; background:var(--panel); display:flex; justify-content:space-between; gap:8px;
+         align-items:center; overflow:hidden; }
+  .tok.base { border-left:3px solid var(--faint); }
+  .tok.merge { border-left:3px solid var(--accent); }
+  .tok .txt { white-space:pre; overflow:hidden; text-overflow:ellipsis; }
+  .tok .eow { color:var(--gold); opacity:.8; }
+  .tok .rank { font-size:10px; color:var(--faint); font-variant-numeric:tabular-nums; }
+  .browser-foot { display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:14px;
+                  font-size:12.5px; color:var(--muted); flex-wrap:wrap; }
+  .more { font-family:var(--mono); font-size:13px; padding:9px 16px; border-radius:10px; cursor:pointer;
+          border:1px solid var(--accent); background:transparent; color:var(--accent); }
+  .more:hover { background:var(--accent-soft); }
+  .more:disabled { opacity:.4; cursor:default; }
+
+  .foot { margin-top:40px; padding-top:18px; border-top:1px solid var(--line); font-size:12px;
+          color:var(--faint); }
+  .foot code { font-family:var(--mono); background:var(--panel-2); padding:1px 5px; border-radius:5px; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  @media (prefers-reduced-motion:reduce){ *{ transition:none !important; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">BPE Tokenizer · Wikipedia “India”</div>
+    <h1>Multilingual subword compression &amp; self-score</h1>
+    <p class="lede">One shared <b>10,000-token</b> BPE vocabulary per candidate, trained on the “India”
+      article in English, Hindi, Telugu + a 4th language. Score rewards keeping every language’s
+      tokens-per-word ratio close together.</p>
+    <div class="metarow" id="metarow"></div>
+  </header>
+
+  <div class="hero">
+    <div class="card winner" id="winnerCard"></div>
+    <div class="card" id="methodCard">
+      <div class="eyebrow">The metric</div>
+      <p style="margin:.5em 0 0;font-size:14px;color:var(--muted)">
+        <b style="color:var(--ink)">Fertility X = word&nbsp;tokens ÷ words</b> — the average number of
+        tokens each word breaks into. Lower means better compression; English targets ≈ 1.2.</p>
+      <div class="formula" style="margin-top:12px">
+        X1 English · X2 Hindi · X3 Telugu · X4 = your 4th language</div>
+      <div class="formula">
+        Sort X’s → <b>Score = 1000 ÷ (X<sub>max</sub> − X<sub>min</sub>)</b></div>
+    </div>
+  </div>
+
+  <div class="eyebrow" style="margin-bottom:9px">Choose the 4th language (fixed: English · Hindi · Telugu)</div>
+  <div class="tabs" id="tabs" role="tablist"></div>
+  <p class="tabhint" id="tabhint"></p>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="section-h"><h2>Self-score calculation</h2><p>sorted, largest → least</p></div>
+      <div class="calc" id="calc"></div>
+    </div>
+    <div class="card">
+      <div class="section-h"><h2>Fertility per language</h2><p>tokens / word</p></div>
+      <div class="bars" id="bars"></div>
+      <div class="target-key">▏ dashed line = <b>1.2 target</b> · red bar = X<sub>max</sub> · green bar = X<sub>min</sub></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <div class="section-h"><h2>Token statistics</h2><p id="statnote"></p></div>
+    <div class="tablewrap">
+      <table id="stats">
+        <thead><tr>
+          <th>Language</th><th>Chars</th><th>Words</th><th>Unique words</th>
+          <th>Word tokens</th><th>X (fertility)</th><th>Was</th><th>Δ</th>
+        </tr></thead>
+        <tbody id="statsBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <div class="section-h"><h2>Preprocessing profiles — what’s honest vs. gamed</h2>
+      <p>selected 4th language · fertility on the India article</p></div>
+    <div class="tablewrap">
+      <table id="profTable">
+        <thead><tr><th>Profile</th><th>Eng</th><th>Hin</th><th>Tel</th><th>4th</th><th>Spread</th><th>Score</th></tr></thead>
+        <tbody id="profBody"></tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><span class="ktag honest">honest</span> real gain</span>
+      <span><span class="ktag linguistic">linguistic</span> Indic morphology</span>
+      <span><span class="ktag realistic">realistic</span> more data, higher X</span>
+      <span><span class="ktag overfit">overfit</span> memorises the article</span>
+      <span><span class="ktag leakage">leakage</span> in-domain MT of eval content</span>
+    </div>
+    <p id="profNote" class="target-key" style="margin-top:10px"></p>
+  </div>
+
+  <div class="browser card">
+    <div class="section-h"><h2>Tokenizer vocabulary</h2><p id="vocabnote"></p></div>
+    <div class="toolbar">
+      <input class="search" id="search" placeholder="search tokens…  (e.g.  tion   भा   the )" autocomplete="off">
+      <div class="segmented" id="filter" role="group" aria-label="token type filter">
+        <button data-f="all" aria-pressed="true">all</button>
+        <button data-f="base" aria-pressed="false">base</button>
+        <button data-f="merge" aria-pressed="false">merges</button>
+      </div>
+    </div>
+    <div class="tokgrid" id="tokgrid"></div>
+    <div class="browser-foot">
+      <span id="tokcount"></span>
+      <button class="more" id="more">Show more</button>
+    </div>
+  </div>
+
+  <div class="foot" id="foot"></div>
+</div>
+
+<script>
+const DATA = /*__DATA__*/;
+const R = DATA.results;
+const ORDER = ["es","kn","mr","ne"];
+// X-index by role: English=X1, Hindi=X2, Telugu=X3, 4th=X4
+const XID = {en:"X1", hi:"X2", te:"X3"};
+let cur = DATA.meta.best_candidate_code || ORDER.reduce((b,c)=> (R[c].score>(R[b]?.score??-1)?c:b), ORDER[0]);
+let filterMode = "all", shown = 0, PAGE = 180, filtered = [];
+
+const $ = s => document.querySelector(s);
+const fmt = n => n.toLocaleString("en-US");
+const esc = s => s.replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+function tokHTML(t){ // render </w> marker
+  const eow = t.endsWith("</w>");
+  const body = eow ? t.slice(0,-4) : t;
+  return esc(body||"") + (eow ? '<span class="eow">⏎</span>' : "");
+}
+
+// ---- static bits
+function profileText(p){
+  if(!p) return "baseline";
+  const bits=[];
+  bits.push(p.unit_mode==="akshara" ? "akshara units" : "codepoint units");
+  if(p.strip_joiners) bits.push("ZWNJ/ZWJ-stripped");
+  if(p.cap_chars) bits.push("corpus-capped "+(p.cap_chars/1000)+"k");
+  if(p.augment) bits.push("real+MT augmented");
+  if(p.morph) bits.push("suffix-split");
+  if(p.translit) bits.push("shared-script");
+  return bits.join(" · ");
+}
+function deltaHTML(now, was){
+  if(was==null) return "";
+  const d = now - was;
+  const cls = d < -0.001 ? "down" : (d > 0.001 ? "up" : "flat");
+  const arrow = d < -0.001 ? "▼" : (d > 0.001 ? "▲" : "→");
+  return `<span class="delta ${cls}">${arrow}${Math.abs(d).toFixed(3)}</span>`;
+}
+function renderMeta(){
+  const m = DATA.meta;
+  $("#metarow").innerHTML =
+    `<span><b>Source:</b> ${m.source}</span>`+
+    `<span><b>Vocab budget:</b> ${fmt(m.vocab_budget)} tokens</span>`+
+    `<span><b>Fixed:</b> ${m.fixed_languages.join(" · ")}</span>`+
+    `<span><b>Submitted profile:</b> ${m.profile_labels[m.primary_profile]}</span>`;
+  const best = R[bestCode()];
+  const bs = best.baseline_score;
+  $("#winnerCard").innerHTML =
+    `<div class="eyebrow">Best 4th language by score</div>`+
+    `<div style="display:flex;align-items:baseline;gap:12px;margin:.35em 0 .1em">`+
+      `<div class="bigscore">${best.score}<small> / self-score</small></div></div>`+
+    `<div style="font-size:15px;font-weight:650;margin-top:2px">${best.candidate_name} 🏆</div>`+
+    `<div style="color:var(--muted);font-size:13px;margin-top:4px">`+
+      `spread X<sub>max</sub>−X<sub>min</sub> = ${best.x_max} − ${best.x_min} = <b class="mono">${best.spread}</b></div>`+
+    (bs!=null ? `<div class="formula">baseline ${bs} <span style="color:var(--good)">→</span> <b>${best.score}</b> `+
+      `(spread ${best.baseline_spread} → ${best.spread})</div>` :
+      `<div class="formula">1000 ÷ ${best.spread} = <b>${best.score}</b></div>`);
+  $("#foot").innerHTML =
+    `Metric: <code>X = word_tokens / words</code> · Score: <code>1000 / (Xmax − Xmin)</code>. `+
+    `Text NFC-normalised &amp; casefolded; Unicode combining marks kept with their base letter. `+
+    `Base units are <b>aksharas</b> (grapheme clusters) so Devanagari / Telugu / Kannada syllables stay `+
+    `intact; classic BPE with a <code>&lt;/w&gt;</code> end-of-word marker (shown ⏎). `+
+    `Corpus = article prose + image captions + data tables (infobox excluded). `+
+    `“was” = baseline (codepoint BPE). <b>Submitted profile = akshara + morphology:</b> it drops Telugu `+
+    `honestly by splitting case/plural suffixes (so Telugu/Kannada fertility is tokens per <i>morpheme</i>-word). `+
+    `<b>English ≈ 1.25 is its floor</b> — it can’t be reduced honestly (more data dilutes the fixed 10k budget `+
+    `and raises it; only <span style="color:var(--warn)">min_pair_freq=1</span> gets below 1.2, by memorising `+
+    `the article). Fertility is train-inclusive, so numbers are optimistic.`;
+}
+function bestCode(){ return ORDER.reduce((b,c)=> (R[c].score>(R[b]?.score??-1)?c:b), ORDER[0]); }
+
+function renderTabs(){
+  const bc = bestCode();
+  $("#tabs").innerHTML = ORDER.map(c=>{
+    const r = R[c];
+    return `<button class="tab" role="tab" data-c="${c}" aria-selected="${c===cur}">`+
+      `${r.candidate_name}${c===bc?'<span class="crown">🏆</span>':""}`+
+      `<span class="pill">${r.score}</span></button>`;
+  }).join("");
+  $("#tabs").querySelectorAll(".tab").forEach(b=>{
+    b.onclick = ()=>{ cur=b.dataset.c; renderTabs(); renderDetail(); resetBrowser(); };
+  });
+  const r = R[cur];
+  const rank = [...ORDER].sort((a,b)=>R[b].score-R[a].score).indexOf(cur)+1;
+  $("#tabhint").innerHTML = `Showing <b>English · Hindi · Telugu · ${r.candidate_name}</b> — `+
+    `self-score <b class="mono">${r.score}</b> (rank ${rank} of 4). `+
+    (cur===bc ? `This is the best-scoring choice.` :
+      `Best is <b>${R[bc].candidate_name}</b> at <b class="mono">${R[bc].score}</b>.`);
+}
+
+function renderDetail(){
+  const r = R[cur];
+  const langs = r.languages;
+  const byName = Object.fromEntries(langs.map(l=>[l.code,l]));
+  const maxName = r.sorted_ratios[0].name, minName = r.sorted_ratios[r.sorted_ratios.length-1].name;
+
+  // calc
+  const chips = r.sorted_ratios.map((s,i)=>{
+    const cls = i===0?"max":(i===r.sorted_ratios.length-1?"min":"");
+    return `<span class="chip ${cls}"><span class="lab">${s.name}</span> ${s.X.toFixed(3)}</span>`;
+  }).join('<span class="op">≥</span>');
+  $("#calc").innerHTML =
+    `<div class="sortrow">${chips}</div>`+
+    `<div class="sortrow"><span class="op">spread =</span>`+
+      `<span class="chip max"><span class="lab">${maxName}</span> ${r.x_max.toFixed(3)}</span>`+
+      `<span class="op">−</span>`+
+      `<span class="chip min"><span class="lab">${minName}</span> ${r.x_min.toFixed(3)}</span>`+
+      `<span class="op">=</span><span class="chip"><b>${r.spread.toFixed(4)}</b></span></div>`+
+    `<div class="result-line"><span class="op">Score = 1000 ÷ ${r.spread.toFixed(4)} =</span>`+
+      `<span class="score">${r.score}</span></div>`+
+    (r.baseline_score!=null ? `<div class="result-line" style="border-top:0;padding-top:0">`+
+      `<span class="op">baseline was</span><span class="chip">spread ${r.baseline_spread.toFixed(4)}</span>`+
+      `<span class="op">→ score</span><span class="chip">${r.baseline_score}</span>`+
+      `${deltaHTML(-r.score, -r.baseline_score)} score</div>` : "");
+
+  // bars
+  const scale = 2.1;
+  $("#bars").innerHTML = langs.map(l=>{
+    const isMax = l.name===maxName, isMin = l.name===minName;
+    const w = Math.min(100, l.fertility/scale*100);
+    const cls = isMax?"max":(isMin?"min":"");
+    const xid = XID[l.code] || "X4";
+    const was = l.baseline_fertility;
+    const ghost = (was!=null) ? `<div class="ghost" style="left:${Math.min(100,was/scale*100)}%"></div>` : "";
+    const wasLine = (was!=null) ? `<span class="was">was ${was.toFixed(3)}</span>` : "";
+    return `<div class="bar"><div class="name">${l.name}<span class="xid">${xid}</span></div>`+
+      `<div class="track"><div class="fill ${cls}" style="width:${w}%"></div>`+
+        `<div class="target" style="left:${1.2/scale*100}%"></div>${ghost}</div>`+
+      `<div class="val">${l.fertility.toFixed(3)}${wasLine}</div></div>`;
+  }).join("");
+
+  // stats table
+  $("#statnote").textContent = `${r.vocab_size.toLocaleString()} tokens · ${r.n_base} base + ${fmt(r.n_merges)} merges`;
+  const dotcol = n => n===maxName?"var(--bad)":(n===minName?"var(--good)":"var(--accent)");
+  $("#statsBody").innerHTML = langs.map(l=>
+    `<tr><td><span class="dot" style="background:${dotcol(l.name)}"></span>${l.name} `+
+      `<span class="mono" style="color:var(--faint);font-size:11px">${XID[l.code]||"X4"}</span></td>`+
+    `<td>${fmt(l.chars)}</td><td>${fmt(l.words)}</td><td>${fmt(l.unique_words)}</td>`+
+    `<td>${fmt(l.word_tokens)}</td>`+
+    `<td class="xcell" style="color:${dotcol(l.name)}">${l.fertility.toFixed(3)}</td>`+
+    `<td style="color:var(--faint)">${l.baseline_fertility!=null?l.baseline_fertility.toFixed(3):"–"}</td>`+
+    `<td>${deltaHTML(l.fertility, l.baseline_fertility)}</td></tr>`
+  ).join("");
+
+  renderProfiles(r);
+}
+
+function renderProfiles(r){
+  const primary = DATA.meta.primary_profile;
+  const scoreColor = k => (k==="gamed"||k==="leakage")?"var(--bad)":(k==="overfit"?"var(--warn)":
+                          (k==="linguistic"?"var(--good)":(k==="realistic"?"var(--muted)":"var(--accent)")));
+  $("#profBody").innerHTML = (r.profiles||[]).map(p=>{
+    const x = p.langX || {};
+    const is1 = p.key===primary;
+    return `<tr class="${is1?'primaryrow':''}" title="${esc(p.note||'')}">`+
+      `<td>${p.label}<span class="ktag ${p.kind}">${p.kind}</span></td>`+
+      `<td>${(x.en??0).toFixed(3)}</td><td>${(x.hi??0).toFixed(3)}</td>`+
+      `<td>${(x.te??0).toFixed(3)}</td><td>${(x[r.candidate]??0).toFixed(3)}</td>`+
+      `<td>${p.spread.toFixed(3)}</td>`+
+      `<td class="score-cell" style="color:${scoreColor(p.kind)}">${p.score}</td></tr>`;
+  }).join("");
+  const over = (r.profiles||[]).find(p=>p.kind==="overfit");
+  const leak = (r.profiles||[]).find(p=>p.kind==="leakage");
+  const ling = (r.profiles||[]).find(p=>p.kind==="linguistic");
+  const parts = [`Primary (highlighted) is the submitted tokenizer — the honest floor.`];
+  if(ling){ const te=(ling.langX?.te??0).toFixed(3);
+    parts.push(`<b style="color:var(--good)">Morphology</b> honestly drops Telugu to ${te} (from 1.857) without touching English — the real Indic-linguistics win.`); }
+  if(over){ const en=over.langX?.en??0;
+    parts.push(`<b style="color:var(--warn)">Overfit</b> reaches English ${en.toFixed(3)} by merging singletons (memorises the article); it only dips below 1.2 when the 4th language is small enough to leave spare budget — and lowering English actually widens the spread, hurting the score.`); }
+  if(leak){ const te=(leak.langX?.te??0).toFixed(3);
+    parts.push(`<b style="color:var(--bad)">Leakage</b> (translate India→Telugu) only reaches Telugu ${te} and dilutes the budget for the others — translation is both leaky AND ineffective here.`); }
+  $("#profNote").innerHTML = parts.join(" ");
+}
+
+// ---- token browser
+function resetBrowser(){ shown=0; applyFilter(); }
+function applyFilter(){
+  const r = R[cur];
+  const q = $("#search").value.trim().toLowerCase();
+  const nb = r.n_base;
+  filtered = [];
+  for(let i=0;i<r.tokens.length;i++){
+    const t = r.tokens[i];
+    const isBase = i<nb;
+    if(filterMode==="base" && !isBase) continue;
+    if(filterMode==="merge" && isBase) continue;
+    if(q){ const disp = t.replace("</w>","").toLowerCase(); if(!disp.includes(q)) continue; }
+    filtered.push([i,t,isBase]);
+  }
+  shown = Math.min(PAGE, filtered.length);
+  paint();
+}
+function paint(){
+  const r = R[cur];
+  const slice = filtered.slice(0,shown);
+  $("#tokgrid").innerHTML = slice.map(([i,t,isBase])=>
+    `<div class="tok ${isBase?'base':'merge'}" title="${esc(t)}">`+
+      `<span class="txt">${tokHTML(t)}</span>`+
+      `<span class="rank">${isBase?'·':'#'+(i-r.n_base+1)}</span></div>`
+  ).join("");
+  $("#tokcount").innerHTML = `Showing <b class="mono">${fmt(shown)}</b> of <b class="mono">${fmt(filtered.length)}</b> `+
+    `matching tokens (vocab ${fmt(r.tokens.length)})`;
+  $("#more").disabled = shown>=filtered.length;
+  $("#vocabnote").textContent = `${R[cur].candidate_name} tokenizer`;
+}
+$("#search").addEventListener("input", ()=>{ applyFilter(); });
+$("#more").addEventListener("click", ()=>{ shown=Math.min(shown+PAGE,filtered.length); paint(); });
+$("#filter").querySelectorAll("button").forEach(b=>{
+  b.onclick=()=>{ filterMode=b.dataset.f;
+    $("#filter").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed", x===b));
+    applyFilter(); };
+});
+
+renderMeta(); renderTabs(); renderDetail(); resetBrowser();
+</script>

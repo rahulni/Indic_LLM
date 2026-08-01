@@ -1,0 +1,63 @@
+{
+  "total_vocab": 9999,
+  "spread": 0.2064166675757848,
+  "assignment_score": 4844.570023071685,
+  "languages": [
+    {
+      "code": "hi",
+      "x_label": "X2",
+      "language": "Hindi",
+      "local_name": "हिन्दी",
+      "page_title": "भारत",
+      "word_count": 8134,
+      "unique_words": 2248,
+      "base_vocab_size": 102,
+      "selected_bpe_vocab": 1477,
+      "bpe_tokens": 11439,
+      "encoded_token_occurrences": 11439,
+      "ratio": 1.4063191541676912
+    },
+    {
+      "code": "mr",
+      "x_label": "X4",
+      "language": "Marathi",
+      "local_name": "मराठी",
+      "page_title": "भारत",
+      "word_count": 4569,
+      "unique_words": 2248,
+      "base_vocab_size": 96,
+      "selected_bpe_vocab": 2674,
+      "bpe_tokens": 6425,
+      "encoded_token_occurrences": 6425,
+      "ratio": 1.4062158021448894
+    },
+    {
+      "code": "te",
+      "x_label": "X3",
+      "language": "Telugu",
+      "local_name": "తెలుగు",
+      "page_title": "భారతదేశం",
+      "word_count": 2522,
+      "unique_words": 1564,
+      "base_vocab_size": 92,
+      "selected_bpe_vocab": 2488,
+      "bpe_tokens": 3546,
+      "encoded_token_occurrences": 3546,
+      "ratio": 1.4060269627279935
+    },
+    {
+      "code": "en",
+      "x_label": "X1",
+      "language": "English",
+      "local_name": "English",
+      "page_title": "India",
+      "word_count": 10255,
+      "unique_words": 2976,
+      "base_vocab_size": 39,
+      "selected_bpe_vocab": 3360,
+      "bpe_tokens": 12305,
+      "encoded_token_occurrences": 12305,
+      "ratio": 1.1999024865919063
+    }
+  ]
+}

@@ -1,0 +1,2875 @@
+{
+ "budget": 3000000000000,
+ "phases": [
+  {
+   "idx": 0,
+   "id": "A",
+   "label": "Foundation",
+   "weight": 0.4,
+   "tokens": 1200000000000.0,
+   "why": "Breadth. Model cannot yet use premium data, so premium data is not spent on it."
+  },
+  {
+   "idx": 1,
+   "id": "B",
+   "label": "Consolidation",
+   "weight": 0.32,
+   "tokens": 960000000000.0,
+   "why": "Code and reasoning ramp; long-context packing begins."
+  },
+  {
+   "idx": 2,
+   "id": "C",
+   "label": "Specialisation",
+   "weight": 0.25,
+   "tokens": 750000000000.0,
+   "why": "Scarce lanes concentrate; sequence length reaches 128k."
+  },
+  {
+   "idx": 3,
+   "id": "D",
+   "label": "Anneal",
+   "weight": 0.03,
+   "tokens": 90000000000.0,
+   "why": "The reserve. Verified tiers only, highest difficulty, highest reasoning bands."
+  }
+ ],
+ "lanes": [
+  {
+   "id": "web",
+   "label": "General web & knowledge",
+   "phases": [
+    68.0,
+    52.0,
+    32.0,
+    13.0
+   ],
+   "share": 52.230000000000004,
+   "tokens": 1566900000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 1566900000000.0,
+   "selector_mult": 2.0,
+   "candidate_tokens": 3133800000000.0,
+   "benchmarks": [
+    "MMLU-Pro (>=85.2, Gemma-4-31B parity)",
+    "GPQA (>=84.3)",
+    "SimpleQA"
+   ]
+  },
+  {
+   "id": "code",
+   "label": "Code",
+   "phases": [
+    16.0,
+    25.0,
+    34.0,
+    22.0
+   ],
+   "share": 23.56,
+   "tokens": 706799999999.9999,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 706799999999.9999,
+   "selector_mult": 2.0,
+   "candidate_tokens": 1413599999999.9998,
+   "benchmarks": [
+    "LiveCodeBench (>=80.0)",
+    "SWE-bench Verified",
+    "HumanEval+/MBPP+"
+   ]
+  },
+  {
+   "id": "reasoning",
+   "label": "Reasoning & math",
+   "phases": [
+    3.0,
+    7.0,
+    13.0,
+    26.0
+   ],
+   "share": 7.470000000000001,
+   "tokens": 224100000000.0,
+   "loss_bearing_frac": 0.85,
+   "loss_bearing_tokens": 190485000000.0,
+   "selector_mult": 1.8661311914323964,
+   "candidate_tokens": 418200000000.0,
+   "benchmarks": [
+    "AIME 2026 (>=89.2)",
+    "GPQA",
+    "FrontierMath",
+    "GSM8K"
+   ]
+  },
+  {
+   "id": "indic",
+   "label": "Indic (22 languages)",
+   "phases": [
+    4.0,
+    5.0,
+    6.0,
+    11.0
+   ],
+   "share": 5.03,
+   "tokens": 150900000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 150900000000.0,
+   "selector_mult": 1.4035785288270377,
+   "candidate_tokens": 211800000000.0,
+   "benchmarks": [
+    "MILU (>=75, beats GPT-4o's real 72)",
+    "IndicGenBench",
+    "FLORES-200 (never averaged)"
+   ]
+  },
+  {
+   "id": "multiling",
+   "label": "World multilingual",
+   "phases": [
+    5.0,
+    4.0,
+    2.0,
+    0.0
+   ],
+   "share": 3.7800000000000002,
+   "tokens": 113400000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 113400000000.0,
+   "selector_mult": 2.0,
+   "candidate_tokens": 226800000000.0,
+   "benchmarks": [
+    "FLORES-200 non-Indic",
+    "MGSM"
+   ]
+  },
+  {
+   "id": "longctx",
+   "label": "Long-context native",
+   "phases": [
+    1.0,
+    3.0,
+    5.0,
+    8.0
+   ],
+   "share": 2.85,
+   "tokens": 85500000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 85500000000.0,
+   "selector_mult": 1.4736842105263157,
+   "candidate_tokens": 126000000000.0,
+   "benchmarks": [
+    "RULER @32k/128k",
+    "LongBench-v2",
+    "HELMET"
+   ]
+  },
+  {
+   "id": "civic",
+   "label": "India civic & legal",
+   "phases": [
+    1.5,
+    2.0,
+    3.0,
+    4.0
+   ],
+   "share": 2.1100000000000003,
+   "tokens": 63300000000.000015,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 63300000000.000015,
+   "selector_mult": 1.7630331753554502,
+   "candidate_tokens": 111600000000.00003,
+   "benchmarks": [
+    "MILU Law/Governance and Arts/Humanities sub-scores",
+    "Drishtikon-Bench (session-3 novel)"
+   ]
+  },
+  {
+   "id": "agentic",
+   "label": "Agentic / tool-use",
+   "phases": [
+    0.5,
+    1.0,
+    4.0,
+    16.0
+   ],
+   "share": 2.0,
+   "tokens": 60000000000.0,
+   "loss_bearing_frac": 0.3,
+   "loss_bearing_tokens": 18000000000.0,
+   "selector_mult": 1.5,
+   "candidate_tokens": 90000000000.0,
+   "benchmarks": [
+    "tau-bench",
+    "BFCL v4",
+    "Terminal-Bench",
+    "WebArena",
+    "GAIA",
+    "DPI-Gym (session-3 novel)"
+   ]
+  },
+  {
+   "id": "parallel",
+   "label": "Parallel / cross-lingual",
+   "phases": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "share": 0.97,
+   "tokens": 29100000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 29100000000.0,
+   "selector_mult": 2.0,
+   "candidate_tokens": 58200000000.0,
+   "benchmarks": [
+    "FLORES-200 en<->xx chrF++",
+    "IN22-Gen"
+   ]
+  }
+ ],
+ "audited": [
+  {
+   "id": "web",
+   "label": "General web & knowledge",
+   "phases": [
+    68.0,
+    52.0,
+    32.0,
+    13.0
+   ],
+   "share": 52.230000000000004,
+   "tokens": 1566900000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 1566900000000.0,
+   "selector_mult": 2.0,
+   "candidate_tokens": 3133800000000.0,
+   "benchmarks": [
+    "MMLU-Pro (>=85.2, Gemma-4-31B parity)",
+    "GPQA (>=84.3)",
+    "SimpleQA"
+   ],
+   "supply_raw": 9694959677419.355,
+   "supply_usable": 6301723790322.581,
+   "supply_capped": 13976572580645.162,
+   "demand": 3133800000000.0,
+   "trained": 1566900000000.0,
+   "epochs": 0.4972925034912682,
+   "effective_tokens": 3133800000000.0,
+   "effective_ratio": 1.0,
+   "repetition_loss": 0.0,
+   "found": 3133800000000.0,
+   "manufactured": 0.0,
+   "manufactured_pct": 0.0,
+   "verdict": "SUPPLY-OK",
+   "sources": [
+    {
+     "lane": "web",
+     "tier": null,
+     "name": "Nemotron-CC",
+     "samples": null,
+     "tokens": 6300000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.65,
+     "epoch_cap": 2.0,
+     "url": "https://arxiv.org/abs/2412.02595",
+     "note": "Common Crawl derivative; overlaps DCLM and FineWeb heavily.",
+     "tokens_src": 6300000000000.0,
+     "src_tokenizer": "neox",
+     "content_class": "english_prose",
+     "fertility_src": 1.55,
+     "fertility_ours": 1.3,
+     "factor": 0.8387096774193549,
+     "words": 4064516129032.258,
+     "tokens_ours": 5283870967741.936,
+     "usable": 3434516129032.2583,
+     "capped": 6869032258064.517
+    },
+    {
+     "lane": "web",
+     "tier": null,
+     "name": "DCLM-Baseline",
+     "samples": null,
+     "tokens": 4000000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.65,
+     "epoch_cap": 2.0,
+     "url": "https://huggingface.co/datasets/mlfoundations/dclm-baseline-1.0",
+     "note": "Common Crawl derivative.",
+     "tokens_src": 4000000000000.0,
+     "src_tokenizer": "neox",
+     "content_class": "english_prose",
+     "fertility_src": 1.55,
+     "fertility_ours": 1.3,
+     "factor": 0.8387096774193549,
+     "words": 2580645161290.3223,
+     "tokens_ours": 3354838709677.4194,
+     "usable": 2180645161290.3228,
+     "capped": 4361290322580.6455
+    },
+    {
+     "lane": "web",
+     "tier": null,
+     "name": "FineWeb-Edu",
+     "samples": null,
+     "tokens": 1300000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.65,
+     "epoch_cap": 4.0,
+     "src_tokenizer": "gpt2",
+     "url": "https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu",
+     "note": "Highest-quality web tier; the only web source eligible for the anneal.",
+     "tokens_src": 1300000000000.0,
+     "content_class": "english_prose",
+     "fertility_src": 1.6,
+     "fertility_ours": 1.3,
+     "factor": 0.8125,
+     "words": 812500000000.0,
+     "tokens_ours": 1056250000000.0,
+     "usable": 686562500000.0,
+     "capped": 2746250000000.0
+    }
+   ]
+  },
+  {
+   "id": "code",
+   "label": "Code",
+   "phases": [
+    16.0,
+    25.0,
+    34.0,
+    22.0
+   ],
+   "share": 23.56,
+   "tokens": 706799999999.9999,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 706799999999.9999,
+   "selector_mult": 2.0,
+   "candidate_tokens": 1413599999999.9998,
+   "benchmarks": [
+    "LiveCodeBench (>=80.0)",
+    "SWE-bench Verified",
+    "HumanEval+/MBPP+"
+   ],
+   "supply_raw": 833000000000.0001,
+   "supply_usable": 832200000000.0001,
+   "supply_capped": 3328800000000.0005,
+   "demand": 1413599999999.9998,
+   "trained": 706799999999.9999,
+   "epochs": 1.6986301369863008,
+   "effective_tokens": 1400598593939.8367,
+   "effective_ratio": 0.990802627291905,
+   "repetition_loss": 13001406060.163086,
+   "found": 1413599999999.9998,
+   "manufactured": 0.0,
+   "manufactured_pct": 0.0,
+   "verdict": "REPEAT",
+   "sources": [
+    {
+     "lane": "code",
+     "tier": null,
+     "name": "The Stack v2 (dedup)",
+     "samples": 600000000.0,
+     "tokens": 900000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 1.0,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/bigcode/the-stack-v2",
+     "note": "Already deduplicated at source. 600M files / ~900B tokens per the session-5 inventory widget.",
+     "tokens_src": 900000000000.0,
+     "src_tokenizer": "starcoder2",
+     "content_class": "code",
+     "fertility_src": 2.4,
+     "fertility_ours": 2.2,
+     "factor": 0.9166666666666667,
+     "words": 375000000000.0,
+     "tokens_ours": 825000000000.0001,
+     "usable": 825000000000.0001,
+     "capped": 3300000000000.0005
+    },
+    {
+     "lane": "code",
+     "tier": null,
+     "name": "Repo-level packs (India-Stack SDKs, ONDC, UPI)",
+     "samples": null,
+     "tokens": 8000000000.0,
+     "provenance": "ESTIMATED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://github.com/ONDC-Official",
+     "note": "Session-3 novel source. Estimate; not load-bearing - 0.3% of the lane.",
+     "tokens_src": 8000000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "code",
+     "fertility_src": 2.2,
+     "fertility_ours": 2.2,
+     "factor": 1.0,
+     "words": 3636363636.363636,
+     "tokens_ours": 8000000000.0,
+     "usable": 7200000000.0,
+     "capped": 28800000000.0
+    }
+   ]
+  },
+  {
+   "id": "reasoning",
+   "label": "Reasoning & math",
+   "phases": [
+    3.0,
+    7.0,
+    13.0,
+    26.0
+   ],
+   "share": 7.470000000000001,
+   "tokens": 224100000000.0,
+   "loss_bearing_frac": 0.85,
+   "loss_bearing_tokens": 190485000000.0,
+   "selector_mult": 1.8661311914323964,
+   "candidate_tokens": 418200000000.0,
+   "benchmarks": [
+    "AIME 2026 (>=89.2)",
+    "GPQA",
+    "FrontierMath",
+    "GSM8K"
+   ],
+   "supply_raw": 80122941176.47058,
+   "supply_usable": 68419000000.0,
+   "supply_capped": 273676000000.0,
+   "demand": 418200000000.0,
+   "trained": 224100000000.0,
+   "epochs": 6.112337216270334,
+   "effective_tokens": 399429965242.8279,
+   "effective_ratio": 0.9551170857073837,
+   "repetition_loss": 0.0,
+   "found": 273676000000.0,
+   "manufactured": 144524000000.0,
+   "manufactured_pct": 34.5585844093735,
+   "verdict": "GENERATE",
+   "sources": [
+    {
+     "lane": "reasoning",
+     "tier": null,
+     "name": "arXiv full-text",
+     "samples": null,
+     "tokens": 28000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/EleutherAI/proof-pile-2",
+     "note": "",
+     "tokens_src": 28000000000.0,
+     "src_tokenizer": "neox",
+     "content_class": "math_prose",
+     "fertility_src": 1.7,
+     "fertility_ours": 1.45,
+     "factor": 0.8529411764705882,
+     "words": 16470588235.294119,
+     "tokens_ours": 23882352941.176468,
+     "usable": 21494117647.058823,
+     "capped": 85976470588.23529
+    },
+    {
+     "lane": "reasoning",
+     "tier": null,
+     "name": "FineMath (3+)",
+     "samples": null,
+     "tokens": 34000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.85,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/HuggingFaceTB/finemath",
+     "note": "",
+     "tokens_src": 34000000000.0,
+     "src_tokenizer": "neox",
+     "content_class": "math_prose",
+     "fertility_src": 1.7,
+     "fertility_ours": 1.45,
+     "factor": 0.8529411764705882,
+     "words": 20000000000.0,
+     "tokens_ours": 29000000000.0,
+     "usable": 24650000000.0,
+     "capped": 98600000000.0
+    },
+    {
+     "lane": "reasoning",
+     "tier": null,
+     "name": "OpenWebMath",
+     "samples": null,
+     "tokens": 14700000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.7,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/open-web-math/open-web-math",
+     "note": "Overlaps FineMath and DCLM; heaviest dedup haircut in the lane.",
+     "tokens_src": 14700000000.0,
+     "src_tokenizer": "neox",
+     "content_class": "math_prose",
+     "fertility_src": 1.7,
+     "fertility_ours": 1.45,
+     "factor": 0.8529411764705882,
+     "words": 8647058823.529411,
+     "tokens_ours": 12538235294.117647,
+     "usable": 8776764705.882353,
+     "capped": 35107058823.52941
+    },
+    {
+     "lane": "reasoning",
+     "tier": null,
+     "name": "AlgebraicStack",
+     "samples": null,
+     "tokens": 11000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/EleutherAI/proof-pile-2",
+     "note": "",
+     "tokens_src": 11000000000.0,
+     "src_tokenizer": "neox",
+     "content_class": "math_prose",
+     "fertility_src": 1.7,
+     "fertility_ours": 1.45,
+     "factor": 0.8529411764705882,
+     "words": 6470588235.294118,
+     "tokens_ours": 9382352941.17647,
+     "usable": 8444117647.058823,
+     "capped": 33776470588.23529
+    },
+    {
+     "lane": "reasoning",
+     "tier": null,
+     "name": "OpenThoughts2 (long CoT)",
+     "samples": 1000000.0,
+     "tokens": 4000000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.95,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/open-thoughts/OpenThoughts2-1M",
+     "note": "DERIVED: 1.0M samples x 4,000 tok/sample assumed mean.",
+     "tokens_src": 4000000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "math_prose",
+     "fertility_src": 1.45,
+     "fertility_ours": 1.45,
+     "factor": 1.0,
+     "words": 2758620689.6551723,
+     "tokens_ours": 4000000000.0,
+     "usable": 3800000000.0,
+     "capped": 15200000000.0
+    },
+    {
+     "lane": "reasoning",
+     "tier": null,
+     "name": "OpenR1-Math-220k",
+     "samples": 220000.0,
+     "tokens": 1320000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.95,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/open-r1/OpenR1-Math-220k",
+     "note": "DERIVED: 220k samples x 6,000 tok/sample assumed mean.",
+     "tokens_src": 1320000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "math_prose",
+     "fertility_src": 1.45,
+     "fertility_ours": 1.45,
+     "factor": 1.0,
+     "words": 910344827.5862069,
+     "tokens_ours": 1320000000.0,
+     "usable": 1254000000.0,
+     "capped": 5016000000.0
+    }
+   ]
+  },
+  {
+   "id": "indic",
+   "label": "Indic (22 languages)",
+   "phases": [
+    4.0,
+    5.0,
+    6.0,
+    11.0
+   ],
+   "share": 5.03,
+   "tokens": 150900000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 150900000000.0,
+   "selector_mult": 1.4035785288270377,
+   "candidate_tokens": 211800000000.0,
+   "benchmarks": [
+    "MILU (>=75, beats GPT-4o's real 72)",
+    "IndicGenBench",
+    "FLORES-200 (never averaged)"
+   ],
+   "supply_raw": 199195270043.47827,
+   "supply_usable": 191548596130.43478,
+   "supply_capped": 425324576934.7826,
+   "demand": 211800000000.0,
+   "trained": 150900000000.0,
+   "epochs": 1.1057246269545877,
+   "effective_tokens": 211730585015.36896,
+   "effective_ratio": 0.99967226164008,
+   "repetition_loss": 69414984.63104248,
+   "found": 211800000000.0,
+   "manufactured": 0.0,
+   "manufactured_pct": 0.0,
+   "verdict": "REPEAT",
+   "sources": [
+    {
+     "lane": "indic",
+     "tier": "verified",
+     "name": "Sangraha Verified (22 langs)",
+     "samples": null,
+     "tokens": 64306100000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 1.0,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/ai4bharat/sangraha",
+     "note": "Human-verified web + OCR from Indic PDFs + ASR from video/podcast. The only Indic tier eligible for the anneal.",
+     "tokens_src": 64306100000.0,
+     "src_tokenizer": "indic_sp",
+     "content_class": "indic",
+     "fertility_src": 2.3,
+     "fertility_ours": 1.683,
+     "factor": 0.7317391304347827,
+     "words": 27959173913.04348,
+     "tokens_ours": 47055289695.652176,
+     "usable": 47055289695.652176,
+     "capped": 188221158782.6087
+    },
+    {
+     "lane": "indic",
+     "tier": "unverified",
+     "name": "Sangraha Unverified (14 langs)",
+     "samples": null,
+     "tokens": 24307700000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 1.0,
+     "epoch_cap": 2.0,
+     "url": "https://huggingface.co/datasets/ai4bharat/sangraha",
+     "note": "Perplexity-filtered from existing multilingual corpora. Epoch cap halved: this is the tier our own pipeline measured, and it lost 8.0% at the quality filter.",
+     "tokens_src": 24307700000.0,
+     "src_tokenizer": "indic_sp",
+     "content_class": "indic",
+     "fertility_src": 2.3,
+     "fertility_ours": 1.683,
+     "factor": 0.7317391304347827,
+     "words": 10568565217.391306,
+     "tokens_ours": 17786895260.869568,
+     "usable": 17786895260.869568,
+     "capped": 35573790521.739136
+    },
+    {
+     "lane": "indic",
+     "tier": "unverified",
+     "name": "IndicCorp v2",
+     "samples": null,
+     "tokens": 20900000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.5,
+     "epoch_cap": 3.0,
+     "url": "https://huggingface.co/datasets/ai4bharat/IndicCorpV2",
+     "note": "Same crawl lineage as Sangraha; 50% dedup haircut applied.",
+     "tokens_src": 20900000000.0,
+     "src_tokenizer": "indic_sp",
+     "content_class": "indic",
+     "fertility_src": 2.3,
+     "fertility_ours": 1.683,
+     "factor": 0.7317391304347827,
+     "words": 9086956521.739132,
+     "tokens_ours": 15293347826.086958,
+     "usable": 7646673913.043479,
+     "capped": 22940021739.130436
+    },
+    {
+     "lane": "indic",
+     "tier": "translated",
+     "name": "Sangraha Synthetic (MT + romanised, 14 langs)",
+     "samples": null,
+     "tokens": 162707900000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 1.0,
+     "epoch_cap": 1.5,
+     "url": "https://huggingface.co/datasets/ai4bharat/sangraha",
+     "note": "AI4Bharat labels this 'synthetic', but it is WikiMedia English machine-translated into 14 languages and then transliterated. That is the TRANSLATED tier, not the synthetic one. Epoch cap 1.5 because translationese compounds under repetition.",
+     "tokens_src": 162707900000.0,
+     "src_tokenizer": "indic_sp",
+     "content_class": "indic",
+     "fertility_src": 2.3,
+     "fertility_ours": 1.683,
+     "factor": 0.7317391304347827,
+     "words": 70742565217.39131,
+     "tokens_ours": 119059737260.86957,
+     "usable": 119059737260.86957,
+     "capped": 178589605891.30435
+    }
+   ]
+  },
+  {
+   "id": "multiling",
+   "label": "World multilingual",
+   "phases": [
+    5.0,
+    4.0,
+    2.0,
+    0.0
+   ],
+   "share": 3.7800000000000002,
+   "tokens": 113400000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 113400000000.0,
+   "selector_mult": 2.0,
+   "candidate_tokens": 226800000000.0,
+   "benchmarks": [
+    "FLORES-200 non-Indic",
+    "MGSM"
+   ],
+   "supply_raw": 1200000000000.0,
+   "supply_usable": 840000000000.0,
+   "supply_capped": 1680000000000.0,
+   "demand": 226800000000.0,
+   "trained": 113400000000.0,
+   "epochs": 0.27,
+   "effective_tokens": 226800000000.0,
+   "effective_ratio": 1.0,
+   "repetition_loss": 0.0,
+   "found": 226800000000.0,
+   "manufactured": 0.0,
+   "manufactured_pct": 0.0,
+   "verdict": "SUPPLY-OK",
+   "sources": [
+    {
+     "lane": "multiling",
+     "tier": null,
+     "name": "CulturaX (167 langs, non-Indic slice)",
+     "samples": null,
+     "tokens": 1200000000000.0,
+     "provenance": "ESTIMATED",
+     "dedup_keep": 0.7,
+     "epoch_cap": 2.0,
+     "url": "https://huggingface.co/datasets/uonlp/CulturaX",
+     "note": "ESTIMATED: CulturaX is 6.3T total; non-Indic non-English slice taken at ~19%.",
+     "tokens_src": 1200000000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "multilingual",
+     "fertility_src": 1.45,
+     "fertility_ours": 1.45,
+     "factor": 1.0,
+     "words": 827586206896.5518,
+     "tokens_ours": 1200000000000.0,
+     "usable": 840000000000.0,
+     "capped": 1680000000000.0
+    }
+   ]
+  },
+  {
+   "id": "longctx",
+   "label": "Long-context native",
+   "phases": [
+    1.0,
+    3.0,
+    5.0,
+    8.0
+   ],
+   "share": 2.85,
+   "tokens": 85500000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 85500000000.0,
+   "selector_mult": 1.4736842105263157,
+   "candidate_tokens": 126000000000.0,
+   "benchmarks": [
+    "RULER @32k/128k",
+    "LongBench-v2",
+    "HELMET"
+   ],
+   "supply_raw": 133612903225.80646,
+   "supply_usable": 127574193548.3871,
+   "supply_capped": 391780645161.2903,
+   "demand": 126000000000.0,
+   "trained": 85500000000.0,
+   "epochs": 0.9876605643774653,
+   "effective_tokens": 126000000000.0,
+   "effective_ratio": 1.0,
+   "repetition_loss": 0.0,
+   "found": 126000000000.0,
+   "manufactured": 0.0,
+   "manufactured_pct": 0.0,
+   "verdict": "SUPPLY-OK",
+   "sources": [
+    {
+     "lane": "longctx",
+     "tier": null,
+     "name": "Repo-level concatenated packs (from Stack v2)",
+     "samples": null,
+     "tokens": 90000000000.0,
+     "provenance": "ESTIMATED",
+     "dedup_keep": 1.0,
+     "epoch_cap": 3.0,
+     "url": "https://huggingface.co/datasets/bigcode/the-stack-v2",
+     "note": "ESTIMATED. Budget-neutral: these tokens are re-packed Stack v2 and are charged to THIS lane, not to code, so they are never double-counted.",
+     "tokens_src": 90000000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "english_prose",
+     "fertility_src": 1.3,
+     "fertility_ours": 1.3,
+     "factor": 1.0,
+     "words": 69230769230.76923,
+     "tokens_ours": 90000000000.0,
+     "usable": 90000000000.0,
+     "capped": 270000000000.0
+    },
+    {
+     "lane": "longctx",
+     "tier": null,
+     "name": "Books / PG-19 / public-domain long-form",
+     "samples": null,
+     "tokens": 12000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/deepmind/pg19",
+     "note": "",
+     "tokens_src": 12000000000.0,
+     "src_tokenizer": "neox",
+     "content_class": "english_prose",
+     "fertility_src": 1.55,
+     "fertility_ours": 1.3,
+     "factor": 0.8387096774193549,
+     "words": 7741935483.870968,
+     "tokens_ours": 10064516129.032259,
+     "usable": 9058064516.129034,
+     "capped": 36232258064.516136
+    },
+    {
+     "lane": "longctx",
+     "tier": null,
+     "name": "ProLong long-context corpus",
+     "samples": null,
+     "tokens": 40000000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.85,
+     "epoch_cap": 3.0,
+     "url": "https://arxiv.org/abs/2410.02660",
+     "note": "~40B tokens of curated long-dependency continued-pretraining data.",
+     "tokens_src": 40000000000.0,
+     "src_tokenizer": "neox",
+     "content_class": "english_prose",
+     "fertility_src": 1.55,
+     "fertility_ours": 1.3,
+     "factor": 0.8387096774193549,
+     "words": 25806451612.903225,
+     "tokens_ours": 33548387096.774197,
+     "usable": 28516129032.258068,
+     "capped": 85548387096.7742
+    }
+   ]
+  },
+  {
+   "id": "civic",
+   "label": "India civic & legal",
+   "phases": [
+    1.5,
+    2.0,
+    3.0,
+    4.0
+   ],
+   "share": 2.1100000000000003,
+   "tokens": 63300000000.000015,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 63300000000.000015,
+   "selector_mult": 1.7630331753554502,
+   "candidate_tokens": 111600000000.00003,
+   "benchmarks": [
+    "MILU Law/Governance and Arts/Humanities sub-scores",
+    "Drishtikon-Bench (session-3 novel)"
+   ],
+   "supply_raw": 42000000000.0,
+   "supply_usable": 38400000000.0,
+   "supply_capped": 153600000000.0,
+   "demand": 111600000000.00003,
+   "trained": 63300000000.000015,
+   "epochs": 2.906250000000001,
+   "effective_tokens": 107247321118.52597,
+   "effective_ratio": 0.9609975010620604,
+   "repetition_loss": 4352678881.47406,
+   "found": 111600000000.00003,
+   "manufactured": 0.0,
+   "manufactured_pct": 0.0,
+   "verdict": "REPEAT",
+   "sources": [
+    {
+     "lane": "civic",
+     "tier": null,
+     "name": "Indian court judgments (SC + 25 HCs)",
+     "samples": 10000000.0,
+     "tokens": 30000000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://www.indiankanoon.org/",
+     "note": "DERIVED: ~10M judgments x 3,000 tok/judgment assumed mean.",
+     "tokens_src": 30000000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "english_prose",
+     "fertility_src": 1.3,
+     "fertility_ours": 1.3,
+     "factor": 1.0,
+     "words": 23076923076.923077,
+     "tokens_ours": 30000000000.0,
+     "usable": 27000000000.0,
+     "capped": 108000000000.0
+    },
+    {
+     "lane": "civic",
+     "tier": null,
+     "name": "Panchayat-to-Parliament records (session-3 corpus)",
+     "samples": null,
+     "tokens": 12000000000.0,
+     "provenance": "ESTIMATED",
+     "dedup_keep": 0.95,
+     "epoch_cap": 4.0,
+     "url": "",
+     "note": "ESTIMATED. Session-3 novel corpus; not yet built, so it is counted as supply only at the ESTIMATED tag and the shortfall it creates is carried as manufactured.",
+     "tokens_src": 12000000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "english_prose",
+     "fertility_src": 1.3,
+     "fertility_ours": 1.3,
+     "factor": 1.0,
+     "words": 9230769230.76923,
+     "tokens_ours": 12000000000.0,
+     "usable": 11400000000.0,
+     "capped": 45600000000.0
+    }
+   ]
+  },
+  {
+   "id": "agentic",
+   "label": "Agentic / tool-use",
+   "phases": [
+    0.5,
+    1.0,
+    4.0,
+    16.0
+   ],
+   "share": 2.0,
+   "tokens": 60000000000.0,
+   "loss_bearing_frac": 0.3,
+   "loss_bearing_tokens": 18000000000.0,
+   "selector_mult": 1.5,
+   "candidate_tokens": 90000000000.0,
+   "benchmarks": [
+    "tau-bench",
+    "BFCL v4",
+    "Terminal-Bench",
+    "WebArena",
+    "GAIA",
+    "DPI-Gym (session-3 novel)"
+   ],
+   "supply_raw": 4720692307.692307,
+   "supply_usable": 3959473076.923077,
+   "supply_capped": 15837892307.692308,
+   "demand": 90000000000.0,
+   "trained": 60000000000.0,
+   "epochs": 22.73029725206248,
+   "effective_tokens": 88913760106.49187,
+   "effective_ratio": 0.9879306678499097,
+   "repetition_loss": 0.0,
+   "found": 15837892307.692307,
+   "manufactured": 74162107692.3077,
+   "manufactured_pct": 82.40234188034188,
+   "verdict": "GENERATE",
+   "sources": [
+    {
+     "lane": "agentic",
+     "tier": null,
+     "name": "Nemotron-SWE-v1 (OpenHands trajectories)",
+     "samples": 59000.0,
+     "tokens": 1770000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.8,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/nvidia/Nemotron-SWE-v1",
+     "note": "DERIVED: 59k trajectories x 30,000 tok/trajectory assumed mean. Issues sourced from SWE-Gym and R2E-Gym, hence the 0.80 dedup keep.",
+     "tokens_src": 1770000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "code",
+     "fertility_src": 2.2,
+     "fertility_ours": 2.2,
+     "factor": 1.0,
+     "words": 804545454.5454545,
+     "tokens_ours": 1770000000.0,
+     "usable": 1416000000.0,
+     "capped": 5664000000.0
+    },
+    {
+     "lane": "agentic",
+     "tier": null,
+     "name": "SWE-smith",
+     "samples": 50137,
+     "tokens": 1000000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/SWE-bench/SWE-smith",
+     "note": "DERIVED: 50,137 task instances from 128 repos x 20,000 tok assumed mean.",
+     "tokens_src": 1000000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "code",
+     "fertility_src": 2.2,
+     "fertility_ours": 2.2,
+     "factor": 1.0,
+     "words": 454545454.5454545,
+     "tokens_ours": 1000000000.0,
+     "usable": 900000000.0,
+     "capped": 3600000000.0
+    },
+    {
+     "lane": "agentic",
+     "tier": null,
+     "name": "AgentInstruct",
+     "samples": 1100000.0,
+     "tokens": 1650000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.85,
+     "epoch_cap": 4.0,
+     "url": "https://arxiv.org/abs/2407.03502",
+     "note": "DERIVED: 1.1M pairs x 1,500 tok assumed mean. Short single-step samples, not long-horizon trajectories.",
+     "tokens_src": 1650000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "code",
+     "fertility_src": 2.2,
+     "fertility_ours": 2.2,
+     "factor": 1.0,
+     "words": 749999999.9999999,
+     "tokens_ours": 1650000000.0,
+     "usable": 1402500000.0,
+     "capped": 5610000000.0
+    },
+    {
+     "lane": "agentic",
+     "tier": null,
+     "name": "ToolBench",
+     "samples": 120000.0,
+     "tokens": 80000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://github.com/OpenBMB/ToolBench",
+     "note": "120k samples but only ~80M tokens - the session-5 inventory's own warning about sizing in samples instead of tokens.",
+     "tokens_src": 80000000.0,
+     "src_tokenizer": "cl100k",
+     "content_class": "code",
+     "fertility_src": 2.6,
+     "fertility_ours": 2.2,
+     "factor": 0.8461538461538461,
+     "words": 30769230.769230768,
+     "tokens_ours": 67692307.6923077,
+     "usable": 60923076.92307693,
+     "capped": 243692307.6923077
+    },
+    {
+     "lane": "agentic",
+     "tier": null,
+     "name": "xLAM function-calling-60k",
+     "samples": 60000.0,
+     "tokens": 60000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/Salesforce/xlam-function-calling-60k",
+     "note": "DERIVED: 60k x 1,000 tok.",
+     "tokens_src": 60000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "code",
+     "fertility_src": 2.2,
+     "fertility_ours": 2.2,
+     "factor": 1.0,
+     "words": 27272727.27272727,
+     "tokens_ours": 60000000.0,
+     "usable": 54000000.0,
+     "capped": 216000000.0
+    },
+    {
+     "lane": "agentic",
+     "tier": null,
+     "name": "Glaive function-calling v2",
+     "samples": 113000.0,
+     "tokens": 113000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.85,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/glaiveai/glaive-function-calling-v2",
+     "note": "DERIVED: 113k x 1,000 tok.",
+     "tokens_src": 113000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "code",
+     "fertility_src": 2.2,
+     "fertility_ours": 2.2,
+     "factor": 1.0,
+     "words": 51363636.36363636,
+     "tokens_ours": 113000000.0,
+     "usable": 96050000.0,
+     "capped": 384200000.0
+    },
+    {
+     "lane": "agentic",
+     "tier": null,
+     "name": "SWE-Gym",
+     "samples": 2400,
+     "tokens": 60000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.5,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/SWE-Gym/SWE-Gym",
+     "note": "DERIVED: 2.4k tasks x 25,000 tok. Half discarded as a subset of Nemotron-SWE's issue pool.",
+     "tokens_src": 60000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "code",
+     "fertility_src": 2.2,
+     "fertility_ours": 2.2,
+     "factor": 1.0,
+     "words": 27272727.27272727,
+     "tokens_ours": 60000000.0,
+     "usable": 30000000.0,
+     "capped": 120000000.0
+    }
+   ]
+  },
+  {
+   "id": "parallel",
+   "label": "Parallel / cross-lingual",
+   "phases": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "share": 0.97,
+   "tokens": 29100000000.0,
+   "loss_bearing_frac": 1.0,
+   "loss_bearing_tokens": 29100000000.0,
+   "selector_mult": 2.0,
+   "candidate_tokens": 58200000000.0,
+   "benchmarks": [
+    "FLORES-200 en<->xx chrF++",
+    "IN22-Gen"
+   ],
+   "supply_raw": 22400000000.0,
+   "supply_usable": 18160000000.0,
+   "supply_capped": 72640000000.0,
+   "demand": 58200000000.0,
+   "trained": 29100000000.0,
+   "epochs": 3.2048458149779737,
+   "effective_tokens": 55463529929.86972,
+   "effective_ratio": 0.9529816139152872,
+   "repetition_loss": 2736470070.1302795,
+   "found": 58200000000.0,
+   "manufactured": 0.0,
+   "manufactured_pct": 0.0,
+   "verdict": "REPEAT",
+   "sources": [
+    {
+     "lane": "parallel",
+     "tier": null,
+     "name": "BPCC (Bharat Parallel Corpus Collection)",
+     "samples": 230000000.0,
+     "tokens": 18400000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.9,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/ai4bharat/BPCC",
+     "note": "DERIVED: 230M sentence pairs x ~40 tok/side x 2 sides.",
+     "tokens_src": 18400000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "indic",
+     "fertility_src": 1.683,
+     "fertility_ours": 1.683,
+     "factor": 1.0,
+     "words": 10932857991.68152,
+     "tokens_ours": 18400000000.0,
+     "usable": 16560000000.0,
+     "capped": 66240000000.0
+    },
+    {
+     "lane": "parallel",
+     "tier": null,
+     "name": "Samanantar",
+     "samples": 49700000.0,
+     "tokens": 4000000000.0,
+     "provenance": "DERIVED",
+     "dedup_keep": 0.4,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/ai4bharat/samanantar",
+     "note": "DERIVED: 49.7M pairs x ~40 tok x 2. Largely absorbed into BPCC - 60% haircut.",
+     "tokens_src": 4000000000.0,
+     "src_tokenizer": "ours",
+     "content_class": "indic",
+     "fertility_src": 1.683,
+     "fertility_ours": 1.683,
+     "factor": 1.0,
+     "words": 2376708259.0612,
+     "tokens_ours": 4000000000.0,
+     "usable": 1600000000.0,
+     "capped": 6400000000.0
+    }
+   ]
+  }
+ ],
+ "seq_ladder": [
+  {
+   "seq_len": 4096,
+   "phase": "A",
+   "share_of_phase": 100,
+   "batch_examples": 512,
+   "note": "Everything starts here. 4,096 tokens is already a long document.",
+   "tokens_per_batch": 2097152
+  },
+  {
+   "seq_len": 8192,
+   "phase": "B",
+   "share_of_phase": 70,
+   "batch_examples": 256,
+   "note": "First doubling. Code repos and arXiv papers begin to fit whole.",
+   "tokens_per_batch": 2097152
+  },
+  {
+   "seq_len": 16384,
+   "phase": "B",
+   "share_of_phase": 30,
+   "batch_examples": 128,
+   "note": "Introduced inside phase B so the jump into C is not a cliff.",
+   "tokens_per_batch": 2097152
+  },
+  {
+   "seq_len": 32768,
+   "phase": "C",
+   "share_of_phase": 55,
+   "batch_examples": 64,
+   "note": "Repo-level packs and full court judgments.",
+   "tokens_per_batch": 2097152
+  },
+  {
+   "seq_len": 65536,
+   "phase": "C",
+   "share_of_phase": 45,
+   "batch_examples": 32,
+   "note": "Agentic trajectories at full length; a 100k-token session is truncated here rather than in the middle of a tool call.",
+   "tokens_per_batch": 2097152
+  },
+  {
+   "seq_len": 65536,
+   "phase": "D",
+   "share_of_phase": 100,
+   "batch_examples": 32,
+   "note": "The anneal does not introduce a new length. Changing sequence length and data quality at the same moment makes an unstable step impossible to attribute.",
+   "tokens_per_batch": 2097152
+  }
+ ],
+ "indic_tiers": [
+  {
+   "tier": "verified",
+   "tokens": 188221158782.6087,
+   "available": 188221158782.6087,
+   "unused": 0.0,
+   "share_of_lane": 88.86740263579259,
+   "manufactured": false,
+   "sources": [
+    {
+     "lane": "indic",
+     "tier": "verified",
+     "name": "Sangraha Verified (22 langs)",
+     "samples": null,
+     "tokens": 64306100000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 1.0,
+     "epoch_cap": 4.0,
+     "url": "https://huggingface.co/datasets/ai4bharat/sangraha",
+     "note": "Human-verified web + OCR from Indic PDFs + ASR from video/podcast. The only Indic tier eligible for the anneal.",
+     "tokens_src": 64306100000.0,
+     "src_tokenizer": "indic_sp",
+     "content_class": "indic",
+     "fertility_src": 2.3,
+     "fertility_ours": 1.683,
+     "factor": 0.7317391304347827,
+     "words": 27959173913.04348,
+     "tokens_ours": 47055289695.652176,
+     "usable": 47055289695.652176,
+     "capped": 188221158782.6087
+    }
+   ]
+  },
+  {
+   "tier": "unverified",
+   "tokens": 23578841217.391296,
+   "available": 58513812260.86957,
+   "unused": 34934971043.47827,
+   "share_of_lane": 11.132597364207411,
+   "manufactured": false,
+   "sources": [
+    {
+     "lane": "indic",
+     "tier": "unverified",
+     "name": "Sangraha Unverified (14 langs)",
+     "samples": null,
+     "tokens": 24307700000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 1.0,
+     "epoch_cap": 2.0,
+     "url": "https://huggingface.co/datasets/ai4bharat/sangraha",
+     "note": "Perplexity-filtered from existing multilingual corpora. Epoch cap halved: this is the tier our own pipeline measured, and it lost 8.0% at the quality filter.",
+     "tokens_src": 24307700000.0,
+     "src_tokenizer": "indic_sp",
+     "content_class": "indic",
+     "fertility_src": 2.3,
+     "fertility_ours": 1.683,
+     "factor": 0.7317391304347827,
+     "words": 10568565217.391306,
+     "tokens_ours": 17786895260.869568,
+     "usable": 17786895260.869568,
+     "capped": 35573790521.739136
+    },
+    {
+     "lane": "indic",
+     "tier": "unverified",
+     "name": "IndicCorp v2",
+     "samples": null,
+     "tokens": 20900000000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 0.5,
+     "epoch_cap": 3.0,
+     "url": "https://huggingface.co/datasets/ai4bharat/IndicCorpV2",
+     "note": "Same crawl lineage as Sangraha; 50% dedup haircut applied.",
+     "tokens_src": 20900000000.0,
+     "src_tokenizer": "indic_sp",
+     "content_class": "indic",
+     "fertility_src": 2.3,
+     "fertility_ours": 1.683,
+     "factor": 0.7317391304347827,
+     "words": 9086956521.739132,
+     "tokens_ours": 15293347826.086958,
+     "usable": 7646673913.043479,
+     "capped": 22940021739.130436
+    }
+   ]
+  },
+  {
+   "tier": "translated",
+   "tokens": 0.0,
+   "available": 178589605891.30435,
+   "unused": 178589605891.30435,
+   "share_of_lane": 0.0,
+   "manufactured": false,
+   "sources": [
+    {
+     "lane": "indic",
+     "tier": "translated",
+     "name": "Sangraha Synthetic (MT + romanised, 14 langs)",
+     "samples": null,
+     "tokens": 162707900000.0,
+     "provenance": "PUBLISHED",
+     "dedup_keep": 1.0,
+     "epoch_cap": 1.5,
+     "url": "https://huggingface.co/datasets/ai4bharat/sangraha",
+     "note": "AI4Bharat labels this 'synthetic', but it is WikiMedia English machine-translated into 14 languages and then transliterated. That is the TRANSLATED tier, not the synthetic one. Epoch cap 1.5 because translationese compounds under repetition.",
+     "tokens_src": 162707900000.0,
+     "src_tokenizer": "indic_sp",
+     "content_class": "indic",
+     "fertility_src": 2.3,
+     "fertility_ours": 1.683,
+     "factor": 0.7317391304347827,
+     "words": 70742565217.39131,
+     "tokens_ours": 119059737260.86957,
+     "usable": 119059737260.86957,
+     "capped": 178589605891.30435
+    }
+   ]
+  },
+  {
+   "tier": "synthetic",
+   "tokens": 0.0,
+   "available": 0.0,
+   "unused": 0.0,
+   "share_of_lane": 0.0,
+   "manufactured": true,
+   "sources": []
+  }
+ ],
+ "indic_demand": 211800000000.0,
+ "floors": [
+  {
+   "id": "indic",
+   "label": "Indic (22 languages)",
+   "floor": 3.0,
+   "whole_run": 5.03,
+   "headroom": 2.0300000000000002,
+   "note": "of which Sangraha Verified >= 1.50 pct; unverified may never substitute for the verified half"
+  },
+  {
+   "id": "longctx",
+   "label": "Long-context native",
+   "floor": 1.5,
+   "whole_run": 2.85,
+   "headroom": 1.35,
+   "note": "sequences >= 32k only; shorter packs do not count toward this floor"
+  },
+  {
+   "id": "reasoning",
+   "label": "Reasoning & math",
+   "floor": 1.0,
+   "whole_run": 7.470000000000001,
+   "headroom": 6.470000000000001,
+   "note": "long-CoT traces only, not the math corpus"
+  },
+  {
+   "id": "agentic",
+   "label": "Agentic / tool-use",
+   "floor": 1.0,
+   "whole_run": 2.0,
+   "headroom": 1.0,
+   "note": "multi-step trajectories only; single-turn function-call pairs do not count"
+  },
+  {
+   "id": "civic",
+   "label": "India civic & legal",
+   "floor": 0.5,
+   "whole_run": 2.1100000000000003,
+   "headroom": 1.6100000000000003,
+   "note": "India-context legal/administrative"
+  }
+ ],
+ "floor_total": 7.0,
+ "anneal": {
+  "tokens": 90000000000.0,
+  "pct_of_budget": 3.0,
+  "rows": [
+   {
+    "id": "reasoning",
+    "label": "Reasoning & math",
+    "share": 26.0,
+    "tokens": 23400000000.0,
+    "pct_of_lane_lifetime": 10.441767068273093
+   },
+   {
+    "id": "code",
+    "label": "Code",
+    "share": 22.0,
+    "tokens": 19800000000.0,
+    "pct_of_lane_lifetime": 2.8013582342954164
+   },
+   {
+    "id": "agentic",
+    "label": "Agentic / tool-use",
+    "share": 16.0,
+    "tokens": 14400000000.0,
+    "pct_of_lane_lifetime": 24.0
+   },
+   {
+    "id": "web",
+    "label": "General web & knowledge",
+    "share": 13.0,
+    "tokens": 11700000000.0,
+    "pct_of_lane_lifetime": 0.7466973004020678
+   },
+   {
+    "id": "indic",
+    "label": "Indic (22 languages)",
+    "share": 11.0,
+    "tokens": 9900000000.0,
+    "pct_of_lane_lifetime": 6.560636182902584
+   },
+   {
+    "id": "longctx",
+    "label": "Long-context native",
+    "share": 8.0,
+    "tokens": 7200000000.0,
+    "pct_of_lane_lifetime": 8.421052631578947
+   },
+   {
+    "id": "civic",
+    "label": "India civic & legal",
+    "share": 4.0,
+    "tokens": 3600000000.0,
+    "pct_of_lane_lifetime": 5.687203791469193
+   }
+  ]
+ },
+ "anneal_supply": {
+  "rows": [
+   {
+    "id": "reasoning",
+    "label": "Reasoning & math",
+    "share": 26.0,
+    "demand": 23400000000.0,
+    "pool": 212943000000.0,
+    "yield_frac": 0.35,
+    "eligible": 74530050000.0,
+    "ok": true,
+    "shortfall": 0.0,
+    "basis": "items with a checkable final answer that the generator got right"
+   },
+   {
+    "id": "code",
+    "label": "Code",
+    "share": 22.0,
+    "demand": 19800000000.0,
+    "pool": 832200000000.0001,
+    "yield_frac": 0.15,
+    "eligible": 124830000000.00002,
+    "ok": true,
+    "shortfall": 0.0,
+    "basis": "repos with a runnable test suite that goes green in the harness; most of Stack v2 has no executable tests"
+   },
+   {
+    "id": "agentic",
+    "label": "Agentic / tool-use",
+    "share": 16.0,
+    "demand": 14400000000.0,
+    "pool": 78121580769.23077,
+    "yield_frac": 0.6,
+    "eligible": 46872948461.53846,
+    "ok": true,
+    "shortfall": 0.0,
+    "basis": "trajectories with a positive verifier reward; manufactured rollouts are verifier-gated at generation so they clear at a higher rate than scraped ones"
+   },
+   {
+    "id": "web",
+    "label": "General web & knowledge",
+    "share": 13.0,
+    "demand": 11700000000.0,
+    "pool": 6301723790322.581,
+    "yield_frac": 0.1,
+    "eligible": 630172379032.2582,
+    "ok": true,
+    "shortfall": 0.0,
+    "basis": "top-decile FineWeb-Edu classifier score only"
+   },
+   {
+    "id": "indic",
+    "label": "Indic (22 languages)",
+    "share": 11.0,
+    "demand": 9900000000.0,
+    "pool": 47055289695.652176,
+    "yield_frac": 1.0,
+    "eligible": 47055289695.652176,
+    "ok": true,
+    "shortfall": 0.0,
+    "basis": "Sangraha Verified only - the tier restriction IS the filter, so yield is 1.0 of that tier and 0.0 of every other"
+   },
+   {
+    "id": "longctx",
+    "label": "Long-context native",
+    "share": 8.0,
+    "demand": 7200000000.0,
+    "pool": 127574193548.3871,
+    "yield_frac": 0.25,
+    "eligible": 31893548387.096775,
+    "ok": true,
+    "shortfall": 0.0,
+    "basis": "documents with measured long-range dependency, not merely long"
+   },
+   {
+    "id": "civic",
+    "label": "India civic & legal",
+    "share": 4.0,
+    "demand": 3600000000.0,
+    "pool": 38400000000.0,
+    "yield_frac": 0.4,
+    "eligible": 15360000000.0,
+    "ok": true,
+    "shortfall": 0.0,
+    "basis": "judgments and proceedings clearing the licence gate"
+   }
+  ],
+  "failures": [],
+  "total_shortfall": 0.0
+ },
+ "difficulty_bands": [
+  {
+   "id": "D1",
+   "label": "Foundational",
+   "phase_mix": [
+    55,
+    35,
+    18,
+    5
+   ],
+   "example_source": "MBPP task 2",
+   "example": "Write a function to find the shared elements from two given lists.",
+   "why": "Single concept, single function, no state. Present in bulk early and never removed entirely - it is what keeps the tokenizer and syntax priors sharp."
+  },
+  {
+   "id": "D2",
+   "label": "Standard",
+   "phase_mix": [
+    35,
+    42,
+    37,
+    20
+   ],
+   "example_source": "GSM8K train, item 1",
+   "example": "Natalia sold clips to 48 of her friends in April, and then she sold half as many clips in May. How many clips did Natalia sell altogether in April and May?",
+   "why": "Two-to-four step chain, one arithmetic path, verifiable answer (72). This is the band that moves GSM8K and MBPP+."
+  },
+  {
+   "id": "D3",
+   "label": "Hard",
+   "phase_mix": [
+    9,
+    20,
+    33,
+    45
+   ],
+   "example_source": "SWE-bench Verified, django__django-11099",
+   "example": "ASCIIUsernameValidator and UnicodeUsernameValidator accept a username with a trailing newline, because r'^[\\w.@+-]+$' lets $ match before a final newline. Locate both validators across the repo, change the anchor to \\Z, keep the hidden tests green. (Django ticket #30257, PR #11099.)",
+   "why": "Requires localisation across an unfamiliar repo before a one-line edit. This is the band SWE-bench Verified actually tests, and the band we have least of."
+  },
+  {
+   "id": "D4",
+   "label": "Frontier",
+   "phase_mix": [
+    1,
+    3,
+    12,
+    30
+   ],
+   "example_source": "Terminal-Bench / SWE-bench Live-Pro class",
+   "example": "On a bare container, install and configure a headless X server on display :99, bring up the GUI test suite, diagnose the failure the logs report, and make all 1,240 tests pass.",
+   "why": "Multi-hour, multi-tool, requires recovery from a failed call. Almost none of this exists as public data - it is the lane we manufacture in the harness."
+  }
+ ],
+ "length_bands": [
+  {
+   "id": "low",
+   "token_budget": [
+    0,
+    128
+   ],
+   "control": "<think:low>",
+   "share_of_reasoning_lane": 40,
+   "example_q": "What is 43 divided by 17?",
+   "example_trace": "17x2=34, remainder 9; 9/17 is a bit over 0.5 -> ~2.53",
+   "example_a": "approximately 2.53"
+  },
+  {
+   "id": "medium",
+   "token_budget": [
+    129,
+    1024
+   ],
+   "control": "<think:medium>",
+   "share_of_reasoning_lane": 35,
+   "example_q": "How many integers between 1 and 1000 are divisible by 3 or 5?",
+   "example_trace": "Inclusion-exclusion. floor(1000/3)=333, floor(1000/5)=200, floor(1000/15)=66. 333+200-66.",
+   "example_a": "467"
+  },
+  {
+   "id": "high",
+   "token_budget": [
+    1025,
+    8192
+   ],
+   "control": "<think:high>",
+   "share_of_reasoning_lane": 20,
+   "example_q": "How many 4-digit positive integers have digits summing to exactly 20?",
+   "example_trace": "Stars and bars over d1 in 1..9 and d2,d3,d4 in 0..9 with sum 20, inclusion-exclusion on the upper bounds; enumerate the correction terms.",
+   "example_a": "597"
+  },
+  {
+   "id": "ultra",
+   "token_budget": [
+    8193,
+    65536
+   ],
+   "control": "<think:ultra>",
+   "share_of_reasoning_lane": 5,
+   "example_q": "Migrate this 40k-line service from SQLAlchemy 1.4 to 2.0 across 63 modules, keeping all 1,240 tests green and the public API unchanged.",
+   "example_trace": "Plan the migration order from the dependency graph; convert Query to select(); run the suite; read failures; revise; repeat until green.",
+   "example_a": "a merged patch series with a green suite"
+  }
+ ],
+ "cost": {
+  "arm_1b": {
+   "flops": 1.2e+20,
+   "hours": 10.53252443545669,
+   "gpu_hours": 84.26019548365352,
+   "usd": 252.78058645096056
+  },
+  "arm_3b": {
+   "flops": 1.08e+21,
+   "hours": 94.79271991911021,
+   "gpu_hours": 758.3417593528817,
+   "usd": 2275.025278058645
+  },
+  "n_1b": 7,
+  "n_3b": 2,
+  "total_usd": 6319.5146612740145,
+  "full_run": {
+   "flops": 7.2e+23,
+   "days": 5.1428341970003375,
+   "gpu_hours": 505561.17290192115,
+   "usd": 1516683.5187057634
+  },
+  "pct_of_full": 0.4166666666666667
+ },
+ "manufacturing": [
+  {
+   "id": "reasoning",
+   "label": "Reasoning & math",
+   "kind": "GENERATE",
+   "method": "Synthetic textbooks and graded exercise sets (Cosmopedia / phi-4 method) plus long-CoT distillation at the four length bands, every item gated on a checkable final answer.",
+   "need": 144524000000.0,
+   "need_pct": 34.5585844093735,
+   "units": 72262000.0,
+   "generated": 144524000000.0,
+   "gpu_hours": 8118.413661386361,
+   "usd": 24355.240984159085,
+   "infer_days": 0.6606781950998015,
+   "env_days": 0.0,
+   "wall_days": 0.6606781950998015,
+   "risk": "Synthetic math inherits the generator's error modes. Mitigated by answer-checking every item and discarding the trace when the final answer is wrong.",
+   "fallback": "If verified yield falls below 60%, cut the lane to 5.0% and raise web; a smaller honest reasoning lane beats a large unverified one."
+  },
+  {
+   "id": "agentic",
+   "label": "Agentic / tool-use",
+   "kind": "GENERATE",
+   "method": "Verifier-gated rollouts in a live harness: real container, real shell, real test suite. Only trajectories whose verifier returns green are kept.",
+   "need": 74162107692.3077,
+   "need_pct": 82.40234188034188,
+   "units": 2966484.3076923075,
+   "generated": 22248632307.692307,
+   "gpu_hours": 1249.782738326722,
+   "usd": 3749.3482149801657,
+   "infer_days": 0.10170757961643245,
+   "env_days": 0.20600585470085472,
+   "wall_days": 0.20600585470085472,
+   "risk": "This is the single largest infrastructure commitment in the plan and the thing V4 did not have. If the harness lands late, the agentic lane cannot be filled by any amount of scraping.",
+   "fallback": "If the harness delivers under 50% of planned rollouts, agentic drops to its 1.00% floor and the freed share goes to code, which has repetition headroom."
+  }
+ ],
+ "manufacturing_usd": 28104.58919913925,
+ "proxy_pools": {
+  "factor": 0.006666666666666667,
+  "rows": [
+   {
+    "id": "web",
+    "label": "General web & knowledge",
+    "pool": 42011491935.48388,
+    "demand": 20892000000.0,
+    "epochs": 0.49729250349126813,
+    "full_epochs": 0.4972925034912682
+   },
+   {
+    "id": "code",
+    "label": "Code",
+    "pool": 5548000000.000001,
+    "demand": 9423999999.999998,
+    "epochs": 1.6986301369863008,
+    "full_epochs": 1.6986301369863008
+   },
+   {
+    "id": "reasoning",
+    "label": "Reasoning & math",
+    "pool": 456126666.6666667,
+    "demand": 2788000000.0,
+    "epochs": 6.112337216270334,
+    "full_epochs": 6.112337216270334
+   },
+   {
+    "id": "indic",
+    "label": "Indic (22 languages)",
+    "pool": 1276990640.8695652,
+    "demand": 1412000000.0,
+    "epochs": 1.1057246269545877,
+    "full_epochs": 1.1057246269545877
+   },
+   {
+    "id": "multiling",
+    "label": "World multilingual",
+    "pool": 5600000000.0,
+    "demand": 1512000000.0,
+    "epochs": 0.27,
+    "full_epochs": 0.27
+   },
+   {
+    "id": "longctx",
+    "label": "Long-context native",
+    "pool": 850494623.6559141,
+    "demand": 840000000.0,
+    "epochs": 0.9876605643774653,
+    "full_epochs": 0.9876605643774653
+   },
+   {
+    "id": "civic",
+    "label": "India civic & legal",
+    "pool": 256000000.00000003,
+    "demand": 744000000.0000002,
+    "epochs": 2.9062500000000004,
+    "full_epochs": 2.906250000000001
+   },
+   {
+    "id": "agentic",
+    "label": "Agentic / tool-use",
+    "pool": 26396487.179487184,
+    "demand": 600000000.0,
+    "epochs": 22.730297252062478,
+    "full_epochs": 22.73029725206248
+   },
+   {
+    "id": "parallel",
+    "label": "Parallel / cross-lingual",
+    "pool": 121066666.66666667,
+    "demand": 388000000.0,
+    "epochs": 3.2048458149779733,
+    "full_epochs": 3.2048458149779737
+   }
+  ],
+  "tokens_per_param_proxy": 20.0,
+  "tokens_per_param_full": 75.0
+ },
+ "at_ceiling": [],
+ "sweep": [
+  {
+   "budget": 2400000000000.0,
+   "note": "low end of the range named in session 5",
+   "feasible": true,
+   "error": null,
+   "manufacturing_usd": 13099.533587410231,
+   "full_run_usd": 1213346.8149646109,
+   "full_run_days": 4.114267357600269,
+   "generate_lanes": 2,
+   "at_ceiling": 0,
+   "worst_lane": "agentic",
+   "worst_pct": 78.00292735042736,
+   "epochs": {
+    "web": 0.39783400279301456,
+    "code": 1.3589041095890408,
+    "reasoning": 4.889869773016267,
+    "indic": 0.8845797015636703,
+    "multiling": 0.216,
+    "longctx": 0.7901284515019723,
+    "civic": 2.325,
+    "agentic": 18.184237801649985,
+    "parallel": 2.563876651982379
+   }
+  },
+  {
+   "budget": 3000000000000.0,
+   "note": "PRIMARY - midpoint of the session-5 range",
+   "feasible": true,
+   "error": null,
+   "manufacturing_usd": 28104.58919913925,
+   "full_run_usd": 1516683.5187057634,
+   "full_run_days": 5.1428341970003375,
+   "generate_lanes": 2,
+   "at_ceiling": 0,
+   "worst_lane": "agentic",
+   "worst_pct": 82.40234188034188,
+   "epochs": {
+    "web": 0.4972925034912682,
+    "code": 1.6986301369863008,
+    "reasoning": 6.112337216270334,
+    "indic": 1.1057246269545877,
+    "multiling": 0.27,
+    "longctx": 0.9876605643774653,
+    "civic": 2.906250000000001,
+    "agentic": 22.73029725206248,
+    "parallel": 3.2048458149779737
+   }
+  },
+  {
+   "budget": 4000000000000.0,
+   "note": "high end of the range named in session 5",
+   "feasible": true,
+   "error": null,
+   "manufacturing_usd": 53136.00140001555,
+   "full_run_usd": 2022244.6916076848,
+   "full_run_days": 6.857112262667116,
+   "generate_lanes": 3,
+   "at_ceiling": 1,
+   "worst_lane": "agentic",
+   "worst_pct": 86.80175641025642,
+   "epochs": {
+    "web": 0.6630566713216909,
+    "code": 2.2648401826484013,
+    "reasoning": 8.149782955027112,
+    "indic": 1.474299502606117,
+    "multiling": 0.36,
+    "longctx": 1.316880752503287,
+    "civic": 3.875000000000001,
+    "agentic": 30.307063002749977,
+    "parallel": 4.273127753303965
+   }
+  },
+  {
+   "budget": 14000000000000.0,
+   "note": "session-3 design memo for a 40B dense model",
+   "feasible": false,
+   "error": "lane web needs 6.478e+11 manufactured tokens but has no entry in MANUFACTURING - the plan would be wishing",
+   "manufacturing_usd": null,
+   "full_run_usd": null,
+   "full_run_days": null,
+   "generate_lanes": null,
+   "at_ceiling": null,
+   "worst_lane": null,
+   "worst_pct": null,
+   "epochs": {}
+  }
+ ],
+ "sensitivity": [
+  {
+   "id": "sangraha_fertility",
+   "label": "Sangraha's tokenizer (unstated by AI4Bharat)",
+   "basis": "AI4Bharat publishes 251.3B tokens and documents no tokenizer. Checked: the HF dataset card, arXiv:2403.06350 abstract and full PDF, and the IndicLLMSuite GitHub README - none state it. The high bound is our own MEASURED cl100k fertility on Telugu; the low bound is an aggressive Indic sentencepiece.",
+   "breaks": "At the high bound the Indic lane loses ~83% of its apparent supply and flips from verified-only to mostly manufactured.",
+   "base": 2.3,
+   "low": 1.8,
+   "high": 13.268,
+   "results": {
+    "low": {
+     "feasible": true,
+     "lane": "indic",
+     "epochs": 0.8653497080514165,
+     "manufactured_pct": 0.0,
+     "verdict": "SUPPLY-OK",
+     "manufacturing_usd": 28104.58919913925
+    },
+    "base": {
+     "feasible": true,
+     "lane": "indic",
+     "epochs": 1.1057246269545877,
+     "manufactured_pct": 0.0,
+     "verdict": "REPEAT",
+     "manufacturing_usd": 28104.58919913925
+    },
+    "high": {
+     "feasible": false,
+     "error": "anneal reserve cannot be stocked under its own eligibility rules: indic short 1.7B (demand 9.9B vs eligible 8.2B)"
+    }
+   },
+   "swings_conclusion": true
+  },
+  {
+   "id": "web_dedup",
+   "label": "Cross-corpus dedup survival for web",
+   "basis": "A single estimate covering the shared Common Crawl lineage of Nemotron-CC, DCLM and FineWeb-Edu. Never measured.",
+   "breaks": "At the low bound the largest lane in the plan needs repetition even at 3T.",
+   "base": 0.65,
+   "low": 0.4,
+   "high": 0.85,
+   "results": {
+    "low": {
+     "feasible": true,
+     "lane": "web",
+     "epochs": 0.8081003181733108,
+     "manufactured_pct": 0.0,
+     "verdict": "SUPPLY-OK",
+     "manufacturing_usd": 28104.58919913925
+    },
+    "base": {
+     "feasible": true,
+     "lane": "web",
+     "epochs": 0.4972925034912682,
+     "manufactured_pct": 0.0,
+     "verdict": "SUPPLY-OK",
+     "manufacturing_usd": 28104.58919913925
+    },
+    "high": {
+     "feasible": true,
+     "lane": "web",
+     "epochs": 0.38028250266979335,
+     "manufactured_pct": 0.0,
+     "verdict": "SUPPLY-OK",
+     "manufacturing_usd": 28104.58919913925
+    }
+   },
+   "swings_conclusion": false
+  },
+  {
+   "id": "agentic_traj_tokens",
+   "label": "Mean tokens per agentic trajectory",
+   "basis": "DERIVED from 59k trajectories x an assumed 30,000 tok/trajectory. Bounds are 10k and 90k tok/trajectory.",
+   "breaks": "Nothing. Even at 3x the assumed length the lane stays overwhelmingly manufactured, which is why the agentic conclusion is robust to an assumption that is itself weak.",
+   "base": 1770000000.0,
+   "low": 590000000.0,
+   "high": 5310000000.0,
+   "results": {
+    "low": {
+     "feasible": true,
+     "lane": "agentic",
+     "epochs": 29.846063189472755,
+     "manufactured_pct": 86.59789743589744,
+     "verdict": "GENERATE",
+     "manufacturing_usd": 28295.489098027017
+    },
+    "base": {
+     "feasible": true,
+     "lane": "agentic",
+     "epochs": 22.73029725206248,
+     "manufactured_pct": 82.40234188034188,
+     "verdict": "GENERATE",
+     "manufacturing_usd": 28104.58919913925
+    },
+    "high": {
+     "feasible": true,
+     "lane": "agentic",
+     "epochs": 13.251911474966064,
+     "manufactured_pct": 69.81567521367522,
+     "verdict": "GENERATE",
+     "manufacturing_usd": 27531.889502475955
+    }
+   },
+   "swings_conclusion": false
+  },
+  {
+   "id": "civic_judgment_tokens",
+   "label": "Mean tokens per Indian court judgment",
+   "basis": "DERIVED from ~10M judgments x an assumed 3,000 tok each. The corpus has never been built, so both factors are estimates.",
+   "breaks": "At the low bound the civic lane becomes substantially manufactured and needs a COLLECT plan it does not have.",
+   "base": 30000000000.0,
+   "low": 10000000000.0,
+   "high": 60000000000.0,
+   "results": {
+    "low": {
+     "feasible": true,
+     "lane": "civic",
+     "epochs": 5.4705882352941195,
+     "manufactured_pct": 26.881720430107546,
+     "verdict": "GENERATE",
+     "manufacturing_usd": 28104.58919913925
+    },
+    "base": {
+     "feasible": true,
+     "lane": "civic",
+     "epochs": 2.906250000000001,
+     "manufactured_pct": 0.0,
+     "verdict": "REPEAT",
+     "manufacturing_usd": 28104.58919913925
+    },
+    "high": {
+     "feasible": true,
+     "lane": "civic",
+     "epochs": 1.7064220183486243,
+     "manufactured_pct": 0.0,
+     "verdict": "REPEAT",
+     "manufacturing_usd": 28104.58919913925
+    }
+   },
+   "swings_conclusion": true
+  }
+ ],
+ "microproxy": {
+  "arms": {
+   "A0": {
+    "name": "Baseline (crossfade + floor)",
+    "n_seeds": 2,
+    "runs": [
+     {
+      "seed": 1337,
+      "spikes_in_transition": 2,
+      "steps_in_transition": 543,
+      "spikes_outside": 7,
+      "steps_outside": 1457,
+      "spike_rate_in_transition": 0.003683241252302026,
+      "spike_rate_outside": 0.004804392587508579,
+      "peak_gnorm_transition": 0.7337383031845093,
+      "peak_gnorm_outside": 2.0708694458007812,
+      "mean_gnorm": 0.5049582515358925,
+      "excess_z_transition": -0.7020529834179776,
+      "excess_z_outside": -3132.6566754491528,
+      "excess_z_sd_transition": 1.0716114377065946,
+      "mean_gnorm_transition": 0.5122928381185725,
+      "mean_gnorm_outside": 0.5022247714299246,
+      "final_bpb_indic": 1.4269128250555254,
+      "final_bpb_reasoning": 3.097260754846672,
+      "elapsed_s": 289.91684341430664,
+      "params": 11040768,
+      "tokens": 24576000,
+      "crossfade": 0.15,
+      "indic_schedule": [
+       10.0,
+       30.0,
+       60.0,
+       80.0
+      ],
+      "evals": [
+       {
+        "step": 0,
+        "frac": 0.0,
+        "indic": 8.153676426729293,
+        "reasoning": 8.310919407689495
+       },
+       {
+        "step": 200,
+        "frac": 0.1,
+        "indic": 1.9516008972647028,
+        "reasoning": 3.8337405815856798
+       },
+       {
+        "step": 400,
+        "frac": 0.2,
+        "indic": 1.9087178573879182,
+        "reasoning": 3.689660206817938
+       },
+       {
+        "step": 600,
+        "frac": 0.3,
+        "indic": 1.9224443946925571,
+        "reasoning": 3.501069586921405
+       },
+       {
+        "step": 800,
+        "frac": 0.4,
+        "indic": 1.8657699800517584,
+        "reasoning": 3.3559917643734534
+       },
+       {
+        "step": 1000,
+        "frac": 0.5,
+        "indic": 1.609049249933515,
+        "reasoning": 3.230713375713022
+       },
+       {
+        "step": 1200,
+        "frac": 0.6,
+        "indic": 1.5389233670398674,
+        "reasoning": 3.2088046606039944
+       },
+       {
+        "step": 1400,
+        "frac": 0.7,
+        "indic": 1.4862597469011416,
+        "reasoning": 3.1705577742447835
+       },
+       {
+        "step": 1600,
+        "frac": 0.8,
+        "indic": 1.4421828120612,
+        "reasoning": 3.07459471413457
+       },
+       {
+        "step": 1800,
+        "frac": 0.9,
+        "indic": 1.4382660232760889,
+        "reasoning": 3.076134474807745
+       },
+       {
+        "step": 1999,
+        "frac": 0.9995,
+        "indic": 1.4269128250555254,
+        "reasoning": 3.097260754846672
+       }
+      ]
+     },
+     {
+      "seed": 2024,
+      "spikes_in_transition": 1,
+      "steps_in_transition": 543,
+      "spikes_outside": 5,
+      "steps_outside": 1457,
+      "spike_rate_in_transition": 0.001841620626151013,
+      "spike_rate_outside": 0.0034317089910775567,
+      "peak_gnorm_transition": 0.8378812074661255,
+      "peak_gnorm_outside": 2.1915814876556396,
+      "mean_gnorm": 0.5044612062722444,
+      "excess_z_transition": -0.6639976264632832,
+      "excess_z_outside": 1428.725562382029,
+      "excess_z_sd_transition": 1.136925818463826,
+      "mean_gnorm_transition": 0.5179554616438969,
+      "mean_gnorm_outside": 0.49943211864917836,
+      "final_bpb_indic": 1.4221327693544084,
+      "final_bpb_reasoning": 3.1454234987214265,
+      "elapsed_s": 289.1274309158325,
+      "params": 11040768,
+      "tokens": 24576000,
+      "crossfade": 0.15,
+      "indic_schedule": [
+       10.0,
+       30.0,
+       60.0,
+       80.0
+      ],
+      "evals": [
+       {
+        "step": 0,
+        "frac": 0.0,
+        "indic": 8.089213751946772,
+        "reasoning": 8.317624151333382
+       },
+       {
+        "step": 200,
+        "frac": 0.1,
+        "indic": 1.9956462044951508,
+        "reasoning": 3.8507250206421437
+       },
+       {
+        "step": 400,
+        "frac": 0.2,
+        "indic": 1.9031499104671021,
+        "reasoning": 3.689241050701255
+       },
+       {
+        "step": 600,
+        "frac": 0.3,
+        "indic": 1.8931138542768704,
+        "reasoning": 3.5047320606611185
+       },
+       {
+        "step": 800,
+        "frac": 0.4,
+        "indic": 1.8248810446151977,
+        "reasoning": 3.410792006675607
+       },
+       {
+        "step": 1000,
+        "frac": 0.5,
+        "indic": 1.584262456757094,
+        "reasoning": 3.22762140282275
+       },
+       {
+        "step": 1200,
+        "frac": 0.6,
+        "indic": 1.5042407480271618,
+        "reasoning": 3.1476802894625786
+       },
+       {
+        "step": 1400,
+        "frac": 0.7,
+        "indic": 1.4863575061394585,
+        "reasoning": 3.103500792768795
+       },
+       {
+        "step": 1600,
+        "frac": 0.8,
+        "indic": 1.4568034054759154,
+        "reasoning": 3.060269169856109
+       },
+       {
+        "step": 1800,
+        "frac": 0.9,
+        "indic": 1.4704857905345114,
+        "reasoning": 3.1411297712608532
+       },
+       {
+        "step": 1999,
+        "frac": 0.9995,
+        "indic": 1.4221327693544084,
+        "reasoning": 3.1454234987214265
+       }
+      ]
+     }
+    ],
+    "spike_rate_in_transition": 0.0027624309392265192,
+    "spike_rate_in_transition_spread": 0.001841620626151013,
+    "spike_rate_outside": 0.004118050789293068,
+    "spike_rate_outside_spread": 0.0013726835964310226,
+    "peak_gnorm_transition": 0.7858097553253174,
+    "peak_gnorm_transition_spread": 0.10414290428161621,
+    "peak_gnorm_outside": 2.1312254667282104,
+    "peak_gnorm_outside_spread": 0.1207120418548584,
+    "mean_gnorm": 0.5047097289040685,
+    "mean_gnorm_spread": 0.0004970452636480216,
+    "excess_z_transition": -0.6830253049406304,
+    "excess_z_transition_spread": 0.03805535695469442,
+    "excess_z_outside": -851.9655565335619,
+    "excess_z_outside_spread": 4561.382237831182,
+    "mean_gnorm_transition": 0.5151241498812347,
+    "mean_gnorm_transition_spread": 0.005662623525324428,
+    "mean_gnorm_outside": 0.5008284450395515,
+    "mean_gnorm_outside_spread": 0.002792652780746252,
+    "final_bpb_indic": 1.424522797204967,
+    "final_bpb_indic_spread": 0.004780055701117059,
+    "final_bpb_reasoning": 3.1213421267840493,
+    "final_bpb_reasoning_spread": 0.04816274387475428
+   },
+   "A2": {
+    "name": "No floor (indic introduced late)",
+    "n_seeds": 2,
+    "runs": [
+     {
+      "seed": 1337,
+      "spikes_in_transition": 0,
+      "steps_in_transition": 543,
+      "spikes_outside": 4,
+      "steps_outside": 1457,
+      "spike_rate_in_transition": 0.0,
+      "spike_rate_outside": 0.002745367192862045,
+      "peak_gnorm_transition": 1.0396027565002441,
+      "peak_gnorm_outside": 2.21138072013855,
+      "mean_gnorm": 0.5287238501757383,
+      "excess_z_transition": -0.784793330335431,
+      "excess_z_outside": -2953.1800146246364,
+      "excess_z_sd_transition": 1.1086447041615322,
+      "mean_gnorm_transition": 0.5367420764698289,
+      "mean_gnorm_outside": 0.5257355887634589,
+      "final_bpb_indic": 1.4189110527523257,
+      "final_bpb_reasoning": 3.1339432440179724,
+      "elapsed_s": 293.0535843372345,
+      "params": 11040768,
+      "tokens": 24576000,
+      "crossfade": 0.15,
+      "indic_schedule": [
+       0.0,
+       37.0,
+       68.0,
+       86.0
+      ],
+      "evals": [
+       {
+        "step": 0,
+        "frac": 0.0,
+        "indic": 8.153676426729293,
+        "reasoning": 8.310919407689495
+       },
+       {
+        "step": 200,
+        "frac": 0.1,
+        "indic": 7.330970827809224,
+        "reasoning": 3.8268755157146592
+       },
+       {
+        "step": 400,
+        "frac": 0.2,
+        "indic": 4.30013400349898,
+        "reasoning": 3.6741998436168903
+       },
+       {
+        "step": 600,
+        "frac": 0.3,
+        "indic": 4.389540904376519,
+        "reasoning": 3.4825690520045254
+       },
+       {
+        "step": 800,
+        "frac": 0.4,
+        "indic": 1.8793957785186541,
+        "reasoning": 3.354327557054114
+       },
+       {
+        "step": 1000,
+        "frac": 0.5,
+        "indic": 1.5921381184819823,
+        "reasoning": 3.2488766698498246
+       },
+       {
+        "step": 1200,
+        "frac": 0.6,
+        "indic": 1.5317092279823905,
+        "reasoning": 3.230110180961651
+       },
+       {
+        "step": 1400,
+        "frac": 0.7,
+        "indic": 1.475369005729182,
+        "reasoning": 3.186700048656502
+       },
+       {
+        "step": 1600,
+        "frac": 0.8,
+        "indic": 1.4303006940966068,
+        "reasoning": 3.098907041573791
+       },
+       {
+        "step": 1800,
+        "frac": 0.9,
+        "indic": 1.4277771410657016,
+        "reasoning": 3.099407141325103
+       },
+       {
+        "step": 1999,
+        "frac": 0.9995,
+        "indic": 1.4189110527523257,
+        "reasoning": 3.1339432440179724
+       }
+      ]
+     },
+     {
+      "seed": 2024,
+      "spikes_in_transition": 3,
+      "steps_in_transition": 543,
+      "spikes_outside": 4,
+      "steps_outside": 1457,
+      "spike_rate_in_transition": 0.0055248618784530384,
+      "spike_rate_outside": 0.002745367192862045,
+      "peak_gnorm_transition": 1.0356005430221558,
+      "peak_gnorm_outside": 2.3249075412750244,
+      "mean_gnorm": 0.51978681217134,
+      "excess_z_transition": -0.7439928497363373,
+      "excess_z_outside": 2186.113477617434,
+      "excess_z_sd_transition": 1.0863864172346571,
+      "mean_gnorm_transition": 0.5396854892290758,
+      "mean_gnorm_outside": 0.5123709016412435,
+      "final_bpb_indic": 1.4015034331851495,
+      "final_bpb_reasoning": 3.1789001796858485,
+      "elapsed_s": 295.9765360355377,
+      "params": 11040768,
+      "tokens": 24576000,
+      "crossfade": 0.15,
+      "indic_schedule": [
+       0.0,
+       37.0,
+       68.0,
+       86.0
+      ],
+      "evals": [
+       {
+        "step": 0,
+        "frac": 0.0,
+        "indic": 8.089213751946772,
+        "reasoning": 8.317624151333382
+       },
+       {
+        "step": 200,
+        "frac": 0.1,
+        "indic": 6.759474130025559,
+        "reasoning": 3.8418425294834413
+       },
+       {
+        "step": 400,
+        "frac": 0.2,
+        "indic": 5.0262609390092035,
+        "reasoning": 3.695053754731646
+       },
+       {
+        "step": 600,
+        "frac": 0.3,
+        "indic": 5.266006611724588,
+        "reasoning": 3.482917970406596
+       },
+       {
+        "step": 800,
+        "frac": 0.4,
+        "indic": 1.8422095177664468,
+        "reasoning": 3.370921027950371
+       },
+       {
+        "step": 1000,
+        "frac": 0.5,
+        "indic": 1.5819940915835389,
+        "reasoning": 3.231921725817984
+       },
+       {
+        "step": 1200,
+        "frac": 0.6,
+        "indic": 1.5096683614044402,
+        "reasoning": 3.1571261785872418
+       },
+       {
+        "step": 1400,
+        "frac": 0.7,
+        "indic": 1.4790340248121288,
+        "reasoning": 3.126305460096625
+       },
+       {
+        "step": 1600,
+        "frac": 0.8,
+        "indic": 1.4487272979714465,
+        "reasoning": 3.050777154984484
+       },
+       {
+        "step": 1800,
+        "frac": 0.9,
+        "indic": 1.4496362821756177,
+        "reasoning": 3.159866068594668
+       },
+       {
+        "step": 1999,
+        "frac": 0.9995,
+        "indic": 1.4015034331851495,
+        "reasoning": 3.1789001796858485
+       }
+      ]
+     }
+    ],
+    "spike_rate_in_transition": 0.0027624309392265192,
+    "spike_rate_in_transition_spread": 0.0055248618784530384,
+    "spike_rate_outside": 0.002745367192862045,
+    "spike_rate_outside_spread": 0.0,
+    "peak_gnorm_transition": 1.0376016497612,
+    "peak_gnorm_transition_spread": 0.004002213478088379,
+    "peak_gnorm_outside": 2.268144130706787,
+    "peak_gnorm_outside_spread": 0.11352682113647461,
+    "mean_gnorm": 0.5242553311735392,
+    "mean_gnorm_spread": 0.008937038004398268,
+    "excess_z_transition": -0.7643930900358842,
+    "excess_z_transition_spread": 0.04080048059909369,
+    "excess_z_outside": -383.5332685036012,
+    "excess_z_outside_spread": 5139.29349224207,
+    "mean_gnorm_transition": 0.5382137828494523,
+    "mean_gnorm_transition_spread": 0.0029434127592469217,
+    "mean_gnorm_outside": 0.5190532452023513,
+    "mean_gnorm_outside_spread": 0.01336468712221539,
+    "final_bpb_indic": 1.4102072429687376,
+    "final_bpb_indic_spread": 0.01740761956717618,
+    "final_bpb_reasoning": 3.1564217118519107,
+    "final_bpb_reasoning_spread": 0.04495693566787606
+   },
+   "A6": {
+    "name": "Sharp transitions (no crossfade)",
+    "n_seeds": 2,
+    "runs": [
+     {
+      "seed": 1337,
+      "spikes_in_transition": 3,
+      "steps_in_transition": 543,
+      "spikes_outside": 7,
+      "steps_outside": 1457,
+      "spike_rate_in_transition": 0.0055248618784530384,
+      "spike_rate_outside": 0.004804392587508579,
+      "peak_gnorm_transition": 0.8233731985092163,
+      "peak_gnorm_outside": 2.0708694458007812,
+      "mean_gnorm": 0.5126632351130247,
+      "excess_z_transition": -0.5734944187309181,
+      "excess_z_outside": -3132.6582894785133,
+      "excess_z_sd_transition": 1.3290678414296817,
+      "mean_gnorm_transition": 0.5324989049035103,
+      "mean_gnorm_outside": 0.5052708063578883,
+      "final_bpb_indic": 1.4369303501151267,
+      "final_bpb_reasoning": 3.088132294100706,
+      "elapsed_s": 287.9903521537781,
+      "params": 11040768,
+      "tokens": 24576000,
+      "crossfade": 0.0,
+      "indic_schedule": [
+       10.0,
+       30.0,
+       60.0,
+       80.0
+      ],
+      "evals": [
+       {
+        "step": 0,
+        "frac": 0.0,
+        "indic": 8.153676426729293,
+        "reasoning": 8.310919407689495
+       },
+       {
+        "step": 200,
+        "frac": 0.1,
+        "indic": 1.9515974920082158,
+        "reasoning": 3.8337392573192686
+       },
+       {
+        "step": 400,
+        "frac": 0.2,
+        "indic": 1.9087264307230638,
+        "reasoning": 3.68966163427394
+       },
+       {
+        "step": 600,
+        "frac": 0.3,
+        "indic": 1.922445675963306,
+        "reasoning": 3.5010578405063506
+       },
+       {
+        "step": 800,
+        "frac": 0.4,
+        "indic": 1.9038341950383553,
+        "reasoning": 3.346802868923974
+       },
+       {
+        "step": 1000,
+        "frac": 0.5,
+        "indic": 1.6448934268714495,
+        "reasoning": 3.2231197397381512
+       },
+       {
+        "step": 1200,
+        "frac": 0.6,
+        "indic": 1.5487615399920167,
+        "reasoning": 3.2027796955859085
+       },
+       {
+        "step": 1400,
+        "frac": 0.7,
+        "indic": 1.5005560971246192,
+        "reasoning": 3.1520957376443
+       },
+       {
+        "step": 1600,
+        "frac": 0.8,
+        "indic": 1.4536895434937547,
+        "reasoning": 3.06511248507578
+       },
+       {
+        "step": 1800,
+        "frac": 0.9,
+        "indic": 1.4481119354475267,
+        "reasoning": 3.067966683352101
+       },
+       {
+        "step": 1999,
+        "frac": 0.9995,
+        "indic": 1.4369303501151267,
+        "reasoning": 3.088132294100706
+       }
+      ]
+     },
+     {
+      "seed": 2024,
+      "spikes_in_transition": 2,
+      "steps_in_transition": 543,
+      "spikes_outside": 5,
+      "steps_outside": 1457,
+      "spike_rate_in_transition": 0.003683241252302026,
+      "spike_rate_outside": 0.0034317089910775567,
+      "peak_gnorm_transition": 1.1093485355377197,
+      "peak_gnorm_outside": 2.191577911376953,
+      "mean_gnorm": 0.5109117185771466,
+      "excess_z_transition": -0.5678734595526914,
+      "excess_z_outside": 1428.7583408831804,
+      "excess_z_sd_transition": 1.432399083252816,
+      "mean_gnorm_transition": 0.5318792017235062,
+      "mean_gnorm_outside": 0.5030974815500543,
+      "final_bpb_indic": 1.4340580549643682,
+      "final_bpb_reasoning": 3.1409583475536054,
+      "elapsed_s": 4144.178108930588,
+      "params": 11040768,
+      "tokens": 24576000,
+      "crossfade": 0.0,
+      "indic_schedule": [
+       10.0,
+       30.0,
+       60.0,
+       80.0
+      ],
+      "evals": [
+       {
+        "step": 0,
+        "frac": 0.0,
+        "indic": 8.089213751946772,
+        "reasoning": 8.317624151333382
+       },
+       {
+        "step": 200,
+        "frac": 0.1,
+        "indic": 1.9956588624182543,
+        "reasoning": 3.850723730772262
+       },
+       {
+        "step": 400,
+        "frac": 0.2,
+        "indic": 1.9031431343506582,
+        "reasoning": 3.689228943122634
+       },
+       {
+        "step": 600,
+        "frac": 0.3,
+        "indic": 1.893290041903547,
+        "reasoning": 3.5057214596532678
+       },
+       {
+        "step": 800,
+        "frac": 0.4,
+        "indic": 1.8724123713855745,
+        "reasoning": 3.394389247340892
+       },
+       {
+        "step": 1000,
+        "frac": 0.5,
+        "indic": 1.602612790625842,
+        "reasoning": 3.2264456090335965
+       },
+       {
+        "step": 1200,
+        "frac": 0.6,
+        "indic": 1.5226207790001478,
+        "reasoning": 3.1606138491606193
+       },
+       {
+        "step": 1400,
+        "frac": 0.7,
+        "indic": 1.5021104935213823,
+        "reasoning": 3.1017796333946226
+       },
+       {
+        "step": 1600,
+        "frac": 0.8,
+        "indic": 1.4692750369720033,
+        "reasoning": 3.0504597266057867
+       },
+       {
+        "step": 1800,
+        "frac": 0.9,
+        "indic": 1.4753123288465904,
+        "reasoning": 3.1346193508141766
+       },
+       {
+        "step": 1999,
+        "frac": 0.9995,
+        "indic": 1.4340580549643682,
+        "reasoning": 3.1409583475536054
+       }
+      ]
+     }
+    ],
+    "spike_rate_in_transition": 0.004604051565377533,
+    "spike_rate_in_transition_spread": 0.0018416206261510125,
+    "spike_rate_outside": 0.004118050789293068,
+    "spike_rate_outside_spread": 0.0013726835964310226,
+    "peak_gnorm_transition": 0.966360867023468,
+    "peak_gnorm_transition_spread": 0.2859753370285034,
+    "peak_gnorm_outside": 2.131223678588867,
+    "peak_gnorm_outside_spread": 0.12070846557617188,
+    "mean_gnorm": 0.5117874768450856,
+    "mean_gnorm_spread": 0.0017515165358781282,
+    "excess_z_transition": -0.5706839391418048,
+    "excess_z_transition_spread": 0.005620959178226692,
+    "excess_z_outside": -851.9499742976665,
+    "excess_z_outside_spread": 4561.416630361694,
+    "mean_gnorm_transition": 0.5321890533135083,
+    "mean_gnorm_transition_spread": 0.0006197031800040387,
+    "mean_gnorm_outside": 0.5041841439539714,
+    "mean_gnorm_outside_spread": 0.002173324807834054,
+    "final_bpb_indic": 1.4354942025397475,
+    "final_bpb_indic_spread": 0.002872295150758486,
+    "final_bpb_reasoning": 3.1145453208271556,
+    "final_bpb_reasoning_spread": 0.05282605345289948
+   }
+  },
+  "spike_k": 3.0,
+  "crossfade_ref": 0.15,
+  "boundaries": [
+   0.4,
+   0.7,
+   0.8999999999999999
+  ],
+  "claim_crossfade": {
+   "a0_spike_rate_transition": 0.0027624309392265192,
+   "a6_spike_rate_transition": 0.004604051565377533,
+   "a0_peak_gnorm_transition": 0.7858097553253174,
+   "a6_peak_gnorm_transition": 0.966360867023468,
+   "spike_ratio": 1.666666666666667,
+   "gnorm_ratio": 1.2297644060468609,
+   "rule": "Keep the crossfade iff A6 shows >= 2x the loss-spike count of A0, or peak gradient norm above 0.5 during any transition.",
+   "absolute_limb_applicable": false,
+   "absolute_limb_note": "The rule's 'peak grad-norm > 0.5' limb does not transfer to this scale: A0's peak grad norm OUTSIDE any transition is already 2.131. Verdict uses the relative limb only.",
+   "preregistered_underpowered": true,
+   "total_transition_spikes_A0_A6": 8,
+   "power_note": "The pre-registered spike-count metric recorded 8 spike events across both arms and all seeds. A ratio built on that many events is a ratio of small integers; it is reported but NOT used for the verdict.",
+   "excess_z_lift_A0": 851.2825312286212,
+   "excess_z_lift_A6": 851.3792903585247,
+   "excess_z_lift_delta": 0.09675912990348934,
+   "metric_used": "post-hoc continuous excess-loss z, because the pre-registered spike count is underpowered",
+   "verdict": "INCONCLUSIVE, leaning DROP - no stability benefit detectable at this scale, and the pre-registered metric was underpowered"
+  },
+  "claim_floor": {
+   "a0_final_bpb_indic": 1.424522797204967,
+   "a2_final_bpb_indic": 1.4102072429687376,
+   "delta_bpb": -0.014315554236229433,
+   "a0_final_bpb_reasoning": 3.1213421267840493,
+   "a2_final_bpb_reasoning": 3.1564217118519107,
+   "rule": "The floor earns its 3% of every batch iff removing it costs measurable indic held-out bits-per-byte at matched total share.",
+   "seed_noise_bpb": 0.01740761956717618,
+   "effect_to_noise": 0.8223728799325815,
+   "noise_note": "Within-arm seed spread on indic bpb is 0.0174. The measured between-arm delta is 0.0143, i.e. 0.8x the noise.",
+   "verdict": "INCONCLUSIVE - the -0.0143 bpb delta is within seed noise (0.0174); this experiment cannot separate them"
+  }
+ },
+ "decon": {
+  "ngram": 12,
+  "ngram_short": 6,
+  "jaccard": 0.8,
+  "index_stats": [
+   {
+    "suite": "gsm8k",
+    "lane": "reasoning",
+    "items": 400,
+    "unindexable_12gram": 0,
+    "distinct_12grams": 34443,
+    "distinct_6grams_short_items": 0
+   },
+   {
+    "suite": "mmlu",
+    "lane": "web",
+    "items": 400,
+    "unindexable_12gram": 139,
+    "distinct_12grams": 2886,
+    "distinct_6grams_short_items": 445
+   },
+   {
+    "suite": "humaneval",
+    "lane": "code",
+    "items": 164,
+    "unindexable_12gram": 0,
+    "distinct_12grams": 13234,
+    "distinct_6grams_short_items": 0
+   },
+   {
+    "suite": "mbpp",
+    "lane": "code",
+    "items": 400,
+    "unindexable_12gram": 0,
+    "distinct_12grams": 11020,
+    "distinct_6grams_short_items": 0
+   },
+   {
+    "suite": "belebele_tel",
+    "lane": "indic",
+    "items": 400,
+    "unindexable_12gram": 0,
+    "distinct_12grams": 14467,
+    "distinct_6grams_short_items": 0
+   },
+   {
+    "suite": "arc",
+    "lane": "web",
+    "items": 400,
+    "unindexable_12gram": 83,
+    "distinct_12grams": 4830,
+    "distinct_6grams_short_items": 322
+   }
+  ],
+  "corpora": [
+   {
+    "corpus": "telugu_web",
+    "name": "Sangraha unverified / Telugu",
+    "lane": "indic",
+    "tier": "unverified",
+    "docs": 11607,
+    "words": 3735715,
+    "hits_12gram": {},
+    "hits_6gram_short_items": {},
+    "contaminated_docs": 0,
+    "rate_pct": 0.0,
+    "detection_floor_pct": 0.025846471956577927,
+    "detection_note": "zero hits here bounds contamination below ~0.026%, it does not establish zero",
+    "examples": [],
+    "error": null
+   },
+   {
+    "corpus": "reasoning_sft",
+    "name": "Reasoning / SFT distillation mix",
+    "lane": "reasoning",
+    "tier": null,
+    "docs": 9553,
+    "words": 6823323,
+    "hits_12gram": {
+     "mbpp": 2
+    },
+    "hits_6gram_short_items": {
+     "mmlu": 10,
+     "arc": 1
+    },
+    "contaminated_docs": 2,
+    "rate_pct": 0.020935831675913327,
+    "detection_floor_pct": 0.03140374751386999,
+    "detection_note": "zero hits here bounds contamination below ~0.031%, it does not establish zero",
+    "examples": [
+     {
+      "corpus": "reasoning_sft",
+      "suite": "mbpp",
+      "doc_id": "722e035f1390e9a80705309c25ad7dedc9ba31afae7691cff0c652e25476656d",
+      "ngram": "while left <= right: mid = (left + right) // 2 if"
+     },
+     {
+      "corpus": "reasoning_sft",
+      "suite": "mbpp",
+      "doc_id": "5e1f7ad03a9fc6470bceddd2b4d696e0aad775f2799dd36237e74684466aeaaa",
+      "ngram": "while left <= right: mid = (left + right) // 2 if"
+     }
+    ],
+    "error": null
+   }
+  ],
+  "generated_utc": "2026-07-30T09:58:01Z"
+ }
+}

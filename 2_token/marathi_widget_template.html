@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>India BPE Tokenizer — English · Hindi · Telugu · Marathi</title>
+<style>
+  :root {
+    --page: #f9f9f7;
+    --surface: #fcfcfb;
+    --ink: #0b0b0b;
+    --ink2: #52514e;
+    --muted: #898781;
+    --grid: #e1e0d9;
+    --baseline: #c3c2b7;
+    --border: rgba(11,11,11,0.10);
+    --series: #2a78d6;
+    --series-soft: rgba(42,120,214,0.10);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --page: #0d0d0d;
+      --surface: #1a1a19;
+      --ink: #ffffff;
+      --ink2: #c3c2b7;
+      --muted: #898781;
+      --grid: #2c2c2a;
+      --baseline: #383835;
+      --border: rgba(255,255,255,0.10);
+      --series: #3987e5;
+      --series-soft: rgba(57,135,229,0.14);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--page); color: var(--ink);
+    font: 14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 28px 20px 56px; }
+  header h1 { font-size: 22px; font-weight: 650; margin: 0 0 4px; }
+  header p.sub { margin: 0; color: var(--ink2); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .chip {
+    font-size: 12px; color: var(--ink2); background: var(--surface);
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px;
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px; margin-top: 20px;
+  }
+  .card h2 { font-size: 15px; font-weight: 650; margin: 0 0 2px; }
+  .card p.note { margin: 0 0 14px; color: var(--muted); font-size: 12.5px; }
+  /* ---- KPI row ---- */
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 20px; }
+  @media (max-width: 720px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+  .tile {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 18px;
+  }
+  .tile .label { color: var(--ink2); font-size: 12.5px; }
+  .tile .value { font-size: 26px; font-weight: 600; margin-top: 2px; }
+  .tile.hero .value { font-size: 48px; line-height: 1.1; color: var(--ink); }
+  .tile .hint { color: var(--muted); font-size: 12px; margin-top: 2px; }
+  /* ---- fertility chart ---- */
+  .fchart { display: grid; grid-template-columns: 150px 1fr; column-gap: 12px; margin-top: 22px; }
+  .fc-labels, .fc-plot { display: flex; flex-direction: column; row-gap: 10px; }
+  .fc-labels .lab {
+    height: 30px; display: flex; align-items: center; justify-content: flex-end;
+    text-align: right; color: var(--ink2); font-size: 13px; gap: 6px;
+  }
+  .fc-labels .lab b { color: var(--ink); font-weight: 600; }
+  .fc-plot { position: relative; }
+  .fc-grid { position: absolute; inset: 0 0 24px 0; pointer-events: none; }
+  .fc-grid i { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--grid); }
+  .fc-target {
+    position: absolute; top: -4px; bottom: 20px; width: 0; pointer-events: none;
+    border-left: 1px dashed var(--baseline);
+  }
+  .fc-target span {
+    position: absolute; top: -16px; left: -4px; transform: translateX(-100%);
+    font-size: 11px; color: var(--muted); white-space: nowrap;
+  }
+  .fc-row { position: relative; height: 30px; cursor: default; }
+  .fc-bar {
+    position: absolute; top: 5px; height: 20px; left: 0;
+    background: var(--series); border-radius: 0 4px 4px 0;
+  }
+  .fc-row:hover .fc-bar { filter: brightness(1.12); }
+  .fc-val {
+    position: absolute; top: 5px; height: 20px; display: flex; align-items: center;
+    font-size: 12.5px; font-weight: 600; color: var(--ink); white-space: nowrap;
+  }
+  .fc-flag {
+    font-weight: 400; color: var(--muted); margin-left: 6px; font-size: 11.5px;
+  }
+  .fc-axis { position: relative; height: 20px; }
+  .fc-axis i { position: absolute; transform: translateX(-50%); font-size: 11px;
+    color: var(--muted); font-variant-numeric: tabular-nums; }
+  .fc-baseline { position: absolute; left: 0; top: 0; bottom: 24px; width: 1px; background: var(--baseline); }
+  #tooltip {
+    position: fixed; z-index: 10; display: none; pointer-events: none;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12); padding: 8px 12px; font-size: 12.5px;
+    color: var(--ink2); max-width: 260px;
+  }
+  #tooltip b { color: var(--ink); }
+  /* ---- calculation ---- */
+  .calc { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  @media (max-width: 720px) { .calc { grid-template-columns: repeat(2, 1fr); } }
+  .calc .step {
+    border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 13px;
+  }
+  .calc .step .t { color: var(--muted); font-size: 11.5px; text-transform: uppercase; letter-spacing: .04em; }
+  .calc .step .v { margin-top: 2px; }
+  .formula {
+    margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: var(--series-soft);
+    font-size: 13.5px;
+  }
+  .formula code { font: 12.5px/1.6 ui-monospace, Consolas, monospace; }
+  /* ---- tables ---- */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left; color: var(--muted); font-weight: 500; font-size: 12px;
+    border-bottom: 1px solid var(--grid); padding: 6px 10px;
+  }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--grid); }
+  tr:last-child td { border-bottom: none; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td b { font-weight: 600; }
+  .tag {
+    display: inline-block; font-size: 11px; border-radius: 999px; padding: 1px 8px;
+    border: 1px solid var(--border); color: var(--ink2); margin-left: 6px;
+  }
+  .tag.sub { background: var(--series-soft); color: var(--ink); border-color: transparent; }
+  .scroll-x { overflow-x: auto; }
+  /* ---- token browser ---- */
+  .tok-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+  .tok-controls input {
+    flex: 1; min-width: 200px; background: var(--page); color: var(--ink);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font: inherit;
+  }
+  .tok-controls input:focus { outline: 2px solid var(--series); outline-offset: -1px; }
+  button {
+    background: var(--series); color: #fff; border: none; border-radius: 8px;
+    padding: 8px 14px; font: 600 13px system-ui, sans-serif; cursor: pointer;
+  }
+  button.ghost { background: transparent; color: var(--ink); border: 1px solid var(--border); }
+  button:hover { filter: brightness(1.08); }
+  #tokCount { color: var(--muted); font-size: 12.5px; margin-bottom: 8px; }
+  #tokList {
+    display: flex; flex-wrap: wrap; gap: 6px; max-height: 320px; overflow-y: auto;
+    border: 1px solid var(--border); border-radius: 10px; padding: 12px; background: var(--page);
+  }
+  .tok {
+    font: 12px/1.4 ui-monospace, Consolas, monospace; color: var(--ink2);
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 2px 7px; white-space: pre;
+  }
+  footer { margin-top: 24px; color: var(--muted); font-size: 12px; }
+  footer ul { margin: 6px 0 0; padding-left: 18px; }
+  footer li { margin-top: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>India on Wikipedia — one BPE tokenizer for four languages</h1>
+    <p class="sub">A single joint byte-pair-encoding vocabulary (budget 10,000 tokens) trained on the
+      Wikipedia “India” article in English, Hindi, Telugu and Marathi, and evaluated on the same four
+      articles. Fertility X = word&nbsp;tokens ÷ words; score = 1000 / (X<sub>max</sub> − X<sub>min</sub>).</p>
+    <div class="chips" id="chips"></div>
+  </header>
+
+  <div class="kpis" id="kpis"></div>
+
+  <div class="card">
+    <h2>Fertility ratio by language</h2>
+    <p class="note">X = average tokens per word on the India article (lower is better).
+      All four languages are encoded by the same shared vocabulary. Hover a bar for details.</p>
+    <div class="fchart" id="fchart"></div>
+  </div>
+
+  <div class="card">
+    <h2>Score calculation</h2>
+    <p class="note">Ratios in assignment order, then sorted; the score uses the largest and smallest.</p>
+    <div class="calc" id="calc"></div>
+    <div class="formula" id="formula"></div>
+  </div>
+
+  <div class="card">
+    <h2>Token statistics per language</h2>
+    <p class="note">Measured on the evaluation article with the submitted profile
+      (akshara units + joiner strip + Telugu suffix morphology). “Baseline X” is plain codepoint BPE.</p>
+    <div class="scroll-x">
+    <table id="statsTable">
+      <thead><tr>
+        <th>Language</th><th>Wikipedia page</th>
+        <th class="num">Words</th><th class="num">Unique words</th>
+        <th class="num">Word tokens</th><th class="num">All tokens</th>
+        <th class="num">X (fertility)</th><th class="num">Baseline X</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Preprocessing profiles compared</h2>
+    <p class="note">Same data, same 10,000 budget — only the preprocessing changes.</p>
+    <div class="scroll-x">
+    <table id="profTable">
+      <thead><tr>
+        <th>Profile</th>
+        <th class="num">X English</th><th class="num">X Hindi</th>
+        <th class="num">X Telugu</th><th class="num">X Marathi</th>
+        <th class="num">Spread</th><th class="num">Score</th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Tokenizer vocabulary</h2>
+    <p class="note" id="tokNote"></p>
+    <div class="tok-controls">
+      <input id="tokSearch" type="search" placeholder="Search tokens (any script)…" aria-label="Search tokens">
+      <button id="dlTxt">Download .txt</button>
+      <button id="dlJson" class="ghost">Download .json</button>
+    </div>
+    <div id="tokCount"></div>
+    <div id="tokList"></div>
+  </div>
+
+  <footer id="foot"></footer>
+</div>
+<div id="tooltip"></div>
+
+<script>
+const DATA = /*__DATA__*/;
+
+const P = DATA.primary;
+const LANG_ORDER = ["en", "hi", "te", "mr"];      // assignment order -> X1..X4
+const XLBL = { en: "X1", hi: "X2", te: "X3", mr: "X4" };
+const byCode = {};
+P.languages.forEach(l => byCode[l.code] = l);
+const fmt = (n) => n.toLocaleString("en-US");
+const fx = (n, d = 4) => n.toFixed(d);
+
+/* ---- header chips ---- */
+document.getElementById("chips").innerHTML = [
+  "Vocab budget: 10,000 tokens (shared)",
+  `Vocab used: ${fmt(P.vocab_size)}`,
+  "Languages: English · हिन्दी · తెలుగు · मराठी",
+  "Data: partitioned_bpe/data/india_*_extract.json",
+  "Profile: akshara + joiner strip + Telugu morphology",
+].map(t => `<span class="chip">${t}</span>`).join("");
+
+/* ---- KPI tiles ---- */
+const totalWords = P.languages.reduce((a, l) => a + l.words, 0);
+const totalTokens = P.languages.reduce((a, l) => a + l.total_tokens, 0);
+document.getElementById("kpis").innerHTML = `
+  <div class="tile hero">
+    <div class="label">Self score = 1000 / (X<sub>max</sub> − X<sub>min</sub>)</div>
+    <div class="value">${P.score.toFixed(2)}</div>
+    <div class="hint">baseline profile: ${DATA.profiles[0].score.toFixed(2)}</div>
+  </div>
+  <div class="tile">
+    <div class="label">Spread X<sub>max</sub> − X<sub>min</sub></div>
+    <div class="value">${fx(P.spread)}</div>
+    <div class="hint">Telugu ${fx(P.x_max)} − Hindi ${fx(P.x_min)}</div>
+  </div>
+  <div class="tile">
+    <div class="label">Vocabulary used</div>
+    <div class="value">${fmt(P.vocab_size)}</div>
+    <div class="hint">of 10,000 budget · ${fmt(P.n_base)} base + ${fmt(P.n_merges)} merges</div>
+  </div>
+  <div class="tile">
+    <div class="label">Corpus tokenized</div>
+    <div class="value">${fmt(totalTokens)}</div>
+    <div class="hint">tokens over ${fmt(totalWords)} words in 4 articles</div>
+  </div>`;
+
+/* ---- fertility bar chart (single measure -> one series color) ---- */
+const XMAXIS = 2.0;                                // axis end; ratios live in 1.0–1.9
+const sorted = [...P.languages].sort((a, b) => b.fertility - a.fertility);
+const fchart = document.getElementById("fchart");
+const labels = document.createElement("div");
+labels.className = "fc-labels";
+const plot = document.createElement("div");
+plot.className = "fc-plot";
+
+const grid = document.createElement("div");
+grid.className = "fc-grid";
+[0.5, 1.0, 1.5, 2.0].forEach(v => {
+  const i = document.createElement("i");
+  i.style.left = (v / XMAXIS * 100) + "%";
+  grid.appendChild(i);
+});
+plot.appendChild(grid);
+const baselineEl = document.createElement("div");
+baselineEl.className = "fc-baseline";
+plot.appendChild(baselineEl);
+const target = document.createElement("div");
+target.className = "fc-target";
+target.style.left = (1.2 / XMAXIS * 100) + "%";
+target.innerHTML = "<span>English goal ≤ 1.2</span>";
+plot.appendChild(target);
+
+const tooltip = document.getElementById("tooltip");
+sorted.forEach(l => {
+  const lab = document.createElement("div");
+  lab.className = "lab";
+  lab.innerHTML = `<b>${l.name}</b> · ${XLBL[l.code]}`;
+  labels.appendChild(lab);
+
+  const row = document.createElement("div");
+  row.className = "fc-row";
+  const w = l.fertility / XMAXIS * 100;
+  const flag = l.fertility === P.x_max ? "X max" : (l.fertility === P.x_min ? "X min" : "");
+  row.innerHTML = `<div class="fc-bar" style="width:${w}%"></div>
+    <span class="fc-val" style="left:calc(${w}% + 8px)">${fx(l.fertility)}${flag ? `<span class="fc-flag">${flag}</span>` : ""}</span>`;
+  row.addEventListener("mousemove", (e) => {
+    tooltip.style.display = "block";
+    tooltip.innerHTML = `<b>${l.name}</b> (${l.local_name}) — “${l.page_title}”<br>
+      X = ${fmt(l.word_tokens)} word tokens ÷ ${fmt(l.words)} words = <b>${fx(l.fertility)}</b><br>
+      ${fmt(l.unique_words)} unique words · ${fmt(l.total_tokens)} tokens incl. digits/punct.`;
+    const pad = 14;
+    let x = e.clientX + pad, y = e.clientY + pad;
+    const r = tooltip.getBoundingClientRect();
+    if (x + r.width > innerWidth - 8) x = e.clientX - r.width - pad;
+    if (y + r.height > innerHeight - 8) y = e.clientY - r.height - pad;
+    tooltip.style.left = x + "px";
+    tooltip.style.top = y + "px";
+  });
+  row.addEventListener("mouseleave", () => tooltip.style.display = "none");
+  plot.appendChild(row);
+});
+const axis = document.createElement("div");
+axis.className = "fc-axis";
+axis.innerHTML = [0, 0.5, 1.0, 1.5, 2.0].map(v =>
+  `<i style="left:${v / XMAXIS * 100}%">${v.toFixed(1)}</i>`).join("");
+plot.appendChild(axis);
+fchart.appendChild(labels);
+fchart.appendChild(plot);
+
+/* ---- score calculation ---- */
+document.getElementById("calc").innerHTML = LANG_ORDER.map(c => {
+  const l = byCode[c];
+  return `<div class="step"><div class="t">${XLBL[c]} — ${l.name}</div>
+    <div class="v">${fmt(l.word_tokens)} ÷ ${fmt(l.words)} = <b>${fx(l.fertility)}</b></div></div>`;
+}).join("");
+const sortedLbl = sorted.map(l => `${XLBL[l.code]} (${l.name}) = ${fx(l.fertility)}`).join(" &nbsp;&gt;&nbsp; ");
+document.getElementById("formula").innerHTML =
+  `Sorted: ${sortedLbl}<br>
+   <code>score = 1000 / (X<sub>max</sub> − X<sub>min</sub>) = 1000 / (${fx(P.x_max)} − ${fx(P.x_min)})
+   = 1000 / ${fx(P.spread)} = <b>${P.score.toFixed(2)}</b></code>`;
+
+/* ---- token statistics table ---- */
+document.querySelector("#statsTable tbody").innerHTML = LANG_ORDER.map(c => {
+  const l = byCode[c];
+  return `<tr>
+    <td><b>${l.name}</b> <span class="tag">${l.local_name}</span></td>
+    <td>${l.page_title}</td>
+    <td class="num">${fmt(l.words)}</td>
+    <td class="num">${fmt(l.unique_words)}</td>
+    <td class="num">${fmt(l.word_tokens)}</td>
+    <td class="num">${fmt(l.total_tokens)}</td>
+    <td class="num"><b>${fx(l.fertility)}</b></td>
+    <td class="num">${fx(l.baseline_fertility)}</td>
+  </tr>`;
+}).join("");
+
+/* ---- profiles table ---- */
+document.querySelector("#profTable tbody").innerHTML = DATA.profiles.map(p => `
+  <tr>
+    <td>${p.label.replace(" — SUBMITTED", "")}${p.key === DATA.meta.primary_profile ? ' <span class="tag sub">submitted</span>' : ""}</td>
+    <td class="num">${fx(p.langX.en)}</td>
+    <td class="num">${fx(p.langX.hi)}</td>
+    <td class="num">${fx(p.langX.te)}</td>
+    <td class="num">${fx(p.langX.mr)}</td>
+    <td class="num">${fx(p.spread)}</td>
+    <td class="num"><b>${p.score.toFixed(2)}</b></td>
+  </tr>`).join("");
+
+/* ---- token browser ---- */
+const TOKENS = P.tokens;
+const SHOW_CAP = 800;
+document.getElementById("tokNote").textContent =
+  `All ${fmt(TOKENS.length)} tokens of the shared vocabulary (${fmt(P.n_base)} base symbols + ` +
+  `${fmt(P.n_merges)} learned merges, in merge order). "</w>" marks end-of-word.`;
+const tokList = document.getElementById("tokList");
+const tokCount = document.getElementById("tokCount");
+function renderTokens(q) {
+  const query = (q || "").toLowerCase();
+  const hits = query ? TOKENS.filter(t => t.toLowerCase().includes(query)) : TOKENS;
+  tokCount.textContent = hits.length === TOKENS.length
+    ? `Showing ${fmt(Math.min(SHOW_CAP, hits.length))} of ${fmt(hits.length)} tokens — search to filter, download for the full list.`
+    : `${fmt(hits.length)} match${hits.length === 1 ? "" : "es"}${hits.length > SHOW_CAP ? ` — showing first ${fmt(SHOW_CAP)}` : ""}.`;
+  const frag = document.createDocumentFragment();
+  hits.slice(0, SHOW_CAP).forEach(t => {
+    const s = document.createElement("span");
+    s.className = "tok";
+    s.textContent = t;
+    frag.appendChild(s);
+  });
+  tokList.replaceChildren(frag);
+}
+renderTokens("");
+let debounce;
+document.getElementById("tokSearch").addEventListener("input", (e) => {
+  clearTimeout(debounce);
+  debounce = setTimeout(() => renderTokens(e.target.value), 120);
+});
+function download(name, text, type) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([text], { type }));
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+document.getElementById("dlTxt").addEventListener("click", () =>
+  download("india_bpe_tokens.txt", TOKENS.join("\n"), "text/plain;charset=utf-8"));
+document.getElementById("dlJson").addEventListener("click", () =>
+  download("india_bpe_tokens.json", JSON.stringify({
+    meta: DATA.meta, vocab_size: P.vocab_size, n_base: P.n_base, n_merges: P.n_merges,
+    languages: P.languages.map(l => ({ code: l.code, name: l.name, fertility: l.fertility })),
+    spread: P.spread, score: P.score, tokens: TOKENS,
+  }, null, 1), "application/json;charset=utf-8"));
+
+/* ---- footnotes ---- */
+document.getElementById("foot").innerHTML = `
+  Method notes (read before comparing numbers):
+  <ul>
+    <li>Training data = evaluation data: the intro extracts of the “India” article in each language,
+        loaded directly from <code>${DATA.meta.source}</code>. No extra corpora, no download step.</li>
+    <li>One <b>joint</b> vocabulary is trained for all four languages (the main-project approach).
+        ${fmt(P.vocab_size)} of the 10,000 budget is used — merging stops when no symbol pair repeats.</li>
+    <li>Words = maximal runs of Unicode letters/marks after NFC + casefold; digits and punctuation are
+        tokenized but not counted as words. Fertility counts tokens of word pretokens only.</li>
+    <li>English lands at X1 = ${fx(byCode.en.fertility)} here — above the assignment's ≤ 1.2 target.
+        With a shared budget the Indic scripts absorb most merges; per-language vocabulary partitioning
+        (the <code>partitioned_bpe</code> project) is what brings English under 1.2.</li>
+  </ul>`;
+</script>
+</body>
+</html>

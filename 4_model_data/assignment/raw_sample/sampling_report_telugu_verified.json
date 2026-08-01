@@ -1,0 +1,50 @@
+{
+  "actual_doc_count": 14596,
+  "actual_tokens_cl100k": 50000810,
+  "corpus_id": "telugu_verified",
+  "corpus_name": "AI4Bharat Sangraha — verified tier — Telugu",
+  "determinism_note": "No random draw is involved. The slice is contiguous from a fixed offset, so re-running this stage against the same upstream revision reproduces the same documents in the same order.",
+  "elapsed_s": 407.1,
+  "heldout": {
+    "data_files": "verified/tel/*.parquet",
+    "docs_after_removing_any_train_overlap": 300,
+    "docs_dropped_because_also_in_training_pool": 0,
+    "docs_taken": 300,
+    "draw_strategy": "contiguous_after_row_14896",
+    "first_row_index": 14896,
+    "hf_id": "ai4bharat/sangraha",
+    "last_row_index": 15195,
+    "license_agrees": false,
+    "license_declared_in_registry": null,
+    "license_reported_by_hf_api": "cc-by-4.0",
+    "license_status": "declared",
+    "note": "Starts past this corpus's own last training row, so it is disjoint from both this training slice and telugu_web's held-out rows 0-299.",
+    "rows_scanned": 300,
+    "rows_skipped_empty": 0,
+    "source_key": "heldout",
+    "tokens_cl100k": 959899
+  },
+  "heldout_file": "telugu_verified_heldout.jsonl",
+  "raw_file": "telugu_verified_raw.jsonl",
+  "sampling_reason": "Contiguous, like the unverified draw, so duplicate pairs survive into the sample. Offset past row 300 because rows 0-299 of this exact shard are telugu_web's frozen held-out set.",
+  "sampling_strategy": "contiguous_slice_after_heldout",
+  "sources": [
+    {
+      "data_files": "verified/tel/*.parquet",
+      "docs_taken": 14596,
+      "draw_strategy": "contiguous_after_row_300",
+      "first_row_index": 300,
+      "hf_id": "ai4bharat/sangraha",
+      "last_row_index": 14895,
+      "license_agrees": false,
+      "license_declared_in_registry": "CC-BY-4.0",
+      "license_reported_by_hf_api": "cc-by-4.0",
+      "license_status": "declared",
+      "rows_scanned": 14596,
+      "rows_skipped_empty": 0,
+      "source_key": "sangraha_verified_tel",
+      "tokens_cl100k": 50000810
+    }
+  ],
+  "target_tokens_cl100k": 50000000
+}

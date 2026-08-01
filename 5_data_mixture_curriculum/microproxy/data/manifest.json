@@ -1,0 +1,34 @@
+[
+ {
+  "lane": "indic",
+  "split": "train",
+  "docs": 11607,
+  "bytes": 78855918,
+  "source": "telugu_raw.jsonl",
+  "name": "Sangraha unverified / Telugu"
+ },
+ {
+  "lane": "indic",
+  "split": "heldout",
+  "docs": 300,
+  "bytes": 1571969,
+  "source": "telugu_heldout.jsonl",
+  "name": "Sangraha unverified / Telugu"
+ },
+ {
+  "lane": "reasoning",
+  "split": "train",
+  "docs": 9553,
+  "bytes": 48048206,
+  "source": "reasoning_sft_raw.jsonl",
+  "name": "Reasoning / SFT distillation mix"
+ },
+ {
+  "lane": "reasoning",
+  "split": "heldout",
+  "docs": 300,
+  "bytes": 1217810,
+  "source": "reasoning_sft_heldout.jsonl",
+  "name": "Reasoning / SFT distillation mix"
+ }
+]

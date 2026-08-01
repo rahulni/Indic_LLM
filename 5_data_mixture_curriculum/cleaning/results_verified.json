@@ -1,0 +1,1038 @@
+{
+ "corpus": "telugu_verified",
+ "name": "AI4Bharat Sangraha — verified tier — Telugu",
+ "generated_utc": "2026-07-31T18:10:21Z",
+ "elapsed_s": 5282.017562866211,
+ "disjointness": {
+  "frozen_heldout_ids": 300,
+  "training_ids": 14596,
+  "lowest_training_row": 300,
+  "overlap": 0,
+  "disjoint": true
+ },
+ "quality_classifier_caveat": "Labels are 200 Telugu unverified-web documents. Applied here to verified-tier text (curated web + OCR + ASR), which is the same language and script but not the same distribution. Reported with this caveat attached.",
+ "result": {
+  "corpus_id": "telugu_verified",
+  "corpus_name": "AI4Bharat Sangraha — verified tier — Telugu",
+  "corpus_kind": "web_crawl",
+  "hf_url": "https://huggingface.co/datasets/ai4bharat/sangraha",
+  "elapsed_s": 5271.06,
+  "sampling_report": {
+   "actual_doc_count": 14596,
+   "actual_tokens_cl100k": 50000810,
+   "corpus_id": "telugu_verified",
+   "corpus_name": "AI4Bharat Sangraha — verified tier — Telugu",
+   "determinism_note": "No random draw is involved. The slice is contiguous from a fixed offset, so re-running this stage against the same upstream revision reproduces the same documents in the same order.",
+   "elapsed_s": 407.1,
+   "heldout": {
+    "data_files": "verified/tel/*.parquet",
+    "docs_after_removing_any_train_overlap": 300,
+    "docs_dropped_because_also_in_training_pool": 0,
+    "docs_taken": 300,
+    "draw_strategy": "contiguous_after_row_14896",
+    "first_row_index": 14896,
+    "hf_id": "ai4bharat/sangraha",
+    "last_row_index": 15195,
+    "license_agrees": false,
+    "license_declared_in_registry": null,
+    "license_reported_by_hf_api": "cc-by-4.0",
+    "license_status": "declared",
+    "note": "Starts past this corpus's own last training row, so it is disjoint from both this training slice and telugu_web's held-out rows 0-299.",
+    "rows_scanned": 300,
+    "rows_skipped_empty": 0,
+    "source_key": "heldout",
+    "tokens_cl100k": 959899
+   },
+   "heldout_file": "telugu_verified_heldout.jsonl",
+   "raw_file": "telugu_verified_raw.jsonl",
+   "sampling_reason": "Contiguous, like the unverified draw, so duplicate pairs survive into the sample. Offset past row 300 because rows 0-299 of this exact shard are telugu_web's frozen held-out set.",
+   "sampling_strategy": "contiguous_slice_after_heldout",
+   "sources": [
+    {
+     "data_files": "verified/tel/*.parquet",
+     "docs_taken": 14596,
+     "draw_strategy": "contiguous_after_row_300",
+     "first_row_index": 300,
+     "hf_id": "ai4bharat/sangraha",
+     "last_row_index": 14895,
+     "license_agrees": false,
+     "license_declared_in_registry": "CC-BY-4.0",
+     "license_reported_by_hf_api": "cc-by-4.0",
+     "license_status": "declared",
+     "rows_scanned": 14596,
+     "rows_skipped_empty": 0,
+     "source_key": "sangraha_verified_tel",
+     "tokens_cl100k": 50000810
+    }
+   ],
+   "target_tokens_cl100k": 50000000
+  },
+  "raw_input": {
+   "doc_count": 14596,
+   "token_count_cl100k": 50000810
+  },
+  "stage_reports": [
+   {
+    "stage_num": 1,
+    "stage_name": "Extract",
+    "input_docs": 14596,
+    "output_docs": 14596,
+    "docs_removed": 0,
+    "survival_pct": 100.0,
+    "elapsed_s": 0.93,
+    "extra": {
+     "note": "Sangraha's unverified tier is pre-extracted plain text, not raw HTML, so this stage runs a verification pass rather than a full trafilatura-style extraction. It found residual markup in a small number of documents and stripped it; zero documents were dropped at this stage.",
+     "corpus_id": "telugu_verified",
+     "code_protection_enabled": false,
+     "docs_with_any_residual_markup": 36,
+     "docs_with_protected_spans": 0,
+     "total_protected_spans": 0,
+     "total_html_tags_stripped": 56,
+     "total_html_entities_seen": 3,
+     "total_boilerplate_lines_dropped": 1
+    },
+    "examples": [
+     {
+      "doc_id": "5af24ee0bfcc9a1217cce17a01b7d4ace784891fc4e6c07ffba4ac9789cc57d9",
+      "html_tags_found": 7,
+      "boilerplate_lines_dropped": 0,
+      "protected_spans": 0,
+      "note": "residual markup stripped; protected spans left untouched"
+     },
+     {
+      "doc_id": "df61ec3733b8bdcdc1d8fb31d4db89e857b3596f5b21e420e12906206725fa85",
+      "html_tags_found": 2,
+      "boilerplate_lines_dropped": 0,
+      "protected_spans": 0,
+      "note": "residual markup stripped; protected spans left untouched"
+     },
+     {
+      "doc_id": "1d2000d2ad201075d14ddd66819fb5f4ae67586448e4c4e63bba0e258528584f",
+      "html_tags_found": 2,
+      "boilerplate_lines_dropped": 0,
+      "protected_spans": 0,
+      "note": "residual markup stripped; protected spans left untouched"
+     },
+     {
+      "doc_id": "1b8417ca7dbee1814a2f20d91ba4bc704e399e741b046b85cde98a9d0b765732",
+      "html_tags_found": 2,
+      "boilerplate_lines_dropped": 0,
+      "protected_spans": 0,
+      "note": "residual markup stripped; protected spans left untouched"
+     },
+     {
+      "doc_id": "49cbc91eff52d6b86d3c965ab8d025fd923acc2cca9943694583326023153e0b",
+      "html_tags_found": 1,
+      "boilerplate_lines_dropped": 0,
+      "protected_spans": 0,
+      "note": "residual markup stripped; protected spans left untouched"
+     }
+    ]
+   },
+   {
+    "stage_num": 2,
+    "stage_name": "Normalize",
+    "input_docs": 14596,
+    "output_docs": 14596,
+    "docs_removed": 0,
+    "survival_pct": 100.0,
+    "elapsed_s": 2.51,
+    "extra": {
+     "note": "No documents are dropped here - this stage cleans characters, not documents. The character-level shrink and the noise inventory are the real signal. This corpus is web text with no conversation markers in it, so the ghost-tag scan runs and legitimately finds nothing - reported as zero rather than hidden.",
+     "corpus_id": "telugu_verified",
+     "ghost_tag_unification_enabled": false,
+     "code_protection_enabled": false,
+     "docs_with_ghost_markers": 0,
+     "ghost_format_breakdown": {},
+     "canonical_format_chosen": {
+      "system": "<|system|>",
+      "user": "<|user|>",
+      "assistant": "<|assistant|>",
+      "end": "<|end|>"
+     },
+     "code_blocks_protected": 0,
+     "ghost_tag_examples": [],
+     "total_chars_before": 29726501,
+     "total_chars_after": 29725377,
+     "char_shrink_pct": 0.0038,
+     "docs_with_any_noise_char": 15,
+     "noise_char_inventory": {
+      "LEFT-TO-RIGHT MARK": 2,
+      "PRIVATE USE AREA CHARACTER": 6,
+      "REPLACEMENT CHARACTER": 17,
+      "other control characters": 12
+     },
+     "total_noise_chars_removed": 37,
+     "distinct_noise_categories_found": 4,
+     "zwj_zwnj_preserved_count": 3,
+     "ghost_conversation_markers_found": 0
+    },
+    "examples": [
+     {
+      "doc_id": "9187d057ede9e4275347961e025392df2dbb91f60db80f746b472da5d4a11956",
+      "noise_removed": {
+       "LEFT-TO-RIGHT MARK": 1
+      },
+      "chars_before": 2172,
+      "chars_after": 2171
+     },
+     {
+      "doc_id": "b7307abe1ae681c2fa697e67085c912263d42e37657d0522027f72ff1bcbeba2",
+      "noise_removed": {
+       "PRIVATE USE AREA CHARACTER": 3
+      },
+      "chars_before": 1461,
+      "chars_after": 1458
+     },
+     {
+      "doc_id": "3ac7ee2c2db13845a76f36a4b7327b8f5997706be7c9166b571f7fa054e5c94f",
+      "noise_removed": {
+       "LEFT-TO-RIGHT MARK": 1
+      },
+      "chars_before": 1533,
+      "chars_after": 1532
+     },
+     {
+      "doc_id": "86f8cc5307c6970e79dddb2b205389471e92152eccc0b2315ae1c09f97e42e91",
+      "noise_removed": {
+       "REPLACEMENT CHARACTER": 1
+      },
+      "chars_before": 2094,
+      "chars_after": 2093
+     },
+     {
+      "doc_id": "7ce4bd38716b915cc9404dfd933c0abe63675a83d6c447a0e57a5557888652db",
+      "noise_removed": {
+       "REPLACEMENT CHARACTER": 6
+      },
+      "chars_before": 3765,
+      "chars_after": 3755
+     },
+     {
+      "doc_id": "1668b103d52c9fd3aff2604fdeefc0b84178a21e8376aecc991354af21bf9b3f",
+      "noise_removed": {
+       "REPLACEMENT CHARACTER": 1
+      },
+      "chars_before": 899,
+      "chars_after": 898
+     }
+    ]
+   },
+   {
+    "stage_num": 3,
+    "stage_name": "Language ID",
+    "input_docs": 14596,
+    "output_docs": 14580,
+    "docs_removed": 16,
+    "survival_pct": 99.89,
+    "elapsed_s": 18.96,
+    "extra": {
+     "note": "Runtime detection via py3langid (ISO 639-1) translated through an explicit 639-1 -> 639-3 map before comparing against the folder-claimed label, which is the concrete fix for the te/tel code-mismatch bug.",
+     "corpus_id": "telugu_verified",
+     "claimed_lang": "tel",
+     "docs_matching_claim": 14580,
+     "docs_too_short_to_judge_kept_asis": 0,
+     "docs_mismatched_and_dropped": 16,
+     "detected_language_distribution": {
+      "tel": 14580,
+      "mg": 2,
+      "ms": 1,
+      "sw": 7,
+      "jv": 1,
+      "qu": 3,
+      "eng": 1,
+      "la": 1
+     }
+    },
+    "examples": [
+     {
+      "doc_id": "1459cd794cad30e0b0f68c10df79717f5b3f4e34d76c4717ae1c0ff4ea5c69f5",
+      "claimed_lang": "tel",
+      "detected_lang": "mg",
+      "logprob": -5373.56,
+      "text_preview": "Ity fanangonam-boninkazo tropikaly ity dia manasongadina endrika takelaka lalina mahitsizoro miaraka amin'ny tahony roa.Ny fampiasana ankapobeny ny loko fotsy m"
+     },
+     {
+      "doc_id": "d3bf65d47e4c7f40ca2364b86635270e0a387e3facc1b1defabfd4c73c754ac5",
+      "claimed_lang": "tel",
+      "detected_lang": "mg",
+      "logprob": -2363.16,
+      "text_preview": "Na inona na inona mpividy vaovao na mpividy teo aloha, mino izahay fa misy fehezanteny lava sy fifandraisana azo itokisana ho an'ny CE Certificate Demand Swing "
+     },
+     {
+      "doc_id": "b6c8d29a3ea4dbb573c2325c8700a0140c08caad2678daf80917967dd36867cd",
+      "claimed_lang": "tel",
+      "detected_lang": "ms",
+      "logprob": -9245.34,
+      "text_preview": "1 Chihuashaga shuc tupuna caspita ñucama cuusha casnami nihuara, Jatari, Diosta alabana huasita rupachina rumi muntundas tupugri. Chi huasibi Diosta alabauc run"
+     },
+     {
+      "doc_id": "7a7e97b77368f01f25d6d34c6af33ed4a8c92d111ab017b01ee9545f8b7bb67e",
+      "claimed_lang": "tel",
+      "detected_lang": "sw",
+      "logprob": -5691.22,
+      "text_preview": "1 Apanll waana ateeja.\n¿Antaati nuw siyaa Israelchicheetsis tputs kizaa kasataru, sheeruri kasarangee? Nda.\nTputs wizanllee natsaku, kapeetaru, ¿antaati nuw siy"
+     },
+     {
+      "doc_id": "9e8853180ce3e94139997aeeb933660c6fd3d5b95079b99ce4be5d96206621d1",
+      "claimed_lang": "tel",
+      "detected_lang": "jv",
+      "logprob": -7160.25,
+      "text_preview": "1 Yuwa, latangka-yan kutjupa-kutjupa tjapiranytja. Nyangka-rna tjuma palunyanya pirninya kuwarri watjalku.\nYuwa, palya wati kurrimaalpa nyinarratjaku. 2 Nyangka"
+     },
+     {
+      "doc_id": "3bf8daa02340eedf68e9efcb727d85da0b8c43f68af00c68c26e775230678bba",
+      "claimed_lang": "tel",
+      "detected_lang": "qu",
+      "logprob": -7192.93,
+      "text_preview": "1 Yun te ni jini san in seña kaꞌnu ndevaꞌa ichi andivi: in ñasiꞌi ja ñusuku ña nikandii na kuinio saꞌun ña, te ichi nuu jaꞌa ña oo yoo, te ñuꞌu in corona xini ñ"
+     },
+     {
+      "doc_id": "9acae0c0f18e77f9eefd7cc27e9026e00956f4b2acdfa838cafcc98abb897333",
+      "claimed_lang": "tel",
+      "detected_lang": "sw",
+      "logprob": -3943.09,
+      "text_preview": "1 Wa kwenu hava wina muzeko ni zumwi, kana kete a tiye kuyenda ku chikota chava hedeni havusu muatuli yasa zumini, kuhita havusu vwa va jolola? 2 Kana ka mwizi "
+     },
+     {
+      "doc_id": "08b7f535005f58dc90a77c157cc52c83d78cbcef7cadf5b92bba6b21f7af72f3",
+      "claimed_lang": "tel",
+      "detected_lang": "sw",
+      "logprob": -4023.63,
+      "text_preview": "Rang va materiallar mehmonxona mebellari dizaynining tarkibiy qismlaridan biridir. Mehmonxona mebelining dastlabki taassurotlari odatda rang, shakli ikkinchi, k"
+     },
+     {
+      "doc_id": "90bf34c58d22dbe790b59693dcf073f078daf7da37c0e1e3582c557730bdeaef",
+      "claimed_lang": "tel",
+      "detected_lang": "eng",
+      "logprob": -10988.57,
+      "text_preview": "1995-96 సంవత్సరమునకు బడ్జెటు ( ఆదాయ వ్యయపట్టిక) గ్రాంట కొరకు అభ్యర్థనhave come to 1995 and the programme is still to take off. We are hopeful that by 2005, the "
+     },
+     {
+      "doc_id": "8bfb3ff4c7fbeca7f9e90d6f1ed0fd6ec28a099ee08940afea7694509b1378ef",
+      "claimed_lang": "tel",
+      "detected_lang": "sw",
+      "logprob": -8053.19,
+      "text_preview": "1 Nhiirũ, kiro ji ei mbapavamo pe me: Pejoryjory ti Cristo'gareheva'ero g̃waramo. Ymya'i ji ikwatijarukari mbatera pe momoranduva. Ji ndajikwerai reki ikwatijar"
+     },
+     {
+      "doc_id": "65bc934136e6e290fb861afcc56684070183c3e2b8c035f461101806f61f4ee3",
+      "claimed_lang": "tel",
+      "detected_lang": "sw",
+      "logprob": -6739.45,
+      "text_preview": "1 Ha'e gui teĩgue ju anjo xereve ijayvu va'ekue ou vy xemomyĩ imo'amy, avakue okeague gui omomyĩa rami.\n2 Ha'e rami vy oporandu xevy:\n - Mba'e nunga tu rexa?\n3 "
+     },
+     {
+      "doc_id": "9bf41386b548d9fb0cd5f95e992e210486af3cc168029b6ef1253729ecb217d4",
+      "claimed_lang": "tel",
+      "detected_lang": "qu",
+      "logprob": -8236.73,
+      "text_preview": "1 Cuyay wauguicuna panicuna, cay cartawanga ishcay cutinam gamcunaman cartata apachimü. Ishcanchrüpis munashcä ali tantiyacärinayquitam. 2 Diosninchipa willacog"
+     }
+    ]
+   },
+   {
+    "stage_num": 4,
+    "stage_name": "Quality filter",
+    "input_docs": 14580,
+    "output_docs": 12162,
+    "docs_removed": 2418,
+    "survival_pct": 83.416,
+    "elapsed_s": 6.68,
+    "extra": {
+     "note": "Layer 1 is a real Gopher/C4-style heuristic cascade using a script-appropriate stopword list - Telugu for the web corpus, English for the SFT corpus - rather than one English ruleset applied to everything, which is the filter-bias failure standard practice names. Layer 2 is a real scikit-learn LogisticRegression trained on 200 genuinely hand-labeled documents (pipeline/quality_labels.jsonl) - the LLM-distilled educational-value classifier this implements, done for real.",
+     "corpus_id": "telugu_verified",
+     "stopword_list_used": "telugu",
+     "trained_classifier_applied": true,
+     "fail_reason_breakdown": {
+      "too_few_stopwords": 1443,
+      "trained_classifier_reject": 792,
+      "symbol_word_ratio_too_high": 181,
+      "duplicate_line_wall": 2
+     },
+     "docs_rejected_by_trained_classifier_only": 792,
+     "avg_p_good_of_survivors": 0.7963,
+     "classifier_training": {
+      "training_labels_source": "pipeline/quality_labels.jsonl - 200 documents hand-labeled by Claude reading the actual text, resolved against raw_sample/telugu_quality_label_pool.jsonl",
+      "label_pool_is_disjoint_from_training_pool": true,
+      "label_pool_note": "The labeled documents come from a separately drawn, frozen sample of the same Sangraha shard, not from the pool this stage filters. The classifier therefore never scores a document it was fit on, so the corpus rejection rate below is a genuine out-of-sample number.",
+      "n_labeled_total": 200,
+      "n_good": 184,
+      "n_bad": 16,
+      "n_labels_missing_from_corpus": 0,
+      "train_test_split": {
+       "n_train": 160,
+       "n_test": 40,
+       "random_state": 42
+      },
+      "held_out_test_metrics": {
+       "accuracy": 0.9,
+       "precision": 0.9231,
+       "recall": 0.973,
+       "f1": 0.9474,
+       "confusion_matrix": {
+        "labels": [
+         "bad",
+         "good"
+        ],
+        "matrix": [
+         [
+          0,
+          3
+         ],
+         [
+          1,
+          36
+         ]
+        ]
+       }
+      },
+      "feature_coefficients": {
+       "n_words": 0.0006,
+       "mean_word_len": 0.9548,
+       "symbol_word_ratio": -0.3662,
+       "line_terminal_punct_ratio": 2.292,
+       "duplicate_line_ratio": -0.1455,
+       "stopword_hits_first_250": -0.0373,
+       "compression_ratio": -0.4401
+      },
+      "note": "held_out_test_metrics come from a model trained ONLY on the 80% train split, evaluated on the untouched 20% test split - an honest generalization estimate. The classifier actually used below is refit on all 200 labels for full data use."
+     },
+     "classifier_vs_old_proxy_disagreements": [
+      {
+       "doc_id": "1c286dcd7db67c602fd7191034cd0d6cf2069ac47b4ce8db2b31d21509309730",
+       "trained_classifier_verdict": "good",
+       "old_compression_proxy_verdict": "bad",
+       "trained_classifier_p_good": 0.7682,
+       "compression_ratio": 0.2258
+      },
+      {
+       "doc_id": "060af1e9093e6bc793614d4804f278aa3181b17390d1aa2a058ba8a7929e71dc",
+       "trained_classifier_verdict": "bad",
+       "old_compression_proxy_verdict": "good",
+       "trained_classifier_p_good": 0.4513,
+       "compression_ratio": 0.4293
+      },
+      {
+       "doc_id": "79ecdc3449f17d649ccf18d0bb1bfad652696ef766b9fa2d79620c6b8dbf13ad",
+       "trained_classifier_verdict": "good",
+       "old_compression_proxy_verdict": "bad",
+       "trained_classifier_p_good": 0.8419,
+       "compression_ratio": 0.247
+      },
+      {
+       "doc_id": "b00fc63cde3604d0182d44600924ec956f3452c6752c13b43cdac1cb5abd0b74",
+       "trained_classifier_verdict": "good",
+       "old_compression_proxy_verdict": "bad",
+       "trained_classifier_p_good": 0.9144,
+       "compression_ratio": 0.2348
+      },
+      {
+       "doc_id": "b6d0a1c8d151e87d271fd29e2d83af1119a2b989572e5c707ad606ae5cea9c66",
+       "trained_classifier_verdict": "good",
+       "old_compression_proxy_verdict": "bad",
+       "trained_classifier_p_good": 0.8137,
+       "compression_ratio": 0.2421
+      },
+      {
+       "doc_id": "c5b79f247dd9da8e5fd3d976ac2292bbc5ca04f4fdb550e534c91877ecc63887",
+       "trained_classifier_verdict": "good",
+       "old_compression_proxy_verdict": "bad",
+       "trained_classifier_p_good": 0.8658,
+       "compression_ratio": 0.2291
+      }
+     ]
+    },
+    "examples": [
+     {
+      "doc_id": "b6f13e21b229078c2454aa529da1cef7b091c151fa8499be1d1ae365b1548f3e",
+      "reason": "too_few_stopwords (1)",
+      "signals": {
+       "n_words": 39,
+       "mean_word_len": 6.18,
+       "symbol_word_ratio": 0.0,
+       "n_lines": 1,
+       "line_terminal_punct_ratio": null,
+       "duplicate_line_ratio": null,
+       "stopword_hits_first_250": 1,
+       "compression_ratio": 0.3992
+      }
+     },
+     {
+      "doc_id": "060af1e9093e6bc793614d4804f278aa3181b17390d1aa2a058ba8a7929e71dc",
+      "reason": "trained_classifier_reject (p_good=0.4513)",
+      "signals": {
+       "n_words": 46,
+       "mean_word_len": 6.54,
+       "symbol_word_ratio": 0.1087,
+       "n_lines": 6,
+       "line_terminal_punct_ratio": 0.3333,
+       "duplicate_line_ratio": 0.0,
+       "stopword_hits_first_250": 2,
+       "compression_ratio": 0.4293
+      }
+     },
+     {
+      "doc_id": "521b0bb8a5ce722461b26a06f936f8c64f861b152cf9ec51a07139794dc4e39c",
+      "reason": "trained_classifier_reject (p_good=0.4821)",
+      "signals": {
+       "n_words": 579,
+       "mean_word_len": 5.79,
+       "symbol_word_ratio": 0.0518,
+       "n_lines": 13,
+       "line_terminal_punct_ratio": 1.0,
+       "duplicate_line_ratio": 0.0,
+       "stopword_hits_first_250": 32,
+       "compression_ratio": 0.2541
+      }
+     },
+     {
+      "doc_id": "273d9c79ff5be78f27c789cb2526786db217b81664eb249bcb6c53621e7dc54c",
+      "reason": "trained_classifier_reject (p_good=0.4165)",
+      "signals": {
+       "n_words": 79,
+       "mean_word_len": 5.11,
+       "symbol_word_ratio": 0.038,
+       "n_lines": 2,
+       "line_terminal_punct_ratio": null,
+       "duplicate_line_ratio": null,
+       "stopword_hits_first_250": 12,
+       "compression_ratio": 0.3802
+      }
+     },
+     {
+      "doc_id": "e2a20cc219fb32f41115c2dc7bd356501b0eb8f1abc068a9201c567b18a544ed",
+      "reason": "too_few_stopwords (0)",
+      "signals": {
+       "n_words": 97,
+       "mean_word_len": 7.63,
+       "symbol_word_ratio": 0.0309,
+       "n_lines": 5,
+       "line_terminal_punct_ratio": 0.8,
+       "duplicate_line_ratio": 0.0,
+       "stopword_hits_first_250": 0,
+       "compression_ratio": 0.3283
+      }
+     },
+     {
+      "doc_id": "975011cae6ee97f6525c6a281bf3461414e72aef03193a155f0ec81e73527a11",
+      "reason": "too_few_stopwords (1)",
+      "signals": {
+       "n_words": 323,
+       "mean_word_len": 6.65,
+       "symbol_word_ratio": 0.0464,
+       "n_lines": 14,
+       "line_terminal_punct_ratio": 0.0,
+       "duplicate_line_ratio": 0.0,
+       "stopword_hits_first_250": 1,
+       "compression_ratio": 0.3106
+      }
+     },
+     {
+      "doc_id": "c41881f6eba35081da05743c41d8b0ce82945adbc6c8371dc6ad981b5e799d42",
+      "signals": {
+       "n_words": 222,
+       "mean_word_len": 7.05,
+       "symbol_word_ratio": 0.009,
+       "n_lines": 7,
+       "line_terminal_punct_ratio": 0.8571,
+       "duplicate_line_ratio": 0.0,
+       "stopword_hits_first_250": 16,
+       "compression_ratio": 0.3137
+      },
+      "trained_classifier_p_good": 0.7627
+     },
+     {
+      "doc_id": "bc687db75ceafebbff4a8389df03ea8aa8ea9cb7d0fe0c41ac6df87c41aa96f6",
+      "signals": {
+       "n_words": 88,
+       "mean_word_len": 8.17,
+       "symbol_word_ratio": 0.0,
+       "n_lines": 2,
+       "line_terminal_punct_ratio": null,
+       "duplicate_line_ratio": null,
+       "stopword_hits_first_250": 2,
+       "compression_ratio": 0.2932
+      },
+      "trained_classifier_p_good": 0.9532
+     },
+     {
+      "doc_id": "a0ab03367761e97ce16ef73d5e2a4c5f8bb1bb3dba85515075c8433cec0e1486",
+      "signals": {
+       "n_words": 179,
+       "mean_word_len": 6.73,
+       "symbol_word_ratio": 0.0168,
+       "n_lines": 11,
+       "line_terminal_punct_ratio": 1.0,
+       "duplicate_line_ratio": 0.0,
+       "stopword_hits_first_250": 20,
+       "compression_ratio": 0.2759
+      },
+      "trained_classifier_p_good": 0.7364
+     },
+     {
+      "doc_id": "0ab7a06374d01ee1d830a02f01039ecf7719c40405a07a9970cd175d2c8d1a53",
+      "signals": {
+       "n_words": 539,
+       "mean_word_len": 6.29,
+       "symbol_word_ratio": 0.0223,
+       "n_lines": 31,
+       "line_terminal_punct_ratio": 0.9355,
+       "duplicate_line_ratio": 0.0,
+       "stopword_hits_first_250": 24,
+       "compression_ratio": 0.2626
+      },
+      "trained_classifier_p_good": 0.6314
+     }
+    ]
+   },
+   {
+    "stage_num": 5,
+    "stage_name": "Deduplicate",
+    "input_docs": 12162,
+    "output_docs": 12162,
+    "docs_removed": 0,
+    "survival_pct": 100.0,
+    "elapsed_s": 76.66,
+    "extra": {
+     "note": "Global pass over the whole surviving pool (not per-shard), exactly the mechanism standard practice names as missing from Sangraha's original ingestion.",
+     "method": "MinHash + LSH banding",
+     "num_perm": 128,
+     "lsh_threshold": 0.75,
+     "lsh_bands_b": 11,
+     "lsh_rows_per_band_r": 11,
+     "shingle_size_words": 5,
+     "exact_duplicates_removed": 0,
+     "near_duplicates_removed": 0,
+     "total_removed": 0,
+     "cross_source_exact_duplicates": 0,
+     "cross_source_near_duplicates": 0,
+     "scale_local_vs_global": {
+      "shards_deduplicated_independently": [
+       {
+        "source_key": "sangraha_verified_tel",
+        "docs": 12162,
+        "removed_by_local_pass": 0,
+        "exact": 0,
+        "near": 0
+       }
+      ],
+      "total_removed_if_only_local_dedup": 0,
+      "total_removed_by_global_pass": 0,
+      "duplicates_only_a_global_pass_can_find": 0,
+      "note": "Each shard above was deduplicated in isolation with the identical code the global pass uses. The final row is the whole argument for one large-memory machine holding the entire corpus at once: those documents are invisible to every local pass, no matter how carefully each shard owner does their job."
+     },
+     "threshold_sensitivity_probe": [],
+     "threshold_probe_note": "Measured on near-duplicate pairs this run actually found in the corpus, not on candidates seeded in from outside. The sample is drawn as a contiguous slice precisely so that duplicate pairs survive into it - a uniform random sub-sample keeps both halves of a given pair with probability p-squared (~0.6% at p=0.08), which is why an earlier random draw of this same shard found almost nothing.",
+     "seeded_probe_legacy": []
+    },
+    "examples": []
+   },
+   {
+    "stage_num": 6,
+    "stage_name": "PII scrub",
+    "input_docs": 12162,
+    "output_docs": 12162,
+    "docs_removed": 0,
+    "survival_pct": 100.0,
+    "elapsed_s": 2638.49,
+    "extra": {
+     "note": "Redaction removes text, not documents - survival is 100% of documents by design. NAME_NER is a real model pass, run before the gazetteer so NAME_HIGH_CONFIDENCE / NAME_AMBIGUOUS below report only what the model did NOT already catch - a real recall comparison, not an assertion. Same ungated Telugu NER model the unverified corpus uses.",
+     "corpus_id": "telugu_verified",
+     "ner_model": "kuppuluri/telugu_bertu_ner",
+     "ner_model_license": "MIT",
+     "gazetteer_enabled": true,
+     "ner_truncation_chars": 1000,
+     "ner_coverage": {
+      "total_chars_in_corpus": 25196228,
+      "chars_actually_scanned": 11274310,
+      "pct_of_corpus_text_scanned": 44.75,
+      "docs_longer_than_window": 8977,
+      "docs_total": 12162,
+      "note": "Everything past the first 1000 characters of a document is NOT scanned by the NER layer. Regex layers still cover the whole document. This is a real recall limit, and this is its size."
+     },
+     "ner_min_confidence": 0.6,
+     "total_redactions_by_type": {
+      "NAME_NER": 97442,
+      "NAME_AMBIGUOUS": 5770,
+      "NAME_HIGH_CONFIDENCE": 2998,
+      "EMAIL": 4,
+      "PHONE": 41,
+      "IP": 1
+     },
+     "docs_with_any_pii": 10396,
+     "ambiguous_name_false_positive_risk_count": 5770,
+     "ner_recall_gain_examples": [
+      "రామిరెడ్డి ప్రతాప్ కుమార్ రెడ్డి",
+      "రామిరెడ్డి",
+      "పల్లమ",
+      "కామదేవచో",
+      "భీమ",
+      "చిర",
+      "చాళుక్య",
+      "పిదప",
+      "విక్రమచోరుని",
+      "చో",
+      "పవన్ కళ్యాణ్",
+      "హరీశ్ శంకర్"
+     ],
+     "ner_gazetteer_overlap_examples": [
+      "పవన్",
+      "నాగార్జున",
+      "వెంకటేష్",
+      "నరేష్",
+      "రజనీకాంత్",
+      "బాబు",
+      "శ్రీనివాస్",
+      "మహేష్",
+      "చిరంజీవి",
+      "రాజు",
+      "బాలకృష్ణ",
+      "కిరణ్"
+     ]
+    },
+    "examples": [
+     {
+      "doc_id": "00088dce2613bdbc3f9dac475ae13b5718f64d58a5ba75651cc9112088c1bb8f",
+      "counts": {
+       "NAME_NER": 13,
+       "NAME_AMBIGUOUS": 1
+      },
+      "matched_examples": {
+       "NAME_NER": "రామిరెడ్డి ప్రతాప్ కుమార్ రెడ్డి",
+       "NAME_AMBIGUOUS": "బాబు (also a generic honorific ('sir'/'mister'), not always a name)"
+      }
+     },
+     {
+      "doc_id": "000c60045d5d41de23d930880fb978531b526bf388dc50c686feb4c1651a9863",
+      "counts": {
+       "NAME_NER": 23,
+       "NAME_AMBIGUOUS": 3
+      },
+      "matched_examples": {
+       "NAME_NER": "పల్లమ",
+       "NAME_AMBIGUOUS": "రాజు (also the common noun 'king')"
+      }
+     },
+     {
+      "doc_id": "001255be09de0df0787fc0f287f5f6625e0cb0ce564f4234c75e48e1d5f9fca6",
+      "counts": {
+       "NAME_NER": 14
+      },
+      "matched_examples": {
+       "NAME_NER": "పవన్ కళ్యాణ్"
+      }
+     },
+     {
+      "doc_id": "001f207219e6cad727c21aa50b1021946a300fbb9ea56658c39dcd997731b499",
+      "counts": {
+       "NAME_NER": 9,
+       "NAME_AMBIGUOUS": 3
+      },
+      "matched_examples": {
+       "NAME_NER": "కౌశల్",
+       "NAME_AMBIGUOUS": "అమ్మ (also the common noun 'mother')"
+      }
+     },
+     {
+      "doc_id": "00202439dca68d30812002106a2d52b230418564d8c8ff49eff33b091c441573",
+      "counts": {
+       "NAME_AMBIGUOUS": 2
+      },
+      "matched_examples": {
+       "NAME_AMBIGUOUS": "అమ్మ (also the common noun 'mother')"
+      }
+     },
+     {
+      "doc_id": "0027e11aa315728ff63686dae5f3adec38a8884ed2f6706e49614064fd6b834f",
+      "counts": {
+       "NAME_NER": 17
+      },
+      "matched_examples": {
+       "NAME_NER": "సీఎంవో"
+      }
+     },
+     {
+      "doc_id": "00326a90edf8dc0e8d8463eedfbdfe07b1969718351ed77449970e2da0b892b4",
+      "counts": {
+       "NAME_NER": 6
+      },
+      "matched_examples": {
+       "NAME_NER": "బ్రయిన్ గా"
+      }
+     },
+     {
+      "doc_id": "004049f1787a48299649cd44ba1e3c09d26d3cfd8a8d9a11d51124c0a3d460c5",
+      "counts": {
+       "NAME_NER": 11,
+       "NAME_HIGH_CONFIDENCE": 2
+      },
+      "matched_examples": {
+       "NAME_NER": "జగదీశ్రెడ్డి",
+       "NAME_HIGH_CONFIDENCE": "లక్ష్మి"
+      }
+     }
+    ]
+   },
+   {
+    "stage_num": 7,
+    "stage_name": "Decontaminate",
+    "input_docs": 12162,
+    "output_docs": 11554,
+    "docs_removed": 608,
+    "survival_pct": 95.001,
+    "elapsed_s": 2.55,
+    "extra": {
+     "note": "Held-out fingerprint built from a pool that is disjoint from the training pool by construction - the same role the Golden Proxy pattern plays. Overlap threshold is deliberately small (>=2 shared 10-grams) so even partial leakage is caught. Starts past this corpus's own last training row, so it is disjoint from both this training slice and telugu_web's held-out rows 0-299.",
+     "corpus_id": "telugu_verified",
+     "heldout_docs_used": 300,
+     "fingerprint_shingle_size_words": 10,
+     "fingerprint_total_shingles": 69244,
+     "contamination_threshold_shared_shingles": 2,
+     "docs_flagged_contaminated_and_removed": 608,
+     "canary_mechanism_test": {
+      "canary_string": "CANARY-b9891d6cf98757d7",
+      "planted_in_doc_preview": true,
+      "scanned_generation_log_preview": "ఓట్లూ పడితేనే ఏ నేతైనా గెలుపు గుర్రం ఎక్కేది. అయిత CANARY-b9891d6cf98757d7 ే, వైసీపీకి చెందిన ఓ నేతమాత్రం ఎస్సీ, ఎస్టీల ...",
+      "leak_detected": true,
+      "mechanism_status": "PASS - canary found in the scanned output, exactly as designed"
+     }
+    },
+    "examples": [
+     {
+      "doc_id": "001f207219e6cad727c21aa50b1021946a300fbb9ea56658c39dcd997731b499",
+      "shared_shingles_with_heldout": 57,
+      "sample_shared_ngram": "- Sports Ranji Trophy 2024: విచిత్రకర ఘటన.. ముంబైతో పోరుకు బిహార్"
+     },
+     {
+      "doc_id": "007ec0ad89bb1559b178606eff482c2b1f1cbeb5ca83c69b3f18a83f6358fdd6",
+      "shared_shingles_with_heldout": 22,
+      "sample_shared_ngram": "ప్రారంభం కానున్న ఇంటర్నేషనల్ కైట్ ఫెస్టివల్ 2024.. - Automobiles Atal Setu"
+     },
+     {
+      "doc_id": "00935529d66cda6fa873bfcc77404ad207ace060b623b843ebb560fca54b0965",
+      "shared_shingles_with_heldout": 57,
+      "sample_shared_ngram": "- Sports Ranji Trophy 2024: విచిత్రకర ఘటన.. ముంబైతో పోరుకు బిహార్"
+     },
+     {
+      "doc_id": "00fc3a187ca5785d67503deaf1fb7c52e4365517792cdfecf1ac16cd63c79e96",
+      "shared_shingles_with_heldout": 40,
+      "sample_shared_ngram": "తగిన జాగ్రత్త వహించి, ఉత్పత్తులు లేదా సేవల గురించి సముచిత విచారణ చేసి"
+     },
+     {
+      "doc_id": "0110fa12fd4b1af90393d48a148d632e51a1c0e8800a013bb4b920a3ecf65f8a",
+      "shared_shingles_with_heldout": 57,
+      "sample_shared_ngram": "- Sports Ranji Trophy 2024: విచిత్రకర ఘటన.. ముంబైతో పోరుకు బిహార్"
+     }
+    ]
+   },
+   {
+    "stage_num": 8,
+    "stage_name": "Manifest",
+    "input_docs": 11554,
+    "output_docs": 11554,
+    "docs_removed": 0,
+    "survival_pct": 100.0,
+    "elapsed_s": 8.86,
+    "extra": {
+     "note": "No text is removed at this stage. The manifest is the object the gating rule enforces - a shard without one does not ship. content_sha256 and the token count are both computed fresh here, not carried over from any earlier estimate.",
+     "manifest": {
+      "corpus_id": "telugu_verified",
+      "corpus_name": "AI4Bharat Sangraha — verified tier — Telugu",
+      "source": "ai4bharat/sangraha (verified/tel/*.parquet)",
+      "license": "CC-BY-4.0",
+      "shard_manifests": [
+       {
+        "shard_id": "sangraha_verified_tel",
+        "source": "ai4bharat/sangraha",
+        "license": "CC-BY-4.0",
+        "license_status": "CLEAN",
+        "license_reason": "CC-BY-4.0 permits training use with attribution.",
+        "ships": true,
+        "contributor": "Indic data-cleaning pipeline",
+        "cleaning_script_hash_sha256": "b727a9d8a7a78ae2ffbab8c4926e6afb215b4f0f76c01f4e937ae702d890a88b",
+        "content_sha256": "f3cb746dd6d046a52aac4974b96b210d74115af29c6ab163668bf6712a7dffc8",
+        "doc_count": 11554,
+        "token_count_cl100k": 39238266,
+        "word_count": 2952088,
+        "fertility_ratio_tokens_per_word": 13.292,
+        "language_breakdown": {
+         "tel": 11554
+        },
+        "timestamp_utc": "2026-07-31T17:28:26.041057+00:00"
+       }
+      ],
+      "shards_total": 1,
+      "shards_blocked": 0,
+      "shards_blocked_ids": [],
+      "tokens_blocked_from_shipping": 0,
+      "gating_note": "Every shard carries its own license and its own status. A BLOCKED shard is counted in the statistics above but does not ship - which is the point of the gate: the corpus is not a single undifferentiated blob, and one bad source should cost you that source, not the whole run.",
+      "contributor": "Indic data-cleaning pipeline",
+      "cleaning_script_name": "cleaning pipeline (stages 0-8)",
+      "cleaning_script_hash_sha256": "b727a9d8a7a78ae2ffbab8c4926e6afb215b4f0f76c01f4e937ae702d890a88b",
+      "cleaning_script_per_file_hash": {
+       "common.py": "1bb84089e5df06d0de09554303fdeb202729f207dc6ed5a77ca2eaa6381d4304",
+       "corpora.py": "0c5f5b126c24ac109b24e0d22580d7ba9d904daf3a09b784ad434db964fc4fce",
+       "stage0_sample.py": "cdd6481fb9488b4720f04f8b5e71da4082d78ce5851fe824167a2a60f090ee7d",
+       "stage1_extract.py": "34d9cf8c2628e54fa4e3a78d7d4c6fff26f18ae0bc4f8c349dd2f6f745dcc14f",
+       "stage2_normalize.py": "f0ff613dedd34e650c7aae1fe8bf31b066ad68f3e4484e5425dd9a1ac1d3e62d",
+       "stage3_langid.py": "7f04c5fb4e35fd28401f13be1d4813fad3e83f4fca230a8e61fd22715a29f1c2",
+       "stage4_quality.py": "bfeb8c2d247031f461cd6e7e9d5e5fa39ed8870bdee0e08a1e366bbc82dd71e2",
+       "stage5_dedup.py": "2a8231e5af74c9ccc018351ad42713ccb63339a097dd8439452169b9229d6271",
+       "stage6_pii.py": "56bb1cd3a20daabf499a1c57af0bc9fa7e2086524cd2c57c2116de34490c6c86",
+       "stage7_decontaminate.py": "8c888b60acc5ec9af19d0858c462d6f0cf62252ad85b06380221851e402bd639",
+       "stage8_manifest.py": "3027b16eba29e65b65f1db0c90ad4ab4d8683bf819c834904f8d335089fb5baf"
+      },
+      "content_sha256": "f3cb746dd6d046a52aac4974b96b210d74115af29c6ab163668bf6712a7dffc8",
+      "final_doc_count": 11554,
+      "final_token_count_cl100k": 39238266,
+      "final_word_count": 2952088,
+      "fertility_ratio_tokens_per_word": 13.292,
+      "language_breakdown": {
+       "tel": 11554
+      },
+      "timestamp_utc": "2026-07-31T17:28:26.041057+00:00"
+     }
+    },
+    "examples": []
+   }
+  ],
+  "survival_funnel": [
+   {
+    "stage": 0,
+    "name": "Raw input",
+    "docs": 14596,
+    "tokens": 50000810
+   },
+   {
+    "stage": 1,
+    "name": "Extract",
+    "docs": 14596,
+    "docs_removed": 0,
+    "survival_pct_this_stage": 100.0
+   },
+   {
+    "stage": 2,
+    "name": "Normalize",
+    "docs": 14596,
+    "docs_removed": 0,
+    "survival_pct_this_stage": 100.0
+   },
+   {
+    "stage": 3,
+    "name": "Language ID",
+    "docs": 14580,
+    "docs_removed": 16,
+    "survival_pct_this_stage": 99.89
+   },
+   {
+    "stage": 4,
+    "name": "Quality filter",
+    "docs": 12162,
+    "docs_removed": 2418,
+    "survival_pct_this_stage": 83.416
+   },
+   {
+    "stage": 5,
+    "name": "Deduplicate",
+    "docs": 12162,
+    "docs_removed": 0,
+    "survival_pct_this_stage": 100.0
+   },
+   {
+    "stage": 6,
+    "name": "PII scrub",
+    "docs": 12162,
+    "docs_removed": 0,
+    "survival_pct_this_stage": 100.0
+   },
+   {
+    "stage": 7,
+    "name": "Decontaminate",
+    "docs": 11554,
+    "docs_removed": 608,
+    "survival_pct_this_stage": 95.001
+   },
+   {
+    "stage": 8,
+    "name": "Manifest",
+    "docs": 11554,
+    "docs_removed": 0,
+    "survival_pct_this_stage": 100.0,
+    "tokens": 39238266
+   }
+  ],
+  "determinism_check": {
+   "run1_content_sha256": "f3cb746dd6d046a52aac4974b96b210d74115af29c6ab163668bf6712a7dffc8",
+   "run2_content_sha256": "f3cb746dd6d046a52aac4974b96b210d74115af29c6ab163668bf6712a7dffc8",
+   "run1_script_hash": "b727a9d8a7a78ae2ffbab8c4926e6afb215b4f0f76c01f4e937ae702d890a88b",
+   "run2_script_hash": "b727a9d8a7a78ae2ffbab8c4926e6afb215b4f0f76c01f4e937ae702d890a88b",
+   "run1_final_doc_count": 11554,
+   "run2_final_doc_count": 11554,
+   "content_hash_matches": true,
+   "script_hash_matches": true,
+   "doc_count_matches": true,
+   "run2_executed_in_separate_process": true,
+   "run2_pythonhashseed": "696218425",
+   "method_note": "The second run is a separate interpreter launched with a different PYTHONHASHSEED. Two passes inside one process share a hash seed, so any accidental dependence on set or dict iteration order would reproduce identically and the check would pass without proving anything. This version can actually fail.",
+   "fully_reproducible": true
+  },
+  "final_manifest": {
+   "corpus_id": "telugu_verified",
+   "corpus_name": "AI4Bharat Sangraha — verified tier — Telugu",
+   "source": "ai4bharat/sangraha (verified/tel/*.parquet)",
+   "license": "CC-BY-4.0",
+   "shard_manifests": [
+    {
+     "shard_id": "sangraha_verified_tel",
+     "source": "ai4bharat/sangraha",
+     "license": "CC-BY-4.0",
+     "license_status": "CLEAN",
+     "license_reason": "CC-BY-4.0 permits training use with attribution.",
+     "ships": true,
+     "contributor": "Indic data-cleaning pipeline",
+     "cleaning_script_hash_sha256": "b727a9d8a7a78ae2ffbab8c4926e6afb215b4f0f76c01f4e937ae702d890a88b",
+     "content_sha256": "f3cb746dd6d046a52aac4974b96b210d74115af29c6ab163668bf6712a7dffc8",
+     "doc_count": 11554,
+     "token_count_cl100k": 39238266,
+     "word_count": 2952088,
+     "fertility_ratio_tokens_per_word": 13.292,
+     "language_breakdown": {
+      "tel": 11554
+     },
+     "timestamp_utc": "2026-07-31T17:28:26.041057+00:00"
+    }
+   ],
+   "shards_total": 1,
+   "shards_blocked": 0,
+   "shards_blocked_ids": [],
+   "tokens_blocked_from_shipping": 0,
+   "gating_note": "Every shard carries its own license and its own status. A BLOCKED shard is counted in the statistics above but does not ship - which is the point of the gate: the corpus is not a single undifferentiated blob, and one bad source should cost you that source, not the whole run.",
+   "contributor": "Indic data-cleaning pipeline",
+   "cleaning_script_name": "cleaning pipeline (stages 0-8)",
+   "cleaning_script_hash_sha256": "b727a9d8a7a78ae2ffbab8c4926e6afb215b4f0f76c01f4e937ae702d890a88b",
+   "cleaning_script_per_file_hash": {
+    "common.py": "1bb84089e5df06d0de09554303fdeb202729f207dc6ed5a77ca2eaa6381d4304",
+    "corpora.py": "0c5f5b126c24ac109b24e0d22580d7ba9d904daf3a09b784ad434db964fc4fce",
+    "stage0_sample.py": "cdd6481fb9488b4720f04f8b5e71da4082d78ce5851fe824167a2a60f090ee7d",
+    "stage1_extract.py": "34d9cf8c2628e54fa4e3a78d7d4c6fff26f18ae0bc4f8c349dd2f6f745dcc14f",
+    "stage2_normalize.py": "f0ff613dedd34e650c7aae1fe8bf31b066ad68f3e4484e5425dd9a1ac1d3e62d",
+    "stage3_langid.py": "7f04c5fb4e35fd28401f13be1d4813fad3e83f4fca230a8e61fd22715a29f1c2",
+    "stage4_quality.py": "bfeb8c2d247031f461cd6e7e9d5e5fa39ed8870bdee0e08a1e366bbc82dd71e2",
+    "stage5_dedup.py": "2a8231e5af74c9ccc018351ad42713ccb63339a097dd8439452169b9229d6271",
+    "stage6_pii.py": "56bb1cd3a20daabf499a1c57af0bc9fa7e2086524cd2c57c2116de34490c6c86",
+    "stage7_decontaminate.py": "8c888b60acc5ec9af19d0858c462d6f0cf62252ad85b06380221851e402bd639",
+    "stage8_manifest.py": "3027b16eba29e65b65f1db0c90ad4ab4d8683bf819c834904f8d335089fb5baf"
+   },
+   "content_sha256": "f3cb746dd6d046a52aac4974b96b210d74115af29c6ab163668bf6712a7dffc8",
+   "final_doc_count": 11554,
+   "final_token_count_cl100k": 39238266,
+   "final_word_count": 2952088,
+   "fertility_ratio_tokens_per_word": 13.292,
+   "language_breakdown": {
+    "tel": 11554
+   },
+   "timestamp_utc": "2026-07-31T17:28:26.041057+00:00"
+  }
+ }
+}

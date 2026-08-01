@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Cleaning Pipeline — two real corpora</title>
+<meta name="description" content="8 real cleaning strategies applied to a 50M-token Telugu web crawl and a 12M-token reasoning/SFT mix, with genuine before/after statistics.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧹</text></svg>">
+<link rel="stylesheet" href="styles.css">
+<script>
+  /* Dark by default; honor a stored choice. Runs before paint to avoid a flash. */
+  (function () {
+    try {
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("s4-theme") || "dark");
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="dot"></span> Cleaning Widget</div>
+    <nav class="toc">
+      <a href="#strategies">Strategies</a>
+      <a href="#dataset">Dataset</a>
+      <a href="#cleaning">What was cleaned</a>
+      <a href="#concerns">Other concerns</a>
+      <a href="#stats">Final stats</a>
+      <a href="#demo">Try it</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">☾</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="hero">
+    <div class="eyebrow">Data Cleaning &amp; Deduplication</div>
+    <h1>Eight real cleaning strategies, two real corpora.</h1>
+    <p class="lead">
+      Not a simulation — an actual Python pipeline, re-run in a separate process for a
+      determinism check, against a 50M-token Telugu web crawl <em>and</em> a 12M-token four-source reasoning/SFT
+      mix. Two corpora because one could not exercise all eight strategies: a web crawl has no conversation markers
+      to unify, and a single source cannot demonstrate cross-shard deduplication. Every number on this page traces
+      back to <code>assignment/results.json</code>.
+    </p>
+  </div>
+
+  <!-- ============ 1. How many strategies ============ -->
+  <section class="block" id="strategies">
+    <div class="block-head">
+      <h2><span class="num">1</span>How many strategies were there, and what are they</h2>
+    </div>
+    <div class="hero-stat">
+      <div class="figure">8</div>
+      <div class="figure-cap">
+        <div class="t">core pipeline stages, per the authoritative stage list</div>
+        <div class="d">Read directly out of the reference pipeline map ("eight stages") and its prose recap — not a guess.</div>
+      </div>
+    </div>
+    <div class="strategy-rail" id="strategyRail"></div>
+    <div class="note-box" id="strategyFootnote"></div>
+  </section>
+
+  <!-- ============ 2. Dataset ============ -->
+  <section class="block" id="dataset">
+    <div class="block-head">
+      <h2><span class="num">2</span>What dataset was picked</h2>
+      <div class="block-sub">Two corpora, chosen so all eight strategies have real work to do — plus how each sample was drawn, which turned out to matter more than the choice of corpus.</div>
+    </div>
+    <div class="corpus-tabs"></div>
+    <div class="dataset-card">
+      <div class="dataset-header">
+        <div>
+          <h3 id="datasetName"></h3>
+          <div class="meta-row" id="datasetMeta"></div>
+        </div>
+        <a id="hfLink" class="hf-link" target="_blank" rel="noopener">View on Hugging Face →</a>
+      </div>
+      <div class="dataset-body">
+        <div>
+          <div class="mini-label">Why this one</div>
+          <ul class="why-list" id="datasetWhy"></ul>
+        </div>
+        <div class="dataset-notes">
+          <div class="note-box"><b>Held-out set:</b> <span id="datasetHeldout"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="samplingProvenance" class="sampling-section"></div>
+
+    <div class="alt-section">
+      <div class="mini-label">Alternatives considered — and why not this one <span class="alt-count" id="altCount"></span></div>
+      <div class="alt-grid" id="altGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============ 3. What was cleaned ============ -->
+  <section class="block" id="cleaning">
+    <div class="block-head">
+      <h2><span class="num">3</span>What was cleaned, why, and how</h2>
+      <div class="block-sub">The real survival funnel, then every stage's genuine before/after and example artifacts. Switch corpus to see how the same eight stages behave on very different input.</div>
+      <button class="btn-sm" id="expandAllBtn">Expand all</button>
+    </div>
+    <div class="corpus-tabs"></div>
+
+    <div class="chart-card" style="margin-bottom:20px">
+      <h4>Survival funnel — raw input through all 8 stages</h4>
+      <div class="sub">Document count at each stage (real pipeline output, not illustrative)</div>
+      <div id="funnelChart"></div>
+      <div class="sub" id="funnelCaption" style="margin-top:6px"></div>
+    </div>
+
+    <div class="stage-detail" id="stageDetail"></div>
+  </section>
+
+  <!-- ============ 4. Other concerns ============ -->
+  <section class="block" id="concerns">
+    <div class="block-head">
+      <h2><span class="num">4</span>Any other strategy or concern cleaned up</h2>
+      <div class="block-sub">Extras beyond the 8 stages — reproducibility, honest limitations, and licensing.</div>
+    </div>
+    <div class="chart-card" style="margin-bottom:16px">
+      <h4>Determinism check</h4>
+      <div class="sub">Full 8-stage pipeline re-run end-to-end into a separate directory, on the identical frozen input</div>
+      <div id="determinismStatus"></div>
+    </div>
+    <div class="concern-grid" id="concernGrid"></div>
+  </section>
+
+  <!-- ============ 5. Final statistics ============ -->
+  <section class="block" id="stats">
+    <div class="block-head">
+      <h2><span class="num">5</span>Final statistics</h2>
+    </div>
+    <div class="corpus-tabs"></div>
+    <div class="kpi-grid" id="kpiGrid" style="margin-bottom:16px"></div>
+    <div id="tokenizerCaveat" style="margin-bottom:24px"></div>
+
+    <div class="grid-2">
+      <div class="chart-card">
+        <h4>Per-stage timing &amp; survival</h4>
+        <table class="tbl">
+          <thead><tr><th>Stage</th><th>In</th><th>Out</th><th>Survival</th><th>Time</th></tr></thead>
+          <tbody id="stageStatsTable"></tbody>
+        </table>
+      </div>
+      <div class="chart-card">
+        <h4>Final shard manifest</h4>
+        <div class="sub">Real provenance record — content hash computed from the cleaned text itself</div>
+        <pre class="manifest" id="finalManifestView"></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Try it yourself ============ -->
+  <section class="block" id="demo">
+    <div class="block-head">
+      <h2>Try the real Normalize stage yourself</h2>
+      <div class="block-sub">The same NFC-normalize + noise-strip + ZWJ/ZWNJ-preserve + ghost-tag scan logic, ported to JS. Edit the text.</div>
+    </div>
+    <div class="demo-card">
+      <div class="demo-grid">
+        <div>
+          <label>Input (editable)</label>
+          <textarea id="demoInput" spellcheck="false"></textarea>
+        </div>
+        <div>
+          <label>What the cleaner sees</label>
+          <div class="demo-out" id="demoOutput"></div>
+        </div>
+      </div>
+      <div class="demo-unified-wrap">
+        <label>After unification — every dialect rewritten to one canonical format</label>
+        <pre class="demo-unified" id="demoUnified"></pre>
+      </div>
+      <div class="demo-stats" id="demoStats"></div>
+    </div>
+  </section>
+</div>
+
+<script src="data.js"></script>
+<script src="narrative.js"></script>
+<script src="panels.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

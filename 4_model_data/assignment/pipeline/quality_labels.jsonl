@@ -1,0 +1,200 @@
+{"doc_id": "01b93e6698306b5cd9c16a3bd06e27bbf87f2ea8afe254de4388ead5ceb0eb69", "label": "good", "rationale": "coherent, genuine Telugu prose - child-nutrition health article"}
+{"doc_id": "0226cc637c8dc481b9d81527d745421976618fcb86076c8c9a5cfd4ac6258243", "label": "good", "rationale": "coherent, genuine Telugu prose - Telugu cinema studio history"}
+{"doc_id": "02b928aadda04d1422a99696d792260e821b763d6ac4f88da5e6be8693cc0665", "label": "good", "rationale": "coherent, genuine Telugu prose - army landmine casualty news"}
+{"doc_id": "03d701583f1a57fd5f3588160f5ad4d1f3a6a6f5fdf0558af935606fce32fae6", "label": "good", "rationale": "coherent, genuine Telugu prose - political statements exchange"}
+{"doc_id": "041dfa58bb02b2f2efe8e1751cf0e9ff77c160c980c86c810baa8f791afc68c6", "label": "good", "rationale": "coherent, genuine Telugu prose - movie audio-release event news"}
+{"doc_id": "0513ce5c6301ef8fac33471100ac0288b3dfcdb1419873253491187bdf62d9e3", "label": "good", "rationale": "coherent, genuine Telugu prose - singer/dancer biography"}
+{"doc_id": "05f492cee6a479ca3537fee116e9a96349602efbc7dc6089ca73f3f31aa80422", "label": "bad", "rationale": "pure headline-fragment aggregation (UP freezer/mobile-in-stomach/Supreme Court teasers strung together), not a single coherent article"}
+{"doc_id": "074309d5e8446a8e1d22d638c341c9e90a60388b8da2432be53e25b9e9fbcef6", "label": "good", "rationale": "coherent, genuine Telugu prose - actress interview"}
+{"doc_id": "09e21b0f325c7e243287cdc47f04e211822db22732cb02e46434e1b082a6900f", "label": "good", "rationale": "coherent, genuine Telugu prose - movie plot gossip"}
+{"doc_id": "0b96766d141c1f802c89e5686ff7306d0f90dd556268075c8405178698fd324d", "label": "good", "rationale": "coherent, genuine Telugu prose - civic-minded volunteer news"}
+{"doc_id": "0c9b41f08def41c0b22f80319fdf8b09125198e38347c12004c3f0628d066842", "label": "good", "rationale": "coherent, genuine Telugu prose - product feature article"}
+{"doc_id": "0ddec980809c9b27c86809e113ea107c79a33964b963bd6611056c487a6a4b25", "label": "good", "rationale": "coherent, genuine Telugu prose - political defection news"}
+{"doc_id": "1595480470d6c73c39a111e7153d3cbac7e6216ef4ba3610f2eb6b02d9a38974", "label": "good", "rationale": "coherent, genuine Telugu prose - dowry-harassment tragedy news"}
+{"doc_id": "17039d2ebbc967e9f60b54424921a712502b4d5840867a671df45b6c6d3f2553", "label": "good", "rationale": "coherent, genuine Telugu prose - Tollywood roundup"}
+{"doc_id": "1825ece35f224e866680b22de7cf1d6c1d8d3ba4a9630115da28092ab198cd6d", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity family visit news"}
+{"doc_id": "18a567bb423955f42969209ee967d7ffb5823348414a80bcf7f32f1cd438bc09", "label": "good", "rationale": "coherent, genuine Telugu prose - religious pamphlet description"}
+{"doc_id": "1990f05d59dedf6e33fa08ec98d81d1d5fd50d18708851791822c622609c3e63", "label": "good", "rationale": "coherent, genuine Telugu prose - director testimonial"}
+{"doc_id": "1afedb9c178a6ac659eb65506be39853ac5ea36b13a3d0fd5ebd6dbe227cfc82", "label": "good", "rationale": "coherent, genuine Telugu prose - COVID/celebrity health news"}
+{"doc_id": "1b5e10e6b4056ef32317f7b76e20a00fefd0336bd26adb4305cfb3cd932fd4d9", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity twins news"}
+{"doc_id": "1babc15133c2e3a122cc3f224f84e0f1ae3557d76f99c60df6f1e3c4c3483876", "label": "good", "rationale": "coherent, genuine Telugu prose - wildlife sanctuary article"}
+{"doc_id": "1bf40356af022797d7789c0582085466106ac1e9c2fa2138e0b2e54347ee5fa7", "label": "good", "rationale": "coherent, genuine Telugu prose - currency-note confusion news"}
+{"doc_id": "1cff481b8d9454cabb1b229b9b9ee4bf8f18ba2acce958b17b045d760eac858f", "label": "good", "rationale": "coherent, genuine Telugu prose - dental health tips"}
+{"doc_id": "1e0a236569f16828049b7e06060b3f6e722ef12dc21de02c519a195ff026cf12", "label": "good", "rationale": "coherent, genuine Telugu prose - cricket match report"}
+{"doc_id": "1e716da18796f7902389f2bce94f97a5302940d332a25d84de2b268a67cb86bc", "label": "good", "rationale": "coherent, genuine Telugu prose - leopard rescue news"}
+{"doc_id": "1fa0d8171116cc1fb044097eebea98b372d1475315ae3bdd7dbd937756c5e6aa", "label": "good", "rationale": "coherent, genuine Telugu prose - state assembly political news"}
+{"doc_id": "21a24b451e194058972d5c74886b239db577e28692c88b489ef59c0bf711ee02", "label": "bad", "rationale": "broken machine-translated grammar - awkward Telugu syntax, English 'watercress' left untranslated, sentence structure doesn't read as natural Telugu"}
+{"doc_id": "2298594339d7aaeb45b920b2db69975f01752c764c1ce00f872add69cddcb657", "label": "good", "rationale": "coherent, genuine Telugu prose - labor protest news"}
+{"doc_id": "232580c7d94e04b1ee906d2bdb4c4a4361d297d1b0b5e772e2380065894add60", "label": "good", "rationale": "coherent, genuine Telugu prose - post-office savings scheme article"}
+{"doc_id": "239f989b91394d0ee953f5ab7a131129912fd4c34efab8e193946b95326939e2", "label": "bad", "rationale": "fragmented, disjointed phrases (water-shortage complaint) rather than coherent prose"}
+{"doc_id": "26161c0378d0c9dbfe4ae85e923566a2e04482dfaf4beaf9c7655111729b097f", "label": "good", "rationale": "coherent, genuine Telugu prose - education policy news"}
+{"doc_id": "27377d0b84fd6cb4bcc6e33ba5f9a75fa6b29d4ae7afe7015afd05943d49ddc3", "label": "good", "rationale": "coherent, genuine Telugu prose - antivirus study tech news"}
+{"doc_id": "2c65972e27d789120c1f11092bb604174f10d8854e42958d5dc9b3ba52b79b38", "label": "good", "rationale": "coherent, genuine Telugu prose - Beirut explosion survivor news"}
+{"doc_id": "2d859342c6dbdddfdc3e98ee573417f5b05760d354ad2021c86a7b8c2c61f017", "label": "good", "rationale": "coherent, genuine Telugu prose - gaming-addiction social article"}
+{"doc_id": "2ea838b4895bf122f88f1498126e5ddc2f2159b6eeadffb0c57c978ddaa04e2d", "label": "good", "rationale": "coherent, genuine Telugu prose - film-association election news"}
+{"doc_id": "2f3bac265da7dbdfe8232eef39d6508940bacb019fd3150c5700b651f35affc2", "label": "good", "rationale": "coherent, genuine Telugu prose - political criticism news"}
+{"doc_id": "301b0eae9af7d46e2376eff3a9cf78f879faa867b8377dd3557595fd2d0a75d3", "label": "good", "rationale": "coherent, genuine Telugu prose - classical dancer biography"}
+{"doc_id": "308bf5228e10e447cdbfedd1c50ebb8554a29d786d1d319d66986b284428eb35", "label": "good", "rationale": "coherent, genuine Telugu prose - Ghadar Party historical article"}
+{"doc_id": "30f30204e11f8aaf6af1821c7154f6ade40edb4bed00fa555390d3259a1b9e13", "label": "good", "rationale": "coherent, genuine Telugu prose - shelved movie projects news"}
+{"doc_id": "345944c2071558a767804624f0722fa7e7c33bfa9001f789d2474bf122233230", "label": "good", "rationale": "coherent, genuine Telugu prose - COVID case-count news"}
+{"doc_id": "35ed0d548a733e9d3865058c77c58c58aa20b43db81c03222ce1c83523f4e47c", "label": "good", "rationale": "coherent, genuine Telugu prose - religious-activity political news"}
+{"doc_id": "367579a4b8bc0ba96aaa91ee066be0760848ef52646f0524c0483ffc47e58e0f", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity fitness news"}
+{"doc_id": "369a37b5a0bf2e079359fc1e7f9fd8aa080c6c17b1f04d62e36c3780b1e09ebd", "label": "good", "rationale": "coherent, genuine Telugu prose - NCB officer news"}
+{"doc_id": "374249d29b6dc7e87dded27d87f2f4a26e493b03a6cfbf080391d02543352b5e", "label": "good", "rationale": "coherent, genuine Telugu prose - district collector farmer-welfare news"}
+{"doc_id": "37fd61174ac0f8db21fd8b0ffa39b2ca2053ae29cb713961a3462b3ae7605f5e", "label": "good", "rationale": "coherent, genuine Telugu prose - free-borewell scheme news"}
+{"doc_id": "3965321d21b301dc60d67b02e25e6c1393e92e4c06857dd06268d7f4187e57a9", "label": "good", "rationale": "coherent, genuine Telugu prose - cricket captaincy news"}
+{"doc_id": "39b313a171c1621450d3e7446dc2b9401cf668665ac8016f92ce2d55d7d9b03d", "label": "good", "rationale": "coherent, genuine Telugu prose - movie announcement news"}
+{"doc_id": "3b1d39a316c353aaca5ebc288f2e089f8f0d6b34382a3ddc558201f6d9cdf867", "label": "good", "rationale": "coherent, genuine Telugu prose - activist murder-case news"}
+{"doc_id": "3b5d156a242239b0510dd60e5c3cabb39d43add56a450e5033baa814000c0966", "label": "good", "rationale": "coherent, genuine Telugu prose - WHO mask guidance news"}
+{"doc_id": "3c3d9839a76804137caec0c879dc86f0d492faee9936c96b6856ccaf437bba92", "label": "good", "rationale": "coherent, genuine Telugu prose - international diplomatic news"}
+{"doc_id": "3c4af3970ecde8f11015386956a92a8ef4609b6a3db12b3ab96d5881b3937803", "label": "good", "rationale": "coherent, genuine Telugu prose - Lok Sabha seat contest news"}
+{"doc_id": "3d068fae061d628bcd84af793437d5c89e10b0c99478c364a27339e649313b91", "label": "good", "rationale": "coherent, genuine Telugu prose - personal reflective essay"}
+{"doc_id": "3fa0b0d5a637c77e8d5f8d1272b3383e53de973b222715696bc7b4f28064815b", "label": "good", "rationale": "coherent, genuine Telugu prose - singer profile interview"}
+{"doc_id": "3ffb5d8971d6e4327769c69e068d68346fd13294072806df75db945ab3bdb123", "label": "good", "rationale": "coherent, genuine Telugu prose - PM COVID address transcript"}
+{"doc_id": "4434dde9844a2357bd8ab06bbe64b638f7d8214cbdf6fbca07f1275233d4dd05", "label": "good", "rationale": "coherent, genuine Telugu prose - MLA citizenship news"}
+{"doc_id": "44c276c7dc3724d35f99a35886f3575306a088504f43d1f878f00c7d43827644", "label": "good", "rationale": "coherent, genuine Telugu prose - Benidorm travel article"}
+{"doc_id": "455d46e5e20d18b10265a3fee3b6c951bd28241fb2259bf52f473487bcc39cea", "label": "good", "rationale": "coherent, genuine Telugu prose - union budget railway-zone news"}
+{"doc_id": "472a0ea2c6969bfb8b014b3bc439fe8324ee097519b5e4a6408fc7b2a49c9a96", "label": "good", "rationale": "coherent, genuine Telugu prose - Singareni workers pension news"}
+{"doc_id": "477d1294700e07fd8cb0049bb1fe42eb7fa63888747c8319a6e7535d412bd128", "label": "good", "rationale": "coherent, genuine Telugu prose - local election campaign news"}
+{"doc_id": "483148999cf01f534f5246359d6f0446838bdf16d517b7c4ed07a2d29b2854d8", "label": "good", "rationale": "coherent, genuine Telugu prose - stock-market report"}
+{"doc_id": "48ec983a86cdbcb212d87c405525c5992115e8de44b020bab0258e82e971ec70", "label": "good", "rationale": "coherent, genuine Telugu prose - Bigg Boss recap"}
+{"doc_id": "49bbf55fd4755d1b7cf48fcd8c8d3dac5184916a1e8fed8204dbeeb9730691b7", "label": "good", "rationale": "coherent, genuine Telugu prose - employee-records admin news"}
+{"doc_id": "4b9d916a75262e2bb742c0e453f447cb557a1072966eb31019835fc38435f35e", "label": "good", "rationale": "coherent, genuine Telugu prose - demonetization exchange news"}
+{"doc_id": "4bb9309da06ac255a3d1eb4eb0ebaa5222c987750698fd2fd9f303e16887bbc5", "label": "good", "rationale": "coherent, genuine Telugu prose - school yoga policy news"}
+{"doc_id": "4cd79e5e6bc3b3cdd1b4bd32383ab4ad6c3727e4066ed2d5b5adc40ce6eb529c", "label": "bad", "rationale": "SenaDaily site-wide boilerplate template ('Search for:' / site tagline) repeated twice, a large fraction of a 222-word document"}
+{"doc_id": "4d8963e8666cfa47cdea5b5d42b1acf67b302a8d8cd99508dd2bb78146040d6b", "label": "good", "rationale": "coherent, genuine Telugu prose - cricket-match nationalism news"}
+{"doc_id": "4e1feb260ed11293ab729bd7cde2779ec67fd673ec282485e761f45b8d8fd650", "label": "bad", "rationale": "pure headline-fragment aggregation (temple development/court verdict/party office teasers), no single coherent narrative"}
+{"doc_id": "500ad684aba546fcd66c7a49a526b1762a16a6a1caed7d7639addfae6f4fc7be", "label": "good", "rationale": "coherent, genuine Telugu prose - migrant-worker hardship news"}
+{"doc_id": "51940212c2616dd77afed910d08fb20b1b748909ff1b868d2f52f8644a312f2b", "label": "good", "rationale": "coherent, genuine Telugu prose - political alliance commentary"}
+{"doc_id": "5270ef75d1931f0a2646cb3ed353ebcd86312367094e8dabb76c8f22ea4f2993", "label": "bad", "rationale": "broken machine-translated travel text - Spanish conjunction 'y' leaking into Telugu sentences, incoherent grammar"}
+{"doc_id": "52971aadc0e19468610b7951a0ade917c564d35c5d701d1f630f9e0c18390ee5", "label": "good", "rationale": "coherent, genuine Telugu prose - actress debut gossip"}
+{"doc_id": "52b627d1bbadff9a1a3a969dde6d76dfa81ca580fd01a53a1e696bd0baf8a9f9", "label": "good", "rationale": "coherent, genuine Telugu prose - COVID district-collector news"}
+{"doc_id": "55373892e5a090526a4c09cc63e5581c1dcae00552d5f7ffdf4dc8653948095d", "label": "good", "rationale": "coherent, genuine Telugu prose - Nifty technical analysis"}
+{"doc_id": "55d0b1942e9908adbc4417e6f34657a35cc50a59315b99938a3e06282360d33b", "label": "good", "rationale": "coherent, genuine Telugu prose - swimming health-tips article"}
+{"doc_id": "581f79c84931b2091b8dda73578a74501805992ddfae0c9064cdcfffb84a9fc9", "label": "good", "rationale": "coherent, genuine Telugu prose - career-advice article"}
+{"doc_id": "58432bb948a9330d5093f9ba426f8e34c6f510c56c0da4a3f3255df25896965e", "label": "good", "rationale": "coherent, genuine Telugu prose - political-biography journalism"}
+{"doc_id": "58dc93e1b1b7e38628c5c031642857c012e5f4bb255ab32ff34ab2e1c467cba9", "label": "good", "rationale": "coherent, genuine Telugu prose - COVID record-cases news"}
+{"doc_id": "597520409b2297f52371effd021f2c4f60c64234536619e390e789eca4c6322d", "label": "good", "rationale": "coherent, genuine Telugu prose - digestion/cancer-risk health article"}
+{"doc_id": "59a66b131c8bfa24d6c123902fed42ca16b89d2c143f8c4fcca026a417ae6b8a", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-release news"}
+{"doc_id": "5c20a5548b3df653be32128b2685f68e7473fa347fcd72bf1617bffbdd6c8925", "label": "good", "rationale": "coherent, genuine Telugu prose - World Cup cricket report"}
+{"doc_id": "605d7ebde6ec957d25feb3d29b25dd3aa5638b3ec8a89495491269715ad7bebd", "label": "good", "rationale": "coherent, genuine Telugu prose - Android ROM tech review"}
+{"doc_id": "60bd1cabb328620a037bce6fc4b23f1f9c023e71796ba9032922721adfac6075", "label": "good", "rationale": "coherent, genuine Telugu prose - music-college heritage article"}
+{"doc_id": "60fee02fa3a887fd6f322dc323ca667b81e923c07d3cbfecbcea1a7127c18bd8", "label": "good", "rationale": "coherent, genuine Telugu prose - local election news"}
+{"doc_id": "6124c4a1abc0a4f70ff7f671064e66c666c4776b81e538e2b60acd0746954e0e", "label": "good", "rationale": "coherent, genuine Telugu prose - scholar biography (encyclopedic)"}
+{"doc_id": "63631f9e0a6c9a3e5ea4ec14d11b04f17b91429fee2a0322a5e0c148d5817cca", "label": "good", "rationale": "coherent, genuine Telugu prose - actor-family biography"}
+{"doc_id": "6478f657761a1fd4091dde47a3d9ed762342226f29b3318b7ce19c6d2aa9d16d", "label": "good", "rationale": "coherent, genuine Telugu prose - school-reopening COVID news"}
+{"doc_id": "65525a767f5d7fd6a7c84e114c280da78abb2bf1bb50eca27514c1a33737ed85", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity tabloid news"}
+{"doc_id": "6559e35e86f4bb68307202808806bfc9a3349196882b0bdbd622e62ab3d1cb15", "label": "good", "rationale": "coherent, genuine Telugu prose - high-court parliament news"}
+{"doc_id": "664c488fbc6f74dd6027c31c03e91b708be87541117d76ac244530f36d1b5019", "label": "good", "rationale": "coherent, genuine Telugu prose - music/lyrics commentary"}
+{"doc_id": "698efca5e84adc3bbfc3efa38bf5bb8b9361e11c40fd0f4028a02d7d0fbb3ea7", "label": "good", "rationale": "coherent, genuine Telugu prose - Newton's-laws physics article"}
+{"doc_id": "6b2cc96292a3e36990e2755e2c5f8375c42b8f92adab11c72eb4255bdb23fd9e", "label": "good", "rationale": "coherent, genuine Telugu prose - Congress politics news"}
+{"doc_id": "6b5c3ec955f1435380ea5ccf4fb3c474262aa61a6d9cfae2b9a089386ea36969", "label": "good", "rationale": "coherent, genuine Telugu prose - party-leadership commentary"}
+{"doc_id": "6bf8051b37b82941fa1230b016e8f1392ad62ba4e8f3ec34c50a7bea11d33599", "label": "good", "rationale": "coherent, genuine Telugu prose - vaccination-progress news"}
+{"doc_id": "70de58c4b396846e30de5f810813bf1ac8593f74bd733d5c9dca59cc90311f71", "label": "good", "rationale": "coherent, genuine Telugu prose - nuclear-disarmament diplomatic history"}
+{"doc_id": "71a25f11ae706c0b61f75a8fe299cb4d881ac070049ed6bbb5663ee1565fb868", "label": "good", "rationale": "coherent, genuine Telugu prose - Spain wildfire news"}
+{"doc_id": "73226851f5b8b135ac014e5dde0268f885f0ae581afa163bddfc3f954c035f3e", "label": "good", "rationale": "coherent, genuine Telugu prose - new-party political news"}
+{"doc_id": "73db9ddbb68e7d0853fdf8e999c5c224182ad08ba689b7dcebbfe14298acf73c", "label": "bad", "rationale": "entirely in English despite being filed under the Telugu partition - wrong language, not Telugu prose at all"}
+{"doc_id": "766919f0e43844a28d044529bdcadaeabf31e37a01e5fb5824725b579d9219a0", "label": "good", "rationale": "coherent, genuine Telugu prose - anti-ragging campus news"}
+{"doc_id": "7766b3f85addf4feffd2f368f53e6d6e7731f1bfd035c915ce5ac7f788eb7571", "label": "good", "rationale": "coherent, genuine Telugu prose - RTC workers-strike news"}
+{"doc_id": "7888e6a2002eea8a980cd8793d2114303cf94838f35cea3f09e010b9f870b8da", "label": "good", "rationale": "coherent, genuine Telugu prose - Game of Thrones psychology study article"}
+{"doc_id": "7971041aa7cdef57f33d40806f58a076708d5bd6b3321fe1af3125a3e171aae4", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-release scheduling news"}
+{"doc_id": "7a390499b49fa8b24e7c05b45adecd61b835371e45ce0c1cadb2865934bf8d8c", "label": "good", "rationale": "coherent, genuine Telugu prose - car-insurance explainer article"}
+{"doc_id": "7d9acea5f5892a280fa04406ff1909f5d55769bccfc7894f082457a1ea93f19f", "label": "good", "rationale": "coherent, genuine Telugu prose - journalists-union protest news"}
+{"doc_id": "818cdb1792b766f7012b6fa81568368396efcd9ca48a392c3e76b463bdf03bbd", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity comment news"}
+{"doc_id": "822b9c7ddcb867a9ad870446b98285e13e8895eb8c218fb4d0d7435b4b3fffbc", "label": "good", "rationale": "coherent, genuine Telugu prose - PM-CM political news"}
+{"doc_id": "834e37a9da95f62c300950be1053b50d203acdcf4186ad1631a9b04deea3659d", "label": "good", "rationale": "coherent, genuine Telugu prose - BJP-TDP political news"}
+{"doc_id": "84e46cc2cb7e8b8099f3be30e6072613b780c6e7d069d5f98ee75ee7ed7d2763", "label": "good", "rationale": "coherent, genuine Telugu prose - Covaxin vaccine news"}
+{"doc_id": "855ad0e761de1e6ba5dd579e4f3d0528c337381e3217d1dc439451c24f89f720", "label": "good", "rationale": "coherent, genuine Telugu prose - bank-KYC rule news"}
+{"doc_id": "861a11c238209cf812346ff8343d2819c24c00befe1ab46bdefe12d816ee0931", "label": "bad", "rationale": "pure headline-fragment aggregation (Bigg Boss/Navratri teasers) prefixed to unrelated gas-crisis content"}
+{"doc_id": "8b4807ebea54a635909d3b65fb36488a4e6691ec3cb8cbabae6c7710950c1db8", "label": "good", "rationale": "coherent, genuine Telugu prose - COVID-variant CCMB news"}
+{"doc_id": "8bdc124854c5fd484895c0cd895cc6c69faf086312286c17ad860f7a0d3e4b6d", "label": "bad", "rationale": "medical misinformation presented as fact (lemon '10,000x more powerful than chemotherapy' is a well-documented false claim)"}
+{"doc_id": "8bfd8cceef9a1d85b117349f6d84225c460e16b222e31f4fc67da4ca07dd01f5", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-firstlook news"}
+{"doc_id": "8c988e78f7fb1693f7584cd25a3b1a100eebdbc13a4ee68d969432189f45f5c6", "label": "good", "rationale": "coherent, genuine Telugu prose - mixed political news roundup"}
+{"doc_id": "8d0be4284517266dcee473c37c913b669538356985ab266402966f1a69b2a179", "label": "good", "rationale": "coherent, genuine Telugu prose - party-appointment announcement"}
+{"doc_id": "8e48ea10f4f08346a1762590094bd6b9e38e3b6024807daed99050833f0c01e1", "label": "good", "rationale": "coherent, genuine Telugu prose - corruption-case bail news"}
+{"doc_id": "8ea6269921407f84afebd8d3d6a0325ae36f455445e45587c4038ab2ca4ab050", "label": "good", "rationale": "coherent, genuine Telugu prose - lockdown administration news"}
+{"doc_id": "9034221928cbf0245a34532f93a229818f453663f38fdfbe71f49a40795b3bc7", "label": "good", "rationale": "coherent, genuine Telugu prose - personal WhatsApp-group tribute message"}
+{"doc_id": "913e7040aa63a98627ac4c31203342c80426f991f26ebce967f4814e4ccfc890", "label": "good", "rationale": "coherent, genuine Telugu prose - cricketer profile news"}
+{"doc_id": "9226b61cef458cd3ccc196f560baf0bd42d89a0d86895a27144a8e075f0f38a6", "label": "good", "rationale": "coherent, genuine Telugu prose - local-history essay"}
+{"doc_id": "92fbf85a3909e1f73f7f33ab6cb78f7d19fc5fdde7e838df0e1be074fd095157", "label": "good", "rationale": "coherent, genuine Telugu prose - osteoporosis health article"}
+{"doc_id": "934d3ad793f1149f3bea0b337799726c301c6371cf8129d0ca574d63d0a2de64", "label": "good", "rationale": "coherent, genuine Telugu prose - party-defection news"}
+{"doc_id": "9793e4a793b856d6f3f35a408f242c8177b3523c6f0d6b4b4eae1c4dc9f5dfb7", "label": "good", "rationale": "coherent, genuine Telugu prose - minister ward-visit news"}
+{"doc_id": "99792fd71da0bbbc81d34db037f11881c78a55e66f0f06e230b17330e72d9ac9", "label": "bad", "rationale": "mostly headline-teaser fragments ('6 min ago...', '50 min ago...') for a very short 139-word document"}
+{"doc_id": "9be3edda40d042b491aee0a4a4a2398193b2bb38c805d14008f9b90b484212fd", "label": "bad", "rationale": "the same paragraph is duplicated verbatim within the document (internal near-duplication)"}
+{"doc_id": "9be4d4d8cf51e7ae7e601a86ab8678730c48135f6bdb8a60aec3117de2caa4a2", "label": "good", "rationale": "coherent, genuine Telugu prose - political-criticism news"}
+{"doc_id": "9c30a2fc14b174256314c6bb8aa1ea5786c69bf38ebab02822b7cbef67c4cf64", "label": "good", "rationale": "coherent, genuine Telugu prose - padayatra political news"}
+{"doc_id": "9cd0e8e568b7bd9027ad35a110bbcc9c1a6fb3b79f3bf0e297cf4aaffd900197", "label": "good", "rationale": "coherent, genuine Telugu prose - exam-fee deadline news"}
+{"doc_id": "9ed70d23cbc6ad48c3d096872ac1e431d8a80338cec0bfe27984a4b2dd4999d5", "label": "good", "rationale": "coherent, genuine Telugu prose - post-match cricket quote"}
+{"doc_id": "9f0635506b59f71fbff23be736d1e5454a924d62a1db2910674dac7cddd248a8", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity wedding-rule gossip"}
+{"doc_id": "9fe6b7b81fcbb70ab9005584a472cfefbfc7ac92cbaece096dc7a0e1526e6272", "label": "good", "rationale": "coherent, genuine Telugu prose - small-movies OTT roundup"}
+{"doc_id": "a25b0dd44a37bfb384202d0ca83c85b2fb53aceb25c8b9b47a691b03547bc3cf", "label": "good", "rationale": "coherent, genuine Telugu prose - PSU-privatization political news"}
+{"doc_id": "a34242f7f784d6b128da115dd1aead1025c9cbd05a5bb47dff0cb6be16d7865c", "label": "good", "rationale": "coherent, genuine Telugu prose - court-bail news"}
+{"doc_id": "a610eca0f337102b1dfb9a56f0336f4f79f397d9ff698c6c7ebbd741bfba0ae9", "label": "good", "rationale": "coherent, genuine Telugu prose - industrial-magnets product description"}
+{"doc_id": "a9ac0d39d0649d61deaceba56c974aed9448d62dcf88619275bc232defd9d196", "label": "good", "rationale": "coherent, genuine Telugu prose - political opinion column"}
+{"doc_id": "aae68c9c1a036dc183f857a75cc03bfd2fbc7e7496c4127d502ec96606db66f5", "label": "good", "rationale": "coherent, genuine Telugu prose - Maharashtra-election news"}
+{"doc_id": "acc824dc35cbdaa09a32df680f8d00e9cf0d8fc22375e2860c7f9a370022fe1a", "label": "good", "rationale": "coherent, genuine Telugu prose - e-vehicle business news"}
+{"doc_id": "ad149f21195a4fd0a3c8e0411114b6dacc780e392eab8a7cb828ca93ab6e834e", "label": "good", "rationale": "coherent, genuine Telugu prose - Minecraft gaming guide"}
+{"doc_id": "afa9987dc234ddf6367f49aaa32ce2ab36555a49e541d428ed1a454f973a9a77", "label": "good", "rationale": "coherent, genuine Telugu prose - restaurant-hygiene-fine news"}
+{"doc_id": "b0216f54f436a462fe7ed6b8c84e92f90b1202fd6719b8489659490032a12dd2", "label": "good", "rationale": "coherent, genuine Telugu prose - biopic movie news"}
+{"doc_id": "b18e23a6a0319a15e6b6e85e9fe0f8f42570005fd3aec554f7d34f85f141e7ea", "label": "good", "rationale": "coherent, genuine Telugu prose - infrastructure-review governance news"}
+{"doc_id": "b1b1e3c53a6ca2d52c551f63a7f6a50302f24a754f8ad1b0073e24e8bf8194fb", "label": "good", "rationale": "coherent, genuine Telugu prose - capital-status political news"}
+{"doc_id": "b2537f5d0c25d113ffa62017e1bd00affcce8963029488dab9762741394cee89", "label": "good", "rationale": "coherent, genuine Telugu prose - former-CEC obituary"}
+{"doc_id": "b27f72821a8347d13dadf237e101cf43795bdfa18dd8c49ca518ad1b0dd9bde4", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-promotion news"}
+{"doc_id": "b29f84a4ccc0b40f565d542e8c74efb4e4cbf281e4e55a0cd9b5ddd3f3db4e6c", "label": "bad", "rationale": "literal broken template/code syntax leaked into the extracted text ('con = \"...' JS-like fragment mid-sentence)"}
+{"doc_id": "b725b34d29b7a19327bcccfb2bb353b772f6b2bddfa82c98c4a51a263b82c72e", "label": "good", "rationale": "coherent, genuine Telugu prose - parliament-session speech"}
+{"doc_id": "b823cd1497573296537f06db2ed394e23151ea9fb9842392fb35761fdabd0d3b", "label": "good", "rationale": "coherent, genuine Telugu prose - crime/compensation news"}
+{"doc_id": "b8590dab09fc6671ff30882a7668f08889ccb452b95eee4c801a7e667f06b549", "label": "bad", "rationale": "the opening paragraph is duplicated verbatim within the document (internal near-duplication)"}
+{"doc_id": "b90d01668d67313a147893a4cd5edcef2d4862c670038da0651e9d31e5b32b0c", "label": "good", "rationale": "coherent, genuine Telugu prose - lockdown-violation local news"}
+{"doc_id": "bafb699eb28b84a492b463013209f2c181959f9e5fd144692dbd427aedf4382c", "label": "good", "rationale": "coherent, genuine Telugu prose - candidate-withdrawal news"}
+{"doc_id": "bc69b8676dc63c501be3e40ccf44450cd5e7459670edf3cb03468a19075ee11b", "label": "good", "rationale": "coherent, genuine Telugu prose - suicide tragedy news"}
+{"doc_id": "bf7da51db3747340aa464b97a14c73a75713a5bb12d019f7e21aa48138705803", "label": "good", "rationale": "coherent, genuine Telugu prose - COVID-death-rate causes news"}
+{"doc_id": "bfc263e9c213042d3e9fdb9e8ce2265fc1cd945aa2d76ac5fee71073c2048e48", "label": "good", "rationale": "coherent, genuine Telugu prose - medical-negligence tragedy news"}
+{"doc_id": "bfc9d6677c1ed2faa38516eef2cc133c2fea7619328bb1682fe1fce8eca1bae8", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity pregnancy news"}
+{"doc_id": "c0d4a13bb7ac4dca29cc435b5a8e4d120a2fc4abaf55022b8872ab1f8ced8ab4", "label": "good", "rationale": "coherent, genuine Telugu prose - wedding-mandap drama news"}
+{"doc_id": "c4d2b094dbbae8a03e5d2b1b39837be200eb78718ad3f62835d8ac76a05585ba", "label": "good", "rationale": "coherent, genuine Telugu prose - farmer-hardship political news"}
+{"doc_id": "c61ee60b27428fbccc67f84f29fc790e8e310c8be137103ef93de5b0dedc6653", "label": "good", "rationale": "coherent, genuine Telugu prose - director opinion quote"}
+{"doc_id": "c6b45a3104c6be2c44c4068950606554f081823dd39a299d9427f05980276d11", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-remake news"}
+{"doc_id": "c6bee412c59a123849d02914bd2dc4a28e92c4427d025f9e6df0e2e167edb84d", "label": "good", "rationale": "coherent, genuine Telugu prose - traffic-challan complaint news"}
+{"doc_id": "c8430574f92dc47524c9373ddddf5576e5c8bbc52996f126fa7982a3d3c19ee9", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-shooting news"}
+{"doc_id": "c911bd5ea45153708e8d8b0e836ac19ee9a637f42966ccffcb407f5c16eba447", "label": "good", "rationale": "coherent, genuine Telugu prose - Iran COVID-deaths news"}
+{"doc_id": "cb69e283eb96e88b964afc3606f863a45ff5cc816ccb81fb8e3dfd49142a2f17", "label": "good", "rationale": "coherent, genuine Telugu prose - TDP-founding historical article"}
+{"doc_id": "ccfec53bd6bf340e1e9ae3ac8e900abbe89000e0c6626f35f1e0a3e4fe5fdb7a", "label": "good", "rationale": "coherent, genuine Telugu prose - IPL gossip article"}
+{"doc_id": "cdf821cf09bdf6236e6dd2f08eec8a66b31eab0efbd324f4568b320ab717c4b7", "label": "bad", "rationale": "SenaDaily site-wide boilerplate template repeated, large fraction of a 178-word document"}
+{"doc_id": "ce2439a4cd59b2d05139b0bbafbaca50bf5304533dc2ad4397ce794d8b6833a8", "label": "good", "rationale": "coherent, genuine Telugu prose - political-criticism news"}
+{"doc_id": "ce690c047482f11a6efb9971f496ab0c015a999217c32e25417af5a725bb3522", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-production news"}
+{"doc_id": "cf911471e4cedf082df8a03a6d65509283dd30438ab8ddd7e47c39a57dabb095", "label": "good", "rationale": "coherent, genuine Telugu prose - mining-scandal political news"}
+{"doc_id": "cf9203d8401b246d8ecca19131a697500cc70d78b089f54cdb9b5f17d201d100", "label": "good", "rationale": "coherent, genuine Telugu prose - Olympic-gold sports news"}
+{"doc_id": "d0422edc2c003c948131b737203c9d3af798b36f7ea077c20b1730452685570e", "label": "good", "rationale": "coherent, genuine Telugu prose - Adhan-app description"}
+{"doc_id": "d1a59ee833b558a6e63a7fa7e79ff77f6558f555e8ad5c0377dfd91149d821aa", "label": "good", "rationale": "coherent, genuine Telugu prose - cricket sledging-allegation news"}
+{"doc_id": "d2cff27231727ea27dac0caf3a90aa0270e399ccec5f73d6bf05c9955e78e811", "label": "good", "rationale": "coherent, genuine Telugu prose - coaching-center complaint news"}
+{"doc_id": "d319245c9ffdc4eebd3fd32a4ebe8888f2c4734b24522f9e1b9e7ae4564e8dbd", "label": "good", "rationale": "coherent, genuine Telugu prose - election-postponement news"}
+{"doc_id": "d33f877e967a724320ae614f3c2da160d3c0d944da055dbd03c8c81b88d31d33", "label": "good", "rationale": "coherent, genuine Telugu prose - bus-permit court-ruling news"}
+{"doc_id": "d353b6b595e9bc44398ec507cd21e0c9c686dd95acc3e7f6851ee215315cbc2b", "label": "bad", "rationale": "colloquial comment-section-style text (not article prose), switches mid-document into unrelated English commentary"}
+{"doc_id": "d452b6617bb47622700f1ca8751d94edf0bd70c2e4f7105bdc239670884b7946", "label": "bad", "rationale": "SenaDaily site-wide boilerplate template repeated, large fraction of a 153-word document"}
+{"doc_id": "d47ece7da8f225fd14cf1bb1a74e22feedd08fd8049ec373dacc9780431b483d", "label": "good", "rationale": "coherent, genuine Telugu prose - student-protest news"}
+{"doc_id": "d5a422663d7883858a888a072d051ea1bfaeb81a22dabd6906dbe2c719686f78", "label": "good", "rationale": "coherent, genuine Telugu prose - election-counting news"}
+{"doc_id": "d6bc5f607ba54af8e0ff200e83a68a86f777f2b142862c559b10a14b523f3ded", "label": "good", "rationale": "coherent, genuine Telugu prose - rural-innovation-hub news"}
+{"doc_id": "d71830fa6df7c09134147e1b3aa502c019d5c4afe011b51e72ac05d8ebee0605", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-release news"}
+{"doc_id": "da3e844d799daeab8320305ce533b101a7e08ee24909eeffe96e4e80e23662d0", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-casting news"}
+{"doc_id": "da881aa6211bc12e4a3f889f95baccfda10520a506b0e9b64deaf4d3caea2536", "label": "good", "rationale": "coherent, genuine Telugu prose - party-reshuffle political news"}
+{"doc_id": "dd4c197656822e4918b78833191450153a10b5eab8491883f275fb6c669fa97c", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity-photo gossip"}
+{"doc_id": "df72f327c667687fd09870c9241b336d3aabd1244956e2ee2d18b620977d605d", "label": "good", "rationale": "coherent, genuine Telugu prose - Nalanda-university historical article"}
+{"doc_id": "e05ed280c6b8f74340cdc4f94653f97ed1cfda3827257c7a715403c9fc3a4a29", "label": "good", "rationale": "coherent, genuine Telugu prose - movie-casting gossip"}
+{"doc_id": "e0f7227ca0864f9c734f52ce9e66e54b0f1389f7f1bb2ad8698c1f1de05f5139", "label": "good", "rationale": "coherent, genuine Telugu prose - registration-price governance news"}
+{"doc_id": "e52eb23d95846393bf34d162487db179f63398f18b19280987e2b3cd35be9bb3", "label": "good", "rationale": "coherent, genuine Telugu prose - Twitter-hashtag entertainment news"}
+{"doc_id": "e6f6f05b2245c4b2d23169c502425aebde8873abff3915c8e9d3a525f1f70e78", "label": "good", "rationale": "coherent, genuine Telugu prose - murder-case political news"}
+{"doc_id": "e9e1013b70bfb83bc6e12e6151c696b54b36042fcd01c3537ac89de3256dcd4f", "label": "good", "rationale": "coherent, genuine Telugu prose - Afghanistan/cricket news roundup"}
+{"doc_id": "ea30310e0751e2ae1b7ab2b325f4915c3dc41335ab746ed0e6a64a70ec6f3ea8", "label": "good", "rationale": "coherent, genuine Telugu prose - TDP-BJP rivalry news"}
+{"doc_id": "f08241c38289e1a9692b29bbf49e0e438fa8705e77ef553601e9e64bb48828b9", "label": "good", "rationale": "coherent, genuine Telugu prose - new-district governance news"}
+{"doc_id": "f1c836c0c7034db156262ac14aec2deb5c2354d5afc9264a5ffc4bf991cf12b1", "label": "good", "rationale": "coherent, genuine Telugu prose - govt-exam career-advice article"}
+{"doc_id": "f3222edab8f22e639854fcbc57e354d65cc247c740c1a736f506d427ad512fe8", "label": "good", "rationale": "coherent, genuine Telugu prose - poet's poetry-collection article"}
+{"doc_id": "f4e43a1021f79142a1678f3c7ce35a61763490c135012c83044b908818ff6362", "label": "good", "rationale": "coherent, genuine Telugu prose - Wikipedia village census article"}
+{"doc_id": "f67fc75c029b598706337036fef0d6e5795740cd9b29c4faf0c1bf1f6e0f84e0", "label": "good", "rationale": "coherent, genuine Telugu prose - AP-legal-battles opinion column"}
+{"doc_id": "f95db86a7975b538a93ba4f64de1336f2de98acdf1ae0314e547c3e698fde01b", "label": "good", "rationale": "coherent, genuine Telugu prose - controversial-statement news report"}
+{"doc_id": "fb87898d816b00a66155caaf990a30c0e207fe54f01281fafe6e89fd45a49d46", "label": "good", "rationale": "coherent, genuine Telugu prose - food-combination health tips"}
+{"doc_id": "fba32f19d2a33d8881e4518cdaf4ec04ecc85661c5ab248acc5c0e08826080be", "label": "good", "rationale": "coherent, genuine Telugu prose - LIC insurance-policy news"}
+{"doc_id": "fbab6548d7225dfefa80528d060b59411602da4c6ae29e629642086f1feefe21", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity-friendship commentary"}
+{"doc_id": "fce7a0da3d7c4f0b6c8d0be02b350f3f927471b0005fd3d2da9afb41eb1a1534", "label": "good", "rationale": "coherent, genuine Telugu prose - post-COVID lung-health advice"}
+{"doc_id": "fd09a383b947e5e9414884d3a0034c75338bffc1f0d9f168ef447d1e488155e5", "label": "good", "rationale": "coherent, genuine Telugu prose - celebrity-satire apology news"}
+{"doc_id": "fe234e26d26084750abf7511e43772d322e473b9965e644ea4fd6662e893bc31", "label": "good", "rationale": "coherent, genuine Telugu prose - comedian-meme-harassment news"}
+{"doc_id": "ffe8b5e2e884b7d3ea1a6a03642693e4a2802b92aebe2e9f1a867e4f312edfbe", "label": "good", "rationale": "coherent, genuine Telugu prose - sex-racket-bust crime news"}

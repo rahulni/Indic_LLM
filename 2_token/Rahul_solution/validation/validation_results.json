@@ -1,0 +1,52 @@
+{
+  "validated_at": "2026-07-16T17:47:53Z",
+  "recomputed_rahul": {
+    "en": {
+      "tokens": 123020,
+      "faithful_units": 186367,
+      "faithful_ratio": 0.6600954031561381
+    },
+    "hi": {
+      "tokens": 56474,
+      "faithful_units": 88359,
+      "faithful_ratio": 0.6391425887572291
+    },
+    "te": {
+      "tokens": 24037,
+      "faithful_units": 36293,
+      "faithful_ratio": 0.662304025569669
+    },
+    "mr": {
+      "tokens": 18866,
+      "faithful_units": 29766,
+      "faithful_ratio": 0.6338103876906538
+    }
+  },
+  "recomputed_rahul_spread": 0.028493637879015266,
+  "recomputed_rahul_score": 35095.55375996657,
+  "reproduced_sravan_score": 6502.558365188569,
+  "sravan_tokenizer_on_rahul_corpus_context": {
+    "en": {
+      "tokens": 111390,
+      "faithful_units": 186367,
+      "ratio": 0.5976916514189744
+    },
+    "hi": {
+      "tokens": 51190,
+      "faithful_units": 88359,
+      "ratio": 0.5793410971151779
+    },
+    "te": {
+      "tokens": 24430,
+      "faithful_units": 36293,
+      "ratio": 0.6731325599977958
+    },
+    "mr": {
+      "tokens": 32318,
+      "faithful_units": 29766,
+      "ratio": 1.0857354028085735
+    }
+  },
+  "failures": [],
+  "all_passed": true
+}

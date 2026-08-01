@@ -1,0 +1,859 @@
+<title>Drishtikon-40B — India-First 40B Model Design Memo</title>
+<style>
+  :root{
+    /* dark is the default look now; :root[data-theme="light"] below is the explicit opt-out */
+    --bg:#14151C; --surface:#1C1E29; --surface-2:#20222E; --border:#333648;
+    --text:#E7E7EC; --text-2:#B0B3C4; --text-3:#8A8EA6;
+    --accent:#6A74C9; --accent-tint:#262A48; --accent-ink:#0E0F17;
+    --ochre:#C99A4A; --ochre-tint:#3A2E17;
+    --font-mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+    --font-serif: Charter, "Iowan Old Style", "Palatino Linotype", Georgia, "Times New Roman", serif;
+    --maxw: 760px;
+  }
+  :root[data-theme="dark"]{
+    --bg:#14151C; --surface:#1C1E29; --surface-2:#20222E; --border:#333648;
+    --text:#E7E7EC; --text-2:#B0B3C4; --text-3:#8A8EA6;
+    --accent:#6A74C9; --accent-tint:#262A48; --accent-ink:#0E0F17;
+    --ochre:#C99A4A; --ochre-tint:#3A2E17;
+  }
+  :root[data-theme="light"]{
+    --bg:#F0F1F4; --surface:#FFFFFF; --surface-2:#F7F8FA; --border:#DADCE3;
+    --text:#1B1E2B; --text-2:#4A4F63; --text-3:#7B8098;
+    --accent:#3D4A9E; --accent-tint:#E4E6F5; --accent-ink:#FFFFFF;
+    --ochre:#8C5A0F; --ochre-tint:#F3E6D2;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--bg); color:var(--text);
+    font-family:var(--font-serif); font-size:17px; line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.nav,.mono,.stat-num,.barrow-label,.barrow-value,th,td,.rangebar-label,.rangebar-value,.tag,.footer-brand{
+    font-family:var(--font-mono);
+  }
+  h1,h2,h3{ text-wrap:balance; font-weight:600; letter-spacing:-0.01em; }
+  p{ text-wrap:pretty; }
+  a{ color:var(--accent); }
+  ::selection{ background:var(--accent-tint); }
+  :focus-visible{ outline:2px solid var(--accent); outline-offset:2px; border-radius:2px; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 24px; }
+  .wrap-wide{ max-width:900px; margin:0 auto; padding:0 24px; }
+
+  nav.topnav{
+    position:sticky; top:0; z-index:20; backdrop-filter:blur(8px);
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    border-bottom:1px solid var(--border);
+  }
+  .progress-fill{ position:absolute; left:0; bottom:-1px; height:2px; width:0%; background:var(--ochre); }
+  .topnav-inner{
+    max-width:900px; margin:0 auto; padding:12px 24px;
+    display:flex; gap:18px; align-items:center; overflow-x:auto;
+    scrollbar-width:none;
+  }
+  .topnav-inner::-webkit-scrollbar{ display:none; }
+  .topnav-brand{ font-size:13px; font-weight:700; color:var(--accent); white-space:nowrap; }
+  .topnav a{
+    font-size:12.5px; text-decoration:none; color:var(--text-2); white-space:nowrap;
+    text-transform:uppercase; letter-spacing:.04em; padding-bottom:3px;
+    box-shadow: inset 0 -2px 0 transparent; transition:color .15s ease, box-shadow .15s ease;
+  }
+  .topnav a:hover{ color:var(--accent); }
+  .topnav a.active{ color:var(--accent); box-shadow: inset 0 -2px 0 var(--accent); }
+  .theme-toggle{
+    margin-left:auto; flex:0 0 auto; width:30px; height:30px; border-radius:7px;
+    border:1px solid var(--border); background:var(--surface); color:var(--text-2);
+    display:flex; align-items:center; justify-content:center; cursor:pointer;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .theme-toggle:hover{ color:var(--accent); border-color:var(--accent); }
+
+  header.hero{ position:relative; overflow:hidden; padding:64px 0 40px; }
+  .hero-canvas{ position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+  header.hero > .wrap-wide{ position:relative; z-index:1; }
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.09em; color:var(--ochre);
+    text-transform:uppercase; margin:0 0 14px;
+  }
+  h1.title{ font-size:46px; margin:0 0 6px; line-height:1.05; }
+  .devanagari{ color:var(--text-3); font-weight:400; font-size:0.5em; }
+  .subhead{ font-size:19px; color:var(--text-2); margin:0 0 16px; max-width:640px; font-family:var(--font-serif); }
+  .meta-badge{ display:inline-flex; gap:6px; align-items:center; font-family:var(--font-mono); font-size:11.5px; color:var(--text-3); margin:0 0 20px; }
+  .meta-badge .dot{ width:3px; height:3px; border-radius:50%; background:var(--text-3); }
+
+  .stat-row{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--border); border:1px solid var(--border); border-radius:10px; overflow:hidden;
+    margin-bottom:28px;
+  }
+  .stat-tile{ background:var(--surface); padding:16px 14px; cursor:pointer; transition:background .15s ease; }
+  .stat-tile:hover{ background:var(--surface-2); }
+  .stat-tile:hover .stat-copy-hint{ opacity:1; }
+  .stat-num{ font-size:22px; font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums; }
+  .stat-label{ font-size:11.5px; color:var(--text-3); margin-top:4px; line-height:1.35; }
+  .stat-copy-hint{ font-size:9px; color:var(--text-3); opacity:0; transition:opacity .15s ease; margin-top:3px; text-transform:uppercase; letter-spacing:.05em; }
+
+  .lede{ color:var(--text-2); font-size:16.5px; }
+  .lede a{ text-decoration-color: var(--border); }
+
+  section{ padding:44px 0; border-top:1px solid var(--border); }
+  section:first-of-type{ border-top:none; }
+  .section-head{ display:flex; align-items:baseline; gap:10px; margin-bottom:6px; }
+  .section-mark{ font-family:var(--font-mono); color:var(--ochre); font-size:14px; }
+  h2.section-title{ font-size:24px; margin:0; }
+  .section-dek{ color:var(--text-2); font-size:15px; margin:6px 0 22px; max-width:620px; }
+
+  table{ border-collapse:collapse; width:100%; font-size:14px; }
+  .table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:8px; }
+  th,td{ padding:10px 12px; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  td.wrap-cell, th.wrap-cell{ white-space:normal; font-family:var(--font-serif); font-size:14.5px; }
+  th{ background:var(--surface-2); font-weight:600; font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--text-2); }
+  tr:last-child td{ border-bottom:none; }
+  tbody tr{ transition:background .12s ease; }
+  tbody tr:hover{ background:var(--surface-2); }
+  td:first-child, th:first-child{ position:sticky; left:0; background:var(--surface); }
+  th:first-child{ background:var(--surface-2); }
+  tr.is-hidden{ display:none; }
+
+  .barlist{ display:flex; flex-direction:column; gap:10px; margin:20px 0; }
+  .barrow{ display:grid; grid-template-columns:220px 1fr 56px; gap:12px; align-items:center; cursor:default; }
+  .barrow-label{ font-size:12px; color:var(--text-2); }
+  .barrow-track{ background:var(--surface-2); border:1px solid var(--border); border-radius:5px; height:20px; position:relative; overflow:hidden; }
+  .barrow-fill{ background:var(--accent); height:100%; border-radius:4px 0 0 4px; transition:width .8s cubic-bezier(.22,.9,.3,1); width:0%; }
+  .barrow.is-new .barrow-fill{ background:var(--ochre); }
+  .barrow-value{ font-size:13px; text-align:right; font-weight:600; }
+
+  .rangebar{ display:grid; grid-template-columns:220px 1fr 100px; gap:12px; align-items:center; margin-bottom:12px; }
+  .rangebar-label{ font-size:12px; color:var(--text-2); }
+  .rangebar-track{ background:var(--surface-2); border:1px solid var(--border); border-radius:5px; height:20px; position:relative; }
+  .rangebar-fill{ position:absolute; top:3px; bottom:3px; background:var(--accent); border-radius:4px; width:0%; transition:width .8s cubic-bezier(.22,.9,.3,1), left .8s cubic-bezier(.22,.9,.3,1); }
+  .rangebar-ref{ position:absolute; top:-2px; bottom:-2px; width:1px; background:var(--ochre); opacity:.8; }
+  .rangebar-value{ font-size:12.5px; text-align:right; }
+  .ref-legend{ font-size:11.5px; color:var(--text-3); margin-top:6px; }
+  .ref-dot{ display:inline-block; width:8px; height:8px; background:var(--ochre); border-radius:1px; margin-right:5px; }
+
+  .tooltip{
+    position:fixed; pointer-events:none; background:var(--text); color:var(--bg);
+    font-family:var(--font-mono); font-size:11.5px; padding:6px 9px; border-radius:6px;
+    max-width:240px; line-height:1.4; z-index:50; opacity:0; transition:opacity .1s ease;
+    transform:translate(-50%,-115%);
+  }
+  .tooltip.show{ opacity:1; }
+
+  .stage-list{ list-style:none; margin:0; padding:0; counter-reset:stage; }
+  .stage-list li{
+    counter-increment:stage; display:flex; gap:14px; padding:12px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .stage-list li:last-child{ border-bottom:none; }
+  .stage-list li::before{
+    content:counter(stage); font-family:var(--font-mono); font-size:12px; color:var(--text-3);
+    flex:0 0 20px; padding-top:2px;
+  }
+  .stage-list b{ font-weight:600; }
+  .tag{
+    display:inline-block; font-size:10px; font-weight:700; letter-spacing:.05em;
+    color:var(--ochre); background:var(--ochre-tint); padding:2px 6px; border-radius:4px;
+    margin-left:6px; vertical-align:1px;
+  }
+
+  /* live tokenizer demo */
+  .demo{ margin:22px 0 26px; }
+  .demo-head{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:14px; }
+  .demo-label{ font-family:var(--font-mono); font-size:12px; color:var(--text-2); text-transform:uppercase; letter-spacing:.05em; }
+  .pill-row{ display:flex; gap:8px; flex-wrap:wrap; }
+  .pill{
+    font-family:var(--font-mono); font-size:11.5px; padding:5px 12px; border-radius:999px;
+    border:1px solid var(--border); background:var(--surface); color:var(--text-2);
+    cursor:pointer; transition:all .15s ease; text-transform:uppercase; letter-spacing:.03em;
+  }
+  .pill:hover{ border-color:var(--accent); color:var(--accent); }
+  .pill.active{ background:var(--accent); border-color:var(--accent); color:var(--accent-ink); }
+  .demo-sentence{ font-size:18px; margin-bottom:2px; }
+  .demo-gloss{ font-size:13px; color:var(--text-3); font-style:italic; margin-bottom:12px; }
+  .demo-chips{
+    display:flex; flex-wrap:wrap; align-items:center; padding:18px;
+    background:var(--surface-2); border:1px solid var(--border); border-radius:10px; margin-bottom:10px; min-height:64px;
+  }
+  .tok-word{ display:inline-flex; gap:1px; margin:3px 7px 3px 0; }
+  .chip{
+    font-family:var(--font-mono); font-size:12.5px; padding:4px 7px; border:1px solid; border-radius:5px;
+    line-height:1.3; animation:chipIn .35s ease both; animation-delay:calc(var(--i,0) * 28ms);
+  }
+  .chip.whole{ background:var(--surface); color:var(--text); border-color:var(--border); }
+  .chip.frag{ background:var(--ochre-tint); color:var(--ochre); border-color:var(--ochre); }
+  @keyframes chipIn{ from{ opacity:0; transform:translateY(5px) scale(.92); } to{ opacity:1; transform:none; } }
+  .demo-readout{ font-family:var(--font-mono); font-size:14px; color:var(--text-2); }
+  .demo-readout b{ color:var(--accent); font-size:17px; }
+  .demo-caption{ font-size:12px; color:var(--text-3); margin-top:10px; max-width:560px; }
+
+  .card{
+    background:var(--surface); border:1px solid var(--border); border-radius:10px;
+    padding:20px 22px; margin-bottom:16px; position:relative;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  }
+  .card:hover{ transform:translateY(-3px); box-shadow:0 10px 28px rgba(0,0,0,.10); border-color:var(--accent); }
+  .card-head{ display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap; }
+  .card-head h3{ font-size:16px; margin:0; }
+  .card-badge{
+    font-family:var(--font-mono); font-size:10px; font-weight:700; letter-spacing:.06em;
+    color:var(--accent-ink); background:var(--ochre); padding:3px 7px; border-radius:5px;
+  }
+  .cat-label{
+    font-family:var(--font-mono); font-size:9.5px; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--text-3); border:1px solid var(--border); padding:2px 6px; border-radius:4px; margin-left:auto;
+  }
+  .card p{ margin:0; color:var(--text-2); font-size:15px; }
+  .card p + p{ margin-top:8px; }
+  .card .native{ color:var(--text-3); font-family:var(--font-mono); font-size:12.5px; }
+
+  .reveal{ opacity:0; transform:translateY(16px); transition:opacity .55s ease, transform .55s ease; }
+  .reveal.in-view{ opacity:1; transform:none; }
+
+  .filter-bar{
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    margin:0 0 24px; padding-bottom:16px; border-bottom:1px solid var(--border);
+  }
+  .filter-count{ font-family:var(--font-mono); font-size:11.5px; color:var(--text-3); }
+  .is-hidden{ display:none !important; }
+
+  .tier2-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px 24px; margin-top:18px; }
+  .tier2-item{ font-size:13.5px; color:var(--text-2); border-left:2px solid var(--border); padding-left:12px; }
+  .tier2-item b{ color:var(--text); }
+
+  .callout{
+    border-left:3px solid var(--ochre); background:var(--ochre-tint); border-radius:0 8px 8px 0;
+    padding:14px 18px; font-size:14.5px; color:var(--text-2); margin:18px 0;
+  }
+  .callout b{ color:var(--text); }
+
+  .to-top{
+    position:fixed; right:20px; bottom:24px; width:42px; height:42px; border-radius:50%;
+    background:var(--accent); color:var(--accent-ink); border:none; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:opacity .25s ease, transform .25s ease; z-index:25;
+    box-shadow:0 6px 18px rgba(0,0,0,.22);
+  }
+  .to-top.show{ opacity:1; pointer-events:auto; transform:none; }
+
+  .toast{
+    position:fixed; left:50%; bottom:30px; transform:translateX(-50%) translateY(10px);
+    background:var(--text); color:var(--bg); font-family:var(--font-mono); font-size:12.5px;
+    padding:9px 16px; border-radius:8px; opacity:0; pointer-events:none;
+    transition:opacity .2s ease, transform .2s ease; z-index:60;
+  }
+  .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+  footer{ padding:48px 0 80px; }
+  .footer-brand{ font-size:13px; color:var(--accent); margin-bottom:14px; }
+
+  @media (max-width:700px){
+    .stat-row{ grid-template-columns:repeat(2,1fr); }
+    h1.title{ font-size:32px; }
+    .barrow, .rangebar{ grid-template-columns:110px 1fr 46px; gap:8px; }
+    .barrow-label, .rangebar-label{ font-size:10.5px; }
+    .tier2-grid{ grid-template-columns:1fr; }
+    .demo-chips{ padding:12px; }
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .barrow-fill, .rangebar-fill{ transition:none; }
+    .chip{ animation:none !important; }
+    .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
+    .card{ transition:none; }
+    .card:hover{ transform:none; }
+  }
+</style>
+
+<div class="toast" id="toast"></div>
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<nav class="topnav">
+  <div class="topnav-inner">
+    <span class="topnav-brand">DRISHTIKON-40B</span>
+    <a href="#data">Data</a>
+    <a href="#cleaning">Cleaning</a>
+    <a href="#tokenizer">Tokenizer</a>
+    <a href="#eval">Evaluation</a>
+    <a href="#novel">Novel ideas</a>
+    <a href="#languages">Languages</a>
+    <a href="#licensing">Licensing</a>
+    <button class="theme-toggle" id="themeToggle" aria-label="Switch to light theme"></button>
+  </div>
+  <div class="progress-fill" id="progressFill"></div>
+</nav>
+
+<header class="hero">
+  <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="wrap-wide">
+    <p class="eyebrow">Model design memo · pretraining, post-training &amp; alignment plan · July 2026</p>
+    <h1 class="title">Drishtikon-40B <span class="devanagari">दृष्टिकोण</span></h1>
+    <p class="subhead">A 40B dense model built to match Gemma 4's real published benchmarks, ship production-grade coding and agentic tool-use, and think in India's own languages and frame of reference — not translate into them.</p>
+    <p class="meta-badge" id="readMeta"></p>
+
+    <div class="stat-row">
+      <div class="stat-tile" data-copy="40B dense parameters" tabindex="0" role="button"><div class="stat-num" data-to="40" data-suffix="B">0</div><div class="stat-label">dense params</div><div class="stat-copy-hint">click to copy</div></div>
+      <div class="stat-tile" data-copy="14T pretraining tokens" tabindex="0" role="button"><div class="stat-num" data-to="14" data-suffix="T">0</div><div class="stat-label">pretraining tokens</div><div class="stat-copy-hint">click to copy</div></div>
+      <div class="stat-tile" data-copy="~180K tokenizer vocabulary" tabindex="0" role="button"><div class="stat-num" data-to="180" data-prefix="~" data-suffix="K">0</div><div class="stat-label">tokenizer vocab</div><div class="stat-copy-hint">click to copy</div></div>
+      <div class="stat-tile" data-copy="22 languages, one shared vocab" tabindex="0" role="button"><div class="stat-num" data-to="22" data-suffix="">0</div><div class="stat-label">languages, one vocab</div><div class="stat-copy-hint">click to copy</div></div>
+    </div>
+
+    <p class="lede">Every number below is derived, not asserted — from Gemma 4's real 31B-dense scores (MMLU-Pro 85.2, GPQA 84.3, LiveCodeBench 80.0, AIME 89.2), two real 2025/26 Indic tokenizer papers, and a live, unresolved Delhi High Court case our licensing policy (§7) is built around. Ideas shared with the four reference submissions we were pointed to are credited as baseline practice in the project README; five ideas below are, to our knowledge, new.</p>
+  </div>
+</header>
+
+<main class="wrap-wide">
+
+  <section id="data">
+    <div class="section-head"><span class="section-mark">§1</span><h2 class="section-title">Data — what we collect, and why 20% is Indic</h2></div>
+    <p class="section-dek">14T tokens apportioned by objective, not by what's easiest to scrape.</p>
+    <p>English stays the reasoning backbone; code and agentic trajectories are sized to the coding/tool-use target; Indic climbs to <b>20%</b> — above the 16–18% every comparable plan defaults to — because AI4Bharat's Sangraha alone is a real, <b>CC-BY-4.0</b>, 251-billion-token verified floor, and two new channels (<a href="#novel">Oral-Commons, Rupantar Chains</a>) add fresh, non-scraped supply on top of it rather than upsampling the same 251B thinner.</p>
+
+    <div class="barlist" id="chart-datamix"></div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Category</th><th>Share</th><th>Tokens</th><th class="wrap-cell">Why</th></tr></thead>
+        <tbody>
+          <tr><td>English (edu-filtered)</td><td>30%</td><td>4.20T</td><td class="wrap-cell">Reasoning/knowledge backbone for Gemma-4 parity</td></tr>
+          <tr><td>Code + India-Stack SDKs</td><td>20%</td><td>2.80T</td><td class="wrap-cell">Coding/agentic parity — LiveCodeBench ≥80 target</td></tr>
+          <tr><td>Indic — 22 languages</td><td>20%</td><td>2.80T</td><td class="wrap-cell">Sangraha-anchored + Oral-Commons; see §1 above</td></tr>
+          <tr><td>Math &amp; science</td><td>8%</td><td>1.12T</td><td class="wrap-cell">NCERT-anchored CoT + olympiad + arXiv, for AIME/JEE parity</td></tr>
+          <tr><td>India-context civic/legal</td><td>7%</td><td>0.98T</td><td class="wrap-cell">"Panchayat→Parliament" corpus; closes MILU's real Law/Governance/Arts gap</td></tr>
+          <tr><td>Parallel / cross-lingual</td><td>5%</td><td>0.70T</td><td class="wrap-cell">Samanantar, BPCC, FLORES + Rupantar synthetic pairs</td></tr>
+          <tr><td>Agentic / tool-use</td><td>5%</td><td>0.70T</td><td class="wrap-cell">DPI-Gym + general tool corpora</td></tr>
+          <tr><td>World multilingual</td><td>3%</td><td>0.42T</td><td class="wrap-cell">~140 non-Indic languages, breadth not focus</td></tr>
+          <tr><td>Long-context / books</td><td>2%</td><td>0.28T</td><td class="wrap-cell">Long-context capability, structured documents</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="cleaning">
+    <div class="section-head"><span class="section-mark">§2</span><h2 class="section-title">Cleaning — six stages, two new filters</h2></div>
+    <p class="section-dek">Kept short on purpose; two of the six are new, the rest are correctly-done standard practice.</p>
+    <ol class="stage-list">
+      <li><span><b>Extraction + script-invariant language ID</b> — robust to code-mixed sentences that a whitespace-based LID model misreads as garbage or the wrong language.</span></li>
+      <li><span><b>Transliteration-canonicalized dedup</b><span class="tag">NEW</span> — near-duplicate detection normally runs per script, so the same article scraped once in Devanagari and once as romanized Hinglish looks like two different documents. We transliterate every document to a shared phonemic key before MinHash, so cross-script duplicates get caught too.</span></li>
+      <li><span><b>Per-language quality filtering</b> + Unicode NFC normalization.</span></li>
+      <li><span><b>PII removal</b> — DPDP Act 2023 patterns (Aadhaar/PAN/UPI) + Indic NER.</span></li>
+      <li><span><b>Nirapeksh (निरपेक्ष, "impartial") consistency check</b><span class="tag">NEW</span> — every identity-bearing sentence (caste-coded surname, religion-coded name, regional marker) gets a counterfactual swap; documents where a paired model's output shifts for reasons unrelated to the substitution feed a <i>training-time</i> consistency loss, not just an eval-time probe.</span></li>
+      <li><span><b>Benchmark decontamination</b> (12-gram/fuzzy overlap against every benchmark in §4) + a memorization audit gate before any release.</span></li>
+    </ol>
+  </section>
+
+  <section id="tokenizer">
+    <div class="section-head"><span class="section-mark">§3</span><h2 class="section-title">Tokenizer — ~180K vocab, and why that number</h2></div>
+    <p class="section-dek">Anchored to two real 2026 papers, not a round guess.</p>
+    <p><b>BrahmicTokenizer-131K</b> (arXiv, May 2026) proved a 131K retrofit of <code>o200k_base</code> can match English fertility (1.235) while cutting Indic tokens 26.7% — but it explicitly dropped nine non-Brahmic scripts, so Urdu, Kashmiri, Sindhi and Santali are out of scope for it. <b>IndicSuperTokenizer</b> (OpenReview, Oct 2025) proved a second, independent lever: "superword" multi-word merges beat raw vocab growth, gaining 39.5% over LLaMA-4 through procedure, not size. We start from both, then add the two pieces neither did.</p>
+
+    <div class="barlist" id="chart-vocab"></div>
+
+    <div class="callout"><p><b>Sandhi-BPE</b> (सन्धि — the grammatical term for sound-merging at word boundaries, apt since BPE is itself pairwise merging): <b>one shared tokenizer, not one per language.</b> Devanagari sits inside the Brahmic-core budget alongside the other eight Brahmic blocks, exactly as in BrahmicTokenizer-131K — Hindi, Marathi, Nepali, Sanskrit and Konkani all draw on the same allocation. What we add is specific to the four Dravidian languages, where BrahmicTokenizer's own numbers show the smallest gain (Tamil +15.79%, against Odia's +76.79%): an existing morphological analyzer biases merge selection toward real morpheme boundaries instead of raw frequency, with a confidence-gated fallback to plain BPE so the floor is never worse than known-good behavior. One merge table, applied uniformly — a requirement, not a preference, since Hinglish and Tanglish interleave scripts inside a single sentence.</p></div>
+
+    <h3 style="font-size:15px;margin:28px 0 4px;">Fertility targets (tokens/word)</h3>
+    <div id="chart-fertility" style="margin-top:18px;"></div>
+    <p class="ref-legend"><span class="ref-dot"></span>reference line at 1.0 tokens/word (theoretical ideal)</p>
+
+    <div class="demo" id="tokDemo">
+      <div class="demo-head">
+        <span class="demo-label">See fertility, don't just read it — same sentence, four scripts</span>
+        <div class="pill-row" id="tokPills">
+          <button class="pill active" data-lang="en">English</button>
+          <button class="pill" data-lang="hi">Hindi</button>
+          <button class="pill" data-lang="ta">Tamil</button>
+          <button class="pill" data-lang="hien">Hinglish</button>
+        </div>
+      </div>
+      <p class="demo-sentence" id="tokSentence"></p>
+      <p class="demo-gloss" id="tokGloss"></p>
+      <div class="demo-chips" id="tokChips"></div>
+      <p class="demo-readout" id="tokReadout"></p>
+      <p class="demo-caption">Illustrative segmentation, hand-set to match the fertility ranges in the table above — not literal output of the ~180K-vocab tokenizer. Ochre chips are word-fragments (where fertility cost is paid); plain chips are whole-word tokens.</p>
+    </div>
+  </section>
+
+  <section id="eval">
+    <div class="section-head"><span class="section-mark">§4</span><h2 class="section-title">Evaluation — how we'd know we succeeded</h2></div>
+    <p class="section-dek">Real benchmarks as the floor; new ones only where the objective genuinely can't be measured otherwise. Never averaged across languages.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Objective</th><th class="wrap-cell">Benchmark</th><th class="wrap-cell">Target</th></tr></thead>
+        <tbody>
+          <tr><td>Gemma-4 parity</td><td class="wrap-cell">MMLU-Pro / GPQA / AIME 2026</td><td class="wrap-cell">≥85.2 / ≥84.3 / ≥89.2 (Gemma-4-31B's real scores)</td></tr>
+          <tr><td>Coding</td><td class="wrap-cell">LiveCodeBench, SWE-bench Verified</td><td class="wrap-cell">≥80.0 / competitive verified-resolve rate</td></tr>
+          <tr><td>Agentic</td><td class="wrap-cell">BFCL v4, τ-bench, DPI-Gym<span class="tag">NEW</span></td><td class="wrap-cell">≥ open-model SOTA; DPI-Gym sets the new bar</td></tr>
+          <tr><td>Indic knowledge</td><td class="wrap-cell">MILU, IndicGenBench, FLORES</td><td class="wrap-cell">≥75% MILU avg (beats GPT-4o's real 72%), explicit Arts/Law sub-score</td></tr>
+          <tr><td>Code-mixed help</td><td class="wrap-cell">CodeMix-Bench<span class="tag">NEW</span></td><td class="wrap-cell">native-rater ≥4.3/5</td></tr>
+          <tr><td>India-first worldview</td><td class="wrap-cell">Drishtikon-Bench<span class="tag">NEW</span></td><td class="wrap-cell">frame displacement, gated by a factuality floor</td></tr>
+          <tr><td>Tokenizer fairness</td><td class="wrap-cell">Fertility vs. BrahmicTokenizer-131K/Sarvam-1</td><td class="wrap-cell">see §3 table</td></tr>
+          <tr><td>Safety / fairness</td><td class="wrap-cell">Disaggregated caste/religion/region/gender probes</td><td class="wrap-cell">no single axis &lt;90% of best axis</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="novel">
+    <div class="section-head"><span class="section-mark">§5</span><h2 class="section-title">Five ideas we think are actually new</h2></div>
+    <p class="section-dek">This is where the real word-budget goes — everything above this line is done correctly; this is what's different. Filter the 19 named ideas below by where they sit in the model lifecycle.</p>
+
+    <div class="filter-bar" id="filterBar">
+      <div class="pill-row">
+        <button class="pill active" data-filter="all">All</button>
+        <button class="pill" data-filter="data">Data</button>
+        <button class="pill" data-filter="tokenizer">Tokenizer</button>
+        <button class="pill" data-filter="agentic">Agentic</button>
+        <button class="pill" data-filter="alignment">Alignment</button>
+        <button class="pill" data-filter="eval">Eval</button>
+        <button class="pill" data-filter="post-launch">Post-launch</button>
+      </div>
+      <span class="filter-count" id="filterCount"></span>
+    </div>
+
+    <div class="card reveal" data-cat="agentic">
+      <div class="card-head"><h3>DPI-Gym</h3><span class="card-badge">NEW</span><span class="cat-label">Agentic</span></div>
+      <p>A simulated-environment suite (à la WebArena/OSWorld) built around India's actual Digital Public Infrastructure — UPI, DigiLocker, ONDC (its protocol specs are genuinely open on GitHub, low legal risk to simulate), CoWIN, e-Shram, Aadhaar-eKYC, FASTag, and RBI's Account Aggregator framework — that doubles as an SFT/RL trajectory generator and a held-out benchmark.</p>
+      <p>Realism knobs harder than WebArena's clean web: injected rate-limiting, OTP timeouts, payment idempotency, vernacular utterances that must map to correct API parameters, and simulated 2G/low-bandwidth conditions forcing retry/USSD-fallback behavior. Rewards are execution-verified against the simulator's resulting ledger state, never "looks plausible" — and it's simulated-only, never live rails or real user data. The method — simulate a nation's DPI stack and its real operating constraints — generalizes directly to Singapore's SingPass, Brazil's Pix, Estonia's X-Road: a genuine benchmark contribution, not a one-off toy.</p>
+    </div>
+
+    <div class="card reveal" data-cat="tokenizer">
+      <div class="card-head"><h3>Sandhi-BPE</h3><span class="card-badge">NEW</span><span class="cat-label">Tokenizer</span></div>
+      <p>Morphology-seeded superword tokenizer for the four Dravidian languages — full mechanics in §3. The contribution is procedural, not architectural: a concrete, testable extension of two real 2025/26 papers (BrahmicTokenizer-131K, IndicSuperTokenizer) rather than a reinvention, targeting exactly the case both left hardest.</p>
+    </div>
+
+    <div class="card reveal" data-cat="data">
+      <div class="card-head"><h3>Rupantar Chains</h3><span class="card-badge">NEW</span><span class="native">रूपांतर — "transformation"</span><span class="cat-label">Data</span></div>
+      <p>Synthetic data generation that goes past every reference submission's plain back-translation-with-COMET/chrF gating. An English fact or reasoning chain is translated, then <b>a culturally-grounded rewriter re-expresses it in Indian idiom, units and analogy</b> — transcreation, not translation — then NLI-verified for faithfulness back to the source. The result is natively Indian in <i>framing</i>, not just in language, which mere translation-quality gating can't produce.</p>
+    </div>
+
+    <div class="card reveal" data-cat="eval">
+      <div class="card-head"><h3>Drishtikon-Bench</h3><span class="card-badge">NEW</span><span class="cat-label">Eval</span></div>
+      <p>The memo's namesake contribution. Instead of accuracy-style worldview probes, it measures a <b>perspective displacement score</b>: KL-divergence between the model's answer distribution on ambiguous, ethnocentric-prone questions (discovery attribution, historical framing, "typical" X) versus a Western-default baseline model — gated by a factuality floor so displacement toward an Indian frame never overshoots into inaccuracy or majoritarianism. Turns "India-first" from a vibe into a number.</p>
+    </div>
+
+    <div class="card reveal" data-cat="alignment">
+      <div class="card-head"><h3>Samvidhan-CAI</h3><span class="card-badge">NEW</span><span class="native">संविधान — "constitution"</span><span class="cat-label">Alignment</span></div>
+      <p>A Constitutional-AI-style critique/revision RLAIF loop where critique prompts are drawn from <b>specific, named Articles</b> of the Indian Constitution (14, 15, 19, 25, 29, 30 — equality, expression, religious freedom, minority/cultural rights) and the Directive Principles, each with legal-linguist-validated native-language templates — more rigorous and reproducible than a generic "constitutional framing" gesture.</p>
+    </div>
+
+    <h3 style="font-size:14px;color:var(--text-3);margin:26px 0 4px;text-transform:uppercase;letter-spacing:.04em;">Tier-2 — named, not fully elaborated (keeps length down)</h3>
+    <div class="tier2-grid">
+      <div class="tier2-item" data-cat="alignment"><b>Nirapeksh Loss</b> — counterfactual caste/religion/region name-swap consistency regularizer, trained-in, not just probed.</div>
+      <div class="tier2-item" data-cat="data"><b>Bandit-DoReMi</b> — multi-armed-bandit online data reweighting with hard floors for extreme long-tail languages.</div>
+      <div class="tier2-item" data-cat="data"><b>Oral-Commons</b> — ASHA/community-radio-partnered active audio elicitation + ASR for tribal languages with near-zero digital text, feeding continual pretraining.</div>
+      <div class="tier2-item" data-cat="tokenizer"><b>Matryoshka vocab nesting</b> — deployment-elastic sub-vocabularies for low-RAM/feature-phone inference.</div>
+      <div class="tier2-item" data-cat="eval"><b>CodeMix-Bench</b> — Hinglish/Tanglish code-mixed programming-help benchmark.</div>
+      <div class="tier2-item" data-cat="data"><b>Transliteration-canonicalized dedup</b> — see §2.</div>
+    </div>
+
+    <h3 style="font-size:14px;color:var(--text-3);margin:26px 0 4px;text-transform:uppercase;letter-spacing:.04em;">Across the rest of the lifecycle</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Stage</th><th class="wrap-cell">Idea</th><th class="wrap-cell">Mechanism</th></tr></thead>
+        <tbody>
+          <tr data-cat="data"><td>Pretraining</td><td class="wrap-cell">Uday Schedule <span class="native">(उदय, "rise")</span></td><td class="wrap-cell">Stage language introduction by measured fertility/loss stability instead of flat mixing from step 0 — a temporal curriculum, distinct from Bandit-DoReMi's per-step reweighting</td></tr>
+          <tr data-cat="tokenizer"><td>Tokenizer</td><td class="wrap-cell">Canary reserved tokens</td><td class="wrap-cell">Dedicate part of the special-token budget to per-source canaries, wired into the §2 memorization-audit gate — attributable extraction risk, not just a probe</td></tr>
+          <tr data-cat="alignment"><td>SFT</td><td class="wrap-cell">Mool Data <span class="native">(मूल, "root")</span></td><td class="wrap-cell">Author instructions + reasoning natively in-language first, translate to English second — inverts the usual translate-then-localize flow</td></tr>
+          <tr data-cat="alignment"><td>SFT</td><td class="wrap-cell">Nyaya-CoT</td><td class="wrap-cell">Structure a slice of reasoning traces in the five-part Nyaya syllogism (pratijñā–hetu–udāharaṇa–upanaya–nigamana) as an alternate schema to Western-style CoT</td></tr>
+          <tr data-cat="alignment"><td>DPO</td><td class="wrap-cell">Bahumat-DPO <span class="native">(बहुमत, "plurality")</span></td><td class="wrap-cell">Tag pairs with rater region/language; systematic cross-region disagreement routes to a "present balanced perspectives" objective instead of a forced majority preference</td></tr>
+          <tr data-cat="alignment"><td>RL</td><td class="wrap-cell">Gopaniya-RL <span class="native">(गोपनीय, "confidential")</span></td><td class="wrap-cell">Differentially-private federated aggregation of preference/RL feedback — raw feedback text never centralizes, closing the DPDP gap Nirapeksh Loss leaves at inference time</td></tr>
+          <tr data-cat="post-launch"><td>Post-launch</td><td class="wrap-cell">Gram Adapter Network <span class="native">(गांव, "village")</span></td><td class="wrap-cell">Opt-in, on-device community LoRA adapters via secure aggregation into downloadable "dialect packs" — a privacy-preserving flywheel for the hardest-to-scrape languages</td></tr>
+          <tr data-cat="post-launch"><td>Post-launch</td><td class="wrap-cell">Nagrik Grievance Loop <span class="native">(नागरिक, "citizen")</span></td><td class="wrap-cell">A CPGRAMS-style formal grievance channel for model outputs — tracked ticket ID, committed SLA, public quarterly transparency report</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="languages">
+    <div class="section-head"><span class="section-mark">§6</span><h2 class="section-title">Language tiers</h2></div>
+    <p class="section-dek">Training-time investment, not just tokenizer budget.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Tier</th><th class="wrap-cell">Languages</th><th class="wrap-cell">Investment</th></tr></thead>
+        <tbody>
+          <tr><td>Tier 0</td><td class="wrap-cell">Hindi, Bengali, Tamil, Telugu, Marathi</td><td class="wrap-cell">Full parity-level SFT/RLHF — bridges Indo-Aryan/Dravidian, largest combined population</td></tr>
+          <tr><td>Tier 1</td><td class="wrap-cell">Gujarati, Kannada, Malayalam, Punjabi, Odia, Urdu, Assamese</td><td class="wrap-cell">Full pretraining + lighter native-rater alignment</td></tr>
+          <tr><td>Tier 2</td><td class="wrap-cell">Remaining scheduled languages incl. Sanskrit, Santali, Manipuri, Bodo, Maithili, Konkani, Dogri, Kashmiri, Nepali, Sindhi</td><td class="wrap-cell">Always-on sampling floor + Oral-Commons + byte-fallback safety net</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="licensing">
+    <div class="section-head"><span class="section-mark">§7</span><h2 class="section-title">Licensing</h2></div>
+    <p class="section-dek">A hard requirement, not an afterthought: the model has to be freely usable by others, professionally.</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th class="wrap-cell">Aspect</th><th class="wrap-cell">Policy</th><th class="wrap-cell">Why</th></tr></thead>
+        <tbody>
+          <tr><td class="wrap-cell">Legal context</td><td class="wrap-cell">India's Copyright Act has no text-and-data-mining exception</td><td class="wrap-cell"><i>ANI Media v. OpenAI</i> (Delhi HC) has this exact question unresolved, order reserved — treat as open risk, not settled</td></tr>
+          <tr><td class="wrap-cell">Safe tier</td><td class="wrap-cell">Sangraha (CC-BY-4.0), court judgments (Sec 52(1)(q)), CC0/public domain</td><td class="wrap-cell">Commercially safe today</td></tr>
+          <tr><td class="wrap-cell">Permission-required tier</td><td class="wrap-cell">NCERT, gazettes, ministry reports</td><td class="wrap-cell">Govt retains copyright (Sec 2(k)) — needs an MoU, not just a scrape</td></tr>
+          <tr><td class="wrap-cell">Contested tier</td><td class="wrap-cell">General web crawl</td><td class="wrap-cell">Capped exposure; provenance ledger enables surgical excision if the ruling requires it</td></tr>
+          <tr><td class="wrap-cell">Code</td><td class="wrap-cell">Permissive SPDX only (MIT/Apache-2.0/BSD)</td><td class="wrap-cell">No GPL/AGPL — avoids copyleft obligations flowing into outputs</td></tr>
+          <tr><td class="wrap-cell">Model weight license</td><td class="wrap-cell"><b>Apache 2.0</b></td><td class="wrap-cell">OSI-approved, no MAU threshold (unlike Llama), no ToU-as-license friction (unlike Gemma) — genuinely usable professionally</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+(function(){
+  var reduceMotion = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- theme toggle (dark by default) ---------- */
+  var root = document.documentElement;
+  var themeToggle = document.getElementById('themeToggle');
+  var sunIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>';
+  var moonIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+  function paintToggle(t){
+    themeToggle.innerHTML = t === 'dark' ? moonIcon : sunIcon;
+    themeToggle.setAttribute('aria-label', t === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+  function setTheme(t){
+    root.setAttribute('data-theme', t);
+    try{ localStorage.setItem('drishtikon-theme', t); }catch(e){}
+    paintToggle(t);
+  }
+  var savedTheme = null;
+  try{ savedTheme = localStorage.getItem('drishtikon-theme'); }catch(e){}
+  paintToggle(savedTheme || root.getAttribute('data-theme') || 'dark');
+  if(savedTheme) root.setAttribute('data-theme', savedTheme);
+  themeToggle.addEventListener('click', function(){
+    var isDark = (root.getAttribute('data-theme') || 'dark') === 'dark';
+    setTheme(isDark ? 'light' : 'dark');
+  });
+
+  /* ---------- hover tooltip (existing charts) ---------- */
+  var tooltip = document.getElementById('tooltip');
+  function showTip(el, text){ tooltip.textContent = text; tooltip.classList.add('show'); }
+  function hideTip(){ tooltip.classList.remove('show'); }
+  function moveTip(e){ tooltip.style.left = e.clientX + 'px'; tooltip.style.top = e.clientY + 'px'; }
+  function wireHover(container){
+    container.addEventListener('mousemove', function(e){
+      var row = e.target.closest('[data-tip]');
+      if(row){ showTip(row, row.getAttribute('data-tip')); moveTip(e); }
+      else { hideTip(); }
+    });
+    container.addEventListener('mouseleave', hideTip);
+  }
+
+  /* ---------- data mix bars ---------- */
+  var datamix = [
+    ['English (edu-filtered)', 30, '4.20T tokens — reasoning/knowledge backbone'],
+    ['Code + India-Stack SDKs', 20, '2.80T tokens — coding/agentic parity target'],
+    ['Indic — 22 languages', 20, '2.80T tokens — Sangraha-anchored + Oral-Commons'],
+    ['Math & science', 8, '1.12T tokens — NCERT-anchored CoT + olympiad + arXiv'],
+    ['India-context civic/legal', 7, '0.98T tokens — Panchayat→Parliament corpus'],
+    ['Parallel / cross-lingual', 5, '0.70T tokens — Samanantar, BPCC, FLORES, Rupantar'],
+    ['Agentic / tool-use', 5, '0.70T tokens — DPI-Gym + general tool corpora'],
+    ['World multilingual', 3, '0.42T tokens — ~140 non-Indic languages'],
+    ['Long-context / books', 2, '0.28T tokens — structured documents']
+  ];
+  var maxShare = 30;
+  var dmEl = document.getElementById('chart-datamix');
+  datamix.forEach(function(row){
+    var pct = (row[1]/maxShare*100).toFixed(0);
+    dmEl.insertAdjacentHTML('beforeend',
+      '<div class="barrow" data-tip="'+row[2]+'" data-pct="'+pct+'">'+
+      '<div class="barrow-label">'+row[0]+'</div>'+
+      '<div class="barrow-track"><div class="barrow-fill"></div></div>'+
+      '<div class="barrow-value">'+row[1]+'%</div></div>');
+  });
+
+  /* ---------- vocab budget bars ---------- */
+  var vocab = [
+    ['Latin/English + code', 72, '40% — preserves o200k_base-class code compression'],
+    ['Brahmic core (9 blocks)', 70, '39% — Devanagari + 8 other Brahmic scripts'],
+    ['Non-Brahmic scripts', 14, '8% — Perso-Arabic, Meitei Mayek, Ol Chiki: restores what BrahmicTokenizer-131K dropped'],
+    ['Superword reserve', 10, '6% — IndicSuperTokenizer-style stage-2 merges'],
+    ['Math/tool-call schema', 6, '3% — protected, atomic, never merged'],
+    ['Matryoshka reserve', 8, '4% — nested sub-vocab for edge deployment']
+  ];
+  var maxVocab = 72;
+  var vEl = document.getElementById('chart-vocab');
+  vocab.forEach(function(row){
+    var pct = (row[1]/maxVocab*100).toFixed(0);
+    vEl.insertAdjacentHTML('beforeend',
+      '<div class="barrow" data-tip="'+row[2]+'" data-pct="'+pct+'">'+
+      '<div class="barrow-label">'+row[0]+'</div>'+
+      '<div class="barrow-track"><div class="barrow-fill"></div></div>'+
+      '<div class="barrow-value">'+row[1]+'K</div></div>');
+  });
+
+  /* ---------- fertility range bars ---------- */
+  var fert = [
+    ['English / code', 1.10, 1.25, 'Measured 1.235 real baseline (o200k_base)'],
+    ['Indo-Aryan core (Hindi, Marathi, Gujarati)', 1.50, 1.70, "vs. Sarvam-1's 1.4–2.1 range"],
+    ['Eastern Nagari (Bengali, Assamese, Odia)', 1.50, 1.80, "Odia was BrahmicTokenizer's easiest win: +76.79%/4.31×"],
+    ['Dravidian (Tamil, Telugu, Kannada, Malayalam)', 1.85, 2.10, 'Tamil was the hardest case: only +15.79% — Sandhi-BPE target'],
+    ['Gurmukhi (Punjabi)', 1.70, 1.90, ''],
+    ['Perso-Arabic (Urdu, Kashmiri, Sindhi)', 1.90, 2.20, 'Restored script budget BrahmicTokenizer-131K dropped'],
+    ['Tier-3 / low-resource', 2.20, 2.80, 'Zero-UNK via byte-fallback, Oral-Commons-fed'],
+    ['Math (atomic digits)', 1.00, 1.05, 'Digits never merged'],
+    ['Agentic schema tokens', 1.00, 1.05, 'Protected atomic vocab']
+  ];
+  var scaleMax = 3.0;
+  var fEl = document.getElementById('chart-fertility');
+  fert.forEach(function(row){
+    var left = (row[1]/scaleMax*100).toFixed(1);
+    var width = Math.max(((row[2]-row[1])/scaleMax*100), 1.2).toFixed(1);
+    var refLeft = (1.0/scaleMax*100).toFixed(1);
+    fEl.insertAdjacentHTML('beforeend',
+      '<div class="rangebar" data-tip="'+row[0]+' — '+row[3]+'" data-left="'+left+'" data-width="'+width+'">'+
+      '<div class="rangebar-label">'+row[0]+'</div>'+
+      '<div class="rangebar-track"><div class="rangebar-fill"></div><div class="rangebar-ref" style="left:'+refLeft+'%"></div></div>'+
+      '<div class="rangebar-value">'+row[1].toFixed(2)+'–'+row[2].toFixed(2)+'</div></div>');
+  });
+
+  wireHover(dmEl); wireHover(vEl); wireHover(fEl);
+
+  /* animate bar fills in once, shortly after paint */
+  function animateBars(){
+    document.querySelectorAll('.barrow[data-pct]').forEach(function(el){
+      el.querySelector('.barrow-fill').style.width = el.getAttribute('data-pct') + '%';
+    });
+    document.querySelectorAll('.rangebar[data-left]').forEach(function(el){
+      var f = el.querySelector('.rangebar-fill');
+      f.style.left = el.getAttribute('data-left') + '%';
+      f.style.width = el.getAttribute('data-width') + '%';
+    });
+  }
+  setTimeout(animateBars, reduceMotion ? 0 : 120);
+
+  /* ---------- scroll progress + scrollspy ---------- */
+  var progressFill = document.getElementById('progressFill');
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.topnav a[href^="#"]'));
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+  var ticking = false;
+  function onScroll(){
+    var doc = document.documentElement;
+    var scrollTop = doc.scrollTop || document.body.scrollTop;
+    var scrollHeight = (doc.scrollHeight - doc.clientHeight) || 1;
+    progressFill.style.width = Math.min(100, (scrollTop/scrollHeight*100)) + '%';
+
+    var current = sections.length ? sections[0].id : null;
+    sections.forEach(function(sec){
+      if(sec.getBoundingClientRect().top - 96 <= 0) current = sec.id;
+    });
+    navLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#'+current);
+    });
+
+    var toTop = document.getElementById('toTop');
+    toTop.classList.toggle('show', scrollTop > 700);
+
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if(!ticking){ window.requestAnimationFrame(onScroll); ticking = true; }
+  });
+  onScroll();
+
+  document.getElementById('toTop').addEventListener('click', function(){
+    window.scrollTo({ top:0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  });
+
+  /* ---------- count-up hero stats ---------- */
+  document.querySelectorAll('.stat-num[data-to]').forEach(function(el){
+    var to = parseFloat(el.getAttribute('data-to'));
+    var prefix = el.getAttribute('data-prefix') || '';
+    var suffix = el.getAttribute('data-suffix') || '';
+    if(reduceMotion){ el.textContent = prefix + to + suffix; return; }
+    var start = null, dur = 900;
+    function step(ts){
+      if(!start) start = ts;
+      var p = Math.min(1, (ts-start)/dur);
+      var eased = 1 - Math.pow(1-p, 3);
+      el.textContent = prefix + Math.round(eased*to) + suffix;
+      if(p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+
+  /* ---------- copy-to-clipboard on stat tiles ---------- */
+  var toast = document.getElementById('toast');
+  var toastTimer;
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1600);
+  }
+  function copyTile(tile){
+    var text = tile.getAttribute('data-copy');
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ showToast('Copied — ' + text); }).catch(function(){});
+    }
+  }
+  document.querySelectorAll('.stat-tile[data-copy]').forEach(function(tile){
+    tile.addEventListener('click', function(){ copyTile(tile); });
+    tile.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); copyTile(tile); }
+    });
+  });
+
+  /* ---------- reveal-on-scroll for novel-idea cards ---------- */
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){ entry.target.classList.add('in-view'); io.unobserve(entry.target); }
+      });
+    }, { threshold:0.08, rootMargin:'0px 0px -8% 0px' });
+    document.querySelectorAll('.card.reveal').forEach(function(c){ io.observe(c); });
+  } else {
+    document.querySelectorAll('.card.reveal').forEach(function(c){ c.classList.add('in-view'); });
+  }
+
+  /* ---------- unified filter gallery (§5) ---------- */
+  var filterPills = document.querySelectorAll('#filterBar .pill');
+  var filterables = document.querySelectorAll('[data-cat]');
+  var filterCount = document.getElementById('filterCount');
+  function applyFilter(cat){
+    var shown = 0;
+    filterables.forEach(function(el){
+      var match = (cat === 'all') || (el.getAttribute('data-cat') === cat);
+      el.classList.toggle('is-hidden', !match);
+      if(match) shown++;
+    });
+    filterCount.textContent = shown + ' of ' + filterables.length + ' ideas shown';
+    filterPills.forEach(function(p){ p.classList.toggle('active', p.getAttribute('data-filter') === cat); });
+  }
+  filterPills.forEach(function(p){
+    p.addEventListener('click', function(){ applyFilter(p.getAttribute('data-filter')); });
+  });
+  applyFilter('all');
+
+  /* ---------- live tokenization / fertility demo ---------- */
+  var tokPresets = {
+    en: {
+      sentence: 'The model reads Indian law in the original language.',
+      gloss: '',
+      words: [[['The',0]],[['mod',1],['el',1]],[['reads',0]],[['Indian',0]],[['law',0]],[['in',0]],[['the',0]],[['original',0]],[['language',0]]]
+    },
+    hi: {
+      sentence: 'यह मॉडल भारतीय कानून को मूल भाषा में पढ़ता है।',
+      gloss: '"This model reads Indian law in the original language."',
+      words: [[['यह',0]],[['मॉ',1],['डल',1]],[['भार',1],['तीय',1]],[['कानू',1],['न',1]],[['को',0]],[['मूल',0]],[['भा',1],['षा',1]],[['में',0]],[['पढ़',1],['ता',1]],[['है',0]]]
+    },
+    ta: {
+      sentence: 'இந்த மாதிரி இந்திய சட்டத்தை மூல மொழியில் படிக்கிறது.',
+      gloss: '"This model reads Indian law in the original language."',
+      words: [[['இ',1],['ந்த',1]],[['மா',1],['திரி',1]],[['இந்',1],['திய',1]],[['சட்ட',1],['த்தை',1]],[['மூல',0]],[['மொழி',1],['யில்',1]],[['படி',1],['க்கி',1],['றது',1]]]
+    },
+    hien: {
+      sentence: 'Yeh model Indian law ko original language mein padhta hai',
+      gloss: 'code-mixed — same meaning, no script switch',
+      words: [[['Yeh',0]],[['mod',1],['el',1]],[['Indi',1],['an',1]],[['law',0]],[['ko',0]],[['ori',1],['gi',1],['nal',1]],[['langu',1],['age',1]],[['mein',0]],[['padh',1],['ta',1]],[['hai',0]]]
+    }
+  };
+  var tokSentenceEl = document.getElementById('tokSentence');
+  var tokGlossEl = document.getElementById('tokGloss');
+  var tokChipsEl = document.getElementById('tokChips');
+  var tokReadoutEl = document.getElementById('tokReadout');
+  var tokPillsEl = document.getElementById('tokPills');
+
+  function renderTok(key){
+    var preset = tokPresets[key];
+    tokSentenceEl.textContent = preset.sentence;
+    tokGlossEl.textContent = preset.gloss;
+    tokGlossEl.style.display = preset.gloss ? '' : 'none';
+
+    var html = '', tokenCount = 0, i = 0;
+    preset.words.forEach(function(word){
+      html += '<span class="tok-word">';
+      word.forEach(function(chip){
+        tokenCount++;
+        html += '<span class="chip ' + (chip[1] ? 'frag' : 'whole') + '" style="--i:' + i + '">' + chip[0] + '</span>';
+        i++;
+      });
+      html += '</span>';
+    });
+    tokChipsEl.innerHTML = html;
+    var wordCount = preset.words.length;
+    var fertility = (tokenCount / wordCount).toFixed(2);
+    tokReadoutEl.innerHTML = tokenCount + ' tokens / ' + wordCount + ' words = <b>' + fertility + '</b> tokens/word';
+
+    tokPillsEl.querySelectorAll('.pill').forEach(function(p){
+      p.classList.toggle('active', p.getAttribute('data-lang') === key);
+    });
+  }
+  tokPillsEl.querySelectorAll('.pill').forEach(function(p){
+    p.addEventListener('click', function(){ renderTok(p.getAttribute('data-lang')); });
+  });
+  renderTok('en');
+
+  /* ---------- word count / read time ---------- */
+  var words = (document.querySelector('main').textContent.match(/\\S+/g) || []).length;
+  var mins = Math.max(1, Math.round(words/220));
+  document.getElementById('readMeta').innerHTML =
+    '~' + words.toLocaleString() + ' words <span class="dot"></span> ' + mins + ' min read <span class="dot"></span> updated July 2026';
+
+  /* ---------- ambient hero glyph canvas ---------- */
+  var canvas = document.getElementById('heroCanvas');
+  var ctx = canvas.getContext && canvas.getContext('2d');
+  if(ctx){
+    var glyphs = ['अ','भ','ध','त','क','म','ा','ी','ஆ','த','ம','ழ','க','ன','ற','আ','ব','ক','ম','ਕ','ਮ','മ','ല','ழ','ا','ل','م','A','a'];
+    var hero = canvas.parentElement;
+    var particles = [], raf;
+    function size(){
+      var r = hero.getBoundingClientRect();
+      canvas.width = r.width * devicePixelRatio;
+      canvas.height = r.height * devicePixelRatio;
+      canvas.style.width = r.width + 'px';
+      canvas.style.height = r.height + 'px';
+      ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+      return r;
+    }
+    function seed(r){
+      particles = [];
+      var n = window.innerWidth < 700 ? 34 : 70;
+      for(var k=0;k<n;k++){
+        particles.push({
+          x: Math.random()*r.width, y: Math.random()*r.height,
+          vx: (Math.random()-0.5)*0.14, vy: (Math.random()-0.5)*0.10,
+          s: 16 + Math.random()*46, o: 0.06 + Math.random()*0.13,
+          g: glyphs[Math.floor(Math.random()*glyphs.length)]
+        });
+      }
+    }
+    var textColor = getComputedStyle(document.documentElement).getPropertyValue('--text').trim() || '#1B1E2B';
+    function draw(){
+      var r = hero.getBoundingClientRect();
+      ctx.clearRect(0,0,r.width,r.height);
+      particles.forEach(function(p){
+        p.x += p.vx; p.y += p.vy;
+        if(p.x < -60) p.x = r.width+60; if(p.x > r.width+60) p.x = -60;
+        if(p.y < -60) p.y = r.height+60; if(p.y > r.height+60) p.y = -60;
+        ctx.globalAlpha = p.o;
+        ctx.fillStyle = textColor;
+        ctx.font = p.s + 'px serif';
+        ctx.fillText(p.g, p.x, p.y);
+      });
+      ctx.globalAlpha = 1;
+    }
+    var r0 = size(); seed(r0); draw();
+    if(!reduceMotion){
+      function loop(){ draw(); raf = requestAnimationFrame(loop); }
+      raf = requestAnimationFrame(loop);
+      if('IntersectionObserver' in window){
+        new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if(entry.isIntersecting){ if(!raf) raf = requestAnimationFrame(loop); }
+            else { if(raf){ cancelAnimationFrame(raf); raf = null; } }
+          });
+        }, { threshold:0 }).observe(hero);
+      }
+    }
+    window.addEventListener('resize', function(){ var r = size(); if(reduceMotion) draw(); });
+  }
+})();
+</script>

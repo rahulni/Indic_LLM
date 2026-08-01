@@ -1,0 +1,165 @@
+{
+  "vocab_size": 10000,
+  "versions": {
+    "v1": {
+      "name": "HuggingFace format — byte-fallback (faithful)",
+      "tokenizer_file": "hf_byte_fallback_tokenizer.json",
+      "weights": {
+        "en": 3,
+        "hi": 3,
+        "te": 5,
+        "mr": 7
+      },
+      "vocab": 10000,
+      "rows": {
+        "en": {
+          "tokens": 119081,
+          "units": 186367,
+          "ratio": 0.6389596870690627
+        },
+        "hi": {
+          "tokens": 55489,
+          "units": 88359,
+          "ratio": 0.627994884505257
+        },
+        "te": {
+          "tokens": 24469,
+          "units": 36293,
+          "ratio": 0.6742071473837931
+        },
+        "mr": {
+          "tokens": 18958,
+          "units": 29766,
+          "ratio": 0.6369011624000538
+        }
+      },
+      "spread": 0.04621226287853608,
+      "score": 21639.277925610168,
+      "rt_corpus": {
+        "en": true,
+        "hi": true,
+        "te": true,
+        "mr": true
+      },
+      "rt_probes": {
+        "India's population is 1,428,627,663.": true,
+        "El niño comió jalapeños en Málaga.": true,
+        "東京 Tokyo 日本 — 서울 — 🇮🇳🐯": true,
+        "H₂O and E=mc² — superscripts survive": true,
+        "literal ▁ marker U+2581 must survive": false
+      }
+    },
+    "v2": {
+      "name": "HuggingFace format — NFKC + [UNK]",
+      "tokenizer_file": "hf_best_tokenizer.json",
+      "weights": {
+        "en": 3,
+        "hi": 3,
+        "te": 5,
+        "mr": 7
+      },
+      "vocab": 10000,
+      "rows": {
+        "en": {
+          "tokens": 118289,
+          "units": 186367,
+          "ratio": 0.6347100076730322
+        },
+        "hi": {
+          "tokens": 55160,
+          "units": 88359,
+          "ratio": 0.6242714381104358
+        },
+        "te": {
+          "tokens": 24012,
+          "units": 36293,
+          "ratio": 0.6616151875017221
+        },
+        "mr": {
+          "tokens": 18867,
+          "units": 29766,
+          "ratio": 0.6338439830679299
+        }
+      },
+      "spread": 0.03734374939128626,
+      "score": 26778.24311431724,
+      "rt_corpus": {
+        "en": false,
+        "hi": false,
+        "te": false,
+        "mr": false
+      },
+      "rt_probes": {
+        "India's population is 1,428,627,663.": true,
+        "El niño comió jalapeños en Málaga.": false,
+        "東京 Tokyo 日本 — 서울 — 🇮🇳🐯": false,
+        "H₂O and E=mc² — superscripts survive": false,
+        "literal ▁ marker U+2581 must survive": false
+      }
+    },
+    "v3": {
+      "name": "Custom faithful BPE — the submitted tokenizer",
+      "tokenizer_file": "tokenizer.json",
+      "weights": {
+        "en": 1,
+        "hi": 1,
+        "te": 2,
+        "mr": 3
+      },
+      "vocab": 10000,
+      "rows": {
+        "en": {
+          "tokens": 123020,
+          "units": 186367,
+          "ratio": 0.6600954031561381,
+          "words": 89417,
+          "word_ratio": 1.375801022176991
+        },
+        "hi": {
+          "tokens": 56474,
+          "units": 88359,
+          "ratio": 0.6391425887572291,
+          "words": 42151,
+          "word_ratio": 1.339802139925506
+        },
+        "te": {
+          "tokens": 24037,
+          "units": 36293,
+          "ratio": 0.662304025569669,
+          "words": 16109,
+          "word_ratio": 1.4921472468806258
+        },
+        "mr": {
+          "tokens": 18866,
+          "units": 29766,
+          "ratio": 0.6338103876906538,
+          "words": 14344,
+          "word_ratio": 1.3152537646402678
+        }
+      },
+      "spread": 0.028493637879015266,
+      "score": 35095.55375996657,
+      "rt_corpus": {
+        "en": true,
+        "hi": true,
+        "te": true,
+        "mr": true
+      },
+      "rt_probes": {
+        "India's population is 1,428,627,663.": true,
+        "El niño comió jalapeños en Málaga.": true,
+        "東京 Tokyo 日本 — 서울 — 🇮🇳🐯": true,
+        "H₂O and E=mc² — superscripts survive": true,
+        "literal ▁ marker U+2581 must survive": true
+      }
+    }
+  },
+  "probes": [
+    "India's population is 1,428,627,663.",
+    "El niño comió jalapeños en Málaga.",
+    "東京 Tokyo 日本 — 서울 — 🇮🇳🐯",
+    "H₂O and E=mc² — superscripts survive",
+    "literal ▁ marker U+2581 must survive"
+  ],
+  "submitted": "v2"
+}

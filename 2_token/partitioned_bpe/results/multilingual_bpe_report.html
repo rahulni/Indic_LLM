@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>India Wikipedia BPE Score</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #607080;
+      --line: #d9e1e8;
+      --panel: #f7f9fb;
+      --accent: #0f766e;
+      --warn: #b45309;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background: #ffffff;
+    }
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 32px auto;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+    .sub {
+      margin: 0 0 24px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .metric {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      background: var(--panel);
+    }
+    .metric .label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+    .metric .value {
+      display: block;
+      font-size: 22px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+    th {
+      background: #edf3f7;
+      color: #26323f;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+    td:nth-child(1),
+    td:nth-child(2),
+    td:nth-child(4),
+    td:nth-child(n+6) {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    td:nth-child(3),
+    td:nth-child(5) {
+      text-align: left;
+    }
+    td span {
+      color: var(--muted);
+      margin-left: 4px;
+    }
+    .status {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 16px 0 0;
+    }
+    .pill {
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 13px;
+      color: #ffffff;
+      background: var(--accent);
+    }
+    .pill.warn { background: var(--warn); }
+    .note {
+      margin-top: 18px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+    @media (max-width: 760px) {
+      main { width: min(100% - 20px, 1120px); margin: 20px auto; }
+      .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      table { display: block; overflow-x: auto; }
+      th, td { white-space: nowrap; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>India Wikipedia BPE Score</h1>
+    <p class="sub">Language-partitioned word-internal BPE allocation under a shared vocabulary cap.</p>
+
+    <section class="metrics" aria-label="Summary metrics">
+      <div class="metric"><span class="label">Total vocab entries</span><span class="value">9,999</span></div>
+      <div class="metric"><span class="label">Ratio spread</span><span class="value">0.206416668</span></div>
+      <div class="metric"><span class="label">Assignment score</span><span class="value">4,844.57</span></div>
+      <div class="metric"><span class="label">English X</span><span class="value">1.199902</span></div>
+    </section>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Sort</th>
+          <th>X ID</th>
+          <th>Language</th>
+          <th>Code</th>
+          <th>Page</th>
+          <th>Words</th>
+          <th>Unique Words</th>
+          <th>BPE Vocab Entries</th>
+          <th>Encoded Token Occurrences</th>
+          <th>X = Tokens / Words</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+            <tr>
+              <td>1</td>
+              <td>X2</td>
+              <td>Hindi <span>हिन्दी</span></td>
+              <td>hi</td>
+              <td>भारत</td>
+              <td>8,134</td>
+              <td>2,248</td>
+              <td>1,477</td>
+              <td>11,439</td>
+              <td><strong>1.406319</strong></td>
+            </tr>
+            
+            <tr>
+              <td>2</td>
+              <td>X4</td>
+              <td>Marathi <span>मराठी</span></td>
+              <td>mr</td>
+              <td>भारत</td>
+              <td>4,569</td>
+              <td>2,248</td>
+              <td>2,674</td>
+              <td>6,425</td>
+              <td><strong>1.406216</strong></td>
+            </tr>
+            
+            <tr>
+              <td>3</td>
+              <td>X3</td>
+              <td>Telugu <span>తెలుగు</span></td>
+              <td>te</td>
+              <td>భారతదేశం</td>
+              <td>2,522</td>
+              <td>1,564</td>
+              <td>2,488</td>
+              <td>3,546</td>
+              <td><strong>1.406027</strong></td>
+            </tr>
+            
+            <tr>
+              <td>4</td>
+              <td>X1</td>
+              <td>English <span>English</span></td>
+              <td>en</td>
+              <td>India</td>
+              <td>10,255</td>
+              <td>2,976</td>
+              <td>3,360</td>
+              <td>12,305</td>
+              <td><strong>1.199902</strong></td>
+            </tr>
+            
+      </tbody>
+    </table>
+
+    <div class="status">
+      <span class="pill">Total vocab entries &lt; 10000: True</span>
+      <span class="pill">English X &lt; 1.2: True</span>
+    </div>
+
+    <p class="note">Score formula: 1000 / (largest X - smallest X). The 10,000 limit is applied to tokenizer vocabulary entries. Encoded token occurrences are the tokens produced when the Wikipedia page is tokenized, so they may exceed 10,000 for a long article.</p>
+  </main>
+</body>
+</html>

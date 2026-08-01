@@ -1,0 +1,108 @@
+{
+ "ngram": 12,
+ "ngram_short": 6,
+ "jaccard": 0.8,
+ "index_stats": [
+  {
+   "suite": "gsm8k",
+   "lane": "reasoning",
+   "items": 400,
+   "unindexable_12gram": 0,
+   "distinct_12grams": 34443,
+   "distinct_6grams_short_items": 0
+  },
+  {
+   "suite": "mmlu",
+   "lane": "web",
+   "items": 400,
+   "unindexable_12gram": 139,
+   "distinct_12grams": 2886,
+   "distinct_6grams_short_items": 445
+  },
+  {
+   "suite": "humaneval",
+   "lane": "code",
+   "items": 164,
+   "unindexable_12gram": 0,
+   "distinct_12grams": 13234,
+   "distinct_6grams_short_items": 0
+  },
+  {
+   "suite": "mbpp",
+   "lane": "code",
+   "items": 400,
+   "unindexable_12gram": 0,
+   "distinct_12grams": 11020,
+   "distinct_6grams_short_items": 0
+  },
+  {
+   "suite": "belebele_tel",
+   "lane": "indic",
+   "items": 400,
+   "unindexable_12gram": 0,
+   "distinct_12grams": 14467,
+   "distinct_6grams_short_items": 0
+  },
+  {
+   "suite": "arc",
+   "lane": "web",
+   "items": 400,
+   "unindexable_12gram": 83,
+   "distinct_12grams": 4830,
+   "distinct_6grams_short_items": 322
+  }
+ ],
+ "corpora": [
+  {
+   "corpus": "telugu_web",
+   "name": "Sangraha unverified / Telugu",
+   "lane": "indic",
+   "tier": "unverified",
+   "docs": 11607,
+   "words": 3735715,
+   "hits_12gram": {},
+   "hits_6gram_short_items": {},
+   "contaminated_docs": 0,
+   "rate_pct": 0.0,
+   "detection_floor_pct": 0.025846471956577927,
+   "detection_note": "zero hits here bounds contamination below ~0.026%, it does not establish zero",
+   "examples": [],
+   "error": null
+  },
+  {
+   "corpus": "reasoning_sft",
+   "name": "Reasoning / SFT distillation mix",
+   "lane": "reasoning",
+   "tier": null,
+   "docs": 9553,
+   "words": 6823323,
+   "hits_12gram": {
+    "mbpp": 2
+   },
+   "hits_6gram_short_items": {
+    "mmlu": 10,
+    "arc": 1
+   },
+   "contaminated_docs": 2,
+   "rate_pct": 0.020935831675913327,
+   "detection_floor_pct": 0.03140374751386999,
+   "detection_note": "zero hits here bounds contamination below ~0.031%, it does not establish zero",
+   "examples": [
+    {
+     "corpus": "reasoning_sft",
+     "suite": "mbpp",
+     "doc_id": "722e035f1390e9a80705309c25ad7dedc9ba31afae7691cff0c652e25476656d",
+     "ngram": "while left <= right: mid = (left + right) // 2 if"
+    },
+    {
+     "corpus": "reasoning_sft",
+     "suite": "mbpp",
+     "doc_id": "5e1f7ad03a9fc6470bceddd2b4d696e0aad775f2799dd36237e74684466aeaaa",
+     "ngram": "while left <= right: mid = (left + right) // 2 if"
+    }
+   ],
+   "error": null
+  }
+ ],
+ "generated_utc": "2026-07-30T09:58:01Z"
+}

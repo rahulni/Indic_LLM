@@ -1,0 +1,41 @@
+{
+  "_totals": {
+    "cl100k_tokens_all_corpora": 53781200,
+    "clears_10M_floor_combined_cl100k": true,
+    "note": "Across both corpora the token count clears the 10M floor comfortably under any tokenizer. The floor question only gets interesting for the Telugu corpus alone, which is where the cl100k-vs-Indic gap matters."
+  },
+  "reasoning_sft": {
+    "cl100k": {
+      "fertility_tokens_per_word": 1.563,
+      "tokens": 7607716
+    },
+    "clears_10M_floor_under_cl100k": false,
+    "corpus_id": "reasoning_sft",
+    "corpus_name": "Reasoning / SFT distillation mix — four sources",
+    "documents": 7846,
+    "indic": null,
+    "interpretation": "English/Latin corpus - cl100k is a sensible tokenizer here and its fertility (1.563) is close to 1, so no Indic comparison is drawn. 7,607,716 tokens, below the 10M floor.",
+    "script": "latin",
+    "words": 4867426
+  },
+  "telugu_web": {
+    "cl100k": {
+      "fertility_tokens_per_word": 13.268,
+      "tokens": 46173484
+    },
+    "cl100k_over_indic_fertility_ratio": 5.78,
+    "clears_10M_floor_under_cl100k": true,
+    "clears_10M_floor_under_indic": false,
+    "corpus_id": "telugu_web",
+    "corpus_name": "AI4Bharat Sangraha — unverified tier — Telugu",
+    "documents": 10632,
+    "indic": {
+      "fertility_tokens_per_word": 2.296,
+      "tokenizer": "google/muril-base-cased",
+      "tokens": 7991582
+    },
+    "interpretation": "The manifest's 46,173,484 cl100k tokens is a real count, but it is ~5.78x what the same text costs under an Indic tokenizer (7,991,582 MuRIL tokens). cl100k clears the 10M-token floor; MuRIL does NOT clear it. The corpus is the same size either way - the token count is a property of the tokenizer, not the data, which is exactly why fertility has to be reported, not just a token total.",
+    "script": "telugu",
+    "words": 3480047
+  }
+}

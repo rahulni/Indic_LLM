@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "assignment": "ERA V5 - shared 10k BPE for India Wikipedia (en/hi/te/mr)",
+    "vocab_budget": 10000,
+    "engine": "from-scratch faithful BPE (256 byte-fallback tokens; decode(encode(x))==x)",
+    "unit_mode": "akshara",
+    "pretok_mode": "whitespace",
+    "weights": {
+      "en": 1,
+      "hi": 1,
+      "te": 2,
+      "mr": 3
+    },
+    "headline_metric": "faithful_ratio = total_tokens / faithful_units",
+    "faithful_unit_policy": "one contiguous letter/mark/number run OR one visible punctuation/symbol char",
+    "word_metric": "word_ratio = total_tokens / words (words = letter/mark/number runs)",
+    "score_formula": "1000 / (X_max - X_min) over the four faithful_ratios"
+  },
+  "vocab": {
+    "total": 10000,
+    "byte_tokens": 256,
+    "base_units": 2178,
+    "merges": 7566
+  },
+  "languages": [
+    {
+      "code": "en",
+      "x_label": "X1",
+      "name": "English",
+      "local_name": "English",
+      "page_title": "India",
+      "chars": 598265,
+      "words": 89417,
+      "faithful_units": 186367,
+      "total_tokens": 123020,
+      "faithful_ratio": 0.6600954031561381,
+      "word_ratio": 1.375801022176991
+    },
+    {
+      "code": "hi",
+      "x_label": "X2",
+      "name": "Hindi",
+      "local_name": "हिन्दी",
+      "page_title": "भारत",
+      "chars": 266728,
+      "words": 42151,
+      "faithful_units": 88359,
+      "total_tokens": 56474,
+      "faithful_ratio": 0.6391425887572291,
+      "word_ratio": 1.339802139925506
+    },
+    {
+      "code": "te",
+      "x_label": "X3",
+      "name": "Telugu",
+      "local_name": "తెలుగు",
+      "page_title": "భారతదేశం",
+      "chars": 113836,
+      "words": 16109,
+      "faithful_units": 36293,
+      "total_tokens": 24037,
+      "faithful_ratio": 0.662304025569669,
+      "word_ratio": 1.4921472468806258
+    },
+    {
+      "code": "mr",
+      "x_label": "X4",
+      "name": "Marathi",
+      "local_name": "मराठी",
+      "page_title": "भारत",
+      "chars": 97859,
+      "words": 14344,
+      "faithful_units": 29766,
+      "total_tokens": 18866,
+      "faithful_ratio": 0.6338103876906538,
+      "word_ratio": 1.3152537646402678
+    }
+  ],
+  "sorted_by_faithful_ratio": [
+    {
+      "code": "te",
+      "name": "Telugu",
+      "faithful_ratio": 0.662304025569669
+    },
+    {
+      "code": "en",
+      "name": "English",
+      "faithful_ratio": 0.6600954031561381
+    },
+    {
+      "code": "hi",
+      "name": "Hindi",
+      "faithful_ratio": 0.6391425887572291
+    },
+    {
+      "code": "mr",
+      "name": "Marathi",
+      "faithful_ratio": 0.6338103876906538
+    }
+  ],
+  "faithful": {
+    "x_max": 0.662304025569669,
+    "x_min": 0.6338103876906538,
+    "spread": 0.028493637879015266,
+    "score": 35095.55375996657,
+    "all_within_1_2": true
+  },
+  "word": {
+    "x_max": 1.4921472468806258,
+    "x_min": 1.3152537646402678,
+    "spread": 0.17689348224035806,
+    "score": 5653.119534620429,
+    "all_within_1_2": false
+  },
+  "metric_gaming": {
+    "note": "Same corpus, class-mode pre-tokenization + tuned weights. The score is far higher yet total tokens are HIGHER than the primary tokenizer -- so the metric rewards ratio-clustering (shared markup), not compression quality.",
+    "pretok_mode": "class",
+    "weights": {
+      "en": 1,
+      "hi": 1,
+      "te": 2,
+      "mr": 2
+    },
+    "spread": 0.03881832863498791,
+    "score": 25761.026689301496,
+    "total_tokens": {
+      "en": 201383,
+      "hi": 92650,
+      "te": 38545,
+      "mr": 32367
+    },
+    "faithful_ratio": {
+      "en": 1.0805722043065564,
+      "hi": 1.0485632476601139,
+      "te": 1.0620505331606647,
+      "mr": 1.0873815762951018
+    }
+  },
+  "reference_score": 6502.56
+}

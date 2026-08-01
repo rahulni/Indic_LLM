@@ -1,0 +1,47 @@
+# --- virtual environments (5.4 GB) ---------------------------------------
+.venv/
+venv/
+env/
+**/.venv/
+
+# --- python caches --------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# --- CORPUS DATA: excluded for PRIVACY first, size second -----------------
+#
+# These are bulk scraped Indic web documents. The pipeline's stage 6 exists to
+# strip PII from them (names, Aadhaar/PAN/phone patterns) - so the raw draws and
+# the stage 1-5 intermediates are, by definition, text that has NOT yet been
+# scrubbed. Publishing them would republish personal data harvested from the
+# open web, which is the exact harm the DPDP-Act analysis in 3_40b_model and the
+# stage-6 filter are written to prevent.
+#
+# The source datasets are public and CC-BY-4.0, so anyone can redraw them: every
+# sample is reproducible from stage0_sample.py at a fixed offset and revision.
+# Nothing here is lost - only the obligation to rehost it.
+#
+# They are also 1.9 GB and several exceed GitHub's 100 MB hard limit.
+**/raw_sample/*.jsonl
+**/work_*/
+*.bin
+
+# Frozen hand-label pool - same reasoning, 84 MB of raw web text.
+**/telugu_quality_label_pool.jsonl
+
+# --- benchmark test items -------------------------------------------------
+# Fetched copies of public eval test splits (GSM8K, MMLU, HumanEval, MBPP,
+# Belebele, ARC). Already public, but rehosting test items in a training-data
+# repo is contamination-adjacent housekeeping we would rather not do.
+# `python decon/measure.py --fetch` regenerates them in about a minute.
+decon/benchmarks/*.jsonl
+**/decon/benchmarks/*.jsonl
+
+# --- local scratch --------------------------------------------------------
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
