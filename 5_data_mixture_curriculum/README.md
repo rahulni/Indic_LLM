@@ -15,9 +15,15 @@ It is generated, not written. Every number in it comes out of the three files in
 does not close.
 
 > [!TIP]
-> An interactive view — sticky contents, full-text search, cross-links, and
-> figures drawn from the same audit data — is generated as
-> [`site.html`](site.html) by [`plan/build_site.py`](plan/build_site.py).
+> **Read the plan as a rendered page** →
+> [rahulni.github.io/Indic_LLM/5_data_mixture_curriculum/site.html](https://rahulni.github.io/Indic_LLM/5_data_mixture_curriculum/site.html)
+>
+> Sticky contents, full-text search, cross-links, and figures drawn from the same
+> audit data. GitHub always shows `.html` as source rather than rendering it, so
+> [`site.html`](site.html) needs a host — GitHub Pages above, a local
+> double-click, or
+> [raw.githack.com](https://raw.githack.com/rahulni/Indic_LLM/main/5_data_mixture_curriculum/site.html)
+> with no setup at all.
 
 <details open>
 <summary><b>Contents</b></summary>

@@ -1,3 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Drishtikon-40B — V5 Mixture &amp; Curriculum</title>
+<meta name="description" content="The V5 data mixture-and-curriculum specification for Drishtikon-40B: budget shares, supply audit, protected floor, anneal reserve, and the proxy experiment.">
+<meta name="color-scheme" content="light dark">
+</head>
+<body>
+
+<button id="themebtn" class="themebtn" type="button" aria-label="Switch colour theme">
+  <span aria-hidden="true">◐</span><span class="themebtn-t">Theme</span>
+</button>
+<script>
+(function () {
+  var r = document.documentElement, b = document.getElementById('themebtn');
+  var KEY = 'drishtikon-theme';
+  try { var v = localStorage.getItem(KEY); if (v) r.setAttribute('data-theme', v); } catch (e) {}
+  b.addEventListener('click', function () {
+    var cur = r.getAttribute('data-theme');
+    if (!cur) {
+      cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    var next = cur === 'dark' ? 'light' : 'dark';
+    r.setAttribute('data-theme', next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
+</script>
+
 <style>
 /* ---------------------------------------------------------------------------
    Tokens. Neutrals carry a slight indigo bias so they read as chosen rather
@@ -193,6 +224,15 @@ td code { font-size:.9em; }
 .stat-n { font-size:11.5px; color:var(--ink-3); margin-top:3px; line-height:1.4; }
 
 
+.themebtn { position:fixed; top:14px; right:16px; z-index:50; display:flex;
+  align-items:center; gap:7px; font-family:var(--mono); font-size:11.5px;
+  letter-spacing:.05em; text-transform:uppercase; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--rule-2); border-radius:999px;
+  padding:7px 13px; cursor:pointer; }
+.themebtn:hover { color:var(--ink); border-color:var(--ink-3); }
+.themebtn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+@media (max-width:940px) { .themebtn-t { display:none; } }
+
 /* --- alerts, details, mermaid ------------------------------------------- */
 .alert { display:flex; flex-direction:column; gap:5px; margin:0 0 18px;
   padding:12px 15px; border-radius:9px; border:1px solid; border-left-width:3px;
@@ -272,11 +312,7 @@ html { scroll-behavior:smooth; }
     <h1 id="drishtikon-40b-v5-mixture-curriculum-specification" class="h1"><a class="anchor" href="#drishtikon-40b-v5-mixture-curriculum-specification" aria-label="Link to this section">#</a>Drishtikon-40B — V5 Mixture &amp; Curriculum Specification</h1>
 <p>    </p>
 <p><strong>Budget:</strong> 3.00T pretraining tokens · 40.0B dense parameters · ~75 tokens/param. The budget is a <strong>parameter</strong>, not an assumption — <a class="xref" href="#sec-3.1">§3.1</a> audits the same mixture across 2.4T / 3T / 4T / 14T and reports which survive. 3.00T is the midpoint of the range session 5 named.</p>
-<blockquote>An interactive view of this document — searchable, cross-linked, with the figures drawn from the same audit data — is generated alongside it as <a href="site.html"> 0 </a> by <a href="plan/build_site.py"> 1 </a>.</blockquote>
-<details open>
-<summary><b>Contents</b></summary>
-<ul><li><a href="#1-the-claim">1. The claim</a></li><li><a href="#2-data-gating-status">2. Data-gating status</a></li><li><a href="#3-budget-and-phase-schedule">3. Budget and phase schedule</a></li><li><a href="#31-budget-sweep">3.1 Budget sweep</a></li><li><a href="#4-the-mixture">4. The mixture</a></li><li><a href="#5-supply-audit">5. Supply audit</a></li><li><a href="#51-everything-is-converted-to-one-tokenizer-first">5.1 Everything is converted to one tokenizer first</a></li><li><a href="#52-the-selector-doubles-the-requirement">5.2 The selector doubles the requirement</a></li><li><a href="#53-supply-against-demand">5.3 Supply against demand</a></li><li><a href="#54-repetition-is-not-free-below-the-cap">5.4 Repetition is not free below the cap</a></li><li><a href="#6-manufacturing-plan">6. Manufacturing plan</a></li><li><a href="#7-the-indic-slot-split-four-ways">7. The Indic slot, split four ways</a></li><li><a href="#8-agentic-reasoning-long-context-named-against-the-inventory">8. Agentic, reasoning, long-context — named against the inventory</a></li><li><a href="#agentic-tool-use-200-900b">Agentic / tool-use — 2.00% (90.0B)</a></li><li><a href="#reasoning-math-747-4182b">Reasoning &amp; math — 7.47% (418.2B)</a></li><li><a href="#long-context-native-285-1260b">Long-context native — 2.85% (126.0B)</a></li><li><a href="#9-protected-always-on-floor">9. Protected always-on floor</a></li><li><a href="#10-the-anneal-reserve-and-schedule-mechanics">10. The anneal reserve and schedule mechanics</a></li><li><a href="#101-can-the-reserve-actually-be-stocked">10.1 Can the reserve actually be stocked?</a></li><li><a href="#102-learning-rate-schedule">10.2 Learning-rate schedule</a></li><li><a href="#103-sequence-length-ladder">10.3 Sequence-length ladder</a></li><li><a href="#104-band-transitions">10.4 Band transitions</a></li><li><a href="#11-difficulty-and-reasoning-length-bands">11. Difficulty and reasoning-length bands</a></li><li><a href="#111-difficulty-bands">11.1 Difficulty bands</a></li><li><a href="#112-reasoning-length-bands">11.2 Reasoning-length bands</a></li><li><a href="#12-loss-masking-policy">12. Loss-masking policy</a></li><li><a href="#13-the-proxy-experiment">13. The proxy experiment</a></li><li><a href="#131-the-corpus-is-scaled-not-just-the-model">13.1 The corpus is scaled, not just the model</a></li><li><a href="#132-arms">13.2 Arms</a></li><li><a href="#133-metrics">13.3 Metrics</a></li><li><a href="#134-pre-registered-decision-rules">13.4 Pre-registered decision rules</a></li><li><a href="#135-decontamination">13.5 Decontamination</a></li><li><a href="#136-the-first-run-of-this-measurement-was-wrong">13.6 The first run of this measurement was wrong</a></li><li><a href="#137-the-micro-proxy-what-was-actually-run">13.7 The micro-proxy: what was actually run</a></li><li><a href="#14-sensitivity">14. Sensitivity</a></li><li><a href="#15-where-this-plan-is-weakest">15. Where this plan is weakest</a></li><li><a href="#16-where-the-cleaning-goes-next">16. Where the cleaning goes next</a></li><li><a href="#161-the-quality-filter-has-a-length-bias-and-it-costs-10-of-the-only-anneal-eligible-indic-tier">16.1 The quality filter has a length bias, and it costs 10% of the only anneal-eligible Indic tier</a></li><li><a href="#17-provenance-of-every-supply-figure">17. Provenance of every supply figure</a></li></ul>
-</details>
+<div class="alert alert-tip"><div class="alert-h"><span class="alert-g" aria-hidden="true">✦</span>Tip</div><div><strong>Read this as a rendered page</strong> → <a href="https://rahulni.github.io/Indic_LLM/5_data_mixture_curriculum/site.html">rahulni.github.io/Indic_LLM/5_data_mixture_curriculum/site.html</a> — sticky contents, full-text search, cross-links and figures drawn from the same audit data. GitHub shows <code>.html</code> files as source, never rendered, so the file itself (<a href="site.html"> 1 </a>, built by <a href="plan/build_site.py"> 2 </a>) needs a host: GitHub Pages above, or open it locally, or <a href="https://raw.githack.com/rahulni/Indic_LLM/main/5_data_mixture_curriculum/site.html">raw.githack.com</a> without any setup.</div></div>
 <p>Every number below is generated by <a href="plan/spec.py"> 0 </a> → <a href="plan/audit.py"> 1 </a> → <a href="plan/build_plan.py"> 2 </a>. Nothing is hand-typed. The build refuses to emit this document if any invariant fails — phase weights that do not sum to 1, lane shares that do not sum to 100, a floor above its own lane's share, an Indic tier split that does not close, or a lane that needs manufactured tokens without a costed manufacturing plan.</p>
 <h2 id="sec-1" class="h2"><a class="anchor" href="#sec-1" aria-label="Link to this section">#</a>1. The claim</h2>
 <p>Three findings drive every number in this plan, and all three are arithmetic rather than preference.</p>
@@ -550,7 +586,7 @@ flowchart LR
 <p>     </p>
 <p>The deliverable is <strong><a href="MIXTURE_PLAN.md"> 0 </a></strong> — the V5 mixture-and-curriculum specification for Drishtikon-40B.</p>
 <p>It is generated, not written. Every number in it comes out of the three files in <a href="plan/"> 0 </a>, and the build refuses to emit the document if the arithmetic does not close.</p>
-<div class="alert alert-tip"><div class="alert-h"><span class="alert-g" aria-hidden="true">✦</span>Tip</div><div>An interactive view — sticky contents, full-text search, cross-links, and figures drawn from the same audit data — is generated as <a href="site.html"> 0 </a> by <a href="plan/build_site.py"> 1 </a>.</div></div>
+<div class="alert alert-tip"><div class="alert-h"><span class="alert-g" aria-hidden="true">✦</span>Tip</div><div><strong>Read the plan as a rendered page</strong> → <a href="https://rahulni.github.io/Indic_LLM/5_data_mixture_curriculum/site.html">rahulni.github.io/Indic_LLM/5_data_mixture_curriculum/site.html</a> Sticky contents, full-text search, cross-links, and figures drawn from the same audit data. GitHub always shows <code>.html</code> as source rather than rendering it, so <a href="site.html"> 1 </a> needs a host — GitHub Pages above, a local double-click, or <a href="https://raw.githack.com/rahulni/Indic_LLM/main/5_data_mixture_curriculum/site.html">raw.githack.com</a> with no setup at all.</div></div>
 <details open>
 <summary><b>Contents</b></summary>
 <ul><li><a href="#invariants-enforced">Invariants enforced</a></li><li><a href="#budget">Budget</a></li><li><a href="#review-round-2">Review round 2</a> · <a href="#review-round-3">3</a> · <a href="#review-round-4">4</a></li><li><a href="#review-round-5--decontamination-measured">Review round 5 — decontamination, measured</a></li><li><a href="#review-round-6--a-proxy-was-actually-run">Review round 6 — a proxy was actually run</a></li><li><a href="#review-round-7--the-priority-1-cleaning-job-was-run">Review round 7 — the priority-1 cleaning job was run</a></li><li><a href="#not-yet-done">Not yet done</a></li></ul>
@@ -775,3 +811,5 @@ overlap:                 0        -&gt; DISJOINT</code></pre>
   });
 })();
 </script>
+</body>
+</html>

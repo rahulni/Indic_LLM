@@ -47,6 +47,12 @@ decon/benchmarks/*.jsonl
 **/Axiom*Learning OS.html
 **/Axiom*Learning OS_files/
 
+# --- build outputs ---------------------------------------------------------
+# site.html IS committed (it is the readable deliverable). The fragment is the
+# same content minus its doctype/head/body, kept only for Artifact publishing,
+# and build_site.py regenerates it - no reason to store it twice.
+site.fragment.html
+
 # --- local scratch --------------------------------------------------------
 *.log
 *.tmp

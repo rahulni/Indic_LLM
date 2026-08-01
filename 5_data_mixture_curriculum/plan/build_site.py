@@ -22,6 +22,7 @@ import md2html         # noqa: E402
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.join(HERE, "..")
 OUT = os.path.join(ROOT, "site.html")
+OUT_FRAG = os.path.join(ROOT, "site.fragment.html")
 
 
 def _load(name):
@@ -36,6 +37,28 @@ def _json(name):
     with io.open(p, encoding="utf-8") as f:
         return json.load(f)
 
+
+THEME_TOGGLE = """
+<button id="themebtn" class="themebtn" type="button" aria-label="Switch colour theme">
+  <span aria-hidden="true">◐</span><span class="themebtn-t">Theme</span>
+</button>
+<script>
+(function () {
+  var r = document.documentElement, b = document.getElementById('themebtn');
+  var KEY = 'drishtikon-theme';
+  try { var v = localStorage.getItem(KEY); if (v) r.setAttribute('data-theme', v); } catch (e) {}
+  b.addEventListener('click', function () {
+    var cur = r.getAttribute('data-theme');
+    if (!cur) {
+      cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    var next = cur === 'dark' ? 'light' : 'dark';
+    r.setAttribute('data-theme', next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
+</script>
+"""
 
 CSS = r"""
 /* ---------------------------------------------------------------------------
@@ -231,6 +254,15 @@ td code { font-size:.9em; }
 .stat-delta.up { color:var(--ok); }
 .stat-n { font-size:11.5px; color:var(--ink-3); margin-top:3px; line-height:1.4; }
 
+
+.themebtn { position:fixed; top:14px; right:16px; z-index:50; display:flex;
+  align-items:center; gap:7px; font-family:var(--mono); font-size:11.5px;
+  letter-spacing:.05em; text-transform:uppercase; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--rule-2); border-radius:999px;
+  padding:7px 13px; cursor:pointer; }
+.themebtn:hover { color:var(--ink); border-color:var(--ink-3); }
+.themebtn:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+@media (max-width:940px) { .themebtn-t { display:none; } }
 
 /* --- alerts, details, mermaid ------------------------------------------- */
 .alert { display:flex; flex-direction:column; gap:5px; margin:0 0 18px;
@@ -511,10 +543,36 @@ def build():
 </main>
 </div>"""
 
-    out = (f"<style>{CSS}</style>\n{page}\n<script>{JS}</script>\n")
+    body = f"<style>{CSS}</style>\n{page}\n<script>{JS}</script>\n"
+
+    # Two outputs, because the two destinations want different things.
+    #
+    #  site.html          a COMPLETE document: doctype, <head>, <title>, and a
+    #                     theme toggle. This is what GitHub Pages, raw.githack
+    #                     and a local double-click serve. Without a doctype a
+    #                     browser renders it in quirks mode.
+    #  site.fragment.html body-only, for publishing as an Artifact - that
+    #                     pipeline supplies its own doctype/head/body wrapper,
+    #                     so a full document there would nest inside another.
+    standalone = (
+        "<!doctype html>\n"
+        '<html lang="en">\n<head>\n'
+        '<meta charset="utf-8">\n'
+        '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+        "<title>Drishtikon-40B — V5 Mixture &amp; Curriculum</title>\n"
+        '<meta name="description" content="The V5 data mixture-and-curriculum '
+        'specification for Drishtikon-40B: budget shares, supply audit, '
+        'protected floor, anneal reserve, and the proxy experiment.">\n'
+        '<meta name="color-scheme" content="light dark">\n'
+        f"</head>\n<body>\n{THEME_TOGGLE}\n{body}</body>\n</html>\n")
+
     with io.open(OUT, "w", encoding="utf-8") as f:
-        f.write(out)
-    print(f"wrote {os.path.normpath(OUT)}  ({len(out):,} chars)")
+        f.write(standalone)
+    with io.open(OUT_FRAG, "w", encoding="utf-8") as f:
+        f.write(body)
+    out = standalone
+    print(f"wrote {os.path.normpath(OUT)}  ({len(out):,} chars, standalone)")
+    print(f"wrote {os.path.normpath(OUT_FRAG)}  ({len(body):,} chars, for Artifact)")
     print(f"  figures: {', '.join(sorted(figs)) or 'none'}")
     print(f"  sections: plan {len(plan_toc)}, readme {len(readme_toc)}")
     return out
