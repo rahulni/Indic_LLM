@@ -1,6 +1,22 @@
 # ERA V5 — Indic LLM
 
+![budget](https://img.shields.io/badge/budget-3.00T%20tokens-3B4CC0?style=flat-square&labelColor=1E2230)
+![data gate](https://img.shields.io/badge/data%20gate-93.0M%20cleaned-0ca30c?style=flat-square&labelColor=1E2230)
+![invariants](https://img.shields.io/badge/invariants-all%20passing-0ca30c?style=flat-square&labelColor=1E2230)
+![proxy](https://img.shields.io/badge/proxy-3%20arms%20%C3%97%202%20seeds%20run-0ca30c?style=flat-square&labelColor=1E2230)
+
 Coursework for building an India-first foundation model, one session per folder.
+
+> [!TIP]
+> **Read the session-5 plan as a rendered page** →
+> [rahulni.github.io/Indic_LLM/5_data_mixture_curriculum/site.html](https://rahulni.github.io/Indic_LLM/5_data_mixture_curriculum/site.html)
+>
+> Sticky contents, full-text search, cross-links, and figures drawn from the
+> same audit data as the tables. GitHub always serves `.html` as source rather
+> than rendering it, so the file needs a host: GitHub Pages at the link above,
+> a local double-click, or
+> [raw.githack.com](https://raw.githack.com/rahulni/Indic_LLM/main/5_data_mixture_curriculum/site.html)
+> with no setup.
 
 ## Session 5 — the current submission
 
