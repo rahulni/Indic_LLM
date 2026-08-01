@@ -40,6 +40,13 @@ __pycache__/
 decon/benchmarks/*.jsonl
 **/decon/benchmarks/*.jsonl
 
+# --- saved browser pages --------------------------------------------------
+# "Save Page As" captures of the course platform: 91 files, 8.6 MB, 57 of them
+# minified third-party JS bundles. Not our work, not a deliverable, and 29% of
+# the repo's file count. Kept locally, not published.
+**/Axiom*Learning OS.html
+**/Axiom*Learning OS_files/
+
 # --- local scratch --------------------------------------------------------
 *.log
 *.tmp
