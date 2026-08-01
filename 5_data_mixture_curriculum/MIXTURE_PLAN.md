@@ -227,10 +227,10 @@ At the 4.0 cap this yields **3.726 effective epochs, not 4.0** — the fourth pa
 
 *Caveat, since this number is now load-bearing:* R_D* is quoted from the paper's fitted parameters. Corroborated by the paper's own prose gloss that R* is roughly the half-life of epochs, with repeated tokens retaining value out to ~15 repetitions. Worth re-checking against the published table before this number is used to justify raising any epoch cap.
 
-Two entries deserve the reviewer's pressure before anything else:
+Two entries carry most of the risk:
 
 - **Code at 23.56% is not a preference, it is a ceiling.** 1.70 epochs of The Stack v2 sits just under the 4.0 cap. We would take more code; the corpus does not exist. Arm A3 (§13) deliberately violates this ceiling so the constraint is falsifiable rather than assumed.
-- **Reasoning is 35% manufactured.** Stated plainly rather than buried: arXiv, FineMath, OpenWebMath, AlgebraicStack, OpenThoughts2 and OpenR1 together supply 68.4B usable, and four epochs of that is 273.7B against 418.2B of demand. Synthesis is the established state of the art here (phi-4, Cosmopedia), it is cheap, and §6 prices it — but the reviewer should know it is 70% of the lane.
+- **Reasoning is 35% manufactured.** Stated plainly rather than buried: arXiv, FineMath, OpenWebMath, AlgebraicStack, OpenThoughts2 and OpenR1 together supply 68.4B usable, and four epochs of that is 273.7B against 418.2B of demand. Synthesis is the established state of the art here (phi-4, Cosmopedia), it is cheap, and §6 prices it — but it is 70% of the lane.
 
 ## 6. Manufacturing plan
 
@@ -261,9 +261,9 @@ Lane total **211.8B** (5.03% of budget). Tier sizes are the same supply arithmet
 | **translated** | 0.0% | 0 | 178.6B | **178.6B** | Sangraha Synthetic (MT + romanised, 14 langs) | 162.7B | 1.5× | no |
 | **synthetic** | 0.0% | 0 | 0 | **0** | *manufactured — does not exist yet* | — | — | no |
 
-**The `Unused` column is the argument.** 213.5B of real, downloadable Indic tokens are **available and deliberately declined** — unverified (34.9B), translated (178.6B). This is not a supply failure; it is a quality choice the budget can afford. A reviewer should push on it in the opposite direction to the usual one: not *why is this lane so small*, but *why leave that much real data on the floor*. The answer is the epoch-cap and tier-priority ordering in §5.3 — verified text at 4 epochs is preferred to machine-translated Wikipedia at 1.5, and at 3T we never have to make that trade.
+**The `Unused` column is the argument.** 213.5B of real, downloadable Indic tokens are **available and deliberately declined** — unverified (34.9B), translated (178.6B). This is not a supply failure; it is a quality choice the budget can afford. The pressure on this number runs the opposite way to the usual: not *why is this lane so small*, but *why leave that much real data on the floor*. The answer is the epoch-cap and tier-priority ordering in §5.3 — verified text at 4 epochs is preferred to machine-translated Wikipedia at 1.5, and at 3T we never have to make that trade.
 
-**The correction a reviewer should check first.** AI4Bharat labels its 162.7B-token component *Synthetic*. It is not. It is WikiMedia English machine-translated into 14 languages and then transliterated — that is the **translated** tier. Taking the label at face value would let this plan claim a large synthetic tier it never built, while hiding the translationese risk that actually applies. The tiers here are named for what the data is, not what the card calls it. The epoch cap follows: 1.5× on translated, because translationese compounds under repetition, against 4.0× on verified.
+**A label correction that changes the tier sizes.** AI4Bharat labels its 162.7B-token component *Synthetic*. It is not. It is WikiMedia English machine-translated into 14 languages and then transliterated — that is the **translated** tier. Taking the label at face value would let this plan claim a large synthetic tier it never built, while hiding the translationese risk that actually applies. The tiers here are named for what the data is, not what the card calls it. The epoch cap follows: 1.5× on translated, because translationese compounds under repetition, against 4.0× on verified.
 
 Tier rules: the verified tier is the only one admitted to the anneal; unverified may never substitute for the verified half of the protected floor; synthetic Indic is generated **from verified seeds only**, never from the translated tier, to avoid amplifying translationese through a feedback loop.
 
@@ -618,7 +618,7 @@ Measured: final held-out indic bits-per-byte is 1.4102 without the floor against
 
 This is the most useful thing the run produced, and it is a finding about the *plan*, not about the mixture.
 
-**The spike-count rule had no power.** Across both arms and both seeds the experiment recorded **8 spike events in total**. The 1.67× ratio above is a ratio of small integers — it cannot distinguish a real effect from a coin flip. The verdict therefore uses a *post-hoc* continuous metric (per-step excess loss in robust-sigma units, defined at every step rather than only at threshold crossings), which is stated as post-hoc rather than presented as the plan. A reviewer who rejects that substitution should read the pre-registered number as INCONCLUSIVE, not as DROP.
+**The spike-count rule had no power.** Across both arms and both seeds the experiment recorded **8 spike events in total**. The 1.67× ratio above is a ratio of small integers — it cannot distinguish a real effect from a coin flip. The verdict therefore uses a *post-hoc* continuous metric (per-step excess loss in robust-sigma units, defined at every step rather than only at threshold crossings), which is stated as post-hoc rather than presented as the plan. Anyone who rejects that substitution should read the pre-registered number as INCONCLUSIVE, not as DROP.
 
 **The gradient-norm limb did not transfer at all.** The rule's 'peak grad-norm > 0.5' limb does not transfer to this scale: A0's peak grad norm OUTSIDE any transition is already 2.131. Verdict uses the relative limb only. A threshold written against the full run's 0.2 target fires unconditionally on an 11M model, so applying it here would have manufactured a KEEP verdict out of nothing.
 

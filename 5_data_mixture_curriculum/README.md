@@ -27,26 +27,26 @@ does not close.
 
 <!-- SCORECARD:START -->
 
-## What the assignment asked, and where it is answered
+## The plan at a glance
 
-Every row is a criterion from the brief. The answer is the real number, and the link goes to the section that defends it.
+Each row is a decision the plan makes, the number it lands on, and the section that defends it.
 
-| The brief asks for | Answer | Defended in |
+| Decision | Where it lands | Defended in |
 |---|---|---|
-| A share of the budget for **every capability slot** | **9 lanes**, summing to 100.00% of 3.00T — general 52.2% · code 23.6% · reasoning 7.5% · indic 5.0%, … | [§4](MIXTURE_PLAN.md#4-the-mixture) |
-| The **Indic split** across verified / unverified / translated / synthetic | **88.9% / 11.1% / 0.0% / 0.0%** of a 211.8B lane. 213.5B of real Indic tokens are available and **declined** | [§7](MIXTURE_PLAN.md#7-the-indic-slot-split-four-ways) |
-| **Agentic, reasoning, long-context** named and pointed at inventory datasets | 2.00% / 7.47% / 2.85%, each with a per-dataset table (tokens, provenance tag, dedup keep, epoch cap) | [§8](MIXTURE_PLAN.md#8-agentic-reasoning-long-context--named-against-the-inventory) |
-| A **protected always-on floor** the selector may not cross | **7.00%** of every 1000-step window (indic 3.00% · longctx 1.50% · reasoning 1.00%, …), asserted below each lane's share | [§9](MIXTURE_PLAN.md#9-protected-always-on-floor) |
-| The **anneal reserve** held back for the cooldown | **3% = 90.0B**, verified tiers only, and supply-audited against its own eligibility rules | [§10](MIXTURE_PLAN.md#10-the-anneal-reserve-and-schedule-mechanics) |
-| **Difficulty bands** with a concrete example for each | 4 bands — D1 (MBPP task 2), D2 (GSM8K train, item 1), D3 (SWE-bench Verified, django__django-11099), D4 (Terminal-Bench / SWE-bench Live-Pro class) | [§11.1](MIXTURE_PLAN.md#111-difficulty-bands) |
-| **Reasoning-length bands** with a real example at each level | 4 bands — `<think:low>` ≤128 tok, `<think:medium>` ≤1,024 tok, `<think:high>` ≤8,192 tok, `<think:ultra>` ≤65,536 tok, each with a worked trace and answer | [§11.2](MIXTURE_PLAN.md#112-reasoning-length-bands) |
-| Each lane **tied to the benchmarks** it must win | Benchmark column on every lane — SWE-bench, τ-bench, BFCL, LiveCodeBench, AIME, MILU, FLORES, RULER, MMLU-Pro | [§4](MIXTURE_PLAN.md#4-the-mixture) |
-| Every lane **sized against real supply**, saying plainly where a share needs repeating or generating | `SUPPLY-OK` / `REPEAT` (4) / `GENERATE` (2) per lane, with the manufactured share costed in dollars and wall-clock | [§5.3](MIXTURE_PLAN.md#53-supply-against-demand), [§6](MIXTURE_PLAN.md#6-manufacturing-plan) |
-| A concrete **proxy experiment at 1B / 3B** naming the metric that would confirm or refute the mixture | 7 arms at 1B × 20.0B + a 3B confirmation, **$6,320** (0.42% of the run), with 9 metrics and **pre-registered** decision rules | [§13](MIXTURE_PLAN.md#13-the-proxy-experiment) |
-| **Actually running** the proxy and bringing numbers back | ⚠️ **Partial.** The 1B/3B screen was not run — no GPUs. An 11M-param micro-proxy was: 3 arms × 2 seeds, both verdicts INCONCLUSIVE, and the reason is the finding — **both pre-registered rules were underpowered** | [§13.7](MIXTURE_PLAN.md#137-the-micro-proxy-what-was-actually-run) |
-| Cleaning continuing toward the **cumulative target**, aimed at the starved slots | **93,019,466 cleaned tokens** (1.73× session 4). The +39.2M added is Sangraha **Verified** — the tier the audit ranks first | [§2](MIXTURE_PLAN.md#2-data-gating-status), [§16](MIXTURE_PLAN.md#16-where-the-cleaning-goes-next) |
+| **Budget share per capability lane** | **9 lanes**, summing to 100.00% of 3.00T — general 52.2% · code 23.6% · reasoning 7.5% · indic 5.0%, … | [§4](MIXTURE_PLAN.md#4-the-mixture) |
+| **Indic tier split** — verified / unverified / translated / synthetic | **88.9% / 11.1% / 0.0% / 0.0%** of a 211.8B lane. 213.5B of real Indic tokens are available and **declined** | [§7](MIXTURE_PLAN.md#7-the-indic-slot-split-four-ways) |
+| **Agentic, reasoning, long-context**, against named inventory datasets | 2.00% / 7.47% / 2.85%, each with a per-dataset table (tokens, provenance tag, dedup keep, epoch cap) | [§8](MIXTURE_PLAN.md#8-agentic-reasoning-long-context--named-against-the-inventory) |
+| **Protected always-on floor** the selector may not cross | **7.00%** of every 1000-step window (indic 3.00% · longctx 1.50% · reasoning 1.00%, …), asserted below each lane's share | [§9](MIXTURE_PLAN.md#9-protected-always-on-floor) |
+| **Anneal reserve** held back for the cooldown | **3% = 90.0B**, verified tiers only, and supply-audited against its own eligibility rules | [§10](MIXTURE_PLAN.md#10-the-anneal-reserve-and-schedule-mechanics) |
+| **Difficulty bands**, one worked example each | 4 bands — D1 (MBPP task 2), D2 (GSM8K train, item 1), D3 (SWE-bench Verified, django__django-11099), D4 (Terminal-Bench / SWE-bench Live-Pro class) | [§11.1](MIXTURE_PLAN.md#111-difficulty-bands) |
+| **Reasoning-length bands**, one worked example each | 4 bands — `<think:low>` ≤128 tok, `<think:medium>` ≤1,024 tok, `<think:high>` ≤8,192 tok, `<think:ultra>` ≤65,536 tok, each with a worked trace and answer | [§11.2](MIXTURE_PLAN.md#112-reasoning-length-bands) |
+| **Benchmark accountability** per lane | Benchmark column on every lane — SWE-bench, τ-bench, BFCL, LiveCodeBench, AIME, MILU, FLORES, RULER, MMLU-Pro | [§4](MIXTURE_PLAN.md#4-the-mixture) |
+| **Supply sizing** — where a share needs repeating or generating | `SUPPLY-OK` / `REPEAT` (4) / `GENERATE` (2) per lane, with the manufactured share costed in dollars and wall-clock | [§5.3](MIXTURE_PLAN.md#53-supply-against-demand), [§6](MIXTURE_PLAN.md#6-manufacturing-plan) |
+| **Proxy design** at 1B / 3B, and the metric that refutes the mixture | 7 arms at 1B × 20.0B + a 3B confirmation, **$6,320** (0.42% of the run), with 9 metrics and **pre-registered** decision rules | [§13](MIXTURE_PLAN.md#13-the-proxy-experiment) |
+| **Proxy execution** | ⚠️ **Partial.** The 1B/3B screen was not run — no GPUs. An 11M-param micro-proxy was: 3 arms × 2 seeds, both verdicts INCONCLUSIVE, and the reason is the finding — **both pre-registered rules were underpowered** | [§13.7](MIXTURE_PLAN.md#137-the-micro-proxy-what-was-actually-run) |
+| **Data gate**, cleaning aimed at the starved tier | **93,019,466 cleaned tokens** (1.73× session 4). The +39.2M added is Sangraha **Verified** — the tier the audit ranks first | [§2](MIXTURE_PLAN.md#2-data-gating-status), [§16](MIXTURE_PLAN.md#16-where-the-cleaning-goes-next) |
 
-### The three numbers a reviewer will attack first
+### The three weakest numbers
 
 1. **Agentic is 82% data that does not exist.** 4.0B of real trajectories against 90.0B of demand — **23 epochs** of everything ever published. Costed at §6, with a fallback if the harness slips. Stated, not hidden.
 2. **14T is infeasible and the plan says so.** The budget is swept 2.4T→14T; at 14T the build *refuses*, and it fails on the **web** lane — not agentic, not Indic. See [§3.1](MIXTURE_PLAN.md#31-budget-sweep).
@@ -379,8 +379,6 @@ live in session 4's folder only because `corpora.py` hardcodes `RAW_DIR`.
 - **The micro-proxy tests 2 lanes, not 9.** A Telugu→English shift is the
   sharpest possible transition; a crossfade effect absent here could still
   appear with nine lanes and gentler, more frequent boundaries.
-- **No GitHub repo.** The assignment names a repo README link as the submission
-  mechanism; this was explicitly descoped.
 
 ## Inputs it depends on
 
@@ -391,8 +389,8 @@ live in session 4's folder only because `corpora.py` hardcodes `RAW_DIR`.
 | `session_5_transcipt.md` | loss-masking policy, selector pathology, reasoning-band framing |
 
 Supply figures are tagged `MEASURED` / `PUBLISHED` / `DERIVED` / `ESTIMATED` in
-`spec.py`, and the tag travels into the document so a reviewer can see which
-numbers are measurements and which are assumptions.
+`spec.py`, and the tag travels into the document, so which numbers are
+measurements and which are assumptions stays visible.
 
 ## Not done yet
 

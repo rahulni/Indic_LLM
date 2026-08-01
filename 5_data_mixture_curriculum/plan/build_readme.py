@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-build_readme.py - regenerates the assignment scorecard inside README.md.
+build_readme.py - regenerates the summary block inside README.md.
 
-The README is what gets submitted, so it has to answer the assignment's criteria
-directly rather than only pointing at the document that does. This injects a
-block between the SCORECARD markers, built from the same audit output as the
-plan, so the answers cannot drift from the specification they summarise.
+The README is the entry point, so it states the plan's decisions and their
+numbers directly rather than only pointing at the document that holds them.
+This injects a block between the markers, built from the same audit output as
+the plan, so the summary cannot drift from what it summarises.
 
     python build_readme.py
 """
@@ -48,21 +48,21 @@ def build_block():
 
     w(START)
     w("")
-    w("## What the assignment asked, and where it is answered")
+    w("## The plan at a glance")
     w("")
-    w("Every row is a criterion from the brief. The answer is the real number, "
-      "and the link goes to the section that defends it.")
+    w("Each row is a decision the plan makes, the number it lands on, and the "
+      "section that defends it.")
     w("")
-    w("| The brief asks for | Answer | Defended in |")
+    w("| Decision | Where it lands | Defended in |")
     w("|---|---|---|")
 
     lanes = " · ".join(f"{x['label'].split(' ')[0].lower()} {x['share']:.1f}%"
                        for x in r["audited"][:4])
-    w(f"| A share of the budget for **every capability slot** | "
+    w(f"| **Budget share per capability lane** | "
       f"**{len(r['audited'])} lanes**, summing to 100.00% of {T(r['budget'])} — "
       f"{lanes}, … | [§4]({PLAN}#4-the-mixture) |")
 
-    w(f"| The **Indic split** across verified / unverified / translated / synthetic | "
+    w(f"| **Indic tier split** — verified / unverified / translated / synthetic | "
       f"**{tiers['verified']['share_of_lane']:.1f}% / "
       f"{tiers['unverified']['share_of_lane']:.1f}% / "
       f"{tiers['translated']['share_of_lane']:.1f}% / "
@@ -70,67 +70,64 @@ def build_block():
       f"lane. 213.5B of real Indic tokens are available and **declined** | "
       f"[§7]({PLAN}#7-the-indic-slot-split-four-ways) |")
 
-    w(f"| **Agentic, reasoning, long-context** named and pointed at inventory datasets | "
+    w(f"| **Agentic, reasoning, long-context**, against named inventory datasets | "
       f"{a['agentic']['share']:.2f}% / {a['reasoning']['share']:.2f}% / "
       f"{a['longctx']['share']:.2f}%, each with a per-dataset table (tokens, "
       f"provenance tag, dedup keep, epoch cap) | "
       f"[§8]({PLAN}#8-agentic-reasoning-long-context--named-against-the-inventory) |")
 
     floors = " · ".join(f"{f['id']} {f['floor']:.2f}%" for f in r["floors"][:3])
-    w(f"| A **protected always-on floor** the selector may not cross | "
+    w(f"| **Protected always-on floor** the selector may not cross | "
       f"**{r['floor_total']:.2f}%** of every {spec.SELECTOR['refresh_every_steps']}-step "
       f"window ({floors}, …), asserted below each lane's share | "
       f"[§9]({PLAN}#9-protected-always-on-floor) |")
 
-    w(f"| The **anneal reserve** held back for the cooldown | "
+    w(f"| **Anneal reserve** held back for the cooldown | "
       f"**{r['anneal']['pct_of_budget']:.0f}% = {T(r['anneal']['tokens'])}**, "
       f"verified tiers only, and supply-audited against its own eligibility rules | "
       f"[§10]({PLAN}#10-the-anneal-reserve-and-schedule-mechanics) |")
 
     d = r["difficulty_bands"]
-    w(f"| **Difficulty bands** with a concrete example for each | "
+    w(f"| **Difficulty bands**, one worked example each | "
       f"{len(d)} bands — " + ", ".join(f"{b['id']} ({b['example_source']})" for b in d)
       + f" | [§11.1]({PLAN}#111-difficulty-bands) |")
 
     lb = r["length_bands"]
-    w(f"| **Reasoning-length bands** with a real example at each level | "
+    w(f"| **Reasoning-length bands**, one worked example each | "
       f"{len(lb)} bands — " + ", ".join(
           f"`{b['control']}` ≤{b['token_budget'][1]:,} tok" for b in lb)
       + f", each with a worked trace and answer | [§11.2]({PLAN}#112-reasoning-length-bands) |")
 
-    w(f"| Each lane **tied to the benchmarks** it must win | "
+    w(f"| **Benchmark accountability** per lane | "
       f"Benchmark column on every lane — SWE-bench, τ-bench, BFCL, LiveCodeBench, "
       f"AIME, MILU, FLORES, RULER, MMLU-Pro | [§4]({PLAN}#4-the-mixture) |")
 
     gen = [x for x in r["audited"] if x["verdict"] == "GENERATE"]
     rep = [x for x in r["audited"] if x["verdict"] == "REPEAT"]
-    w(f"| Every lane **sized against real supply**, saying plainly where a share "
-      f"needs repeating or generating | `SUPPLY-OK` / `REPEAT` ({len(rep)}) / "
+    w(f"| **Supply sizing** — where a share needs repeating or generating | `SUPPLY-OK` / `REPEAT` ({len(rep)}) / "
       f"`GENERATE` ({len(gen)}) per lane, with the manufactured share costed in "
       f"dollars and wall-clock | [§5.3]({PLAN}#53-supply-against-demand), "
       f"[§6]({PLAN}#6-manufacturing-plan) |")
 
-    w(f"| A concrete **proxy experiment at 1B / 3B** naming the metric that would "
-      f"confirm or refute the mixture | {len(spec.PROXY['arms'])} arms at 1B × "
+    w(f"| **Proxy design** at 1B / 3B, and the metric that refutes the mixture | {len(spec.PROXY['arms'])} arms at 1B × "
       f"{T(spec.PROXY['scale_1b']['tokens_per_arm'])} + a 3B confirmation, "
       f"**${r['cost']['total_usd']:,.0f}** ({r['cost']['pct_of_full']:.2f}% of the "
       f"run), with 9 metrics and **pre-registered** decision rules | "
       f"[§13]({PLAN}#13-the-proxy-experiment) |")
 
-    w(f"| **Actually running** the proxy and bringing numbers back | "
+    w(f"| **Proxy execution** | "
       f"⚠️ **Partial.** The 1B/3B screen was not run — no GPUs. An 11M-param "
       f"micro-proxy was: 3 arms × 2 seeds, both verdicts INCONCLUSIVE, and the "
       f"reason is the finding — **both pre-registered rules were underpowered** | "
       f"[§13.7]({PLAN}#137-the-micro-proxy-what-was-actually-run) |")
 
-    w(f"| Cleaning continuing toward the **cumulative target**, aimed at the "
-      f"starved slots | **{g['measured_clean_tokens']:,} cleaned tokens** "
+    w(f"| **Data gate**, cleaning aimed at the starved tier | **{g['measured_clean_tokens']:,} cleaned tokens** "
       f"({g['growth_multiple']:.2f}× session 4). The +{T(g['added_this_session'])} "
       f"added is Sangraha **Verified** — the tier the audit ranks first | "
       f"[§2]({PLAN}#2-data-gating-status), [§16]({PLAN}#16-where-the-cleaning-goes-next) |")
 
     w("")
-    w("### The three numbers a reviewer will attack first")
+    w("### The three weakest numbers")
     w("")
     w(f"1. **Agentic is {a['agentic']['manufactured_pct']:.0f}% data that does not "
       f"exist.** {T(a['agentic']['supply_usable'])} of real trajectories against "

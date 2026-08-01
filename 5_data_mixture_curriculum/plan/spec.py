@@ -107,7 +107,7 @@ TOKENIZER_FERTILITY = {
     "indic_sp": {"indic": 2.30},  # assumed Indic sentencepiece for Sangraha's counts
 }
 
-# Provenance of each fertility figure, so a reviewer can see which conversions
+# Provenance of each fertility figure, so which conversions
 # rest on measurement and which on assumption.
 FERTILITY_PROVENANCE = {
     ("cl100k", "english_prose"): "MEASURED (session 4, reasoning_sft: 1.563 tok/word over 4,867,426 words)",

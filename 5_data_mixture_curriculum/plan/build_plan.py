@@ -504,7 +504,7 @@ def build():
     w("")
     w(f"*Caveat, since this number is now load-bearing:* {d['confidence']}")
     w("")
-    w("Two entries deserve the reviewer's pressure before anything else:")
+    w("Two entries carry most of the risk:")
     w("")
     w(f"- **Code at {pct(code['share'])} is not a preference, it is a ceiling.** "
       f"{code['epochs']:.2f} epochs of The Stack v2 sits just under the 4.0 cap. "
@@ -518,7 +518,7 @@ def build():
       f"is {T(by_id['reasoning']['supply_capped'])} against "
       f"{T(by_id['reasoning']['demand'])} of demand. Synthesis is the established "
       f"state of the art here (phi-4, Cosmopedia), it is cheap, and §6 prices it "
-      f"— but the reviewer should know it is 70% of the lane.")
+      f"— but it is 70% of the lane.")
     w("")
 
     # -- manufacturing -------------------------------------------------------
@@ -584,14 +584,14 @@ def build():
         w(f"**The `Unused` column is the argument.** {T(tot)} of real, "
           f"downloadable Indic tokens are **available and deliberately "
           f"declined** — {names}. This is not a supply failure; it is a quality "
-          f"choice the budget can afford. A reviewer should push on it in the "
-          f"opposite direction to the usual one: not *why is this lane so "
-          f"small*, but *why leave that much real data on the floor*. The answer "
+          f"choice the budget can afford. The pressure on this number runs the "
+          f"opposite way to the usual: not *why is this lane so small*, but "
+          f"*why leave that much real data on the floor*. The answer "
           f"is the epoch-cap and tier-priority ordering in §5.3 — verified text "
           f"at 4 epochs is preferred to machine-translated Wikipedia at 1.5, and "
           f"at 3T we never have to make that trade.")
         w("")
-    w("**The correction a reviewer should check first.** AI4Bharat labels its "
+    w("**A label correction that changes the tier sizes.** AI4Bharat labels its "
       "162.7B-token component *Synthetic*. It is not. It is WikiMedia English "
       "machine-translated into 14 languages and then transliterated — that is the "
       "**translated** tier. Taking the label at face value would let this plan "
@@ -1154,7 +1154,7 @@ def build():
               f"verdict therefore uses a *post-hoc* continuous metric "
               f"(per-step excess loss in robust-sigma units, defined at every "
               f"step rather than only at threshold crossings), which is stated "
-              f"as post-hoc rather than presented as the plan. A reviewer who "
+              f"as post-hoc rather than presented as the plan. Anyone who "
               f"rejects that substitution should read the pre-registered number "
               f"as INCONCLUSIVE, not as DROP.")
             w("")
