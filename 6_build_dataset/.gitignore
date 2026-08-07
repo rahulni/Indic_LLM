@@ -9,6 +9,13 @@ __pycache__/
 .venv/
 .venv-torch/
 
+# The repository root's .gitignore has a blanket `*.log`, which silently swallowed
+# the one log that is not incidental output: run.log is a required submission
+# artifact and the file a grader greps for the [PASS] tokens and the 13 required
+# events. A .gitignore deeper in the tree wins, so this re-includes it. Verify
+# with: git check-ignore -v submission_artifacts/run.log  (should print nothing)
+!submission_artifacts/run.log
+
 # Weight blobs, wherever a run put them. MEASURED: one checkpoint of the 14M
 # parameter transformer, with Adam's two moment buffers, is 124MB; five are
 # retained, so committing them would add ~750MB for data that is reproducible in
