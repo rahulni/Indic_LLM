@@ -1,0 +1,58 @@
+[
+  {
+    "accept_threshold": 0.21991676,
+    "accepted": 6,
+    "accepted_score_mean": 0.26671992,
+    "candidates": 16,
+    "deferred": 0,
+    "global_step": 0,
+    "protected_override": 2,
+    "rejected": 8,
+    "score_max": 0.35995282,
+    "score_mean": 0.16968879,
+    "score_min": -0.00413297,
+    "stage": "A"
+  },
+  {
+    "accept_threshold": 0.69417197,
+    "accepted": 6,
+    "accepted_score_mean": 0.80204003,
+    "candidates": 16,
+    "deferred": 0,
+    "global_step": 40,
+    "protected_override": 1,
+    "rejected": 9,
+    "score_max": 0.92795383,
+    "score_mean": 0.39296319,
+    "score_min": -0.41201547,
+    "stage": "A"
+  },
+  {
+    "accept_threshold": 0.58232134,
+    "accepted": 6,
+    "accepted_score_mean": 0.67986069,
+    "candidates": 16,
+    "deferred": 0,
+    "global_step": 80,
+    "protected_override": 3,
+    "rejected": 7,
+    "score_max": 0.83405982,
+    "score_mean": 0.27809311,
+    "score_min": -0.36996188,
+    "stage": "A"
+  },
+  {
+    "accept_threshold": -0.20298165,
+    "accepted": 6,
+    "accepted_score_mean": 0.12046165,
+    "candidates": 16,
+    "deferred": 0,
+    "global_step": 120,
+    "protected_override": 3,
+    "rejected": 7,
+    "score_max": 0.64843888,
+    "score_mean": -0.20495418,
+    "score_min": -0.50389228,
+    "stage": "B"
+  }
+]

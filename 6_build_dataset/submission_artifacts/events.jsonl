@@ -1,0 +1,92 @@
+{"detail":{},"kind":"section","name":"TDES -- Training Data Execution System  [profile: torch]","seq":0,"t":0.0013}
+{"detail":{},"kind":"info","name":"python 3.14.5  platform=win32","seq":1,"t":0.0018}
+{"detail":{},"kind":"info","name":"seed=tdes-v1  steps=240  samples/step=16  vocab=8192  seq_len=256->512","seq":2,"t":0.0023}
+{"detail":{},"kind":"info","name":"PYTHONHASHSEED randomization active: True (artifacts must be identical regardless)","seq":3,"t":0.0028}
+{"detail":{},"kind":"info","name":"NOTE: sequence length 256 stands in for 4,096 and the model is a masked-context neural n-gram, not a transformer. Data-system behaviour is full fidelity; model scale is not.","seq":4,"t":0.0032}
+{"detail":{},"kind":"section","name":"1-6  Corpus, tokenizer, firewall, shards, manifests, mixture","seq":5,"t":0.0045}
+{"detail":{},"kind":"info","name":"admitted 234 documents (0 exact + 0 near duplicates removed, 0 PII-redacted)","seq":6,"t":3.3058}
+{"detail":{"hash":"fc2d3641ba5e32b9","merges":7928,"unit_mode":"byte","vocab_size":8192},"kind":"pass","name":"tokenizer_hash_verified","seq":7,"t":3.3244}
+{"detail":{"shards":24,"tokens":90815},"kind":"event","name":"shards created","seq":8,"t":16.7791}
+{"detail":{"admitted":24,"rejected":0},"kind":"event","name":"manifests validated","seq":9,"t":16.7795}
+{"detail":{"planned":{"agentic":0.039699,"code":0.241857,"indic":0.085708,"longctx":0.036441,"multiling":0.034406,"reasoning":0.096295,"web":0.465594},"stages":4,"steps":240},"kind":"event","name":"mixture compiled","seq":10,"t":16.794}
+{"detail":{},"kind":"info","name":"model: torch TorchLM ln(V)=9.0109  6L/384d/6h  13,980,672 params on cuda (bfloat16)","seq":11,"t":22.6663}
+{"detail":{"lanes":7,"policies":["best_fit","concat_chop","greedy","long_context","structure_preserving"],"sequences":362},"kind":"event","name":"batches packed","seq":12,"t":22.6825}
+{"detail":{},"kind":"section","name":"7  Evaluation firewall","seq":13,"t":22.6852}
+{"detail":{},"kind":"info","name":"injected an evaluation document into the candidate pool: blocked=True reasons=['held-out canary string present in text', '100.0% of 8-grams overlap held-out data (threshold 10%)']","seq":14,"t":22.6858}
+{"detail":{"doc_id":"eval_agentic_0002","reasons":["held-out canary string present in text","100.0% of 8-grams overlap held-out data (threshold 10%)"]},"kind":"event","name":"evaluation data blocked","seq":15,"t":22.6861}
+{"detail":{"doc_id":"eval_agentic_0002","reasons":["held-out canary string present in text","100.0% of 8-grams overlap held-out data (threshold 10%)"]},"kind":"pass","name":"eval_shard_blocked","seq":16,"t":22.6865}
+{"detail":{},"kind":"info","name":"structure-preserving packing never merged two documents: True","seq":17,"t":22.687}
+{"detail":{},"kind":"section","name":"8-10  Training, OPUS, ledgers, checkpoints","seq":18,"t":22.6879}
+{"detail":{},"kind":"info","name":"validation probe: 12 samples, loss=9.0108, ln(V)=9.0109","seq":19,"t":23.3986}
+{"detail":{"accepted":6,"candidates":16,"deferred":0,"protected_override":2,"rejected":8,"step":0},"kind":"event","name":"OPUS decisions recorded","seq":20,"t":24.3277}
+{"detail":{},"kind":"info","name":"  step    0 [A] loss=9.0859 ppl= 8829.85 |g|=11895.371 lr=0.01250 lanes={'code': 3, 'indic': 1, 'multiling': 1, 'reasoning': 1, 'web': 10}","seq":21,"t":24.8591}
+{"detail":{"checkpoint_id":"e69faef9eb2f704b","ledger_offset":80,"step":20},"kind":"event","name":"checkpoint saved","seq":22,"t":30.9901}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":80,"step":20},"kind":"pass","name":"checkpoint_saved","seq":23,"t":30.9907}
+{"detail":{},"kind":"info","name":"  probe@20: loss=6.7108 ppl=821.22 delta=-2.299978","seq":24,"t":31.1198}
+{"detail":{},"kind":"info","name":"  step   24 [A] loss=7.2963 ppl= 1474.90 |g|=5008.474 lr=0.30000 lanes={'code': 3, 'indic': 1, 'multiling': 1, 'reasoning': 1, 'web': 10}","seq":25,"t":32.4154}
+{"detail":{"checkpoint_id":"8657ae6ad0a0c24a","ledger_offset":160,"step":40},"kind":"event","name":"checkpoint saved","seq":26,"t":37.0271}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":160,"step":40},"kind":"pass","name":"checkpoint_saved","seq":27,"t":37.0276}
+{"detail":{},"kind":"info","name":"  probe@40: loss=6.7157 ppl=825.29 delta=0.004934","seq":28,"t":37.1751}
+{"detail":{"accepted":6,"candidates":16,"deferred":0,"protected_override":1,"rejected":9,"step":40},"kind":"event","name":"OPUS decisions recorded","seq":29,"t":38.0447}
+{"detail":{},"kind":"info","name":"  step   48 [A] loss=6.6947 ppl=  808.11 |g|=3276.437 lr=0.29186 lanes={'agentic': 1, 'code': 2, 'indic': 1, 'longctx': 1, 'multiling': 1, 'web': 10}","seq":30,"t":41.0522}
+{"detail":{"checkpoint_id":"5f00def72bb6711c","ledger_offset":240,"step":60},"kind":"event","name":"checkpoint saved","seq":31,"t":45.57}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":240,"step":60},"kind":"pass","name":"checkpoint_saved","seq":32,"t":45.5706}
+{"detail":{},"kind":"info","name":"  probe@60: loss=6.1497 ppl=468.59 delta=-0.566003","seq":33,"t":45.7501}
+{"detail":{},"kind":"info","name":"  step   72 [A] loss=6.1237 ppl=  456.56 |g|=3106.774 lr=0.26842 lanes={'code': 3, 'indic': 2, 'reasoning': 1, 'web': 10}","seq":34,"t":50.3836}
+{"detail":{"checkpoint_id":"db1281568c64f800","ledger_offset":320,"step":80},"kind":"event","name":"checkpoint saved","seq":35,"t":53.395}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":320,"step":80},"kind":"pass","name":"checkpoint_saved","seq":36,"t":53.3962}
+{"detail":{},"kind":"info","name":"  probe@80: loss=5.9853 ppl=397.56 delta=-0.164377","seq":37,"t":53.5845}
+{"detail":{"accepted":6,"candidates":16,"deferred":0,"protected_override":3,"rejected":7,"step":80},"kind":"event","name":"OPUS decisions recorded","seq":38,"t":54.6894}
+{"detail":{},"kind":"info","name":"  step   96 [B] loss=5.6262 ppl=  277.61 |g|=3038.339 lr=0.23250 lanes={'agentic': 1, 'code': 2, 'indic': 1, 'multiling': 1, 'reasoning': 1, 'web': 10}","seq":39,"t":60.5137}
+{"detail":{"checkpoint_id":"d590fc54a2aff8fa","ledger_offset":400,"step":100},"kind":"event","name":"checkpoint saved","seq":40,"t":62.2448}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":400,"step":100},"kind":"pass","name":"checkpoint_saved","seq":41,"t":62.2455}
+{"detail":{},"kind":"info","name":"  probe@100: loss=5.9370 ppl=378.78 delta=-0.048397","seq":42,"t":62.44}
+{"detail":{"checkpoint_id":"96ef5f26b70368a8","ledger_offset":480,"step":120},"kind":"event","name":"checkpoint saved","seq":43,"t":70.0816}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":480,"step":120},"kind":"pass","name":"checkpoint_saved","seq":44,"t":70.0822}
+{"detail":{},"kind":"info","name":"  probe@120: loss=5.9244 ppl=374.07 delta=-0.012513","seq":45,"t":70.3022}
+{"detail":{"accepted":6,"candidates":16,"deferred":0,"protected_override":3,"rejected":7,"step":120},"kind":"event","name":"OPUS decisions recorded","seq":46,"t":71.3864}
+{"detail":{},"kind":"info","name":"  step  120 [B] loss=5.5652 ppl=  261.17 |g|=3038.983 lr=0.18844 lanes={'agentic': 1, 'code': 4, 'indic': 1, 'longctx': 1, 'reasoning': 1, 'web': 8}","seq":47,"t":71.6947}
+{"detail":{"checkpoint_id":"04c5456454d18208","ledger_offset":560,"step":140},"kind":"event","name":"checkpoint saved","seq":48,"t":78.9364}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":560,"step":140},"kind":"pass","name":"checkpoint_saved","seq":49,"t":78.9369}
+{"detail":{},"kind":"info","name":"  probe@140: loss=6.0245 ppl=413.45 delta=0.100102","seq":50,"t":79.129}
+{"detail":{},"kind":"info","name":"  step  144 [B] loss=5.2477 ppl=  190.13 |g|=3941.772 lr=0.14156 lanes={'code': 4, 'indic': 2, 'multiling': 1, 'reasoning': 1, 'web': 8}","seq":51,"t":80.7018}
+{"detail":{"at_step":158,"detail":"injected fault at global step 158: 636 ledger records written, last checkpoint 04c5456454d1"},"kind":"event","name":"crash simulated","seq":52,"t":85.0604}
+{"detail":{},"kind":"info","name":"CRASH: injected fault at global step 158: 636 ledger records written, last checkpoint 04c5456454d1","seq":53,"t":85.061}
+{"detail":{},"kind":"section","name":"11  Crash recovery","seq":54,"t":85.0624}
+{"detail":{"checkpoint_id":"04c5456454d182088b520fd19941b050800082d066bdd3363333549f699fcb4c","ledger_offset":560,"next_expected_step":140,"resumed_at_step":140},"kind":"event","name":"run resumed","seq":55,"t":85.4275}
+{"detail":{},"kind":"info","name":"ledger rewound to offset 560: 76 uncommitted record(s) discarded","seq":56,"t":85.4281}
+{"detail":{"actual":"49de4eb0d6f96731","expected":"49de4eb0d6f96731","step":140},"kind":"pass","name":"resume_next_batch_matched","seq":57,"t":85.4931}
+{"detail":{"problems":[],"records":560,"steps":140},"kind":"pass","name":"no_duplicate_or_skipped_batches","seq":58,"t":85.4937}
+{"detail":{"checkpoint_id":"29d0531561fc4baa","ledger_offset":640,"step":160},"kind":"event","name":"checkpoint saved","seq":59,"t":92.9621}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":640,"step":160},"kind":"pass","name":"checkpoint_saved","seq":60,"t":92.9629}
+{"detail":{"checkpoint_id":"c0047cce948ee011","ledger_offset":720,"step":180},"kind":"event","name":"checkpoint saved","seq":61,"t":102.2961}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":720,"step":180},"kind":"pass","name":"checkpoint_saved","seq":62,"t":102.2966}
+{"detail":{"checkpoint_id":"1e1973671c68cd55","ledger_offset":800,"step":200},"kind":"event","name":"checkpoint saved","seq":63,"t":113.7172}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":800,"step":200},"kind":"pass","name":"checkpoint_saved","seq":64,"t":113.7177}
+{"detail":{"checkpoint_id":"f32c3e6f65c5c999","ledger_offset":880,"step":220},"kind":"event","name":"checkpoint saved","seq":65,"t":125.4808}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":880,"step":220},"kind":"pass","name":"checkpoint_saved","seq":66,"t":125.4813}
+{"detail":{"checkpoint_id":"306ff31886b5574d","ledger_offset":960,"step":240},"kind":"event","name":"checkpoint saved","seq":67,"t":136.7152}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":960,"step":240},"kind":"pass","name":"checkpoint_saved","seq":68,"t":136.716}
+{"detail":{"checkpoint_id":"306ff31886b5574d","ledger_offset":960,"step":240},"kind":"event","name":"checkpoint saved","seq":69,"t":137.3002}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":960,"step":240},"kind":"pass","name":"checkpoint_saved","seq":70,"t":137.3008}
+{"detail":{},"kind":"section","name":"12  Replay","seq":71,"t":137.3487}
+{"detail":{"matched":40,"range":[40,80],"steps":40},"kind":"event","name":"historical stream replayed","seq":72,"t":141.8464}
+{"detail":{"mismatches":0,"steps":40},"kind":"pass","name":"replay_hash_matched","seq":73,"t":141.8469}
+{"detail":{},"kind":"section","name":"13  Fork","seq":74,"t":141.85}
+{"detail":{"diverged_at_step":80,"new_branch":"exp-b","parent_branch":"main","parent_checkpoint_id":"db1281568c64f8006a5f8d1632ed379e54cb768d08c0233fa2b6363e605fb601","parent_ledger_offset":320,"requested_from_step":80},"kind":"event","name":"branch forked","seq":75,"t":142.1679}
+{"detail":{"checkpoint_id":"88bdc590d5ed5e45","ledger_offset":1120,"step":120},"kind":"event","name":"checkpoint saved","seq":76,"t":156.3876}
+{"detail":{"components":["dataloader_state","ledger_offset","model","optimizer","rng_state","scheduler"],"ledger_offset":1120,"step":120},"kind":"pass","name":"checkpoint_saved","seq":77,"t":156.3882}
+{"detail":{"branches_produce_distinct_batches":true,"child_first_step":80,"child_steps":40,"diverged_at_step":80,"new_branch":"exp-b","parent_branch":"main","parent_records_intact":true,"parent_steps":240,"starts_at_divergence":true},"kind":"pass","name":"fork_diverged_at_expected_step","seq":78,"t":156.6124}
+{"detail":{},"kind":"section","name":"14  Audit","seq":79,"t":156.6147}
+{"detail":{"records":1120,"shards":24,"window":null},"kind":"event","name":"audit completed","seq":80,"t":156.6198}
+{"detail":{},"kind":"section","name":"15  Performance, cost, evidence","seq":81,"t":156.6223}
+{"detail":{"violations":0,"worst":{"agentic":0.01875,"indic":0.078125,"longctx":0.01875,"reasoning":0.046875}},"kind":"pass","name":"protected_floor_held","seq":82,"t":156.6351}
+{"detail":{"required":0.5,"samples":365,"supply_shortfalls":0,"verified_share":0.553425},"kind":"pass","name":"indic_verified_floor_held","seq":83,"t":156.6368}
+{"detail":{"reads":{"validation":72}},"kind":"pass","name":"validation_never_gradient_bearing","seq":84,"t":156.6376}
+{"detail":{"useful_tps":11539.753,"utilization":0.89026},"kind":"event","name":"performance measured","seq":85,"t":156.6833}
+{"detail":{},"kind":"info","name":"checkpoint retention: kept [40, 80, 200, 220, 240], removed [20, 60, 100, 120, 140, 160, 180]","seq":86,"t":156.7551}
+{"detail":{},"kind":"section","name":"Evidence","seq":87,"t":157.3825}
+{"detail":{},"kind":"info","name":"generated dashboard.html and README.md from the artifacts","seq":88,"t":157.7279}
+{"detail":{},"kind":"info","name":"loss 9.0859 -> 5.6228 (ln V = 9.0109); probe 9.0108 -> 6.2533","seq":89,"t":157.7284}
+{"detail":{},"kind":"info","name":"evidence: 9/9 passed in 157.7s","seq":90,"t":157.7289}
+{"detail":{},"kind":"info","name":"artifacts: E:\\Projects\\ERA_V5\\6_build_dataset\\submission_artifacts","seq":91,"t":157.7294}

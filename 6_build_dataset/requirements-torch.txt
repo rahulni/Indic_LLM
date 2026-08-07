@@ -1,0 +1,17 @@
+# Only for --backend torch / --profile torch. The graded path (`python run_demo.py`)
+# needs nothing from this file -- see requirements.txt, which lists `regex` alone.
+#
+# Install the CUDA build that matches your driver, not the PyPI default: on
+# Windows the plain `pip install torch` wheel is CPU-only.
+#
+#   NVIDIA driver >= 525 (CUDA 12.x):
+#     pip install torch --index-url https://download.pytorch.org/whl/cu128
+#   CUDA 13.x builds (cu130+) need driver >= 580.
+#   CPU only, which is enough to run tests/test_torch_backend.py:
+#     pip install torch --index-url https://download.pytorch.org/whl/cpu
+#
+# VERIFIED on this machine: torch 2.11.0+cu128, Python 3.14.5, Windows,
+# RTX 3070 Laptop (8GB, sm_86), driver 566.07, bf16 supported.
+# numpy is deliberately absent -- torch warns about it on import and nothing in
+# tdes/ needs it.
+torch>=2.5

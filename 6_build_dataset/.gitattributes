@@ -1,0 +1,33 @@
+# Cross-platform byte determinism.
+#
+# This repo hashes file bytes. sha256(file_bytes) is the identity of every shard,
+# manifest and content hash in the system. The machine this was authored on has
+# core.autocrlf=true, so without this file the vendored corpus would be checked
+# out with CRLF here and LF on a Linux grader's machine -- and every hash in
+# submission_artifacts/ would silently fail to reproduce.
+#
+# Rule: text files normalise to LF in the working tree; anything whose exact
+# bytes are load-bearing is marked binary so git never touches it.
+
+# ORDER MATTERS: in a .gitattributes file the LAST matching pattern wins. An
+# earlier version of this file listed the byte-critical paths first and the
+# per-extension rules last, so `*.json text eol=lf` silently overrode
+# `corpus/** -text` for every manifest and every documents.jsonl -- verified with
+# `git check-attr -a`, which reported `text: set` on exactly the files this file
+# exists to protect. The byte-critical block must come last.
+
+* text=auto eol=lf
+
+# Source types: normalise line endings, they are read by humans and diffed.
+*.py    text eol=lf
+*.md    text eol=lf
+*.yml   text eol=lf
+
+# Bytes ARE the identity here, so git must never touch them. Last, so these win
+# over anything above. Check with:
+#   git check-attr -a corpus/indic/documents.jsonl   ->  text: unset
+corpus/**                   -text
+submission_artifacts/**     -text
+submission_artifacts_*/**   -text
+*.bin                       -text
+*.shard                     -text

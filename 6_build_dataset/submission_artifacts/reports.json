@@ -1,0 +1,2206 @@
+{
+  "corpus": {
+    "admitted": {
+      "documents": 234,
+      "per_lane": {
+        "agentic": 8,
+        "code": 59,
+        "indic": 87,
+        "longctx": 28,
+        "multiling": 22,
+        "reasoning": 10,
+        "web": 20
+      },
+      "total_chars": 305723,
+      "total_words": 44356
+    },
+    "dedup": {
+      "bands": 16,
+      "candidate_pairs_examined": 2,
+      "exact_duplicates_removed": 0,
+      "input_documents": 234,
+      "method": "sha256 exact, then MinHash-LSH over character 5-gram shingles",
+      "near_duplicates_removed": 0,
+      "near_threshold": 0.8,
+      "note": "permutations derive from sha256, never Python hash(), so the duplicate set is identical across processes and platforms",
+      "num_perm": 64,
+      "removed": [],
+      "rows_per_band": 4,
+      "shingle_size": 5,
+      "surviving_documents": 234
+    },
+    "loaded": {
+      "eval_documents": 20,
+      "per_lane": {
+        "agentic": 8,
+        "code": 59,
+        "indic": 87,
+        "longctx": 28,
+        "multiling": 22,
+        "reasoning": 10,
+        "web": 20
+      },
+      "train_documents": 234,
+      "validation_documents": 20
+    },
+    "pii": {
+      "affected": [],
+      "categories": [
+        "email",
+        "aadhaar_shaped",
+        "pan_shaped",
+        "phone_in",
+        "ipv4"
+      ],
+      "documents_redacted": 0,
+      "documents_scanned": 234,
+      "matches_by_category": {},
+      "method": "regex pattern screen with in-place redaction",
+      "scope_note": "This is a pattern screen for the shapes that leak most often in scraped Indian web text (email, Aadhaar-shaped, PAN-shaped, Indian mobile, IPv4). It is not identity resolution and does not detect names in running prose."
+    },
+    "pii_heldout": {
+      "eval": {
+        "affected": [],
+        "categories": [
+          "email",
+          "aadhaar_shaped",
+          "pan_shaped",
+          "phone_in",
+          "ipv4"
+        ],
+        "documents_redacted": 0,
+        "documents_scanned": 20,
+        "matches_by_category": {},
+        "method": "regex pattern screen with in-place redaction",
+        "scope_note": "This is a pattern screen for the shapes that leak most often in scraped Indian web text (email, Aadhaar-shaped, PAN-shaped, Indian mobile, IPv4). It is not identity resolution and does not detect names in running prose."
+      },
+      "validation": {
+        "affected": [],
+        "categories": [
+          "email",
+          "aadhaar_shaped",
+          "pan_shaped",
+          "phone_in",
+          "ipv4"
+        ],
+        "documents_redacted": 0,
+        "documents_scanned": 20,
+        "matches_by_category": {},
+        "method": "regex pattern screen with in-place redaction",
+        "scope_note": "This is a pattern screen for the shapes that leak most often in scraped Indian web text (email, Aadhaar-shaped, PAN-shaped, Indian mobile, IPv4). It is not identity resolution and does not detect names in running prose."
+      }
+    }
+  },
+  "fertility": {
+    "per_language_at_run_vocab": {
+      "eng": {
+        "fertility": 1.3866,
+        "total_tokens": 16852,
+        "unk_rate": 0.0,
+        "unk_tokens": 0,
+        "word_tokens": 13790,
+        "words": 9945
+      },
+      "hin": {
+        "fertility": 1.4036,
+        "total_tokens": 13151,
+        "unk_rate": 0.0,
+        "unk_tokens": 0,
+        "word_tokens": 11199,
+        "words": 7979
+      },
+      "kan": {
+        "fertility": 3.1883,
+        "total_tokens": 2943,
+        "unk_rate": 0.0,
+        "unk_tokens": 0,
+        "word_tokens": 1846,
+        "words": 579
+      },
+      "mar": {
+        "fertility": 1.9409,
+        "total_tokens": 7112,
+        "unk_rate": 0.0,
+        "unk_tokens": 0,
+        "word_tokens": 6341,
+        "words": 3267
+      },
+      "nep": {
+        "fertility": 1.8949,
+        "total_tokens": 3056,
+        "unk_rate": 0.0,
+        "unk_tokens": 0,
+        "word_tokens": 2740,
+        "words": 1446
+      },
+      "python": {
+        "fertility": 1.144,
+        "total_tokens": 25685,
+        "unk_rate": 0.0,
+        "unk_tokens": 0,
+        "word_tokens": 12155,
+        "words": 10625
+      },
+      "spa": {
+        "fertility": 1.4248,
+        "total_tokens": 15127,
+        "unk_rate": 0.0,
+        "unk_tokens": 0,
+        "word_tokens": 13108,
+        "words": 9200
+      },
+      "tel": {
+        "fertility": 2.7316,
+        "total_tokens": 6403,
+        "unk_rate": 0.0,
+        "unk_tokens": 0,
+        "word_tokens": 5578,
+        "words": 2042
+      }
+    },
+    "sweep": {
+      "note": "Fertility is tokens per word. Lower is better. Session 5 targets ~2.0 for Indic languages; session 4 MEASURED cl100k at 13.268 tok/word on Telugu and MuRIL at 2.296 on the same corpus.",
+      "sweep": [
+        {
+          "by_language": {
+            "eng": {
+              "fertility": 3.3133,
+              "total_tokens": 37210,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 32951,
+              "words": 9945
+            },
+            "hin": {
+              "fertility": 3.8136,
+              "total_tokens": 33779,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 30429,
+              "words": 7979
+            },
+            "kan": {
+              "fertility": 10.8912,
+              "total_tokens": 7966,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 6306,
+              "words": 579
+            },
+            "mar": {
+              "fertility": 5.4616,
+              "total_tokens": 19022,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 17843,
+              "words": 3267
+            },
+            "nep": {
+              "fertility": 5.3783,
+              "total_tokens": 8280,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 7777,
+              "words": 1446
+            },
+            "python": {
+              "fertility": 3.1847,
+              "total_tokens": 48731,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 33837,
+              "words": 10625
+            },
+            "spa": {
+              "fertility": 3.3565,
+              "total_tokens": 33671,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 30880,
+              "words": 9200
+            },
+            "tel": {
+              "fertility": 8.2125,
+              "total_tokens": 17838,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 16770,
+              "words": 2042
+            }
+          },
+          "requested": 512,
+          "vocab_size": 512
+        },
+        {
+          "by_language": {
+            "eng": {
+              "fertility": 2.1133,
+              "total_tokens": 24414,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 21017,
+              "words": 9945
+            },
+            "hin": {
+              "fertility": 2.2564,
+              "total_tokens": 20304,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 18004,
+              "words": 7979
+            },
+            "kan": {
+              "fertility": 5.5596,
+              "total_tokens": 4569,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 3219,
+              "words": 579
+            },
+            "mar": {
+              "fertility": 3.2351,
+              "total_tokens": 11420,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 10569,
+              "words": 3267
+            },
+            "nep": {
+              "fertility": 3.249,
+              "total_tokens": 5055,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 4698,
+              "words": 1446
+            },
+            "python": {
+              "fertility": 1.6846,
+              "total_tokens": 31512,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 17899,
+              "words": 10625
+            },
+            "spa": {
+              "fertility": 2.1907,
+              "total_tokens": 22383,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 20154,
+              "words": 9200
+            },
+            "tel": {
+              "fertility": 4.5891,
+              "total_tokens": 10256,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 9371,
+              "words": 2042
+            }
+          },
+          "requested": 2048,
+          "vocab_size": 2048
+        },
+        {
+          "by_language": {
+            "eng": {
+              "fertility": 1.3866,
+              "total_tokens": 16852,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 13790,
+              "words": 9945
+            },
+            "hin": {
+              "fertility": 1.4036,
+              "total_tokens": 13151,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 11199,
+              "words": 7979
+            },
+            "kan": {
+              "fertility": 3.1883,
+              "total_tokens": 2943,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 1846,
+              "words": 579
+            },
+            "mar": {
+              "fertility": 1.9409,
+              "total_tokens": 7112,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 6341,
+              "words": 3267
+            },
+            "nep": {
+              "fertility": 1.8949,
+              "total_tokens": 3056,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 2740,
+              "words": 1446
+            },
+            "python": {
+              "fertility": 1.144,
+              "total_tokens": 25685,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 12155,
+              "words": 10625
+            },
+            "spa": {
+              "fertility": 1.4248,
+              "total_tokens": 15127,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 13108,
+              "words": 9200
+            },
+            "tel": {
+              "fertility": 2.7316,
+              "total_tokens": 6403,
+              "unk_rate": 0.0,
+              "unk_tokens": 0,
+              "word_tokens": 5578,
+              "words": 2042
+            }
+          },
+          "requested": 8192,
+          "vocab_size": 8192
+        }
+      ]
+    }
+  },
+  "firewall_registry": {
+    "access_log_entries": 0,
+    "blocked": [],
+    "blocked_count": 0,
+    "by_split": {
+      "eval": 20,
+      "validation": 20
+    },
+    "fingerprints": {
+      "canaries": 2,
+      "content_hashes": 40,
+      "ngram_overlap_threshold": 0.1,
+      "ngram_size": 8,
+      "ngrams": 6838
+    },
+    "gradient_bearing_reads": 0,
+    "reads_by_split": {},
+    "registered": 40
+  },
+  "floors": {
+    "checkable": true,
+    "checked_floors": {
+      "agentic": {
+        "floor": 0.01,
+        "samples_implied_by_floor": 3.2,
+        "samples_in_window": 320,
+        "window_steps": 20
+      },
+      "indic": {
+        "floor": 0.03,
+        "samples_implied_by_floor": 9.6,
+        "samples_in_window": 320,
+        "window_steps": 20
+      },
+      "longctx": {
+        "floor": 0.015,
+        "samples_implied_by_floor": 4.8,
+        "samples_in_window": 320,
+        "window_steps": 20
+      },
+      "reasoning": {
+        "floor": 0.01,
+        "samples_implied_by_floor": 3.2,
+        "samples_in_window": 320,
+        "window_steps": 20
+      }
+    },
+    "floors_held": true,
+    "not_expressible": {},
+    "samples_per_step": 16,
+    "verdict_note": "floors_held is true only when at least one full window was checked AND at least one floor was expressible in it. Floors listed under not_expressible imply fewer than one sample per window, so no integer allocation can satisfy them; they are excluded from the verdict rather than counted as held.",
+    "violation_count": 0,
+    "violations": [],
+    "window_steps": 20,
+    "windows_checked": 221,
+    "worst_observed_share": {
+      "agentic": 0.01875,
+      "indic": 0.078125,
+      "longctx": 0.01875,
+      "reasoning": 0.046875
+    }
+  },
+  "indic_tier_floor": {
+    "checkable": true,
+    "held": true,
+    "indic_samples": 365,
+    "required_share": 0.5,
+    "rule": "session 5: unverified Indic may never substitute for the verified portion of the protected floor",
+    "supply_shortfalls": [],
+    "unverified": 163,
+    "verified": 202,
+    "verified_share": 0.553425
+  },
+  "mixture": {
+    "anneal_reserve": {
+      "eligible_count": 17,
+      "fraction_requested": 0.03,
+      "reserved_count": 1,
+      "reserved_shard_ids": [
+        "reasoning_0000"
+      ],
+      "rule": "verified tiers only; withheld from stages A-C and released in D"
+    },
+    "indic_verified_floor_fraction": 0.5,
+    "lanes_from_session5_without_corpus": [
+      "civic",
+      "parallel"
+    ],
+    "note": "Session 5 lanes `civic` and `parallel` have no corpus here; their share is folded into `web`. Phase weights, protected floors and the sequence ladder are session 5's real values.",
+    "planned_shares": {
+      "by_lane_share": {
+        "agentic": 0.039699,
+        "code": 0.241857,
+        "indic": 0.085708,
+        "longctx": 0.036441,
+        "multiling": 0.034406,
+        "reasoning": 0.096295,
+        "web": 0.465594
+      },
+      "by_lane_tokens": {
+        "agentic": 49920,
+        "code": 304128,
+        "indic": 107776,
+        "longctx": 45824,
+        "multiling": 43264,
+        "reasoning": 121088,
+        "web": 585472
+      },
+      "total_tokens": 1257472
+    },
+    "protected_floor_window": 20,
+    "protected_floor_window_rationale": {
+      "rule": "window = max(checkpoint_interval, ceil(2 / (smallest_floor x samples_per_step))); a floor below one sample per window is not a checkable guarantee",
+      "samples_in_window": 320,
+      "samples_per_step": 16,
+      "samples_the_smallest_floor_implies": 3.2,
+      "smallest_floor": 0.01,
+      "window_steps": 20
+    },
+    "samples_per_step": 16,
+    "scarcity": {
+      "decisions": [
+        {
+          "demand_tokens": 49920,
+          "effective_tokens": 19119.4,
+          "epoch_cap": 4.0,
+          "epochs": 39.4937,
+          "epochs_needed": 39.4937,
+          "lane": "agentic",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 49920,
+          "shortfall_tokens": 0,
+          "stage": "ALL",
+          "supply_tokens": 1264,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 39.49 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 304128,
+          "effective_tokens": 96133.2,
+          "epoch_cap": 4.0,
+          "epochs": 4.0,
+          "epochs_needed": 11.7865,
+          "lane": "code",
+          "policy": "reduce_share",
+          "reason": "demand needs 11.79 passes, beyond the 4.0 epoch cap; reducing this lane's share",
+          "satisfied_tokens": 103212,
+          "shortfall_tokens": 200916,
+          "stage": "ALL",
+          "supply_tokens": 25803
+        },
+        {
+          "demand_tokens": 107776,
+          "effective_tokens": 99187.1,
+          "epoch_cap": 4.0,
+          "epochs": 4.4102,
+          "epochs_needed": 4.4102,
+          "lane": "indic",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 107776,
+          "shortfall_tokens": 0,
+          "stage": "ALL",
+          "supply_tokens": 24438,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 4.41 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 45824,
+          "effective_tokens": 45261.6,
+          "epoch_cap": 4.0,
+          "epochs": 1.8416,
+          "epochs_needed": 1.8416,
+          "lane": "longctx",
+          "policy": "repeat",
+          "reason": "demand needs 1.84 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 45824,
+          "shortfall_tokens": 0,
+          "stage": "ALL",
+          "supply_tokens": 24883
+        },
+        {
+          "demand_tokens": 43264,
+          "effective_tokens": 23803.2,
+          "epoch_cap": 4.0,
+          "epochs": 4.0,
+          "epochs_needed": 6.7716,
+          "lane": "multiling",
+          "policy": "reduce_share",
+          "reason": "demand needs 6.77 passes, beyond the 4.0 epoch cap; reducing this lane's share",
+          "satisfied_tokens": 25556,
+          "shortfall_tokens": 17708,
+          "stage": "ALL",
+          "supply_tokens": 6389
+        },
+        {
+          "demand_tokens": 121088,
+          "effective_tokens": 19944.3,
+          "epoch_cap": 4.0,
+          "epochs": 99.3339,
+          "epochs_needed": 99.3339,
+          "lane": "reasoning",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 121088,
+          "shortfall_tokens": 0,
+          "stage": "ALL",
+          "supply_tokens": 1219,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 99.33 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 585472,
+          "effective_tokens": 25405.3,
+          "epoch_cap": 4.0,
+          "epochs": 4.0,
+          "epochs_needed": 85.8589,
+          "lane": "web",
+          "policy": "reduce_share",
+          "reason": "demand needs 85.86 passes, beyond the 4.0 epoch cap; reducing this lane's share",
+          "satisfied_tokens": 27276,
+          "shortfall_tokens": 558196,
+          "stage": "ALL",
+          "supply_tokens": 6819
+        }
+      ],
+      "note": "epoch counts come from whole-run demand; the per_stage rows show where the pressure sits but reset at each stage boundary and must not be read as epoch counts",
+      "per_stage": [
+        {
+          "demand_tokens": 7680,
+          "effective_tokens": 6729.1,
+          "epoch_cap": 4.0,
+          "epochs": 6.0759,
+          "epochs_needed": 6.0759,
+          "lane": "agentic",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 7680,
+          "shortfall_tokens": 0,
+          "stage": "A",
+          "supply_tokens": 1264,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 6.08 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 62976,
+          "effective_tokens": 61288.9,
+          "epoch_cap": 4.0,
+          "epochs": 2.4406,
+          "epochs_needed": 2.4406,
+          "lane": "code",
+          "policy": "repeat",
+          "reason": "demand needs 2.44 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 62976,
+          "shortfall_tokens": 0,
+          "stage": "A",
+          "supply_tokens": 25803
+        },
+        {
+          "demand_tokens": 31488,
+          "effective_tokens": 31422.3,
+          "epoch_cap": 4.0,
+          "epochs": 1.2885,
+          "epochs_needed": 1.2885,
+          "lane": "indic",
+          "policy": "repeat",
+          "reason": "demand needs 1.29 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 31488,
+          "shortfall_tokens": 0,
+          "stage": "A",
+          "supply_tokens": 24438
+        },
+        {
+          "demand_tokens": 7936,
+          "effective_tokens": 7936.0,
+          "epoch_cap": 4.0,
+          "epochs": 0.3189,
+          "epochs_needed": 0.3189,
+          "lane": "longctx",
+          "policy": "none",
+          "reason": "supply covers demand within a single pass",
+          "satisfied_tokens": 7936,
+          "shortfall_tokens": 0,
+          "stage": "A",
+          "supply_tokens": 24883
+        },
+        {
+          "demand_tokens": 19712,
+          "effective_tokens": 18848.6,
+          "epoch_cap": 4.0,
+          "epochs": 3.0853,
+          "epochs_needed": 3.0853,
+          "lane": "multiling",
+          "policy": "repeat",
+          "reason": "demand needs 3.09 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 19712,
+          "shortfall_tokens": 0,
+          "stage": "A",
+          "supply_tokens": 6389
+        },
+        {
+          "demand_tokens": 19712,
+          "effective_tokens": 12977.8,
+          "epoch_cap": 4.0,
+          "epochs": 16.1706,
+          "epochs_needed": 16.1706,
+          "lane": "reasoning",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 19712,
+          "shortfall_tokens": 0,
+          "stage": "A",
+          "supply_tokens": 1219,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 16.17 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 243712,
+          "effective_tokens": 25405.3,
+          "epoch_cap": 4.0,
+          "epochs": 4.0,
+          "epochs_needed": 35.7401,
+          "lane": "web",
+          "policy": "defer_to_later_stage",
+          "reason": "demand needs 35.74 passes, beyond the 4.0 epoch cap; deferring the excess to a later stage",
+          "satisfied_tokens": 27276,
+          "shortfall_tokens": 216436,
+          "stage": "A",
+          "supply_tokens": 6819
+        },
+        {
+          "demand_tokens": 9472,
+          "effective_tokens": 7960.0,
+          "epoch_cap": 4.0,
+          "epochs": 7.4937,
+          "epochs_needed": 7.4937,
+          "lane": "agentic",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 9472,
+          "shortfall_tokens": 0,
+          "stage": "B",
+          "supply_tokens": 1264,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 7.49 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 73728,
+          "effective_tokens": 70948.5,
+          "epoch_cap": 4.0,
+          "epochs": 2.8573,
+          "epochs_needed": 2.8573,
+          "lane": "code",
+          "policy": "repeat",
+          "reason": "demand needs 2.86 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 73728,
+          "shortfall_tokens": 0,
+          "stage": "B",
+          "supply_tokens": 25803
+        },
+        {
+          "demand_tokens": 25088,
+          "effective_tokens": 25087.4,
+          "epoch_cap": 4.0,
+          "epochs": 1.0266,
+          "epochs_needed": 1.0266,
+          "lane": "indic",
+          "policy": "repeat",
+          "reason": "demand needs 1.03 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 25088,
+          "shortfall_tokens": 0,
+          "stage": "B",
+          "supply_tokens": 24438
+        },
+        {
+          "demand_tokens": 9216,
+          "effective_tokens": 9216.0,
+          "epoch_cap": 4.0,
+          "epochs": 0.3704,
+          "epochs_needed": 0.3704,
+          "lane": "longctx",
+          "policy": "none",
+          "reason": "supply covers demand within a single pass",
+          "satisfied_tokens": 9216,
+          "shortfall_tokens": 0,
+          "stage": "B",
+          "supply_tokens": 24883
+        },
+        {
+          "demand_tokens": 12800,
+          "effective_tokens": 12595.4,
+          "epoch_cap": 4.0,
+          "epochs": 2.0034,
+          "epochs_needed": 2.0034,
+          "lane": "multiling",
+          "policy": "repeat",
+          "reason": "demand needs 2.00 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 12800,
+          "shortfall_tokens": 0,
+          "stage": "B",
+          "supply_tokens": 6389
+        },
+        {
+          "demand_tokens": 24576,
+          "effective_tokens": 14576.3,
+          "epoch_cap": 4.0,
+          "epochs": 20.1608,
+          "epochs_needed": 20.1608,
+          "lane": "reasoning",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 24576,
+          "shortfall_tokens": 0,
+          "stage": "B",
+          "supply_tokens": 1219,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 20.16 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 160512,
+          "effective_tokens": 25405.3,
+          "epoch_cap": 4.0,
+          "epochs": 4.0,
+          "epochs_needed": 23.5389,
+          "lane": "web",
+          "policy": "defer_to_later_stage",
+          "reason": "demand needs 23.54 passes, beyond the 4.0 epoch cap; deferring the excess to a later stage",
+          "satisfied_tokens": 27276,
+          "shortfall_tokens": 133236,
+          "stage": "B",
+          "supply_tokens": 6819
+        },
+        {
+          "demand_tokens": 24064,
+          "effective_tokens": 14690.6,
+          "epoch_cap": 4.0,
+          "epochs": 19.038,
+          "epochs_needed": 19.038,
+          "lane": "agentic",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 24064,
+          "shortfall_tokens": 0,
+          "stage": "C",
+          "supply_tokens": 1264,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 19.04 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 154624,
+          "effective_tokens": 96133.2,
+          "epoch_cap": 4.0,
+          "epochs": 4.0,
+          "epochs_needed": 5.9925,
+          "lane": "code",
+          "policy": "defer_to_later_stage",
+          "reason": "demand needs 5.99 passes, beyond the 4.0 epoch cap; deferring the excess to a later stage",
+          "satisfied_tokens": 103212,
+          "shortfall_tokens": 51412,
+          "stage": "C",
+          "supply_tokens": 25803
+        },
+        {
+          "demand_tokens": 44032,
+          "effective_tokens": 43530.3,
+          "epoch_cap": 4.0,
+          "epochs": 1.8018,
+          "epochs_needed": 1.8018,
+          "lane": "indic",
+          "policy": "repeat",
+          "reason": "demand needs 1.80 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 44032,
+          "shortfall_tokens": 0,
+          "stage": "C",
+          "supply_tokens": 24438
+        },
+        {
+          "demand_tokens": 24064,
+          "effective_tokens": 24064.0,
+          "epoch_cap": 4.0,
+          "epochs": 0.9671,
+          "epochs_needed": 0.9671,
+          "lane": "longctx",
+          "policy": "none",
+          "reason": "supply covers demand within a single pass",
+          "satisfied_tokens": 24064,
+          "shortfall_tokens": 0,
+          "stage": "C",
+          "supply_tokens": 24883
+        },
+        {
+          "demand_tokens": 10240,
+          "effective_tokens": 10165.5,
+          "epoch_cap": 4.0,
+          "epochs": 1.6028,
+          "epochs_needed": 1.6028,
+          "lane": "multiling",
+          "policy": "repeat",
+          "reason": "demand needs 1.60 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 10240,
+          "shortfall_tokens": 0,
+          "stage": "C",
+          "supply_tokens": 6389
+        },
+        {
+          "demand_tokens": 61952,
+          "effective_tokens": 19239.6,
+          "epoch_cap": 4.0,
+          "epochs": 50.822,
+          "epochs_needed": 50.822,
+          "lane": "reasoning",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 61952,
+          "shortfall_tokens": 0,
+          "stage": "C",
+          "supply_tokens": 1219,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 50.82 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 172544,
+          "effective_tokens": 25405.3,
+          "epoch_cap": 4.0,
+          "epochs": 4.0,
+          "epochs_needed": 25.3034,
+          "lane": "web",
+          "policy": "defer_to_later_stage",
+          "reason": "demand needs 25.30 passes, beyond the 4.0 epoch cap; deferring the excess to a later stage",
+          "satisfied_tokens": 27276,
+          "shortfall_tokens": 145268,
+          "stage": "C",
+          "supply_tokens": 6819
+        },
+        {
+          "demand_tokens": 8704,
+          "effective_tokens": 7446.3,
+          "epoch_cap": 4.0,
+          "epochs": 6.8861,
+          "epochs_needed": 6.8861,
+          "lane": "agentic",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 8704,
+          "shortfall_tokens": 0,
+          "stage": "D",
+          "supply_tokens": 1264,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 6.89 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 12800,
+          "effective_tokens": 12800.0,
+          "epoch_cap": 4.0,
+          "epochs": 0.4961,
+          "epochs_needed": 0.4961,
+          "lane": "code",
+          "policy": "none",
+          "reason": "supply covers demand within a single pass",
+          "satisfied_tokens": 12800,
+          "shortfall_tokens": 0,
+          "stage": "D",
+          "supply_tokens": 25803
+        },
+        {
+          "demand_tokens": 7168,
+          "effective_tokens": 7168.0,
+          "epoch_cap": 4.0,
+          "epochs": 0.2933,
+          "epochs_needed": 0.2933,
+          "lane": "indic",
+          "policy": "none",
+          "reason": "supply covers demand within a single pass",
+          "satisfied_tokens": 7168,
+          "shortfall_tokens": 0,
+          "stage": "D",
+          "supply_tokens": 24438
+        },
+        {
+          "demand_tokens": 4608,
+          "effective_tokens": 4608.0,
+          "epoch_cap": 4.0,
+          "epochs": 0.1852,
+          "epochs_needed": 0.1852,
+          "lane": "longctx",
+          "policy": "none",
+          "reason": "supply covers demand within a single pass",
+          "satisfied_tokens": 4608,
+          "shortfall_tokens": 0,
+          "stage": "D",
+          "supply_tokens": 24883
+        },
+        {
+          "demand_tokens": 512,
+          "effective_tokens": 512.0,
+          "epoch_cap": 4.0,
+          "epochs": 0.0801,
+          "epochs_needed": 0.0801,
+          "lane": "multiling",
+          "policy": "none",
+          "reason": "supply covers demand within a single pass",
+          "satisfied_tokens": 512,
+          "shortfall_tokens": 0,
+          "stage": "D",
+          "supply_tokens": 6389
+        },
+        {
+          "demand_tokens": 14848,
+          "effective_tokens": 10906.1,
+          "epoch_cap": 4.0,
+          "epochs": 12.1805,
+          "epochs_needed": 12.1805,
+          "lane": "reasoning",
+          "policy": "repeat_over_cap",
+          "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+          "satisfied_tokens": 14848,
+          "shortfall_tokens": 0,
+          "stage": "D",
+          "supply_tokens": 1219,
+          "warning": "protected lane exceeds the 4.0 epoch cap at 12.18 passes; supply must be grown before a real run"
+        },
+        {
+          "demand_tokens": 8704,
+          "effective_tokens": 8687.2,
+          "epoch_cap": 4.0,
+          "epochs": 1.2764,
+          "epochs_needed": 1.2764,
+          "lane": "web",
+          "policy": "repeat",
+          "reason": "demand needs 1.28 passes, within the 4.0 epoch cap; repeating existing data",
+          "satisfied_tokens": 8704,
+          "shortfall_tokens": 0,
+          "stage": "D",
+          "supply_tokens": 6819
+        }
+      ],
+      "summary": {
+        "by_policy": {
+          "reduce_share": 3,
+          "repeat": 1,
+          "repeat_over_cap": 3
+        },
+        "cap_breaches": [
+          {
+            "demand_tokens": 49920,
+            "effective_tokens": 19119.4,
+            "epoch_cap": 4.0,
+            "epochs": 39.4937,
+            "epochs_needed": 39.4937,
+            "lane": "agentic",
+            "policy": "repeat_over_cap",
+            "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+            "satisfied_tokens": 49920,
+            "shortfall_tokens": 0,
+            "stage": "ALL",
+            "supply_tokens": 1264,
+            "warning": "protected lane exceeds the 4.0 epoch cap at 39.49 passes; supply must be grown before a real run"
+          },
+          {
+            "demand_tokens": 107776,
+            "effective_tokens": 99187.1,
+            "epoch_cap": 4.0,
+            "epochs": 4.4102,
+            "epochs_needed": 4.4102,
+            "lane": "indic",
+            "policy": "repeat_over_cap",
+            "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+            "satisfied_tokens": 107776,
+            "shortfall_tokens": 0,
+            "stage": "ALL",
+            "supply_tokens": 24438,
+            "warning": "protected lane exceeds the 4.0 epoch cap at 4.41 passes; supply must be grown before a real run"
+          },
+          {
+            "demand_tokens": 121088,
+            "effective_tokens": 19944.3,
+            "epoch_cap": 4.0,
+            "epochs": 99.3339,
+            "epochs_needed": 99.3339,
+            "lane": "reasoning",
+            "policy": "repeat_over_cap",
+            "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
+            "satisfied_tokens": 121088,
+            "shortfall_tokens": 0,
+            "stage": "ALL",
+            "supply_tokens": 1219,
+            "warning": "protected lane exceeds the 4.0 epoch cap at 99.33 passes; supply must be grown before a real run"
+          }
+        ],
+        "decisions": 7,
+        "epoch_cap": 4.0,
+        "epoch_cap_source": "session 5 spec.py EPOCH_CAP_DEFAULT; Muennighoff et al., Scaling Data-Constrained Language Models, NeurIPS 2023 (arXiv:2305.16264)",
+        "lanes_needing_a_policy": [
+          "agentic",
+          "code",
+          "indic",
+          "longctx",
+          "multiling",
+          "reasoning",
+          "web"
+        ],
+        "total_shortfall_tokens": 776820
+      }
+    },
+    "shards_by_lane": {
+      "agentic": [
+        "agentic_0000"
+      ],
+      "code": [
+        "code_0000",
+        "code_0001",
+        "code_0002",
+        "code_0003",
+        "code_0004",
+        "code_0005"
+      ],
+      "indic": [
+        "indic_0000",
+        "indic_0001",
+        "indic_0002",
+        "indic_0003",
+        "indic_0004",
+        "indic_0005"
+      ],
+      "longctx": [
+        "longctx_0000",
+        "longctx_0001",
+        "longctx_0002",
+        "longctx_0003",
+        "longctx_0004",
+        "longctx_0005"
+      ],
+      "multiling": [
+        "multiling_0000",
+        "multiling_0001"
+      ],
+      "reasoning": [
+        "reasoning_0000"
+      ],
+      "web": [
+        "web_0000",
+        "web_0001"
+      ]
+    },
+    "stages": [
+      {
+        "anneal_reserve_only": false,
+        "label": "Foundation",
+        "mixture": {
+          "agentic": 0.02,
+          "code": 0.16,
+          "indic": 0.08,
+          "longctx": 0.02,
+          "multiling": 0.05,
+          "reasoning": 0.05,
+          "web": 0.62
+        },
+        "protected_floors": {
+          "agentic": 0.01,
+          "indic": 0.03,
+          "longctx": 0.015,
+          "reasoning": 0.01
+        },
+        "sequence_length": 256,
+        "stage": "A",
+        "step_end": 96,
+        "step_start": 0,
+        "warmup_frac": 0.15,
+        "weight": 0.4
+      },
+      {
+        "anneal_reserve_only": false,
+        "label": "Consolidation",
+        "mixture": {
+          "agentic": 0.03,
+          "code": 0.24,
+          "indic": 0.08,
+          "longctx": 0.03,
+          "multiling": 0.04,
+          "reasoning": 0.08,
+          "web": 0.5
+        },
+        "protected_floors": {
+          "agentic": 0.01,
+          "indic": 0.03,
+          "longctx": 0.015,
+          "reasoning": 0.01
+        },
+        "sequence_length": 256,
+        "stage": "B",
+        "step_end": 173,
+        "step_start": 96,
+        "warmup_frac": 0.15,
+        "weight": 0.32
+      },
+      {
+        "anneal_reserve_only": false,
+        "label": "Specialisation",
+        "mixture": {
+          "agentic": 0.05,
+          "code": 0.32,
+          "indic": 0.09,
+          "longctx": 0.05,
+          "multiling": 0.02,
+          "reasoning": 0.13,
+          "web": 0.34
+        },
+        "protected_floors": {
+          "agentic": 0.01,
+          "indic": 0.03,
+          "longctx": 0.015,
+          "reasoning": 0.01
+        },
+        "sequence_length": 512,
+        "stage": "C",
+        "step_end": 233,
+        "step_start": 173,
+        "warmup_frac": 0.15,
+        "weight": 0.25
+      },
+      {
+        "anneal_reserve_only": true,
+        "label": "Anneal",
+        "mixture": {
+          "agentic": 0.16,
+          "code": 0.22,
+          "indic": 0.12,
+          "longctx": 0.08,
+          "multiling": 0.0,
+          "reasoning": 0.26,
+          "web": 0.16
+        },
+        "protected_floors": {
+          "agentic": 0.01,
+          "indic": 0.03,
+          "longctx": 0.015,
+          "reasoning": 0.01
+        },
+        "sequence_length": 512,
+        "stage": "D",
+        "step_end": 240,
+        "step_start": 233,
+        "warmup_frac": 0.1,
+        "weight": 0.03
+      }
+    ],
+    "supply_tokens_by_lane": {
+      "agentic": 1264,
+      "code": 25803,
+      "indic": 24438,
+      "longctx": 24883,
+      "multiling": 6389,
+      "reasoning": 1219,
+      "web": 6819
+    },
+    "total_steps": 240
+  },
+  "model": {
+    "V": 8192,
+    "amp_dtype": "bfloat16",
+    "backend": "torch",
+    "bf16_supported": true,
+    "capability": "8.6",
+    "class": "TorchLM",
+    "d_model": 384,
+    "device": "cuda",
+    "gpu_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "n_heads": 6,
+    "n_layers": 6,
+    "parameters_count": 13980672,
+    "seq_len": 512,
+    "torch_version": "2.11.0+cu128",
+    "vram_free_mib_at_start": 7038,
+    "vram_total_mib": 8192
+  },
+  "opus": {
+    "accept_ratio": 0.4,
+    "by_lane": {
+      "agentic": {
+        "protected_override": 1
+      },
+      "code": {
+        "accepted": 8,
+        "rejected": 4
+      },
+      "indic": {
+        "accepted": 1,
+        "protected_override": 4
+      },
+      "longctx": {
+        "accepted": 1
+      },
+      "multiling": {
+        "accepted": 1,
+        "rejected": 2
+      },
+      "reasoning": {
+        "protected_override": 4
+      },
+      "web": {
+        "accepted": 13,
+        "rejected": 25
+      }
+    },
+    "by_rejection_reason": {
+      "below_threshold": 8,
+      "duplication": 23
+    },
+    "by_status": {
+      "accepted": 24,
+      "protected_override": 9,
+      "rejected": 31
+    },
+    "method": "cosine similarity between a candidate's prefix gradient and the validation-probe gradient direction",
+    "pool_health": {
+      "available": true,
+      "early_accepted_score_mean": 0.26671992,
+      "interpretation": "acceptance ratio is fixed, so the accepted COUNT cannot reveal pool exhaustion; only the score distribution can. A large drop means OPUS is selecting the best of a bad set.",
+      "late_accepted_score_mean": 0.12046165,
+      "pool_exhausting": true,
+      "relative_drop": 0.548359
+    },
+    "prefix_tokens": 64,
+    "protected_lanes": [
+      "agentic",
+      "indic",
+      "longctx",
+      "reasoning"
+    ],
+    "proxy_version": "probe-v1",
+    "rounds": 4,
+    "total_decisions": 64
+  },
+  "packing": {
+    "agentic": {
+      "by_policy": {
+        "best_fit": {
+          "boundary_crossings": 2,
+          "coverage": 1.0,
+          "effective_yield": 0.822917,
+          "input_tokens": 1264,
+          "pad_tokens": 272,
+          "positions_vs_pad_only": 0.75,
+          "real_tokens": 1264,
+          "sequences": 6,
+          "tokens_covered": 1264,
+          "tokens_dropped": 0,
+          "total_positions": 1536,
+          "truncations": 0,
+          "utilization": 0.822917
+        },
+        "concat_chop": {
+          "boundary_crossings": 7,
+          "coverage": 1.0,
+          "effective_yield": 0.9875,
+          "input_tokens": 1264,
+          "pad_tokens": 16,
+          "positions_vs_pad_only": 0.625,
+          "real_tokens": 1264,
+          "sequences": 5,
+          "tokens_covered": 1264,
+          "tokens_dropped": 0,
+          "total_positions": 1280,
+          "truncations": 8,
+          "utilization": 0.9875
+        },
+        "greedy": {
+          "boundary_crossings": 1,
+          "coverage": 1.0,
+          "effective_yield": 0.705357,
+          "input_tokens": 1264,
+          "pad_tokens": 528,
+          "positions_vs_pad_only": 0.875,
+          "real_tokens": 1264,
+          "sequences": 7,
+          "tokens_covered": 1264,
+          "tokens_dropped": 0,
+          "total_positions": 1792,
+          "truncations": 0,
+          "utilization": 0.705357
+        },
+        "long_context": {
+          "boundary_crossings": 0,
+          "coverage": 0.0,
+          "effective_yield": 0.0,
+          "input_tokens": 1264,
+          "pad_tokens": 0,
+          "real_tokens": 0,
+          "sequences": 0,
+          "tokens_dropped": 1264,
+          "total_positions": 0,
+          "truncations": 0,
+          "utilization": 0.0
+        },
+        "pad_only": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.617188,
+          "input_tokens": 1264,
+          "pad_tokens": 784,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 1264,
+          "sequences": 8,
+          "tokens_covered": 1264,
+          "tokens_dropped": 0,
+          "total_positions": 2048,
+          "truncations": 0,
+          "utilization": 0.617188
+        },
+        "structure_preserving": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.617188,
+          "input_tokens": 1264,
+          "pad_tokens": 784,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 1264,
+          "sequences": 8,
+          "tokens_covered": 1264,
+          "tokens_dropped": 0,
+          "total_positions": 2048,
+          "truncations": 0,
+          "utilization": 0.617188
+        }
+      },
+      "input_tokens": 1264,
+      "items": 8,
+      "metric_note": "utilization is fill rate (real / positions emitted); coverage is the fraction of input tokens represented; effective_yield is their product. A policy that truncates can score 100% fill while dropping most of the lane, so fill alone is never reported.",
+      "ranked_by_effective_yield": [
+        "concat_chop",
+        "best_fit",
+        "greedy",
+        "pad_only",
+        "structure_preserving",
+        "long_context"
+      ],
+      "seq_len": 256
+    },
+    "code": {
+      "by_policy": {
+        "best_fit": {
+          "boundary_crossings": 18,
+          "coverage": 1.0,
+          "effective_yield": 0.933268,
+          "input_tokens": 25803,
+          "pad_tokens": 1845,
+          "positions_vs_pad_only": 0.857143,
+          "real_tokens": 25803,
+          "sequences": 108,
+          "tokens_covered": 25803,
+          "tokens_dropped": 0,
+          "total_positions": 27648,
+          "truncations": 101,
+          "utilization": 0.933268
+        },
+        "concat_chop": {
+          "boundary_crossings": 58,
+          "coverage": 1.0,
+          "effective_yield": 0.99795,
+          "input_tokens": 25803,
+          "pad_tokens": 53,
+          "positions_vs_pad_only": 0.801587,
+          "real_tokens": 25803,
+          "sequences": 101,
+          "tokens_covered": 25803,
+          "tokens_dropped": 0,
+          "total_positions": 25856,
+          "truncations": 147,
+          "utilization": 0.99795
+        },
+        "greedy": {
+          "boundary_crossings": 15,
+          "coverage": 1.0,
+          "effective_yield": 0.908045,
+          "input_tokens": 25803,
+          "pad_tokens": 2613,
+          "positions_vs_pad_only": 0.880952,
+          "real_tokens": 25803,
+          "sequences": 111,
+          "tokens_covered": 25803,
+          "tokens_dropped": 0,
+          "total_positions": 28416,
+          "truncations": 101,
+          "utilization": 0.908045
+        },
+        "long_context": {
+          "boundary_crossings": 0,
+          "coverage": 0.664729,
+          "effective_yield": 0.664729,
+          "input_tokens": 25803,
+          "pad_tokens": 0,
+          "positions_vs_pad_only": 0.531746,
+          "real_tokens": 17152,
+          "sequences": 67,
+          "tokens_covered": 17152,
+          "tokens_dropped": 8651,
+          "total_positions": 17152,
+          "truncations": 67,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.799944,
+          "input_tokens": 25803,
+          "pad_tokens": 6453,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 25803,
+          "sequences": 126,
+          "tokens_covered": 25803,
+          "tokens_dropped": 0,
+          "total_positions": 32256,
+          "truncations": 101,
+          "utilization": 0.799944
+        },
+        "structure_preserving": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.799944,
+          "input_tokens": 25803,
+          "pad_tokens": 6453,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 25803,
+          "sequences": 126,
+          "tokens_covered": 25803,
+          "tokens_dropped": 0,
+          "total_positions": 32256,
+          "truncations": 101,
+          "utilization": 0.799944
+        }
+      },
+      "input_tokens": 25803,
+      "items": 59,
+      "metric_note": "utilization is fill rate (real / positions emitted); coverage is the fraction of input tokens represented; effective_yield is their product. A policy that truncates can score 100% fill while dropping most of the lane, so fill alone is never reported.",
+      "ranked_by_effective_yield": [
+        "concat_chop",
+        "best_fit",
+        "greedy",
+        "pad_only",
+        "structure_preserving",
+        "long_context"
+      ],
+      "seq_len": 256
+    },
+    "indic": {
+      "by_policy": {
+        "best_fit": {
+          "boundary_crossings": 45,
+          "coverage": 1.0,
+          "effective_yield": 0.984133,
+          "input_tokens": 24438,
+          "pad_tokens": 394,
+          "positions_vs_pad_only": 0.683099,
+          "real_tokens": 24438,
+          "sequences": 97,
+          "tokens_covered": 24438,
+          "tokens_dropped": 0,
+          "total_positions": 24832,
+          "truncations": 93,
+          "utilization": 0.984133
+        },
+        "concat_chop": {
+          "boundary_crossings": 85,
+          "coverage": 1.0,
+          "effective_yield": 0.994385,
+          "input_tokens": 24438,
+          "pad_tokens": 138,
+          "positions_vs_pad_only": 0.676056,
+          "real_tokens": 24438,
+          "sequences": 96,
+          "tokens_covered": 24438,
+          "tokens_dropped": 0,
+          "total_positions": 24576,
+          "truncations": 157,
+          "utilization": 0.994385
+        },
+        "greedy": {
+          "boundary_crossings": 39,
+          "coverage": 1.0,
+          "effective_yield": 0.926805,
+          "input_tokens": 24438,
+          "pad_tokens": 1930,
+          "positions_vs_pad_only": 0.725352,
+          "real_tokens": 24438,
+          "sequences": 103,
+          "tokens_covered": 24438,
+          "tokens_dropped": 0,
+          "total_positions": 26368,
+          "truncations": 93,
+          "utilization": 0.926805
+        },
+        "long_context": {
+          "boundary_crossings": 0,
+          "coverage": 0.576152,
+          "effective_yield": 0.576152,
+          "input_tokens": 24438,
+          "pad_tokens": 0,
+          "positions_vs_pad_only": 0.387324,
+          "real_tokens": 14080,
+          "sequences": 55,
+          "tokens_covered": 14080,
+          "tokens_dropped": 10358,
+          "total_positions": 14080,
+          "truncations": 55,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.67226,
+          "input_tokens": 24438,
+          "pad_tokens": 11914,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 24438,
+          "sequences": 142,
+          "tokens_covered": 24438,
+          "tokens_dropped": 0,
+          "total_positions": 36352,
+          "truncations": 93,
+          "utilization": 0.67226
+        },
+        "structure_preserving": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.67226,
+          "input_tokens": 24438,
+          "pad_tokens": 11914,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 24438,
+          "sequences": 142,
+          "tokens_covered": 24438,
+          "tokens_dropped": 0,
+          "total_positions": 36352,
+          "truncations": 93,
+          "utilization": 0.67226
+        }
+      },
+      "input_tokens": 24438,
+      "items": 87,
+      "metric_note": "utilization is fill rate (real / positions emitted); coverage is the fraction of input tokens represented; effective_yield is their product. A policy that truncates can score 100% fill while dropping most of the lane, so fill alone is never reported.",
+      "ranked_by_effective_yield": [
+        "concat_chop",
+        "best_fit",
+        "greedy",
+        "pad_only",
+        "structure_preserving",
+        "long_context"
+      ],
+      "seq_len": 256
+    },
+    "longctx": {
+      "by_policy": {
+        "best_fit": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.891736,
+          "input_tokens": 24883,
+          "pad_tokens": 3021,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 24883,
+          "sequences": 109,
+          "tokens_covered": 24883,
+          "tokens_dropped": 0,
+          "total_positions": 27904,
+          "truncations": 109,
+          "utilization": 0.891736
+        },
+        "concat_chop": {
+          "boundary_crossings": 27,
+          "coverage": 1.0,
+          "effective_yield": 0.991829,
+          "input_tokens": 24883,
+          "pad_tokens": 205,
+          "positions_vs_pad_only": 0.899083,
+          "real_tokens": 24883,
+          "sequences": 98,
+          "tokens_covered": 24883,
+          "tokens_dropped": 0,
+          "total_positions": 25088,
+          "truncations": 125,
+          "utilization": 0.991829
+        },
+        "greedy": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.891736,
+          "input_tokens": 24883,
+          "pad_tokens": 3021,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 24883,
+          "sequences": 109,
+          "tokens_covered": 24883,
+          "tokens_dropped": 0,
+          "total_positions": 27904,
+          "truncations": 109,
+          "utilization": 0.891736
+        },
+        "long_context": {
+          "boundary_crossings": 0,
+          "coverage": 0.83334,
+          "effective_yield": 0.83334,
+          "input_tokens": 24883,
+          "pad_tokens": 0,
+          "positions_vs_pad_only": 0.743119,
+          "real_tokens": 20736,
+          "sequences": 81,
+          "tokens_covered": 20736,
+          "tokens_dropped": 4147,
+          "total_positions": 20736,
+          "truncations": 81,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.891736,
+          "input_tokens": 24883,
+          "pad_tokens": 3021,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 24883,
+          "sequences": 109,
+          "tokens_covered": 24883,
+          "tokens_dropped": 0,
+          "total_positions": 27904,
+          "truncations": 109,
+          "utilization": 0.891736
+        },
+        "structure_preserving": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.891736,
+          "input_tokens": 24883,
+          "pad_tokens": 3021,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 24883,
+          "sequences": 109,
+          "tokens_covered": 24883,
+          "tokens_dropped": 0,
+          "total_positions": 27904,
+          "truncations": 109,
+          "utilization": 0.891736
+        }
+      },
+      "input_tokens": 24883,
+      "items": 28,
+      "metric_note": "utilization is fill rate (real / positions emitted); coverage is the fraction of input tokens represented; effective_yield is their product. A policy that truncates can score 100% fill while dropping most of the lane, so fill alone is never reported.",
+      "ranked_by_effective_yield": [
+        "concat_chop",
+        "best_fit",
+        "greedy",
+        "pad_only",
+        "structure_preserving",
+        "long_context"
+      ],
+      "seq_len": 256
+    },
+    "multiling": {
+      "by_policy": {
+        "best_fit": {
+          "boundary_crossings": 10,
+          "coverage": 1.0,
+          "effective_yield": 0.959886,
+          "input_tokens": 6389,
+          "pad_tokens": 267,
+          "positions_vs_pad_only": 0.722222,
+          "real_tokens": 6389,
+          "sequences": 26,
+          "tokens_covered": 6389,
+          "tokens_dropped": 0,
+          "total_positions": 6656,
+          "truncations": 24,
+          "utilization": 0.959886
+        },
+        "concat_chop": {
+          "boundary_crossings": 21,
+          "coverage": 1.0,
+          "effective_yield": 0.998281,
+          "input_tokens": 6389,
+          "pad_tokens": 11,
+          "positions_vs_pad_only": 0.694444,
+          "real_tokens": 6389,
+          "sequences": 25,
+          "tokens_covered": 6389,
+          "tokens_dropped": 0,
+          "total_positions": 6400,
+          "truncations": 39,
+          "utilization": 0.998281
+        },
+        "greedy": {
+          "boundary_crossings": 9,
+          "coverage": 1.0,
+          "effective_yield": 0.924334,
+          "input_tokens": 6389,
+          "pad_tokens": 523,
+          "positions_vs_pad_only": 0.75,
+          "real_tokens": 6389,
+          "sequences": 27,
+          "tokens_covered": 6389,
+          "tokens_dropped": 0,
+          "total_positions": 6912,
+          "truncations": 24,
+          "utilization": 0.924334
+        },
+        "long_context": {
+          "boundary_crossings": 0,
+          "coverage": 0.560964,
+          "effective_yield": 0.560964,
+          "input_tokens": 6389,
+          "pad_tokens": 0,
+          "positions_vs_pad_only": 0.388889,
+          "real_tokens": 3584,
+          "sequences": 14,
+          "tokens_covered": 3584,
+          "tokens_dropped": 2805,
+          "total_positions": 3584,
+          "truncations": 14,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.693251,
+          "input_tokens": 6389,
+          "pad_tokens": 2827,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 6389,
+          "sequences": 36,
+          "tokens_covered": 6389,
+          "tokens_dropped": 0,
+          "total_positions": 9216,
+          "truncations": 24,
+          "utilization": 0.693251
+        },
+        "structure_preserving": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.693251,
+          "input_tokens": 6389,
+          "pad_tokens": 2827,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 6389,
+          "sequences": 36,
+          "tokens_covered": 6389,
+          "tokens_dropped": 0,
+          "total_positions": 9216,
+          "truncations": 24,
+          "utilization": 0.693251
+        }
+      },
+      "input_tokens": 6389,
+      "items": 22,
+      "metric_note": "utilization is fill rate (real / positions emitted); coverage is the fraction of input tokens represented; effective_yield is their product. A policy that truncates can score 100% fill while dropping most of the lane, so fill alone is never reported.",
+      "ranked_by_effective_yield": [
+        "concat_chop",
+        "best_fit",
+        "greedy",
+        "pad_only",
+        "structure_preserving",
+        "long_context"
+      ],
+      "seq_len": 256
+    },
+    "reasoning": {
+      "by_policy": {
+        "best_fit": {
+          "boundary_crossings": 5,
+          "coverage": 1.0,
+          "effective_yield": 0.952344,
+          "input_tokens": 1219,
+          "pad_tokens": 61,
+          "positions_vs_pad_only": 0.5,
+          "real_tokens": 1219,
+          "sequences": 5,
+          "tokens_covered": 1219,
+          "tokens_dropped": 0,
+          "total_positions": 1280,
+          "truncations": 0,
+          "utilization": 0.952344
+        },
+        "concat_chop": {
+          "boundary_crossings": 9,
+          "coverage": 1.0,
+          "effective_yield": 0.952344,
+          "input_tokens": 1219,
+          "pad_tokens": 61,
+          "positions_vs_pad_only": 0.5,
+          "real_tokens": 1219,
+          "sequences": 5,
+          "tokens_covered": 1219,
+          "tokens_dropped": 0,
+          "total_positions": 1280,
+          "truncations": 8,
+          "utilization": 0.952344
+        },
+        "greedy": {
+          "boundary_crossings": 4,
+          "coverage": 1.0,
+          "effective_yield": 0.79362,
+          "input_tokens": 1219,
+          "pad_tokens": 317,
+          "positions_vs_pad_only": 0.6,
+          "real_tokens": 1219,
+          "sequences": 6,
+          "tokens_covered": 1219,
+          "tokens_dropped": 0,
+          "total_positions": 1536,
+          "truncations": 0,
+          "utilization": 0.79362
+        },
+        "long_context": {
+          "boundary_crossings": 0,
+          "coverage": 0.0,
+          "effective_yield": 0.0,
+          "input_tokens": 1219,
+          "pad_tokens": 0,
+          "real_tokens": 0,
+          "sequences": 0,
+          "tokens_dropped": 1219,
+          "total_positions": 0,
+          "truncations": 0,
+          "utilization": 0.0
+        },
+        "pad_only": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.476172,
+          "input_tokens": 1219,
+          "pad_tokens": 1341,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 1219,
+          "sequences": 10,
+          "tokens_covered": 1219,
+          "tokens_dropped": 0,
+          "total_positions": 2560,
+          "truncations": 0,
+          "utilization": 0.476172
+        },
+        "structure_preserving": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.476172,
+          "input_tokens": 1219,
+          "pad_tokens": 1341,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 1219,
+          "sequences": 10,
+          "tokens_covered": 1219,
+          "tokens_dropped": 0,
+          "total_positions": 2560,
+          "truncations": 0,
+          "utilization": 0.476172
+        }
+      },
+      "input_tokens": 1219,
+      "items": 10,
+      "metric_note": "utilization is fill rate (real / positions emitted); coverage is the fraction of input tokens represented; effective_yield is their product. A policy that truncates can score 100% fill while dropping most of the lane, so fill alone is never reported.",
+      "ranked_by_effective_yield": [
+        "best_fit",
+        "concat_chop",
+        "greedy",
+        "pad_only",
+        "structure_preserving",
+        "long_context"
+      ],
+      "seq_len": 256
+    },
+    "web": {
+      "by_policy": {
+        "best_fit": {
+          "boundary_crossings": 6,
+          "coverage": 1.0,
+          "effective_yield": 0.887891,
+          "input_tokens": 6819,
+          "pad_tokens": 861,
+          "positions_vs_pad_only": 0.833333,
+          "real_tokens": 6819,
+          "sequences": 30,
+          "tokens_covered": 6819,
+          "tokens_dropped": 0,
+          "total_positions": 7680,
+          "truncations": 29,
+          "utilization": 0.887891
+        },
+        "concat_chop": {
+          "boundary_crossings": 19,
+          "coverage": 1.0,
+          "effective_yield": 0.986545,
+          "input_tokens": 6819,
+          "pad_tokens": 93,
+          "positions_vs_pad_only": 0.75,
+          "real_tokens": 6819,
+          "sequences": 27,
+          "tokens_covered": 6819,
+          "tokens_dropped": 0,
+          "total_positions": 6912,
+          "truncations": 44,
+          "utilization": 0.986545
+        },
+        "greedy": {
+          "boundary_crossings": 6,
+          "coverage": 1.0,
+          "effective_yield": 0.887891,
+          "input_tokens": 6819,
+          "pad_tokens": 861,
+          "positions_vs_pad_only": 0.833333,
+          "real_tokens": 6819,
+          "sequences": 30,
+          "tokens_covered": 6819,
+          "tokens_dropped": 0,
+          "total_positions": 7680,
+          "truncations": 29,
+          "utilization": 0.887891
+        },
+        "long_context": {
+          "boundary_crossings": 0,
+          "coverage": 0.600675,
+          "effective_yield": 0.600675,
+          "input_tokens": 6819,
+          "pad_tokens": 0,
+          "positions_vs_pad_only": 0.444444,
+          "real_tokens": 4096,
+          "sequences": 16,
+          "tokens_covered": 4096,
+          "tokens_dropped": 2723,
+          "total_positions": 4096,
+          "truncations": 16,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.739909,
+          "input_tokens": 6819,
+          "pad_tokens": 2397,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 6819,
+          "sequences": 36,
+          "tokens_covered": 6819,
+          "tokens_dropped": 0,
+          "total_positions": 9216,
+          "truncations": 29,
+          "utilization": 0.739909
+        },
+        "structure_preserving": {
+          "boundary_crossings": 0,
+          "coverage": 1.0,
+          "effective_yield": 0.739909,
+          "input_tokens": 6819,
+          "pad_tokens": 2397,
+          "positions_vs_pad_only": 1.0,
+          "real_tokens": 6819,
+          "sequences": 36,
+          "tokens_covered": 6819,
+          "tokens_dropped": 0,
+          "total_positions": 9216,
+          "truncations": 29,
+          "utilization": 0.739909
+        }
+      },
+      "input_tokens": 6819,
+      "items": 20,
+      "metric_note": "utilization is fill rate (real / positions emitted); coverage is the fraction of input tokens represented; effective_yield is their product. A policy that truncates can score 100% fill while dropping most of the lane, so fill alone is never reported.",
+      "ranked_by_effective_yield": [
+        "concat_chop",
+        "best_fit",
+        "greedy",
+        "pad_only",
+        "structure_preserving",
+        "long_context"
+      ],
+      "seq_len": 256
+    }
+  },
+  "probe_history": [
+    {
+      "by_lane": {
+        "validation": 9.007152
+      },
+      "global_step": 0,
+      "gradient_bearing": false,
+      "label": "pre-training",
+      "mean_loss": 9.01077389512248,
+      "perplexity": 8190.857687582234,
+      "samples": 12,
+      "tokens": 3026
+    },
+    {
+      "by_lane": {
+        "validation": 6.676946
+      },
+      "global_step": 20,
+      "gradient_bearing": false,
+      "label": "step-20",
+      "mean_loss": 6.710795461146625,
+      "perplexity": 821.2236311927203,
+      "samples": 12,
+      "tokens": 3026
+    },
+    {
+      "by_lane": {
+        "validation": 6.700875
+      },
+      "global_step": 40,
+      "gradient_bearing": false,
+      "label": "step-40",
+      "mean_loss": 6.715729465724141,
+      "perplexity": 825.2855649075184,
+      "samples": 12,
+      "tokens": 3026
+    },
+    {
+      "by_lane": {
+        "validation": 6.117988
+      },
+      "global_step": 60,
+      "gradient_bearing": false,
+      "label": "step-60",
+      "mean_loss": 6.149726176844948,
+      "perplexity": 468.5890586791451,
+      "samples": 12,
+      "tokens": 3026
+    },
+    {
+      "by_lane": {
+        "validation": 5.952441
+      },
+      "global_step": 80,
+      "gradient_bearing": false,
+      "label": "step-80",
+      "mean_loss": 5.985349444624453,
+      "perplexity": 397.5614226808047,
+      "samples": 12,
+      "tokens": 3026
+    },
+    {
+      "by_lane": {
+        "validation": 5.903464
+      },
+      "global_step": 100,
+      "gradient_bearing": false,
+      "label": "step-100",
+      "mean_loss": 5.936951974489322,
+      "perplexity": 378.7786412737796,
+      "samples": 12,
+      "tokens": 3026
+    },
+    {
+      "by_lane": {
+        "validation": 5.890404
+      },
+      "global_step": 120,
+      "gradient_bearing": false,
+      "label": "step-120",
+      "mean_loss": 5.924438980818583,
+      "perplexity": 374.0685168685001,
+      "samples": 12,
+      "tokens": 3026
+    },
+    {
+      "by_lane": {
+        "validation": 5.990224
+      },
+      "global_step": 140,
+      "gradient_bearing": false,
+      "label": "step-140",
+      "mean_loss": 6.024540550095784,
+      "perplexity": 413.4516380622146,
+      "samples": 12,
+      "tokens": 3026
+    },
+    {
+      "by_lane": {
+        "validation": 6.216366
+      },
+      "global_step": 240,
+      "gradient_bearing": false,
+      "label": "final",
+      "mean_loss": 6.2533077182000785,
+      "perplexity": 519.7291020324928,
+      "samples": 12,
+      "tokens": 3026
+    }
+  ],
+  "shards": {
+    "by_lane": {
+      "agentic": {
+        "documents": 8,
+        "shards": 1,
+        "tokens": 1264
+      },
+      "code": {
+        "documents": 59,
+        "shards": 6,
+        "tokens": 25803
+      },
+      "indic": {
+        "documents": 87,
+        "shards": 6,
+        "tokens": 24438
+      },
+      "longctx": {
+        "documents": 28,
+        "shards": 6,
+        "tokens": 24883
+      },
+      "multiling": {
+        "documents": 22,
+        "shards": 2,
+        "tokens": 6389
+      },
+      "reasoning": {
+        "documents": 10,
+        "shards": 1,
+        "tokens": 1219
+      },
+      "web": {
+        "documents": 20,
+        "shards": 2,
+        "tokens": 6819
+      }
+    },
+    "documents": 234,
+    "rejected_at_gate": [],
+    "shards": 24,
+    "tokens": 90815
+  },
+  "tokenizer": {
+    "distinct_pretokens": null,
+    "n_base": 257,
+    "n_merges": 7928,
+    "note": "loaded and verified the committed frozen tokenizer; training is deterministic, so this is the artifact a retrain would have produced",
+    "reused_frozen_artifact": true,
+    "stopped_early": false,
+    "tokenizer_hash": "fc2d3641ba5e32b90436bb56f97f59e6e6fa460bdb83b44bb418331183581e98",
+    "trained_on_documents": 234,
+    "unit_mode": "byte",
+    "vocab_size": 8192
+  }
+}

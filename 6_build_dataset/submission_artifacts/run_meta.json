@@ -1,0 +1,11 @@
+{
+  "dataloader_version": "tdes/1.0.0",
+  "hash_randomization_active": true,
+  "note": "wall-clock and host details live here, never inside a hashed artifact",
+  "platform": "win32",
+  "profile": "torch",
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "run_id": "run-0001",
+  "seed": "tdes-v1",
+  "wall_clock_seconds": 156.759
+}

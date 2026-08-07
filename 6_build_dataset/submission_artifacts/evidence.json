@@ -1,0 +1,193 @@
+{
+  "artifacts_read": {
+    "checkpoints": 13,
+    "consumption.jsonl": 1120,
+    "events.jsonl": 87,
+    "learning_tokens.jsonl": 12000,
+    "manifests": 26,
+    "opus_decisions.jsonl": 64,
+    "run.log": 135
+  },
+  "checks": [
+    {
+      "detail": {
+        "distinct_hashes_across_manifests": 1,
+        "manifests_checked": 24,
+        "tokenizer_hash": "fc2d3641ba5e32b90436bb56f97f59e6e6fa460bdb83b44bb418331183581e98",
+        "vocab_size": 8192
+      },
+      "evidence_label": "Manifest record",
+      "evidence_path": "manifests/",
+      "evidence_pointer": "every manifest's tokenizer_hash field",
+      "key": "tokenizer_integrity",
+      "requirement": "Tokenizer integrity",
+      "result": "PASS"
+    },
+    {
+      "detail": {
+        "block_reasons": [
+          "held-out canary string present in text",
+          "100.0% of 8-grams overlap held-out data (threshold 10%)"
+        ],
+        "blocked_on_probe": true,
+        "gradient_bearing_reads": 0,
+        "heldout_docs_found_in_training_batches": 0,
+        "registered_heldout": 40,
+        "validation_reads": 72
+      },
+      "evidence_label": "Blocked-shard event",
+      "evidence_path": "ledgers/firewall.json",
+      "evidence_pointer": "blocked_probe and leak_scan",
+      "key": "evaluation_firewall",
+      "requirement": "Evaluation firewall",
+      "result": "PASS"
+    },
+    {
+      "detail": {
+        "all_policies_cover_85pct_of_input": true,
+        "lanes_reported": 7,
+        "policies": [
+          "best_fit",
+          "concat_chop",
+          "greedy",
+          "long_context",
+          "pad_only",
+          "structure_preserving"
+        ],
+        "structure_preserving_never_merged_two_documents": true
+      },
+      "evidence_label": "Packed-batch report",
+      "evidence_path": "performance.json",
+      "evidence_pointer": "packing_by_lane",
+      "key": "packing_correctness",
+      "requirement": "Packing correctness",
+      "result": "PASS"
+    },
+    {
+      "detail": {
+        "floor_violations": 0,
+        "max_abs_drift": 0.020879,
+        "protected_floors_held": true,
+        "tolerance": 0.1,
+        "worst_observed_share": {
+          "agentic": 0.01875,
+          "indic": 0.078125,
+          "longctx": 0.01875,
+          "reasoning": 0.046875
+        }
+      },
+      "evidence_label": "Planned versus actual shares",
+      "evidence_path": "performance.json",
+      "evidence_pointer": "mixture_compliance + reports.json floors",
+      "key": "mixture_compliance",
+      "requirement": "Mixture compliance",
+      "result": "PASS"
+    },
+    {
+      "detail": {
+        "decisions": 64,
+        "every_decision_scored": true,
+        "protected_overrides": 9,
+        "rejection_reasons_seen": [
+          "below_threshold",
+          "duplication"
+        ],
+        "statuses_seen": [
+          "accepted",
+          "protected_override",
+          "rejected"
+        ]
+      },
+      "evidence_label": "Candidate decision records",
+      "evidence_path": "ledgers/opus_decisions.jsonl",
+      "evidence_pointer": "one record per candidate",
+      "key": "opus_audit_trail",
+      "requirement": "OPUS audit trail",
+      "result": "PASS"
+    },
+    {
+      "detail": {
+        "actual_batch_id": "49de4eb0d6f96731a4ee69379a6eb3024af7cb5489784b404bac8faba178f389",
+        "expected_batch_id": "49de4eb0d6f96731a4ee69379a6eb3024af7cb5489784b404bac8faba178f389",
+        "integrity_problems": [],
+        "matched": true,
+        "no_repeated_batches": true,
+        "no_skipped_steps": true,
+        "offsets_dense": true,
+        "records_discarded_on_rewind": 76
+      },
+      "evidence_label": "Expected and resumed batch ids",
+      "evidence_path": "ledgers/resume.json",
+      "evidence_pointer": "expected vs actual batch id + ledger integrity",
+      "key": "crash_recovery",
+      "requirement": "Crash recovery",
+      "result": "PASS"
+    },
+    {
+      "detail": {
+        "compared_fields": [
+          "batch_id",
+          "batch_content_hash",
+          "loss_mask_hash",
+          "token_spans",
+          "shard_ids"
+        ],
+        "matched": 40,
+        "mismatches": 0,
+        "range": [
+          40,
+          80
+        ],
+        "steps_compared": 40
+      },
+      "evidence_label": "Original and replay hashes",
+      "evidence_path": "ledgers/replay.json",
+      "evidence_pointer": "per-step hash comparison rows",
+      "key": "replay",
+      "requirement": "Replay",
+      "result": "PASS"
+    },
+    {
+      "detail": {
+        "eos_tracked": true,
+        "shard_report_rows": 24,
+        "steps_recorded": 298,
+        "token_records": 12000,
+        "tokens_linked_to_shard_and_doc": "2000/2000 sampled",
+        "usefulness_classes": [
+          "useful"
+        ]
+      },
+      "evidence_label": "Loss linked to source data",
+      "evidence_path": "ledgers/learning_tokens.jsonl",
+      "evidence_pointer": "per-token records with shard_id + doc_id",
+      "key": "learning_trace",
+      "requirement": "Learning trace",
+      "result": "PASS"
+    },
+    {
+      "detail": {
+        "cache_hit_rate": 0.905546,
+        "formulas_published": true,
+        "packing_utilization": 0.89026,
+        "rate_recomputed_from_raw_counters": true,
+        "raw_tokens_per_second": 13251.214,
+        "useful_loss_bearing_tokens_per_second": 11539.753
+      },
+      "evidence_label": "Performance report",
+      "evidence_path": "performance.json",
+      "evidence_pointer": "rates + raw_counters + formulas",
+      "key": "throughput",
+      "requirement": "Throughput",
+      "result": "PASS"
+    }
+  ],
+  "generated_by": "tdes/evidence.py",
+  "generation_method": "read from submission_artifacts/ on disk; no value in this bundle is taken from the run's in-memory state, so corrupting an artifact flips its row",
+  "summary": {
+    "all_passed": true,
+    "failed": 0,
+    "passed": 9,
+    "total": 9
+  }
+}

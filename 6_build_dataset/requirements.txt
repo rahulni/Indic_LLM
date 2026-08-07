@@ -1,0 +1,10 @@
+# The only runtime dependency.
+#
+# `regex` provides \X (extended grapheme cluster) matching, which the standard
+# library `re` does not. The tokenizer uses it for akshara segmentation; without
+# it an Indic conjunct such as क्ष cannot be treated as one unit.
+#
+# Everything else -- hashing, JSON, threading, the model, the tests -- is stdlib.
+# There is no numpy, no torch, no pytest. `python run_demo.py` runs on a clean
+# Python 3.10+ with only this installed.
+regex>=2023.0.0

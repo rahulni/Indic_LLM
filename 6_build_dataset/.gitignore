@@ -1,0 +1,31 @@
+# Scratch run directories from `run_demo.py --out ...`.
+# submission_artifacts/ itself IS committed: the assignment's submission list
+# includes "generated manifests, ledgers, checkpoints and performance reports".
+/tmp/
+*.tmp
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+.venv-torch/
+
+# Weight blobs, wherever a run put them. MEASURED: one checkpoint of the 14M
+# parameter transformer, with Adam's two moment buffers, is 124MB; five are
+# retained, so committing them would add ~750MB for data that is reproducible in
+# three minutes. The checkpoint *envelope* (ids, ledger offset, scheduler, RNG,
+# dataloader state, and the sha256 of the weights) IS committed, so the
+# "checkpoints tied to ledger offsets" evidence survives without the blob.
+*.weights.pt
+
+# The dependency-free control run (`--profile demo`). Kept out of the repo
+# because it duplicates a data plane the default run already commits, byte for
+# byte -- which is the whole point of the backend-equivalence check. Its
+# evidence and dashboard are committed so the comparison is checkable.
+submission_artifacts_stdlib/*
+!submission_artifacts_stdlib/run.log
+!submission_artifacts_stdlib/evidence.json
+!submission_artifacts_stdlib/evidence.md
+!submission_artifacts_stdlib/performance.json
+!submission_artifacts_stdlib/reports.json
+!submission_artifacts_stdlib/run_meta.json
+!submission_artifacts_stdlib/dashboard.html

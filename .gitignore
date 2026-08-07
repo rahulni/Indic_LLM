@@ -58,3 +58,9 @@ site.fragment.html
 *.tmp
 .DS_Store
 Thumbs.db
+
+# Verbatim course material. The transcripts and the Axiom page are the course's
+# content, not this project's; the notes and summaries derived from them are our
+# own writing and stay. This repository is public.
+*Transcript.docx
+*Transcript.txt

@@ -1,0 +1,25 @@
+{
+  "examined": 12,
+  "keep_last": 3,
+  "kept": [
+    40,
+    80,
+    200,
+    220,
+    240
+  ],
+  "protected_by_fork_or_replay": [
+    40,
+    80
+  ],
+  "removed": [
+    20,
+    60,
+    100,
+    120,
+    140,
+    160,
+    180
+  ],
+  "why": "a full checkpoint directory is how real runs crash at save time"
+}

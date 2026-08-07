@@ -1,0 +1,91 @@
+name: TDES demo
+
+# The submission's central claim is that a grader can regenerate every artifact
+# on their machine. This proves it on Linux, from a Windows-authored repo, which
+# is exactly the cross-platform hash path that .gitattributes exists to protect.
+
+on:
+  push:
+    paths: ['6_build_dataset/**']
+  pull_request:
+    paths: ['6_build_dataset/**']
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: 6_build_dataset
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install (regex is the only dependency)
+        run: python -m pip install --quiet -r requirements.txt
+
+      # Every step below uses --profile fast, never the default. The default
+      # profile is the transformer, and GitHub's runners have no GPU and no
+      # PyTorch. `fast` drives the identical pipeline with the stdlib model, so
+      # what CI proves -- that the artifacts reproduce byte-for-byte on Linux from
+      # a Windows-authored repo -- is exactly the claim that needs proving. The
+      # torch suite is listed and skips itself cleanly when torch is absent.
+      - name: Invariant tests (excludes the demo-running evidence suite)
+        run: |
+          python -m unittest tests.test_invariants tests.test_recovery \
+                             tests.test_torch_backend -v
+
+      - name: Run the demo
+        run: python run_demo.py --profile fast --out /tmp/a
+
+      - name: Determinism -- two runs must agree
+        run: |
+          python run_demo.py --profile fast --out /tmp/b
+          python tools/compare_runs.py /tmp/a /tmp/b
+
+      - name: Determinism under hash randomization
+        run: |
+          PYTHONHASHSEED=1 python run_demo.py --profile fast --out /tmp/h1
+          PYTHONHASHSEED=9 python run_demo.py --profile fast --out /tmp/h9
+          python tools/compare_runs.py /tmp/h1 /tmp/h9
+
+      - name: Evidence must be earned
+        run: python -m unittest tests.test_evidence -v
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: submission-artifacts
+          path: 6_build_dataset/submission_artifacts/
+
+  # The transformer backend, on CPU. No GPU runner is needed: the properties
+  # worth testing -- document masking, packed-vs-unpacked equivalence, the loss
+  # mask, gradcheck -- are all device-independent. This job exists so the backend
+  # cannot rot silently while only the stdlib path is exercised.
+  torch-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install CPU-only torch
+        run: |
+          python -m pip install --quiet -r requirements.txt
+          python -m pip install --quiet torch \
+            --index-url https://download.pytorch.org/whl/cpu
+
+      - name: Backend tests, including the packing-equivalence gate
+        run: python -m unittest tests.test_torch_backend -v
+
+      - name: The two backends must produce the same data plane
+        run: |
+          python run_demo.py --profile fast --out /tmp/stdlib
+          python run_demo.py --profile fast --backend torch --out /tmp/torch
+          python tools/compare_runs.py /tmp/stdlib /tmp/torch

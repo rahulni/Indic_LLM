@@ -1,0 +1,431 @@
+{
+  "largest_loss_spike": {
+    "at_step": 80,
+    "delta": 1.418938,
+    "loss_after": 6.316085,
+    "loss_before": 4.897147,
+    "opus_decisions_before": [
+      {
+        "candidate_id": "cand-s0080-11",
+        "lane": "web",
+        "opus_score": 0.11838896,
+        "rejection_reason": "duplication",
+        "status": "rejected"
+      },
+      {
+        "candidate_id": "cand-s0080-05",
+        "lane": "reasoning",
+        "opus_score": 0.11260925,
+        "rejection_reason": null,
+        "status": "protected_override"
+      },
+      {
+        "candidate_id": "cand-s0080-08",
+        "lane": "web",
+        "opus_score": 0.1083201,
+        "rejection_reason": "duplication",
+        "status": "rejected"
+      },
+      {
+        "candidate_id": "cand-s0080-09",
+        "lane": "web",
+        "opus_score": 0.0081194,
+        "rejection_reason": "duplication",
+        "status": "rejected"
+      },
+      {
+        "candidate_id": "cand-s0080-02",
+        "lane": "indic",
+        "opus_score": -0.11966732,
+        "rejection_reason": null,
+        "status": "protected_override"
+      },
+      {
+        "candidate_id": "cand-s0080-04",
+        "lane": "multiling",
+        "opus_score": -0.12369257,
+        "rejection_reason": "duplication",
+        "status": "rejected"
+      },
+      {
+        "candidate_id": "cand-s0080-03",
+        "lane": "indic",
+        "opus_score": -0.24085241,
+        "rejection_reason": null,
+        "status": "protected_override"
+      },
+      {
+        "candidate_id": "cand-s0080-15",
+        "lane": "web",
+        "opus_score": -0.36996188,
+        "rejection_reason": "duplication",
+        "status": "rejected"
+      }
+    ]
+  },
+  "lineage_note": "every shard above resolves through its manifest to content_sha256, document ids and the cleaning pipeline hash that produced it",
+  "records_in_window": 1120,
+  "shard_count_in_window": 24,
+  "shards_influencing_window": [
+    {
+      "capability_lane": "web",
+      "content_sha256": "73ba2b4f0a6c23987b518096e860f6b1d44b8b099ee88a5f5a1bb66846a2d28a",
+      "document_ids": [
+        "eng_en_0001",
+        "eng_en_0007",
+        "eng_en_0011",
+        "eng_en_0012",
+        "eng_en_0014"
+      ],
+      "microbatches": 697,
+      "shard_id": "web_0000",
+      "step_count": 239,
+      "tokens": 347319
+    },
+    {
+      "capability_lane": "web",
+      "content_sha256": "42354e08396cc6a56ffab0bdd839b0e3e95ba4137c1896ee10c6364297732ef7",
+      "document_ids": [
+        "eng_en_0024",
+        "eng_en_0025",
+        "eng_en_0026",
+        "eng_en_0027",
+        "eng_en_0028"
+      ],
+      "microbatches": 564,
+      "shard_id": "web_0001",
+      "step_count": 238,
+      "tokens": 252472
+    },
+    {
+      "capability_lane": "reasoning",
+      "content_sha256": "423053256ee0705f7c5a959e6c44837935b76a8d029e9a99e9e1280a82e8dbed",
+      "document_ids": [
+        "reasoning_0000",
+        "reasoning_0001",
+        "reasoning_0002",
+        "reasoning_0003",
+        "reasoning_0004"
+      ],
+      "microbatches": 345,
+      "shard_id": "reasoning_0000",
+      "step_count": 218,
+      "tokens": 107671
+    },
+    {
+      "capability_lane": "code",
+      "content_sha256": "252109fe7f9de112be4e19fb949efaa00c75f532252d23f4887a17935a4acecc",
+      "document_ids": [
+        "code_audit__header",
+        "code_bpe__00_def_to_units_pt__str__mode__str____char",
+        "code_bpe__01_def__char_class_ch__str_____str",
+        "code_bpe__02_def_pretokenize_text__str__lowercase__bo",
+        "code_bpe__03_class_BPETokenizer"
+      ],
+      "microbatches": 226,
+      "shard_id": "code_0002",
+      "step_count": 161,
+      "tokens": 59637
+    },
+    {
+      "capability_lane": "code",
+      "content_sha256": "644d6eba14bdf7b70999f75da92c2c46a46bd1e0b86744d84bee96f552815283",
+      "document_ids": [
+        "code_audit__13_def_proxy_pools_audited__budget",
+        "code_audit__15_def_count_4digit_digitsum_target_20",
+        "code_audit__16_def_band_tables_phases",
+        "code_audit__17_def_manufacturing_table_audited",
+        "code_audit__19_def_proxy_cost_budget"
+      ],
+      "microbatches": 202,
+      "shard_id": "code_0001",
+      "step_count": 128,
+      "tokens": 53321
+    },
+    {
+      "capability_lane": "code",
+      "content_sha256": "014b0c96df039bb453dae074119ad4d5affcd709f36792df84b5fc352cf5945c",
+      "document_ids": [
+        "code_stage2_normalize__header",
+        "code_stage5_dedup__00_def_word_shingles_text__str__k__int___SH",
+        "code_stage5_dedup__02_def_threshold_sensitivity_probe______lis",
+        "code_stage5_dedup__03_def_natural_threshold_probe_near_pairs",
+        "code_stage5_dedup__04_def_dedup_pass_docs__list_dict______dict"
+      ],
+      "microbatches": 172,
+      "shard_id": "code_0003",
+      "step_count": 126,
+      "tokens": 45862
+    },
+    {
+      "capability_lane": "code",
+      "content_sha256": "970d9c43c2094a12c28be1822d6cc0c6c4652b298b937d207db27a9bbe66e524",
+      "document_ids": [
+        "code_stage8_manifest__03_def_run_input_path__str__timestamp_overr",
+        "code_stage8_manifest__header",
+        "code_train__00_class_Block_nn_Module",
+        "code_train__01_class_GPT_nn_Module",
+        "code_train__03_def_phase_at_frac"
+      ],
+      "microbatches": 170,
+      "shard_id": "code_0005",
+      "step_count": 121,
+      "tokens": 43456
+    },
+    {
+      "capability_lane": "agentic",
+      "content_sha256": "9b3f66c063d8e9e7921f4fb91aea4676c38d4307f8455b6988d0e71f0787bf86",
+      "document_ids": [
+        "agentic_0001",
+        "agentic_0003",
+        "agentic_0004",
+        "agentic_0005",
+        "agentic_0006"
+      ],
+      "microbatches": 143,
+      "shard_id": "agentic_0000",
+      "step_count": 121,
+      "tokens": 35304
+    },
+    {
+      "capability_lane": "code",
+      "content_sha256": "6af65b570ae1530ff6a91add87671a123e01ddc0274ae3d97710daaa9d7b6d44",
+      "document_ids": [
+        "code_audit__01_def_effective_multiplier_epochs",
+        "code_audit__03_def_phase_table_budget",
+        "code_audit__04_def_lane_selector_multiplier_lane_id__la",
+        "code_audit__05_def_lane_table_phases__budget",
+        "code_audit__06_def_resolve_units_item"
+      ],
+      "microbatches": 156,
+      "shard_id": "code_0000",
+      "step_count": 120,
+      "tokens": 40441
+    },
+    {
+      "capability_lane": "code",
+      "content_sha256": "e6cc3561fe8451bf4f43f619b47b2add26b6dd50baedbe6a6478233d99fbb115",
+      "document_ids": [
+        "code_stage5_dedup__header",
+        "code_stage6_pii__02_def_redact_text__str__ner_names__list_st",
+        "code_stage6_pii__03_def_run_input_path__str_____dict",
+        "code_stage6_pii__header",
+        "code_stage8_manifest__00_def_license_status_license_value__str"
+      ],
+      "microbatches": 156,
+      "shard_id": "code_0004",
+      "step_count": 114,
+      "tokens": 41732
+    },
+    {
+      "capability_lane": "multiling",
+      "content_sha256": "96ed02c34b2b53df08325c2db1cfc3c1e8f8bf86b30a1c3e2029850a85f229e0",
+      "document_ids": [
+        "spa_es_0001",
+        "spa_es_0009",
+        "spa_es_0011",
+        "spa_es_0012",
+        "spa_es_0013"
+      ],
+      "microbatches": 120,
+      "shard_id": "multiling_0000",
+      "step_count": 101,
+      "tokens": 29390
+    },
+    {
+      "capability_lane": "indic",
+      "content_sha256": "c86025548b46c6c72aa867fa537624e8cfea6a3db01d9ecad36a06cb85bffaea",
+      "document_ids": [
+        "tel_te_0005",
+        "tel_te_0006",
+        "tel_te_0007",
+        "tel_te_0008",
+        "tel_te_0010"
+      ],
+      "microbatches": 99,
+      "shard_id": "indic_0005",
+      "step_count": 82,
+      "tokens": 21475
+    },
+    {
+      "capability_lane": "indic",
+      "content_sha256": "113767cec34dc115115340653f1d5546736ee16758b2c5e04c30ae064b49874c",
+      "document_ids": [
+        "kan_kn_0008",
+        "kan_kn_0009",
+        "kan_kn_0010",
+        "kan_kn_0011",
+        "kan_kn_0012"
+      ],
+      "microbatches": 92,
+      "shard_id": "indic_0002",
+      "step_count": 73,
+      "tokens": 20991
+    },
+    {
+      "capability_lane": "indic",
+      "content_sha256": "9de01ccad5c100c625cdf1911f720a3b93260999878a7a7dcc2a28b7770e994c",
+      "document_ids": [
+        "hin_hi_0021",
+        "hin_hi_0022",
+        "hin_hi_0023",
+        "hin_hi_0024",
+        "hin_hi_0025"
+      ],
+      "microbatches": 84,
+      "shard_id": "indic_0001",
+      "step_count": 73,
+      "tokens": 18230
+    },
+    {
+      "capability_lane": "indic",
+      "content_sha256": "75aba0b51a35ab8fbffbbf679e60fd41d85073244e694b8dfc904b6eeb93f668",
+      "document_ids": [
+        "mar_mr_0016",
+        "mar_mr_0018",
+        "mar_mr_0019",
+        "mar_mr_0020",
+        "mar_mr_0021"
+      ],
+      "microbatches": 90,
+      "shard_id": "indic_0003",
+      "step_count": 70,
+      "tokens": 21221
+    },
+    {
+      "capability_lane": "indic",
+      "content_sha256": "b781d208b8977f767b7da65495a127febf7f9ebd3f6da0459865021e89bd047f",
+      "document_ids": [
+        "nep_ne_0004",
+        "nep_ne_0005",
+        "nep_ne_0006",
+        "nep_ne_0007",
+        "nep_ne_0008"
+      ],
+      "microbatches": 83,
+      "shard_id": "indic_0004",
+      "step_count": 69,
+      "tokens": 19340
+    },
+    {
+      "capability_lane": "multiling",
+      "content_sha256": "4b1853f9c2bbd7603de988624434480d474cfd4f5fc74a1c9b21fc54d9cf7671",
+      "document_ids": [
+        "spa_es_0023",
+        "spa_es_0024",
+        "spa_es_0026",
+        "spa_es_0027",
+        "spa_es_0028"
+      ],
+      "microbatches": 64,
+      "shard_id": "multiling_0001",
+      "step_count": 53,
+      "tokens": 15654
+    },
+    {
+      "capability_lane": "indic",
+      "content_sha256": "c3165b451a7e83adbcafab80cb06044b0724ef5f394299278724a8b86b6c6421",
+      "document_ids": [
+        "hin_hi_0001",
+        "hin_hi_0003",
+        "hin_hi_0004",
+        "hin_hi_0005",
+        "hin_hi_0007"
+      ],
+      "microbatches": 68,
+      "shard_id": "indic_0000",
+      "step_count": 53,
+      "tokens": 17900
+    },
+    {
+      "capability_lane": "longctx",
+      "content_sha256": "7a7640dcd9f37eded6a4cf9765b615b26f737df2c5c4e6cc49e84d0d54f0f16d",
+      "document_ids": [
+        "hin_hi_0002",
+        "hin_hi_0006",
+        "hin_hi_0010",
+        "hin_hi_0011",
+        "hin_hi_0015"
+      ],
+      "microbatches": 30,
+      "shard_id": "longctx_0002",
+      "step_count": 26,
+      "tokens": 8770
+    },
+    {
+      "capability_lane": "longctx",
+      "content_sha256": "4edaf0b0b2a527cc4974e8fe36e7d269f4832c031bf6fe4a5976237d142d891c",
+      "document_ids": [
+        "spa_es_0005",
+        "spa_es_0006",
+        "spa_es_0007",
+        "spa_es_0008",
+        "spa_es_0010"
+      ],
+      "microbatches": 26,
+      "shard_id": "longctx_0004",
+      "step_count": 24,
+      "tokens": 8090
+    },
+    {
+      "capability_lane": "longctx",
+      "content_sha256": "845d63898e93da697aa39ce82e942fb7aca2045e867de8de880c3ce99c3557d2",
+      "document_ids": [
+        "hin_hi_0030",
+        "mar_mr_0004",
+        "mar_mr_0026",
+        "spa_es_0000",
+        "spa_es_0004"
+      ],
+      "microbatches": 24,
+      "shard_id": "longctx_0003",
+      "step_count": 21,
+      "tokens": 7971
+    },
+    {
+      "capability_lane": "longctx",
+      "content_sha256": "0a7ea70f858c810c369af0a74222a2cb3b573fcdceac61e43cfb5edc5faac6c8",
+      "document_ids": [
+        "eng_en_0002",
+        "eng_en_0003",
+        "eng_en_0004",
+        "eng_en_0005",
+        "eng_en_0006"
+      ],
+      "microbatches": 22,
+      "shard_id": "longctx_0000",
+      "step_count": 21,
+      "tokens": 7040
+    },
+    {
+      "capability_lane": "longctx",
+      "content_sha256": "3b9fd29dea8bdb96255c94e965c7347a89262ac8e99aeb6b5d5764bae90ca81f",
+      "document_ids": [
+        "eng_en_0009",
+        "eng_en_0010",
+        "eng_en_0013",
+        "eng_en_0022",
+        "hin_hi_0000"
+      ],
+      "microbatches": 24,
+      "shard_id": "longctx_0001",
+      "step_count": 20,
+      "tokens": 7138
+    },
+    {
+      "capability_lane": "longctx",
+      "content_sha256": "23d0afd070e7a2719a7fee6731a807afac4a315856320ff17d567368d95570ef",
+      "document_ids": [
+        "spa_es_0015",
+        "spa_es_0016",
+        "spa_es_0031"
+      ],
+      "microbatches": 12,
+      "shard_id": "longctx_0005",
+      "step_count": 11,
+      "tokens": 4264
+    }
+  ],
+  "token_window": null,
+  "total_loss_bearing_tokens": 1235947
+}

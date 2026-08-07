@@ -1,0 +1,104 @@
+{
+  "capability_lane": "code",
+  "cleaning_pipeline_hash": "853f8093dde6da6ae76f34ef111dd6d72b125e877169da8c6098b029319e40a8",
+  "cleaning_pipeline_per_file": {
+    "__init__.py": "965581adff29ab541d31800b86b554d052ed552a278724cd95478b5bfca283a3",
+    "batching.py": "52dca33ec9f8677e206ecfbc207e92e2ac98a44df93969675152a8e70633e71f",
+    "checkpoint.py": "1be1f54cb05e24c14f70acb7dbbd444d8fd4d38a3597379a9452a04f93226cef",
+    "config.py": "427f1d1b566b6f5db9fab4faf8f7cadb93c1ea5a7cfee6fa34d8b72c8a54cd5e",
+    "corpus.py": "7f249295534a6170765fcb4a3c802d55186c11b3e986a11874b0fe5c17f41743",
+    "cost.py": "9fbadadd02c3d506c57c64c6859ea8e3b1f4eabf74958b350bd050c7e4552e36",
+    "dedup.py": "84c6ea00c2da0e9510d66c29f6f6aaf5f5b9a2d0ba26c59993f6eb9dedd7ddb9",
+    "determinism.py": "caf9cf7a395b59ed95ae12d99f6f319bd4a5aa24dd1bfa52d6e9843830c827a8",
+    "evidence.py": "cdb5fd3579004b8bd7258152db91250ea556f661a5ec7c4e13ba1305c8c0177d",
+    "firewall.py": "6ba92b6d76d24779047eb7c05b0a14d7713daeca355d7e43267f1bbe00aae648",
+    "hashing.py": "f0d3fc9ed500ba31cdd062c54a13783e2eb1a7814dd7faf0361c46096a26de03",
+    "ledger/__init__.py": "73fcf7d5c50925060cf49aabe6f2278367d523496af5ebcb3b77d38965498857",
+    "ledger/consumption.py": "07706098b12784d1f2b88bc7c492d26736fe758deff944a8608512acb9d3f737",
+    "ledger/learning.py": "409d614036d465309153c2458d882bc4d721f85c3b3b3b915f1363079af87c3e",
+    "ledger/offsets.py": "5843990bbae2fb633680792b659ab0e6a35f4420fdbf1b259a96545e38140cdf",
+    "lm.py": "a8725435f32e339da8cf06f2d92a3472e79d1223238e1b91e13c3ecc9842f4a8",
+    "loader.py": "7a67e55f8bb921c910cd6227ec979073521e6ab75697b4d5f205a3cb18af5c23",
+    "logging_.py": "28edaedb0213e8660413f6dce1fc9b637718cf6c97ce1163a7f7ac722b343f12",
+    "manifest.py": "e3266358c8fcd5d59839f37b198e543dd584f7bfe4b5657cea47258dba2acf5b",
+    "masks.py": "d11a53f128ee8d9ee9b6b868ba30f9ce52e1fece30ab2bf018f05c6a87d3899d",
+    "mixture.py": "6a756343bceefb87590dda5732887c2edf2a4237a6cbcad2741e88938b8438cf",
+    "model.py": "c98168aea98c43602c38a81f59ba46548e04f8e2afd279b979d32fa00af0c87e",
+    "model_torch.py": "2175ebb91d9a886cb54210dcaa582d3d92d5acd6d1d411e6a963b12568e29acf",
+    "opus.py": "0fcc0f5c8bd3ec68e06bdd980b6f2df469287aa1dfa5fd7b84447bb00bf112c2",
+    "orchestrator.py": "36016b56c15e549c1829eb61780b770fdab05c92293de2e96e99418cd56dd927",
+    "packing.py": "9f28b43888b4a431107fd426bc3660af9eafd8c4c00da2591935aa656488c0df",
+    "perf.py": "68728389d5564a5cb7bd0b4999f904e0dd40164c2981894ffe7bf474884c34f7",
+    "pii.py": "199aa64a21492b693d18dcf653407494e89c6fd6015e2e9f142f3734cf534f71",
+    "pipeline.py": "48a837c1210e2b4aac35511361f80daf90e44bba8f89c8fee818ca31b42b7ba9",
+    "scarcity.py": "b0d5a9d21604e1ea04d9c73e0e7eda87fcaba33efb484604885751245a363153",
+    "shards.py": "2aadf77f5dd7e31de7f83559689a84139d7b2d82f68b72ebb55ff3edb1612e1d",
+    "tokenizer/__init__.py": "d2dc7e7cae22a1f38225d3887b818602064ec8b147144eeef03101f3b8ce0a7d",
+    "tokenizer/bpe.py": "701e544d992b35783036bf6335050ec73d6f409cf65e440875850aad9ada5fc7",
+    "tokenizer/frozen.py": "79b473c567ab5bbd889224be232b40618e11f044c0f49bbacef795665d875113",
+    "trainer.py": "ac0ade2d0d8d3551279761edf78b6aa1043dbb8eedd7e8e47707facfedcf28ed"
+  },
+  "contamination_status": "CLEAN",
+  "content_sha256": "252109fe7f9de112be4e19fb949efaa00c75f532252d23f4887a17935a4acecc",
+  "curriculum_stage": "A",
+  "dedup_status": {
+    "exact_removed": 0,
+    "method": "sha256 exact, then MinHash-LSH over character 5-gram shingles",
+    "near_removed": 0,
+    "status": "DEDUPLICATED"
+  },
+  "document_count": 15,
+  "document_ids": [
+    "code_audit__header",
+    "code_bpe__00_def_to_units_pt__str__mode__str____char",
+    "code_bpe__01_def__char_class_ch__str_____str",
+    "code_bpe__02_def_pretokenize_text__str__lowercase__bo",
+    "code_bpe__03_class_BPETokenizer",
+    "code_bpe__header",
+    "code_common__01_def_write_jsonl_path__str__docs__Iterabl",
+    "code_common__02_def_write_json_path__str__obj__Any_____N",
+    "code_common__04_def_sha256_file_path__str_____str",
+    "code_common__06_class_StageTimer",
+    "code_common__07_def_make_report",
+    "code_common__08_def_set_context_corpus_id__str__work_dir",
+    "code_stage2_normalize__00_def__canon_role_raw__str_____str",
+    "code_stage2_normalize__01_def_unify_ghost_tags_text__str_____tuple",
+    "code_stage2_normalize__02_def_normalize_text_text__str__protect_co"
+  ],
+  "epoch_count": 0.0,
+  "eval_overlap_detail": {
+    "checked_against": 40
+  },
+  "eval_overlap_status": "CLEAN",
+  "indic_tier_breakdown": {},
+  "language_breakdown": {
+    "python": 15
+  },
+  "license": "course-work (author-retained)",
+  "license_breakdown": {
+    "course-work (author-retained)": 15
+  },
+  "manifest_sha256": "6638a3af3820dbd98b978c2c4b21d5564ca53f6af79d7fd5bf582e7358e603b0",
+  "never_train": false,
+  "parent_shard_ids": [],
+  "pii_status": {
+    "documents_redacted": 0,
+    "matches_by_category": {},
+    "method": "regex pattern screen with in-place redaction",
+    "status": "SCREENED"
+  },
+  "provenance_tier": "vendored-corpus",
+  "script_breakdown": {
+    "Latin": 15
+  },
+  "shard_id": "code_0002",
+  "source_ids": [
+    "2_token/bpe.py",
+    "4_model_data/assignment/pipeline/common.py",
+    "4_model_data/assignment/pipeline/stage2_normalize.py",
+    "5_data_mixture_curriculum/plan/audit.py"
+  ],
+  "spans_sha256": "e0c4e72bb87c5628c46f5fb039595cf7850c7e49d14113ecef3edd281d132b51",
+  "token_count": 4734,
+  "tokenizer_hash": "fc2d3641ba5e32b90436bb56f97f59e6e6fa460bdb83b44bb418331183581e98"
+}

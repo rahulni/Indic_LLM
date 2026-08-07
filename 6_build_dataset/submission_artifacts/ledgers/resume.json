@@ -1,0 +1,29 @@
+{
+  "actual_batch_id": "49de4eb0d6f96731a4ee69379a6eb3024af7cb5489784b404bac8faba178f389",
+  "checkpoint_id": "04c5456454d182088b520fd19941b050800082d066bdd3363333549f699fcb4c",
+  "crash_at_step": 158,
+  "crashed": true,
+  "expected_batch_id": "49de4eb0d6f96731a4ee69379a6eb3024af7cb5489784b404bac8faba178f389",
+  "expected_next_batch_id_recorded_before_crash": "bee54273cfd5005aad745b3f7dc288a7c18a5899ea2741c31ea6d266f22f4e01",
+  "integrity": {
+    "branch_id": "main",
+    "no_repeated_batches": true,
+    "no_skipped_steps": true,
+    "offsets_dense": true,
+    "ok": true,
+    "problems": [],
+    "records": 560,
+    "step_range": [
+      0,
+      139
+    ],
+    "steps": 140,
+    "unique_batch_ids": 140
+  },
+  "ledger_offset": 560,
+  "matched": true,
+  "records_discarded": 76,
+  "resume_seconds": 0.4316,
+  "resumed_at_step": 140,
+  "torn_tail_repaired": false
+}

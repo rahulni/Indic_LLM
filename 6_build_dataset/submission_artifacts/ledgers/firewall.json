@@ -1,0 +1,1041 @@
+{
+  "access_log": [
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_agentic_0000",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_code_train__02_class_Lanes",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0008",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_eng_en_0032",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    }
+  ],
+  "blocked_probe": {
+    "blocked": true,
+    "doc_id": "eval_agentic_0002",
+    "matched_heldout": [
+      "eval_agentic_0002",
+      "eval_tel_te_0022"
+    ],
+    "reasons": [
+      "held-out canary string present in text",
+      "100.0% of 8-grams overlap held-out data (threshold 10%)"
+    ]
+  },
+  "leak_scan": {
+    "doc_ids": [],
+    "heldout_docs_in_batches": 0
+  },
+  "records": [
+    {
+      "benchmark_id": "demo-bench-agentic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "d8c61965f11144be8f82edff5d6687de65319a0f79a90969fe9bfc702d8f831c",
+      "doc_id": "eval_agentic_0002",
+      "gradient_bearing_allowed": false,
+      "lane": "agentic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-code",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "287f72279055941a80d1d680984327546399243eb65ea7ad3b14a1ba2fe4213a",
+      "doc_id": "eval_code_audit__14_def_anneal_table_phases__lanes",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-code",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "e12735c001b44e14f9d9f1ea5403862826ed09d417b17772cc3dac235fed952c",
+      "doc_id": "eval_code_common__00_def_read_jsonl_path__str_____list_dict",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-code",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "c4a94c6168901fd4cffc372083448db3fa004f8dc27caf6bdb2c1eedc4a6dda4",
+      "doc_id": "eval_code_common__header",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-code",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "5fed2a71d128b159e1a02998b3586231d99308f33a09f55be4a4dbc3791b8a4f",
+      "doc_id": "eval_code_stage2_normalize__03_def_run_input_path__str_____dict",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-code",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "1cc998fd1a5624ca015096d8dd92b45219851c438f6b5ad536beaf241dd8f3d3",
+      "doc_id": "eval_code_train__08_def_main",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-longctx",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "5ed152abb7a030bfe8544a24b08b65e41a952234bcce30d133f5c1fc07c10447",
+      "doc_id": "eval_eng_en_0000",
+      "gradient_bearing_allowed": false,
+      "lane": "longctx",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-web",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "dca5f6c24a5b58da9efbeb0076d2dd2e8c8588db384af5365e3dba125e244625",
+      "doc_id": "eval_eng_en_0023",
+      "gradient_bearing_allowed": false,
+      "lane": "web",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-indic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "5cbcb18d01ee30f5a9d265d9a236ef27bcb88103b16925ee145cb71d0226478a",
+      "doc_id": "eval_hin_hi_0026",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-indic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "bbf38a391cf8e93d701769686c03ba0f6c6ad4f0c552ab946a56a7ebd5f6bece",
+      "doc_id": "eval_hin_hi_0028",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-indic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "f827b685e495d6195f747826135939bdca30e699a055590e3b2602bde76067db",
+      "doc_id": "eval_kan_kn_0000",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-indic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "20549c6bec800c152a5a23e1b6f354aba36e752df58a546c89a4071f7bc49e14",
+      "doc_id": "eval_mar_mr_0003",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-indic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "f87ca53a4213b4aef7d01a21e90e091503baeee324454e58640968aee0ab61df",
+      "doc_id": "eval_mar_mr_0017",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-indic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "c8b23aed4ba824b63b9c13103231a3f1453e133af9e044f2a5d68a4ac6f23172",
+      "doc_id": "eval_mar_mr_0030",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-reasoning",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "cdf046d598b48c5247322e4b27728829e82c12eac3566246fa1c2946a0a32d17",
+      "doc_id": "eval_reasoning_0011",
+      "gradient_bearing_allowed": false,
+      "lane": "reasoning",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-longctx",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "0701a98f729d5e5a56e630e44a3185b60a07a44f56f5542bc2b86e74430f36aa",
+      "doc_id": "eval_spa_es_0003",
+      "gradient_bearing_allowed": false,
+      "lane": "longctx",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-multiling",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "fb2dc2a659701b019058dea369296308fd19d3fb6bd8ac646f8ddac375f5cafd",
+      "doc_id": "eval_spa_es_0025",
+      "gradient_bearing_allowed": false,
+      "lane": "multiling",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-multiling",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "efd484fb66093838efb47467d1c79b9bfbac77e4f8b6392a0990982905280316",
+      "doc_id": "eval_spa_es_0035",
+      "gradient_bearing_allowed": false,
+      "lane": "multiling",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-indic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "810a02d4405673fc971d1c6f4d5d4ad9ce3163df43ee9bdf2eaf6e4c744e3a18",
+      "doc_id": "eval_tel_te_0018",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-bench-indic",
+      "canary": "ZZQX-EVAL-CANARY-7F3A9C21-DO-NOT-TRAIN",
+      "content_sha256": "024a2e2fcdfb905ab4aef203b2cf7fe600cdf5a1084bec47c8d5502e4289bc62",
+      "doc_id": "eval_tel_te_0022",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": false,
+      "split": "eval",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-agentic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "ba4816f2ad9c85d84d48196136bca2d22668c3a23781528e54598c44ff3477e5",
+      "doc_id": "val_agentic_0000",
+      "gradient_bearing_allowed": false,
+      "lane": "agentic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-code",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "8818ac4158af68fb4b5c4924f04538b901837064e18de96a5aef210e520029d0",
+      "doc_id": "val_code_audit__02_def__check_cond__msg",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-code",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "bf31b15ea0a7cf887efa0dcf99bf35432458ea53029fc0d75ddd93505104bf2a",
+      "doc_id": "val_code_stage5_dedup__01_def_build_minhash_shingles__set_str",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-code",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "87266100cf78168e4273dce2a826c8c0b6ff18d2c0a5e9cbd791204168e095a0",
+      "doc_id": "val_code_stage6_pii__00_def_get_ner_pipeline",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-code",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "35d987302575ce44231e47e36e9ed115f73ce4a703234484f89b6521fa3ce717",
+      "doc_id": "val_code_stage6_pii__01_def_ner_person_names_batch_texts__list_s",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-code",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "f3fc29794ca7c72a1f427641daa040e89ca44c73c731b6f9ded5d8a61f36e9bc",
+      "doc_id": "val_code_train__02_class_Lanes",
+      "gradient_bearing_allowed": false,
+      "lane": "code",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-longctx",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "cc388231c1ebc02dc1b191692516e80db3bb19399d54af1f7e64e3f43914a38b",
+      "doc_id": "val_eng_en_0008",
+      "gradient_bearing_allowed": false,
+      "lane": "longctx",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-web",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "e0c6fbcd133a2b5e356eb22d2a34d6e6e1b06078f83e65b8f6f8ba4a97a6c05b",
+      "doc_id": "val_eng_en_0032",
+      "gradient_bearing_allowed": false,
+      "lane": "web",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-indic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "8d2d05a61560630887ef231093fefd02b8040d9421ca49d454ec21ce730c1abc",
+      "doc_id": "val_hin_hi_0008",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-indic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "16a80328236da246c356758285b7ee19c05d3e56bd03962073778c09cf8947de",
+      "doc_id": "val_hin_hi_0029",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-indic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "9cb2b62b7d74e12912afa3aea8160ebc2c8382cf4243f26a234a77a0db184256",
+      "doc_id": "val_kan_kn_0002",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-indic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "735d1ea6d5e1dcf90fc194621b8834848cacd193af85426dda1c80811f002717",
+      "doc_id": "val_mar_mr_0000",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-longctx",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "23c18562a00427e3d4fa61af10184f493daf77d96de244cfe88a98232126050e",
+      "doc_id": "val_mar_mr_0006",
+      "gradient_bearing_allowed": false,
+      "lane": "longctx",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-indic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "8547698854cb2eb7126957dc0ddf3c5d4f6d6587e1597fad9c5e6fcc3f049a6d",
+      "doc_id": "val_mar_mr_0014",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-indic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "42ce0d7664e7a5ed8ba3c43179a89f02f6643de9c6b0df46729f1da313746f9a",
+      "doc_id": "val_mar_mr_0025",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-reasoning",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "5d6f4254bb56537223c558b7e0609c883e8906299cc89abd82fba15a9008a013",
+      "doc_id": "val_reasoning_0006",
+      "gradient_bearing_allowed": false,
+      "lane": "reasoning",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-multiling",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "df094138e5a14456e9a04281ec506af143c192f61d8231bb82ad7dec1b8ee4a2",
+      "doc_id": "val_spa_es_0002",
+      "gradient_bearing_allowed": false,
+      "lane": "multiling",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-multiling",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "37fc7931bb424f780cad7e3ba0f7a8419f163f43f7bcacd88dec368d02d83aea",
+      "doc_id": "val_spa_es_0036",
+      "gradient_bearing_allowed": false,
+      "lane": "multiling",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-indic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "9dce4319d6ce21ccdeb390b31c6f942f7be09b29f64ce4288318db5ffcf64cb8",
+      "doc_id": "val_tel_te_0009",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    },
+    {
+      "benchmark_id": "demo-val-indic",
+      "canary": "ZZQX-VALIDATION-CANARY-B48D6E05-READ-ONLY",
+      "content_sha256": "1eff5a630b03febd63b64e0c064dc90012363e381e967b4cacffe26f35393ae7",
+      "doc_id": "val_tel_te_0017",
+      "gradient_bearing_allowed": false,
+      "lane": "indic",
+      "never_train": true,
+      "readable_during_training": true,
+      "split": "validation",
+      "version_tag": "demo-v1"
+    }
+  ],
+  "registry": {
+    "access_log_entries": 72,
+    "blocked": [
+      {
+        "blocked": true,
+        "doc_id": "eval_agentic_0002",
+        "matched_heldout": [
+          "eval_agentic_0002",
+          "eval_tel_te_0022"
+        ],
+        "reasons": [
+          "held-out canary string present in text",
+          "100.0% of 8-grams overlap held-out data (threshold 10%)"
+        ]
+      }
+    ],
+    "blocked_count": 1,
+    "by_split": {
+      "eval": 20,
+      "validation": 20
+    },
+    "fingerprints": {
+      "canaries": 2,
+      "content_hashes": 40,
+      "ngram_overlap_threshold": 0.1,
+      "ngram_size": 8,
+      "ngrams": 6838
+    },
+    "gradient_bearing_reads": 0,
+    "reads_by_split": {
+      "validation": 72
+    },
+    "registered": 40
+  },
+  "structure_preserving_no_merge": true
+}

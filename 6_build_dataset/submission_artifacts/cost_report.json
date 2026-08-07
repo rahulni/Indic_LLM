@@ -1,0 +1,111 @@
+{
+  "checkpoint_policy": {
+    "checkpoints_written": 6,
+    "inr_at_risk_between_checkpoints": 5.679005,
+    "interval_steps": 20,
+    "rule": "checkpoint interval is a risk-in-rupees decision: pick the amount of GPU spend you are willing to lose to a crash, and checkpoint at that interval. Loss thresholds and epoch counts do not answer the question.",
+    "seconds_per_step": 0.3786
+  },
+  "constants": {
+    "gpus": 8,
+    "inr_per_hour": 2700.0,
+    "inr_per_second": 0.75,
+    "instance": "AWS p4de.24xlarge (8x A100 80GB)",
+    "source": "course lecture, 00:29-00:31"
+  },
+  "packing_savings": {
+    "by_lane": [
+      {
+        "baseline_policy": "pad_only",
+        "baseline_sequences": 10,
+        "chosen_policy": "best_fit",
+        "chosen_sequences": 5,
+        "inr_saved_per_billion_positions": 28299.3,
+        "lane": "reasoning",
+        "sequence_reduction": 0.5
+      },
+      {
+        "baseline_policy": "pad_only",
+        "baseline_sequences": 8,
+        "chosen_policy": "concat_chop",
+        "chosen_sequences": 5,
+        "inr_saved_per_billion_positions": 21224.48,
+        "lane": "agentic",
+        "sequence_reduction": 0.375
+      },
+      {
+        "baseline_policy": "pad_only",
+        "baseline_sequences": 142,
+        "chosen_policy": "concat_chop",
+        "chosen_sequences": 96,
+        "inr_saved_per_billion_positions": 18334.76,
+        "lane": "indic",
+        "sequence_reduction": 0.323944
+      },
+      {
+        "baseline_policy": "pad_only",
+        "baseline_sequences": 36,
+        "chosen_policy": "concat_chop",
+        "chosen_sequences": 25,
+        "inr_saved_per_billion_positions": 17294.02,
+        "lane": "multiling",
+        "sequence_reduction": 0.305556
+      },
+      {
+        "baseline_policy": "pad_only",
+        "baseline_sequences": 36,
+        "chosen_policy": "concat_chop",
+        "chosen_sequences": 27,
+        "inr_saved_per_billion_positions": 14149.65,
+        "lane": "web",
+        "sequence_reduction": 0.25
+      },
+      {
+        "baseline_policy": "pad_only",
+        "baseline_sequences": 126,
+        "chosen_policy": "concat_chop",
+        "chosen_sequences": 101,
+        "inr_saved_per_billion_positions": 11229.88,
+        "lane": "code",
+        "sequence_reduction": 0.198413
+      },
+      {
+        "baseline_policy": "pad_only",
+        "baseline_sequences": 109,
+        "chosen_policy": "concat_chop",
+        "chosen_sequences": 98,
+        "inr_saved_per_billion_positions": 5711.79,
+        "lane": "longctx",
+        "sequence_reduction": 0.100917
+      }
+    ],
+    "note": "sequences are the unit of compute at a fixed sequence length, so a reduction in sequence count is a proportional reduction in spend for the same data"
+  },
+  "projection_per_billion_positions": {
+    "basis": "this run's measured positions/second, extrapolated linearly",
+    "inr": 56598.6,
+    "inr_lost_to_padding": 6211.1,
+    "seconds": 75464.8
+  },
+  "recovery": {
+    "replay_inr": 3.374368,
+    "replay_seconds": 4.4992,
+    "resume_inr": 0.323672,
+    "resume_seconds": 0.4316
+  },
+  "this_run": {
+    "inr_spent_equivalent": 84.617175,
+    "positions_per_second": 13251.211,
+    "positions_processed": 1495040,
+    "train_seconds": 112.8229
+  },
+  "waste": {
+    "context_only_fraction": 0.019416,
+    "context_only_positions": 29027,
+    "inr_on_context_only": 1.642888,
+    "inr_on_padding": 9.28585,
+    "note": "context-only positions are not waste -- prompts and tool observations must be read to be conditioned on. They are reported beside padding because both are compute that produces no gradient, and only one of them is avoidable.",
+    "pad_fraction": 0.10974,
+    "pad_positions": 164065
+  }
+}

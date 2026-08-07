@@ -1,0 +1,495 @@
+{
+  "efficiency": {
+    "context_only_fraction": 0.019416,
+    "gpu_idle_proxy_seconds": 0.457505,
+    "loader_wait_fraction_of_train_time": 0.004055,
+    "loss_bearing_fraction_of_positions": 0.870845,
+    "loss_bearing_fraction_of_real": 0.978191,
+    "opus_acceptance_rate": 0.375,
+    "packing_utilization": 0.89026,
+    "pad_fraction": 0.10974
+  },
+  "formulas": {
+    "accepted_tokens_per_second_after_opus": "tokens_loss_bearing * (opus_accepted / opus_candidates) / train_seconds",
+    "cache_hit_rate": "cache.hits / (cache.hits + cache.misses)",
+    "context_only_fraction": "tokens_context_only / positions_total",
+    "loader_wait_fraction_of_train_time": "loader_wait_seconds / train_seconds",
+    "packing_utilization": "tokens_real / positions_total",
+    "pad_fraction": "tokens_pad / positions_total",
+    "raw_tokens_per_second": "positions_total / train_seconds",
+    "useful_loss_bearing_tokens_per_second": "tokens_loss_bearing / train_seconds"
+  },
+  "loader": {
+    "bytes_read": 5383212,
+    "cache": {
+      "capacity": 16,
+      "evictions": 647,
+      "hit_rate": 0.905546,
+      "hits": 6107,
+      "lookups": 6744,
+      "misses": 637,
+      "resident": 16
+    },
+    "loader_wait_events": 637,
+    "loader_wait_seconds": 0.457505,
+    "mean_shard_read_ms": 0.6013,
+    "mean_wait_ms": 0.7182,
+    "note": "delivery is strictly in plan order; threads affect only how long the consumer waited, never which data it received",
+    "prefetch_depth": 4,
+    "prefetch_hits": 617,
+    "prefetch_requests": 653,
+    "shard_read_seconds": 0.404665,
+    "shard_reads": 673,
+    "workers": 3
+  },
+  "mixture_compliance": {
+    "by_lane": [
+      {
+        "actual_share": 0.034636,
+        "drift": -0.005063,
+        "lane": "agentic",
+        "planned_share": 0.039699
+      },
+      {
+        "actual_share": 0.242333,
+        "drift": 0.000476,
+        "lane": "code",
+        "planned_share": 0.241857
+      },
+      {
+        "actual_share": 0.082805,
+        "drift": -0.002903,
+        "lane": "indic",
+        "planned_share": 0.085708
+      },
+      {
+        "actual_share": 0.03604,
+        "drift": -0.000401,
+        "lane": "longctx",
+        "planned_share": 0.036441
+      },
+      {
+        "actual_share": 0.035478,
+        "drift": 0.001072,
+        "lane": "multiling",
+        "planned_share": 0.034406
+      },
+      {
+        "actual_share": 0.082234,
+        "drift": -0.014061,
+        "lane": "reasoning",
+        "planned_share": 0.096295
+      },
+      {
+        "actual_share": 0.486473,
+        "drift": 0.020879,
+        "lane": "web",
+        "planned_share": 0.465594
+      }
+    ],
+    "max_abs_drift": 0.020879,
+    "note": "drift is expected at demo scale: six samples per step cannot express a 1.5% share exactly, so small lanes are served by carry-over across steps and converge over the run rather than at every step",
+    "tolerance": 0.1,
+    "within_tolerance": true
+  },
+  "packing_by_lane": {
+    "agentic": {
+      "by_policy": {
+        "best_fit": {
+          "coverage": 1.0,
+          "effective_yield": 0.822917,
+          "pad_tokens": 272,
+          "sequences": 6,
+          "tokens_dropped": 0,
+          "utilization": 0.822917
+        },
+        "concat_chop": {
+          "coverage": 1.0,
+          "effective_yield": 0.9875,
+          "pad_tokens": 16,
+          "sequences": 5,
+          "tokens_dropped": 0,
+          "utilization": 0.9875
+        },
+        "greedy": {
+          "coverage": 1.0,
+          "effective_yield": 0.705357,
+          "pad_tokens": 528,
+          "sequences": 7,
+          "tokens_dropped": 0,
+          "utilization": 0.705357
+        },
+        "long_context": {
+          "coverage": 0.0,
+          "effective_yield": 0.0,
+          "pad_tokens": 0,
+          "sequences": 0,
+          "tokens_dropped": 1264,
+          "utilization": 0.0
+        },
+        "pad_only": {
+          "coverage": 1.0,
+          "effective_yield": 0.617188,
+          "pad_tokens": 784,
+          "sequences": 8,
+          "tokens_dropped": 0,
+          "utilization": 0.617188
+        },
+        "structure_preserving": {
+          "coverage": 1.0,
+          "effective_yield": 0.617188,
+          "pad_tokens": 784,
+          "sequences": 8,
+          "tokens_dropped": 0,
+          "utilization": 0.617188
+        }
+      },
+      "policy_used": "concat_chop"
+    },
+    "code": {
+      "by_policy": {
+        "best_fit": {
+          "coverage": 1.0,
+          "effective_yield": 0.933268,
+          "pad_tokens": 1845,
+          "sequences": 108,
+          "tokens_dropped": 0,
+          "utilization": 0.933268
+        },
+        "concat_chop": {
+          "coverage": 1.0,
+          "effective_yield": 0.99795,
+          "pad_tokens": 53,
+          "sequences": 101,
+          "tokens_dropped": 0,
+          "utilization": 0.99795
+        },
+        "greedy": {
+          "coverage": 1.0,
+          "effective_yield": 0.908045,
+          "pad_tokens": 2613,
+          "sequences": 111,
+          "tokens_dropped": 0,
+          "utilization": 0.908045
+        },
+        "long_context": {
+          "coverage": 0.664729,
+          "effective_yield": 0.664729,
+          "pad_tokens": 0,
+          "sequences": 67,
+          "tokens_dropped": 8651,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "coverage": 1.0,
+          "effective_yield": 0.799944,
+          "pad_tokens": 6453,
+          "sequences": 126,
+          "tokens_dropped": 0,
+          "utilization": 0.799944
+        },
+        "structure_preserving": {
+          "coverage": 1.0,
+          "effective_yield": 0.799944,
+          "pad_tokens": 6453,
+          "sequences": 126,
+          "tokens_dropped": 0,
+          "utilization": 0.799944
+        }
+      },
+      "policy_used": "concat_chop"
+    },
+    "indic": {
+      "by_policy": {
+        "best_fit": {
+          "coverage": 1.0,
+          "effective_yield": 0.984133,
+          "pad_tokens": 394,
+          "sequences": 97,
+          "tokens_dropped": 0,
+          "utilization": 0.984133
+        },
+        "concat_chop": {
+          "coverage": 1.0,
+          "effective_yield": 0.994385,
+          "pad_tokens": 138,
+          "sequences": 96,
+          "tokens_dropped": 0,
+          "utilization": 0.994385
+        },
+        "greedy": {
+          "coverage": 1.0,
+          "effective_yield": 0.926805,
+          "pad_tokens": 1930,
+          "sequences": 103,
+          "tokens_dropped": 0,
+          "utilization": 0.926805
+        },
+        "long_context": {
+          "coverage": 0.576152,
+          "effective_yield": 0.576152,
+          "pad_tokens": 0,
+          "sequences": 55,
+          "tokens_dropped": 10358,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "coverage": 1.0,
+          "effective_yield": 0.67226,
+          "pad_tokens": 11914,
+          "sequences": 142,
+          "tokens_dropped": 0,
+          "utilization": 0.67226
+        },
+        "structure_preserving": {
+          "coverage": 1.0,
+          "effective_yield": 0.67226,
+          "pad_tokens": 11914,
+          "sequences": 142,
+          "tokens_dropped": 0,
+          "utilization": 0.67226
+        }
+      },
+      "policy_used": "concat_chop"
+    },
+    "longctx": {
+      "by_policy": {
+        "best_fit": {
+          "coverage": 1.0,
+          "effective_yield": 0.891736,
+          "pad_tokens": 3021,
+          "sequences": 109,
+          "tokens_dropped": 0,
+          "utilization": 0.891736
+        },
+        "concat_chop": {
+          "coverage": 1.0,
+          "effective_yield": 0.991829,
+          "pad_tokens": 205,
+          "sequences": 98,
+          "tokens_dropped": 0,
+          "utilization": 0.991829
+        },
+        "greedy": {
+          "coverage": 1.0,
+          "effective_yield": 0.891736,
+          "pad_tokens": 3021,
+          "sequences": 109,
+          "tokens_dropped": 0,
+          "utilization": 0.891736
+        },
+        "long_context": {
+          "coverage": 0.83334,
+          "effective_yield": 0.83334,
+          "pad_tokens": 0,
+          "sequences": 81,
+          "tokens_dropped": 4147,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "coverage": 1.0,
+          "effective_yield": 0.891736,
+          "pad_tokens": 3021,
+          "sequences": 109,
+          "tokens_dropped": 0,
+          "utilization": 0.891736
+        },
+        "structure_preserving": {
+          "coverage": 1.0,
+          "effective_yield": 0.891736,
+          "pad_tokens": 3021,
+          "sequences": 109,
+          "tokens_dropped": 0,
+          "utilization": 0.891736
+        }
+      },
+      "policy_used": "concat_chop"
+    },
+    "multiling": {
+      "by_policy": {
+        "best_fit": {
+          "coverage": 1.0,
+          "effective_yield": 0.959886,
+          "pad_tokens": 267,
+          "sequences": 26,
+          "tokens_dropped": 0,
+          "utilization": 0.959886
+        },
+        "concat_chop": {
+          "coverage": 1.0,
+          "effective_yield": 0.998281,
+          "pad_tokens": 11,
+          "sequences": 25,
+          "tokens_dropped": 0,
+          "utilization": 0.998281
+        },
+        "greedy": {
+          "coverage": 1.0,
+          "effective_yield": 0.924334,
+          "pad_tokens": 523,
+          "sequences": 27,
+          "tokens_dropped": 0,
+          "utilization": 0.924334
+        },
+        "long_context": {
+          "coverage": 0.560964,
+          "effective_yield": 0.560964,
+          "pad_tokens": 0,
+          "sequences": 14,
+          "tokens_dropped": 2805,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "coverage": 1.0,
+          "effective_yield": 0.693251,
+          "pad_tokens": 2827,
+          "sequences": 36,
+          "tokens_dropped": 0,
+          "utilization": 0.693251
+        },
+        "structure_preserving": {
+          "coverage": 1.0,
+          "effective_yield": 0.693251,
+          "pad_tokens": 2827,
+          "sequences": 36,
+          "tokens_dropped": 0,
+          "utilization": 0.693251
+        }
+      },
+      "policy_used": "concat_chop"
+    },
+    "reasoning": {
+      "by_policy": {
+        "best_fit": {
+          "coverage": 1.0,
+          "effective_yield": 0.952344,
+          "pad_tokens": 61,
+          "sequences": 5,
+          "tokens_dropped": 0,
+          "utilization": 0.952344
+        },
+        "concat_chop": {
+          "coverage": 1.0,
+          "effective_yield": 0.952344,
+          "pad_tokens": 61,
+          "sequences": 5,
+          "tokens_dropped": 0,
+          "utilization": 0.952344
+        },
+        "greedy": {
+          "coverage": 1.0,
+          "effective_yield": 0.79362,
+          "pad_tokens": 317,
+          "sequences": 6,
+          "tokens_dropped": 0,
+          "utilization": 0.79362
+        },
+        "long_context": {
+          "coverage": 0.0,
+          "effective_yield": 0.0,
+          "pad_tokens": 0,
+          "sequences": 0,
+          "tokens_dropped": 1219,
+          "utilization": 0.0
+        },
+        "pad_only": {
+          "coverage": 1.0,
+          "effective_yield": 0.476172,
+          "pad_tokens": 1341,
+          "sequences": 10,
+          "tokens_dropped": 0,
+          "utilization": 0.476172
+        },
+        "structure_preserving": {
+          "coverage": 1.0,
+          "effective_yield": 0.476172,
+          "pad_tokens": 1341,
+          "sequences": 10,
+          "tokens_dropped": 0,
+          "utilization": 0.476172
+        }
+      },
+      "policy_used": "best_fit"
+    },
+    "web": {
+      "by_policy": {
+        "best_fit": {
+          "coverage": 1.0,
+          "effective_yield": 0.887891,
+          "pad_tokens": 861,
+          "sequences": 30,
+          "tokens_dropped": 0,
+          "utilization": 0.887891
+        },
+        "concat_chop": {
+          "coverage": 1.0,
+          "effective_yield": 0.986545,
+          "pad_tokens": 93,
+          "sequences": 27,
+          "tokens_dropped": 0,
+          "utilization": 0.986545
+        },
+        "greedy": {
+          "coverage": 1.0,
+          "effective_yield": 0.887891,
+          "pad_tokens": 861,
+          "sequences": 30,
+          "tokens_dropped": 0,
+          "utilization": 0.887891
+        },
+        "long_context": {
+          "coverage": 0.600675,
+          "effective_yield": 0.600675,
+          "pad_tokens": 0,
+          "sequences": 16,
+          "tokens_dropped": 2723,
+          "utilization": 1.0
+        },
+        "pad_only": {
+          "coverage": 1.0,
+          "effective_yield": 0.739909,
+          "pad_tokens": 2397,
+          "sequences": 36,
+          "tokens_dropped": 0,
+          "utilization": 0.739909
+        },
+        "structure_preserving": {
+          "coverage": 1.0,
+          "effective_yield": 0.739909,
+          "pad_tokens": 2397,
+          "sequences": 36,
+          "tokens_dropped": 0,
+          "utilization": 0.739909
+        }
+      },
+      "policy_used": "concat_chop"
+    }
+  },
+  "phase_seconds": {
+    "build": 22.6622,
+    "replay": 4.4992,
+    "resume": 0.4316,
+    "train": 113.4685
+  },
+  "rates": {
+    "accepted_tokens_per_second_after_opus": 4327.407,
+    "raw_tokens_per_second": 13251.214,
+    "samples_per_second": 42.261,
+    "seconds_per_step": 0.3786,
+    "steps_per_second": 2.641,
+    "useful_loss_bearing_tokens_per_second": 11539.753
+  },
+  "raw_counters": {
+    "microbatches": 1192,
+    "positions_total": 1495040,
+    "samples": 4768,
+    "tokens_context_only": 29027,
+    "tokens_loss_bearing": 1301948,
+    "tokens_pad": 164065,
+    "tokens_real": 1330975
+  },
+  "reconstruction_note": "every rate above is recomputable by hand from raw_counters, train_seconds and loader. No figure in this file is reported without the inputs that produce it.",
+  "steps": 298,
+  "train_seconds": 112.8229,
+  "wall_clock_seconds": 156.6814
+}

@@ -1,0 +1,182 @@
+{
+  "by_lane": {
+    "agentic": {
+      "mean_loss": 6.058185,
+      "mean_perplexity": 427.598499,
+      "tokens": 13527,
+      "usefulness": "useful"
+    },
+    "code": {
+      "mean_loss": 4.908288,
+      "mean_perplexity": 135.407402,
+      "tokens": 335311,
+      "usefulness": "useful"
+    },
+    "indic": {
+      "mean_loss": 7.818647,
+      "mean_perplexity": 2486.539008,
+      "tokens": 117839,
+      "usefulness": "useful"
+    },
+    "longctx": {
+      "mean_loss": 7.424879,
+      "mean_perplexity": 1677.197207,
+      "tokens": 51821,
+      "usefulness": "useful"
+    },
+    "multiling": {
+      "mean_loss": 7.102246,
+      "mean_perplexity": 1214.692314,
+      "tokens": 52798,
+      "usefulness": "useful"
+    },
+    "reasoning": {
+      "mean_loss": 5.421596,
+      "mean_perplexity": 226.239922,
+      "tokens": 36009,
+      "usefulness": "useful"
+    },
+    "web": {
+      "mean_loss": 5.24652,
+      "mean_perplexity": 189.904302,
+      "tokens": 694643,
+      "usefulness": "useful"
+    }
+  },
+  "eos": {
+    "mean_loss": 4.594976,
+    "mean_perplexity": 98.985807,
+    "observations": 4000,
+    "why": "perplexity at EOS specifically is how you tell whether the boundary token is being learned; if the model is surprised by EOS it has not learned where documents end"
+  },
+  "hardest_tokens": [
+    {
+      "mean_loss": 13.593834,
+      "n": 5,
+      "token_id": 3261
+    },
+    {
+      "mean_loss": 13.58568,
+      "n": 5,
+      "token_id": 979
+    },
+    {
+      "mean_loss": 13.566472,
+      "n": 4,
+      "token_id": 4418
+    },
+    {
+      "mean_loss": 13.10335,
+      "n": 3,
+      "token_id": 2670
+    },
+    {
+      "mean_loss": 12.949805,
+      "n": 4,
+      "token_id": 7304
+    },
+    {
+      "mean_loss": 12.902675,
+      "n": 7,
+      "token_id": 6843
+    },
+    {
+      "mean_loss": 12.749852,
+      "n": 21,
+      "token_id": 7198
+    },
+    {
+      "mean_loss": 12.736366,
+      "n": 18,
+      "token_id": 7353
+    },
+    {
+      "mean_loss": 12.608036,
+      "n": 4,
+      "token_id": 7590
+    },
+    {
+      "mean_loss": 12.585094,
+      "n": 8,
+      "token_id": 6959
+    },
+    {
+      "mean_loss": 12.580045,
+      "n": 4,
+      "token_id": 6156
+    },
+    {
+      "mean_loss": 12.569092,
+      "n": 6,
+      "token_id": 7335
+    },
+    {
+      "mean_loss": 12.55722,
+      "n": 10,
+      "token_id": 5218
+    },
+    {
+      "mean_loss": 12.528362,
+      "n": 3,
+      "token_id": 6956
+    },
+    {
+      "mean_loss": 12.502901,
+      "n": 6,
+      "token_id": 4864
+    },
+    {
+      "mean_loss": 12.493367,
+      "n": 6,
+      "token_id": 5998
+    },
+    {
+      "mean_loss": 12.473426,
+      "n": 3,
+      "token_id": 1505
+    },
+    {
+      "mean_loss": 12.444315,
+      "n": 8,
+      "token_id": 7051
+    },
+    {
+      "mean_loss": 12.427326,
+      "n": 4,
+      "token_id": 5700
+    },
+    {
+      "mean_loss": 12.393616,
+      "n": 13,
+      "token_id": 5709
+    }
+  ],
+  "loss_first_step": 9.085894,
+  "loss_improvement": 3.463102,
+  "loss_last_step": 5.622792,
+  "shards_touched": 24,
+  "steps_recorded": 298,
+  "storage_tiering": {
+    "full_trace_step_windows": [
+      [
+        0,
+        24
+      ],
+      [
+        120,
+        144
+      ],
+      [
+        216,
+        241
+      ]
+    ],
+    "max_token_records": 12000,
+    "policy": "full token trace for selected step windows; per-shard, per-lane and per-token-id aggregates accumulate over EVERY step regardless, so the shard report is complete for the whole run"
+  },
+  "token_records_sampled_out": 1289948,
+  "token_records_written": 12000,
+  "usefulness_counts": {
+    "useful": 24
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "shards": [
+    "agentic_0000",
+    "code_0000",
+    "code_0001",
+    "code_0002",
+    "code_0003",
+    "code_0004",
+    "code_0005",
+    "indic_0000",
+    "indic_0001",
+    "indic_0002",
+    "indic_0003",
+    "indic_0004",
+    "indic_0005",
+    "longctx_0000",
+    "longctx_0001",
+    "longctx_0002",
+    "longctx_0003",
+    "longctx_0004",
+    "longctx_0005",
+    "multiling_0000",
+    "multiling_0001",
+    "reasoning_0000",
+    "web_0000",
+    "web_0001"
+  ],
+  "summary": {
+    "by_lane": {
+      "agentic": {
+        "documents": 8,
+        "shards": 1,
+        "tokens": 1264
+      },
+      "code": {
+        "documents": 59,
+        "shards": 6,
+        "tokens": 25803
+      },
+      "indic": {
+        "documents": 87,
+        "shards": 6,
+        "tokens": 24438
+      },
+      "longctx": {
+        "documents": 28,
+        "shards": 6,
+        "tokens": 24883
+      },
+      "multiling": {
+        "documents": 22,
+        "shards": 2,
+        "tokens": 6389
+      },
+      "reasoning": {
+        "documents": 10,
+        "shards": 1,
+        "tokens": 1219
+      },
+      "web": {
+        "documents": 20,
+        "shards": 2,
+        "tokens": 6819
+      }
+    },
+    "documents": 234,
+    "rejected_at_gate": [],
+    "shards": 24,
+    "tokens": 90815
+  }
+}
