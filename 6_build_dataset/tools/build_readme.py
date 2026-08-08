@@ -115,21 +115,37 @@ def _count_tests() -> dict[str, int]:
 
 
 def _pages_url() -> str:
-    """The GitHub Pages URL, derived from the origin remote.
+    """Base GitHub Pages URL for *this directory*, derived from git.
 
-    Hardcoding it would make it one more documented value that can quietly stop
-    being true -- the failure this generator exists to prevent.
+    This repository publishes Pages straight from the branch, so every committed
+    file is served at its own repository path -- a dashboard needs no copying and
+    no build step, it is simply reachable. The URL is therefore
+    ``https://<owner>.github.io/<repo>/<path-from-repo-root>/``.
+
+    Derived rather than hardcoded, for the same reason every other value in this
+    file is: a pasted URL is one more thing that can quietly stop being true.
+    Returns "" when git is unavailable, and the caller falls back to repo-relative
+    links.
     """
     import re
     import subprocess
-    try:
-        url = subprocess.run(["git", "remote", "get-url", "origin"],
-                             capture_output=True, text=True, cwd=ROOT,
-                             timeout=10).stdout.strip()
-    except Exception:
+
+    def git(*args) -> str:
+        try:
+            r = subprocess.run(["git", *args], capture_output=True, text=True,
+                               cwd=ROOT, timeout=10)
+            return r.stdout.strip() if r.returncode == 0 else ""
+        except Exception:
+            return ""
+
+    remote = git("remote", "get-url", "origin")
+    top = git("rev-parse", "--show-toplevel")
+    m = re.search(r"[:/]([^/:]+)/([^/]+?)(?:\.git)?$", remote)
+    if not (m and top):
         return ""
-    m = re.search(r"[:/]([^/:]+)/([^/]+?)(?:\.git)?$", url)
-    return f"https://{m.group(1).lower()}.github.io/{m.group(2)}/" if m else ""
+    rel = os.path.relpath(ROOT, top).replace(os.sep, "/")
+    prefix = "" if rel == "." else rel + "/"
+    return f"https://{m.group(1).lower()}.github.io/{m.group(2)}/{prefix}"
 
 
 def _fmt(x, nd=0):
@@ -304,7 +320,7 @@ A training data pipeline that can prove what it did.
 
 {badges}
 
-[Quick start](#quick-start) · [Evidence](#evidence) · [**Live dashboards**]({pages}) ·
+[Quick start](#quick-start) · [Evidence](#evidence) · [**Live dashboard**]({pages}submission_artifacts/dashboard.html) ·
 [Two backends](#two-backends-one-data-plane) ·
 [What it caught](#four-bugs-the-system-caught-on-its-own) ·
 [Architecture](ARCHITECTURE.md)
@@ -613,24 +629,22 @@ filterable per-token perplexity heatmap, planned-vs-actual lane shares, the pack
 matrix, the OPUS board, the crash→resume→replay→fork timeline, fertility and cost.
 One per run, so the two backends can be compared panel by panel.
 
-### ▶ [Open the dashboards]({pages}) — rendered, no download
-
-| run | rendered | source in this repo |
+| run | open it | source |
 |---|---|---|
-| **default** — {arch} on `{model.get('device', '?')}` | **[view →]({pages}dashboard.html)** | [dashboard.html](submission_artifacts/dashboard.html) · [evidence.md](submission_artifacts/evidence.md) |
-| fallback — stdlib n-gram, no dependencies | [view →]({pages}dashboard-stdlib.html) | [dashboard.html](submission_artifacts_stdlib/dashboard.html) · [evidence.md](submission_artifacts_stdlib/evidence.md) |
+| **default** — {arch} on `{model.get('device', '?')}` | **[▶ view the dashboard]({pages}submission_artifacts/dashboard.html)** | [file](submission_artifacts/dashboard.html) · [evidence.md](submission_artifacts/evidence.md) |
+| fallback — stdlib n-gram, no dependencies | [▶ view the dashboard]({pages}submission_artifacts_stdlib/dashboard.html) | [file](submission_artifacts_stdlib/dashboard.html) · [evidence.md](submission_artifacts_stdlib/evidence.md) |
 
 > [!NOTE]
 > GitHub serves a repository's `.html` as **source**, so the right-hand links show
-> markup rather than the dashboard. The rendered links are the same committed
-> files published to GitHub Pages by `.github/workflows/pages.yml`, which copies
-> them verbatim — publishing is not a second place where numbers are computed.
+> markup. The left-hand links are the *same committed files* served over GitHub
+> Pages, where a browser renders them — no copy, no build step, no second place
+> where a number could be computed.
 
 Both are self-contained by construction: inline CSS and JS, hand-drawn SVG, **no
 CDN and no network**, so they render equally well from a `file://` path after
-cloning. CI refuses to publish a page that reaches for the network. Each is a
-*view* — every figure is read back out of that run's artifacts and it computes
-nothing of its own.
+cloning — which is also how they are served here, since Pages publishes the
+committed file as-is. Each is a *view*: every figure is read back out of that
+run's artifacts and it computes nothing of its own.
 
 ## Tests
 

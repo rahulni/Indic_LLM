@@ -16,11 +16,6 @@ __pycache__/
 # with: git check-ignore -v submission_artifacts/run.log  (should print nothing)
 !submission_artifacts/run.log
 
-# The GitHub Pages staging directory. `tools/build_pages.py` only copies files
-# that are already committed, so checking the copies in would duplicate ~700KB
-# and give them a second chance to drift. CI rebuilds it on every deploy.
-site/
-
 # Weight blobs, wherever a run put them. MEASURED: one checkpoint of the 14M
 # parameter transformer, with Adam's two moment buffers, is 124MB; five are
 # retained, so committing them would add ~750MB for data that is reproducible in
