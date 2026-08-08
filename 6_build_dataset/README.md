@@ -6,7 +6,7 @@ A training data pipeline that can prove what it did.
 
 ![evidence: 9/9 passing](docs/badges/evidence.svg) ![tests: 99](docs/badges/tests.svg) ![default model: 6L transformer](docs/badges/model.svg) ![trained on: NVIDIA GeForce RTX 3070 Laptop GPU](docs/badges/device.svg) ![data plane: byte-exact](docs/badges/determinism.svg) ![runtime: 157s](docs/badges/runtime.svg)
 
-[Quick start](#quick-start) · [Evidence](#evidence) · [Dashboards](#dashboards) ·
+[Quick start](#quick-start) · [Evidence](#evidence) · [**Live dashboards**](https://rahulni.github.io/Indic_LLM/) ·
 [Two backends](#two-backends-one-data-plane) ·
 [What it caught](#four-bugs-the-system-caught-on-its-own) ·
 [Architecture](ARCHITECTURE.md)
@@ -362,19 +362,24 @@ filterable per-token perplexity heatmap, planned-vs-actual lane shares, the pack
 matrix, the OPUS board, the crash→resume→replay→fork timeline, fertility and cost.
 One per run, so the two backends can be compared panel by panel.
 
-| run | dashboard | evidence |
+### ▶ [Open the dashboards](https://rahulni.github.io/Indic_LLM/) — rendered, no download
+
+| run | rendered | source in this repo |
 |---|---|---|
-| **default** — 6L transformer on `cuda` | **[submission_artifacts/dashboard.html](submission_artifacts/dashboard.html)** | [evidence.md](submission_artifacts/evidence.md) |
-| fallback — stdlib n-gram, no dependencies | [submission_artifacts_stdlib/dashboard.html](submission_artifacts_stdlib/dashboard.html) | [evidence.md](submission_artifacts_stdlib/evidence.md) |
+| **default** — 6L transformer on `cuda` | **[view →](https://rahulni.github.io/Indic_LLM/dashboard.html)** | [dashboard.html](submission_artifacts/dashboard.html) · [evidence.md](submission_artifacts/evidence.md) |
+| fallback — stdlib n-gram, no dependencies | [view →](https://rahulni.github.io/Indic_LLM/dashboard-stdlib.html) | [dashboard.html](submission_artifacts_stdlib/dashboard.html) · [evidence.md](submission_artifacts_stdlib/evidence.md) |
+
+> [!NOTE]
+> GitHub serves a repository's `.html` as **source**, so the right-hand links show
+> markup rather than the dashboard. The rendered links are the same committed
+> files published to GitHub Pages by `.github/workflows/pages.yml`, which copies
+> them verbatim — publishing is not a second place where numbers are computed.
 
 Both are self-contained by construction: inline CSS and JS, hand-drawn SVG, **no
-CDN and no network**, so they render from a `file://` path on a grader's machine.
-Each is a *view* — every figure is read back out of that run's artifacts and it
-computes nothing of its own.
-
-> [!TIP]
-> GitHub will not render an HTML file inline; click through and use the **Raw** or
-> download link, or open the file locally after cloning.
+CDN and no network**, so they render equally well from a `file://` path after
+cloning. CI refuses to publish a page that reaches for the network. Each is a
+*view* — every figure is read back out of that run's artifacts and it computes
+nothing of its own.
 
 ## Tests
 
