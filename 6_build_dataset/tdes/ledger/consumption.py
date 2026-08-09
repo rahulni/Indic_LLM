@@ -101,6 +101,11 @@ class ConsumptionLedger:
                         "seq_len": s["seq_len"],
                         "pool_epoch": s.get("pool_epoch", 0),
                         "indic_tier": s.get("indic_tier"),
+                        # Why this sample was served. The allocation cause comes
+                        # from the apportioner branch that produced the slot;
+                        # the notes are facts about the sample that filled it.
+                        "selection_reason": s.get("selection_reason"),
+                        "selection_notes": s.get("selection_notes") or [],
                         "spans": [
                             {"shard_id": sp["shard_id"], "doc_id": sp["doc_id"],
                              "start": sp["shard_start"], "end": sp["shard_end"],

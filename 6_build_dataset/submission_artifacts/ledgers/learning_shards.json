@@ -1,362 +1,592 @@
 [
   {
     "capability_lane": "agentic",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      1,
+      239
+    ],
+    "gradient_alignment": 0.03203929,
+    "gradient_alignment_from": [
+      "cand-s0120-00"
+    ],
     "high_perplexity_fraction": 0.54151,
     "high_perplexity_tokens": 7325,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -2.948709,
     "max_token_loss": 13.29904,
     "mean_perplexity": 427.598499,
     "mean_token_loss": 6.058185,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 8,
     "shard_id": "agentic_0000",
     "tokens_scored": 13527,
     "usefulness": "useful",
+    "usefulness_percentile": 41.7,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "code",
+    "exposure_steps": [
+      5,
+      237
+    ],
     "gradient_alignment": null,
+    "gradient_alignment_from": null,
     "high_perplexity_fraction": 0.336436,
     "high_perplexity_tokens": 17674,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -4.094521,
     "max_token_loss": 14.693324,
     "mean_perplexity": 100.417008,
     "mean_token_loss": 4.609332,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 6,
     "shard_id": "code_0000",
     "tokens_scored": 52533,
     "usefulness": "useful",
+    "usefulness_percentile": 8.3,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "code",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      2,
+      239
+    ],
+    "gradient_alignment": 0.59503197,
+    "gradient_alignment_from": [
+      "cand-s0080-00",
+      "cand-s0080-01"
+    ],
     "high_perplexity_fraction": 0.318586,
     "high_perplexity_tokens": 18334,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -4.094521,
     "max_token_loss": 13.936829,
     "mean_perplexity": 85.842118,
     "mean_token_loss": 4.45251,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 6,
     "shard_id": "code_0001",
     "tokens_scored": 57548,
     "usefulness": "useful",
+    "usefulness_percentile": 4.2,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "code",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      0,
+      239
+    ],
+    "gradient_alignment": 0.27345794,
+    "gradient_alignment_from": [
+      "cand-s0000-01",
+      "cand-s0120-03"
+    ],
     "high_perplexity_fraction": 0.393586,
     "high_perplexity_tokens": 24265,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -4.094521,
     "max_token_loss": 17.252584,
     "mean_perplexity": 153.128079,
     "mean_token_loss": 5.031275,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 6,
     "shard_id": "code_0002",
     "tokens_scored": 61651,
     "usefulness": "useful",
+    "usefulness_percentile": 16.7,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "code",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      4,
+      238
+    ],
+    "gradient_alignment": 0.40618303,
+    "gradient_alignment_from": [
+      "cand-s0040-00",
+      "cand-s0040-01",
+      "cand-s0120-04"
+    ],
     "high_perplexity_fraction": 0.395012,
     "high_perplexity_tokens": 23361,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -4.094521,
     "max_token_loss": 16.161861,
     "mean_perplexity": 178.009352,
     "mean_token_loss": 5.181836,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 6,
     "shard_id": "code_0003",
     "tokens_scored": 59140,
     "usefulness": "useful",
+    "usefulness_percentile": 25.0,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "code",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      0,
+      239
+    ],
+    "gradient_alignment": 0.32016192,
+    "gradient_alignment_from": [
+      "cand-s0000-01",
+      "cand-s0000-02",
+      "cand-s0120-01"
+    ],
     "high_perplexity_fraction": 0.403787,
     "high_perplexity_tokens": 21943,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -4.094521,
     "max_token_loss": 15.440316,
     "mean_perplexity": 194.098217,
     "mean_token_loss": 5.268364,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 6,
     "shard_id": "code_0004",
     "tokens_scored": 54343,
     "usefulness": "useful",
+    "usefulness_percentile": 29.2,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "code",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      0,
+      239
+    ],
+    "gradient_alignment": 0.07768173,
+    "gradient_alignment_from": [
+      "cand-s0000-00",
+      "cand-s0040-02",
+      "cand-s0120-02"
+    ],
     "high_perplexity_fraction": 0.384103,
     "high_perplexity_tokens": 19242,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -4.094521,
     "max_token_loss": 18.552567,
     "mean_perplexity": 131.69325,
     "mean_token_loss": 4.880475,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 6,
     "shard_id": "code_0005",
     "tokens_scored": 50096,
     "usefulness": "useful",
+    "usefulness_percentile": 12.5,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "indic",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      9,
+      234
+    ],
+    "gradient_alignment": -0.22927559,
+    "gradient_alignment_from": [
+      "cand-s0080-02",
+      "cand-s0080-03"
+    ],
     "high_perplexity_fraction": 0.761244,
     "high_perplexity_tokens": 15030,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.384713,
     "max_token_loss": 17.227903,
     "mean_perplexity": 1955.511264,
     "mean_token_loss": 7.578407,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 2,
     "shard_id": "indic_0000",
     "tokens_scored": 19744,
     "usefulness": "useful",
+    "usefulness_percentile": 70.8,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "indic",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      1,
+      238
+    ],
+    "gradient_alignment": -0.22882945,
+    "gradient_alignment_from": [
+      "cand-s0080-03",
+      "cand-s0120-05"
+    ],
     "high_perplexity_fraction": 0.810841,
     "high_perplexity_tokens": 15766,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.384713,
     "max_token_loss": 16.988714,
     "mean_perplexity": 2312.337655,
     "mean_token_loss": 7.746014,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 2,
     "shard_id": "indic_0001",
     "tokens_scored": 19444,
     "usefulness": "useful",
+    "usefulness_percentile": 83.3,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "indic",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      0,
+      238
+    ],
+    "gradient_alignment": 0.02959076,
+    "gradient_alignment_from": [
+      "cand-s0000-03"
+    ],
     "high_perplexity_fraction": 0.823521,
     "high_perplexity_tokens": 17499,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.384713,
     "max_token_loss": 16.440464,
     "mean_perplexity": 2412.391791,
     "mean_token_loss": 7.788374,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 2,
     "shard_id": "indic_0002",
     "tokens_scored": 21249,
     "usefulness": "useful",
+    "usefulness_percentile": 87.5,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "indic",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      3,
+      239
+    ],
+    "gradient_alignment": 0.41523607,
+    "gradient_alignment_from": [
+      "cand-s0040-03"
+    ],
     "high_perplexity_fraction": 0.864749,
     "high_perplexity_tokens": 17736,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.384713,
     "max_token_loss": 17.076164,
     "mean_perplexity": 2957.788623,
     "mean_token_loss": 7.992197,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 2,
     "shard_id": "indic_0003",
     "tokens_scored": 20510,
     "usefulness": "useful",
+    "usefulness_percentile": 100.0,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "indic",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      10,
+      239
+    ],
+    "gradient_alignment": -0.39373222,
+    "gradient_alignment_from": [
+      "cand-s0080-03"
+    ],
     "high_perplexity_fraction": 0.880014,
     "high_perplexity_tokens": 17881,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.384713,
     "max_token_loss": 15.178909,
     "mean_perplexity": 2732.319569,
     "mean_token_loss": 7.912906,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 2,
     "shard_id": "indic_0004",
     "tokens_scored": 20319,
     "usefulness": "useful",
+    "usefulness_percentile": 95.8,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "indic",
+    "exposure_steps": [
+      2,
+      235
+    ],
     "gradient_alignment": null,
+    "gradient_alignment_from": null,
     "high_perplexity_fraction": 0.869064,
     "high_perplexity_tokens": 14403,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.384713,
     "max_token_loss": 18.33132,
     "mean_perplexity": 2693.349811,
     "mean_token_loss": 7.898541,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 2,
     "shard_id": "indic_0005",
     "tokens_scored": 16573,
     "usefulness": "useful",
+    "usefulness_percentile": 91.7,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "longctx",
+    "exposure_steps": [
+      26,
+      237
+    ],
     "gradient_alignment": null,
+    "gradient_alignment_from": null,
     "high_perplexity_fraction": 0.707475,
     "high_perplexity_tokens": 6322,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": 0.504796,
     "max_token_loss": 20.720119,
     "mean_perplexity": 2291.403293,
     "mean_token_loss": 7.73692,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 1,
     "shard_id": "longctx_0000",
     "tokens_scored": 8936,
     "usefulness": "useful",
+    "usefulness_percentile": 79.2,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "longctx",
+    "exposure_steps": [
+      1,
+      237
+    ],
     "gradient_alignment": null,
+    "gradient_alignment_from": null,
     "high_perplexity_fraction": 0.69985,
     "high_perplexity_tokens": 6074,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.185986,
     "max_token_loss": 19.989172,
     "mean_perplexity": 1669.523969,
     "mean_token_loss": 7.420294,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 1,
     "shard_id": "longctx_0001",
     "tokens_scored": 8679,
     "usefulness": "useful",
+    "usefulness_percentile": 62.5,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "longctx",
+    "exposure_steps": [
+      17,
+      239
+    ],
     "gradient_alignment": null,
+    "gradient_alignment_from": null,
     "high_perplexity_fraction": 0.746697,
     "high_perplexity_tokens": 8195,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.185986,
     "max_token_loss": 16.052773,
     "mean_perplexity": 1943.421165,
     "mean_token_loss": 7.572205,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 1,
     "shard_id": "longctx_0002",
     "tokens_scored": 10975,
     "usefulness": "useful",
+    "usefulness_percentile": 66.7,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "longctx",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      14,
+      234
+    ],
+    "gradient_alignment": 0.11203938,
+    "gradient_alignment_from": [
+      "cand-s0120-06"
+    ],
     "high_perplexity_fraction": 0.749654,
     "high_perplexity_tokens": 6507,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.185986,
     "max_token_loss": 14.832882,
     "mean_perplexity": 2050.954374,
     "mean_token_loss": 7.626061,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 1,
     "shard_id": "longctx_0003",
     "tokens_scored": 8680,
     "usefulness": "useful",
+    "usefulness_percentile": 75.0,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "longctx",
+    "exposure_steps": [
+      7,
+      238
+    ],
     "gradient_alignment": null,
+    "gradient_alignment_from": null,
     "high_perplexity_fraction": 0.640382,
     "high_perplexity_tokens": 6375,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.185986,
     "max_token_loss": 15.876869,
     "mean_perplexity": 1269.025714,
     "mean_token_loss": 7.146005,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 1,
     "shard_id": "longctx_0004",
     "tokens_scored": 9955,
     "usefulness": "useful",
+    "usefulness_percentile": 58.3,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "longctx",
+    "exposure_steps": [
+      69,
+      239
+    ],
     "gradient_alignment": null,
+    "gradient_alignment_from": null,
     "high_perplexity_fraction": 0.5755,
     "high_perplexity_tokens": 2645,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": 0.949846,
     "max_token_loss": 12.790572,
     "mean_perplexity": 811.69803,
     "mean_token_loss": 6.699128,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 1,
     "shard_id": "longctx_0005",
     "tokens_scored": 4596,
     "usefulness": "useful",
+    "usefulness_percentile": 45.8,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "multiling",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      2,
+      235
+    ],
+    "gradient_alignment": 0.5769671,
+    "gradient_alignment_from": [
+      "cand-s0040-04"
+    ],
     "high_perplexity_fraction": 0.660708,
     "high_perplexity_tokens": 22877,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.769407,
     "max_token_loss": 17.291855,
     "mean_perplexity": 1204.879132,
     "mean_token_loss": 7.094135,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 5,
     "shard_id": "multiling_0000",
     "tokens_scored": 34625,
     "usefulness": "useful",
+    "usefulness_percentile": 50.0,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "multiling",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      0,
+      227
+    ],
+    "gradient_alignment": 0.13538915,
+    "gradient_alignment_from": [
+      "cand-s0000-04",
+      "cand-s0080-04"
+    ],
     "high_perplexity_fraction": 0.666318,
     "high_perplexity_tokens": 12109,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -1.769407,
     "max_token_loss": 15.260688,
     "mean_perplexity": 1233.611111,
     "mean_token_loss": 7.117701,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 5,
     "shard_id": "multiling_0001",
     "tokens_scored": 18173,
     "usefulness": "useful",
+    "usefulness_percentile": 54.2,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "reasoning",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      0,
+      239
+    ],
+    "gradient_alignment": 0.04524462,
+    "gradient_alignment_from": [
+      "cand-s0000-05",
+      "cand-s0040-05",
+      "cand-s0080-05",
+      "cand-s0120-07"
+    ],
     "high_perplexity_fraction": 0.451248,
     "high_perplexity_tokens": 16249,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -2.167129,
     "max_token_loss": 16.884773,
     "mean_perplexity": 226.239922,
     "mean_token_loss": 5.421596,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 17,
     "shard_id": "reasoning_0000",
     "tokens_scored": 36009,
     "usefulness": "useful",
+    "usefulness_percentile": 37.5,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "web",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      0,
+      239
+    ],
+    "gradient_alignment": 0.04114927,
+    "gradient_alignment_from": [
+      "cand-s0000-09",
+      "cand-s0000-10",
+      "cand-s0000-11",
+      "cand-s0000-13",
+      "cand-s0000-14",
+      "cand-s0000-15",
+      "cand-s0040-06",
+      "cand-s0040-08",
+      "cand-s0040-09",
+      "cand-s0040-10",
+      "cand-s0040-11",
+      "cand-s0040-13",
+      "cand-s0080-07",
+      "cand-s0080-09",
+      "cand-s0080-10",
+      "cand-s0080-12",
+      "cand-s0080-13",
+      "cand-s0080-15",
+      "cand-s0120-08",
+      "cand-s0120-09",
+      "cand-s0120-10",
+      "cand-s0120-11",
+      "cand-s0120-13"
+    ],
     "high_perplexity_fraction": 0.430677,
     "high_perplexity_tokens": 182742,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -0.3983,
     "max_token_loss": 16.347977,
     "mean_perplexity": 176.098934,
     "mean_token_loss": 5.171046,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 58,
     "shard_id": "web_0000",
     "tokens_scored": 424313,
     "usefulness": "useful",
+    "usefulness_percentile": 20.8,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   },
   {
     "capability_lane": "web",
-    "gradient_alignment": null,
+    "exposure_steps": [
+      0,
+      238
+    ],
+    "gradient_alignment": 0.03164873,
+    "gradient_alignment_from": [
+      "cand-s0000-06",
+      "cand-s0000-07",
+      "cand-s0000-08",
+      "cand-s0000-12",
+      "cand-s0040-07",
+      "cand-s0040-12",
+      "cand-s0040-13",
+      "cand-s0040-14",
+      "cand-s0040-15",
+      "cand-s0080-06",
+      "cand-s0080-08",
+      "cand-s0080-11",
+      "cand-s0080-14",
+      "cand-s0120-12",
+      "cand-s0120-13",
+      "cand-s0120-14",
+      "cand-s0120-15"
+    ],
     "high_perplexity_fraction": 0.458307,
     "high_perplexity_tokens": 123894,
-    "loss_delta_before_after_exposure": null,
+    "loss_delta_before_after_exposure": -0.3983,
     "max_token_loss": 15.763773,
     "mean_perplexity": 213.788154,
     "mean_token_loss": 5.364986,
-    "repeated_pass_number": 0,
+    "repeated_pass_number": 58,
     "shard_id": "web_0001",
     "tokens_scored": 270330,
     "usefulness": "useful",
+    "usefulness_percentile": 33.3,
     "usefulness_rule": "<= 0.5 broken; <= 1.2 already_learned; < 2.0 neutral; else useful"
   }
 ]

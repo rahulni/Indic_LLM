@@ -37,6 +37,7 @@ from .batching import assemble_batch, build_sample, verify_rank_partition
 from .config import (DATALOADER_VERSION, INDIC_VERIFIED_FLOOR_FRACTION,
                      RunConfig)
 from .ledger.consumption import batches_in_range, verify_integrity
+from .mixture import SELECTION_REASONS
 
 
 class CrashSimulated(RuntimeError):
@@ -71,10 +72,20 @@ class RunState:
         self.last_checkpoint_id = "genesis"
         self.checkpoints: list[dict] = []
         self.opus_scores_by_shard: dict[str, float] = {}
+        # shard_id -> the candidate_id of the most recent decision touching it.
+        # OPUS is advisory here: it scores without gating the stream, which is
+        # what keeps the served order free of any float. So this is recorded as
+        # provenance for a score, never as the cause of a draw -- see
+        # `selection_reason` for the cause.
+        self.opus_decision_by_shard: dict[str, str] = {}
         self.seen_doc_ids: set[str] = set()
         self.indic_tier_shortfalls: list[dict] = []
         self.indic_served_verified = 0
         self.indic_served_unverified = 0
+        # Shards withheld until the anneal stage. Held as a set so a served
+        # sample can say it came from the reserve.
+        self._reserved_shards: set[str] = set(
+            (schedule_plan.get("anneal_reserve") or {}).get("reserved_shard_ids", []))
 
     # -- batch construction ------------------------------------------------
 
@@ -84,15 +95,23 @@ class RunState:
         samples, idx = [], 0
 
         for lane, k in sorted(step_plan["lane_quota"].items()):
-            for seq in self._draw(lane, k, seq_len):
+            # Why this lane got slots this step, taken from the apportioner that
+            # allocated them rather than guessed from the numbers afterwards.
+            # Consumed in a fixed order so the reason attached to a sample is
+            # deterministic.
+            reasons = self._reason_queue(step_plan, lane, k)
+            for i, seq in enumerate(self._draw(lane, k, seq_len)):
                 shard_ids = sorted({g["shard_id"] for g in seq["segments"]})
                 self.loader.prefetch(shard_ids)
                 toks = self.loader.get_many(shard_ids)
-                samples.append(build_sample(
+                s = build_sample(
                     seq, toks, seq_len=seq_len,
                     attention_policy=step_plan["attention_policy"],
                     position_policy=step_plan["position_policy"],
-                    lane=lane, sample_index=idx))
+                    lane=lane, sample_index=idx)
+                s["selection_reason"] = reasons[i] if i < len(reasons) else "lane_quota"
+                s["selection_notes"] = self._selection_notes(seq, shard_ids)
+                samples.append(s)
                 idx += 1
 
         batch = assemble_batch(self.cfg, step_plan, samples, branch_id=self.branch_id)
@@ -103,6 +122,32 @@ class RunState:
         self.registry.assert_not_gradient_bearing(
             batch["doc_ids"], where=f"step {global_step} batch {batch['batch_id'][:12]}")
         return batch
+
+    def _reason_queue(self, step_plan: dict, lane: str, k: int) -> list[str]:
+        """The allocation causes for this lane's ``k`` slots, in a fixed order.
+
+        Read from the schedule the apportioner produced, so the recorded reason
+        is the branch that actually allocated the slot rather than a guess made
+        after the fact. Floors are listed first because they were served first.
+        """
+        by_reason = (step_plan.get("lane_quota_reasons") or {}).get(lane, {})
+        out: list[str] = []
+        for reason in SELECTION_REASONS:
+            out.extend([reason] * int(by_reason.get(reason, 0)))
+        # A schedule compiled before this field existed leaves the queue empty;
+        # the caller falls back to lane_quota rather than inventing a reason.
+        return out[:k]
+
+    def _selection_notes(self, seq: dict, shard_ids: list[str]) -> list[str]:
+        """Facts about the sample that filled a slot. Not why the slot existed."""
+        notes: list[str] = []
+        if seq.get("pool_epoch", 0) > 0:
+            notes.append("repeat_pass")
+        if self._reserved_shards & set(shard_ids):
+            notes.append("anneal_reserve")
+        if seq.get("tier_rule_forced"):
+            notes.append("tier_rule_forced")
+        return notes
 
     def _draw(self, lane: str, k: int, seq_len: int) -> list[dict]:
         """Draw ``k`` sequences for ``lane``, honouring the Indic tier rule.
@@ -149,6 +194,10 @@ class RunState:
             drawn = pool.take(1)
             if not drawn:
                 break
+            # Record when the tier rule, not the lane quota, decided which
+            # sub-pool this sample came from.
+            if want_verified:
+                drawn[0]["tier_rule_forced"] = True
             tier = drawn[0].get("indic_tier")
             if tier == "verified":
                 self.indic_served_verified += 1
@@ -210,6 +259,11 @@ class RunState:
             checkpoint_id=self.last_checkpoint_id,
             tokenizer_hash=self.tokenizer_hash,
             dataloader_version=DATALOADER_VERSION,
+            opus_decision_ids={
+                str(s["sample_index"]): self.opus_decision_by_shard.get(sid)
+                for s in batch["samples"]
+                for sid in (s["shard_ids"][:1] or [""])
+                if self.opus_decision_by_shard.get(sid)},
             pool_state=self.pool_states())
 
         if crash_at is not None and global_step == crash_at:
@@ -598,6 +652,14 @@ def audit(cons_records: list[dict], learn_steps: list[dict], opus_decisions: lis
         "shards_influencing_window": sorted(
             shards.values(), key=lambda e: -e["step_count"])[:25],
         "shard_count_in_window": len(shards),
+        # An audit over the whole run answers nothing: it cannot come back empty
+        # and it cannot exclude anything, so it proves no ability to isolate an
+        # interval. Recorded as a verdict rather than left for a reader to notice.
+        "window_is_strict_subset": bool(
+            token_window is not None
+            and (len(ranged) < len(cons_records) or len(shards) < len(man_by_id))),
+        "records_total": len(cons_records),
+        "shards_total": len(man_by_id),
         "largest_loss_spike": spike,
         "lineage_note": ("every shard above resolves through its manifest to "
                          "content_sha256, document ids and the cleaning pipeline "

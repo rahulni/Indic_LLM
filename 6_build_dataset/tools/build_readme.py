@@ -240,6 +240,26 @@ def build(art: str) -> str:
                   if st.get("sequence_length")})
     ladder = f"{_sl[0]}→{_sl[-1]}" if _sl else "?"
     pages = _pages_url()
+    # Figures for the completion-criterion table. Read from artifacts like
+    # everything else, so the table cannot claim a clause is answered when the
+    # underlying field is empty.
+    cons_all = _jl(art, "ledgers", "consumption.jsonl")
+    learn_shards_all = _get(art, "ledgers", "learning_shards.json", default=[])
+    _slots = [x for r in cons_all for x in r.get("samples", [])]
+    reason_slots = sum(1 for x in _slots if x.get("selection_reason"))
+    _rc: dict[str, int] = {}
+    for x in _slots:
+        r_ = x.get("selection_reason")
+        if r_:
+            _rc[r_] = _rc.get(r_, 0) + 1
+    reason_mix = ", ".join(f"`{k}` {v:,}" for k, v in sorted(_rc.items(), key=lambda kv: -kv[1]))
+    aligned_n = sum(1 for x in learn_shards_all if x.get("gradient_alignment") is not None)
+    delta_n_all = sum(1 for x in learn_shards_all
+                      if x.get("loss_delta_before_after_exposure") is not None)
+    _aud = _get(art, "audit", "audit.json", default={})
+    _tw = _aud.get("token_window")
+    audit_window = (f"{_tw[0]:,}-{_tw[1]:,} ({_aud.get('records_in_window')}/"
+                    f"{_aud.get('records_total')} records)" if _tw else "not set")
     badges = write_badges([
         ("evidence", "evidence", f"{s.get('passed', 0)}/{s.get('total', 0)} passing",
          "#0ca30c" if s.get("all_passed") else "#b3261e"),
@@ -406,6 +426,25 @@ non-zero if any evidence row fails.
 > picks up `tests/test_evidence.py`, which executes the whole demo to corrupt its
 > artifacts, so it takes minutes instead of seconds. CI runs both, separately.
 
+## Does it meet the completion criterion?
+
+> The assignment is complete only when the system can prove **what it consumed**,
+> **why it consumed it**, **what the model learned from it** and **how the run can
+> be reconstructed**.
+
+| Clause | Answered by | From this run |
+|---|---|---|
+| What it consumed | Consumption ledger: token spans to `doc_id` + `shard_id` + offsets, both hashes, masks, policies, stage, rank, ledger offset | {_fmt(len(cons_all))} batch records |
+| Why it consumed it | `selection_reason` per sample, from the apportioner branch that allocated the slot — plus floors, tier rule, scarcity policy and the advisory OPUS decision id | {_fmt(reason_slots)} slots, all attributed: {reason_mix} |
+| What the model learned | Learning ledger per token and per shard: cross-entropy, perplexity, gradient alignment, loss delta before/after exposure, repeated pass, usefulness | alignment on {aligned_n}/{len(learn_shards_all)} shards, exposure delta on {delta_n_all}/{len(learn_shards_all)} |
+| How it can be reconstructed | Checkpoint keyed to ledger offset; crash → resume matches the pre-recorded next batch id; replay matches on 5 fields; fork verified distinct; audit isolates a token interval | replay {replay.get('matched', '-')}/{replay.get('steps_compared', '-')}, audit window {audit_window} |
+
+> [!NOTE]
+> Clauses 2 and 3 were **not** answered until recently. Three fields the assignment
+> names existed in the schema and were `null` in every record; the audit window was
+> `null`, making its "in window" counts cover the whole run. Both are fixed, and the
+> evidence bundle now fails if either regresses — see the table further down.
+
 ## Evidence
 
 {s.get('passed', 0)} of {s.get('total', 0)} requirements pass. Each row names the
@@ -462,6 +501,8 @@ objecting to something, not by reading the code.
 
 | Mechanism | What it caught |
 |---|---|
+| Auditing the completion criterion | **Three fields the assignment names, present in the schema and `null` in every record**: `opus_decision_ids` (0 of 4,480 slots), `gradient_alignment` and `loss_delta_before_after_exposure` (0 of 24 shards each). A schema check would have passed on all three |
+| The same audit, on the audit | `audit.token_window` was `null`, so "which shards trained between token X and Y" reported *every* record and *every* shard — a question that could not come back empty |
 | Evaluation firewall | A real train/validation **leak at 100% 8-gram overlap** — the corpus was split *before* deduplication, so a duplicate's twin sat in train while its copy sat in validation |
 | Replay's dual hash | `batch_id` matched but `batch_content_hash` did not: role spans were missing from the ledger, so replayed SFT samples silently lost their prompt masking |
 | Packing equivalence test | A **loss-mask off-by-one at every document boundary** — the packer inserts no separator, so each document's last token was trained to predict the *next* document's first token, which attention forbids it from seeing |

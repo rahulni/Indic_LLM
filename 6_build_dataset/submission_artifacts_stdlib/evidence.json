@@ -2,11 +2,11 @@
   "artifacts_read": {
     "checkpoints": 7,
     "consumption.jsonl": 240,
-    "events.jsonl": 83,
+    "events.jsonl": 84,
     "learning_tokens.jsonl": 12000,
     "manifests": 50,
     "opus_decisions.jsonl": 30,
-    "run.log": 131
+    "run.log": 132
   },
   "checks": [
     {
@@ -33,7 +33,7 @@
         "gradient_bearing_reads": 0,
         "heldout_docs_found_in_training_batches": 0,
         "registered_heldout": 40,
-        "validation_reads": 32
+        "validation_reads": 56
       },
       "evidence_label": "Blocked-shard event",
       "evidence_path": "ledgers/firewall.json",
@@ -87,9 +87,8 @@
       "detail": {
         "decisions": 30,
         "every_decision_scored": true,
-        "protected_overrides": 3,
+        "protected_overrides": 2,
         "rejection_reasons_seen": [
-          "below_threshold",
           "duplication",
           "stage_mismatch"
         ],
@@ -153,6 +152,8 @@
       "detail": {
         "eos_tracked": true,
         "shard_report_rows": 48,
+        "shards_with_exposure_loss_delta": "47/48",
+        "shards_with_gradient_alignment": "13/48",
         "steps_recorded": 128,
         "token_records": 12000,
         "tokens_linked_to_shard_and_doc": "2000/2000 sampled",
@@ -169,12 +170,12 @@
     },
     {
       "detail": {
-        "cache_hit_rate": 0.680516,
+        "cache_hit_rate": 0.681004,
         "formulas_published": true,
         "packing_utilization": 0.963608,
         "rate_recomputed_from_raw_counters": true,
-        "raw_tokens_per_second": 350.579,
-        "useful_loss_bearing_tokens_per_second": 321.862
+        "raw_tokens_per_second": 336.911,
+        "useful_loss_bearing_tokens_per_second": 309.313
       },
       "evidence_label": "Performance report",
       "evidence_path": "performance.json",

@@ -4,7 +4,7 @@
 
 A training data pipeline that can prove what it did.
 
-![evidence: 9/9 passing](docs/badges/evidence.svg) ![tests: 99](docs/badges/tests.svg) ![default model: 6L transformer](docs/badges/model.svg) ![trained on: NVIDIA GeForce RTX 3070 Laptop GPU](docs/badges/device.svg) ![data plane: byte-exact](docs/badges/determinism.svg) ![runtime: 157s](docs/badges/runtime.svg)
+![evidence: 9/9 passing](docs/badges/evidence.svg) ![tests: 108](docs/badges/tests.svg) ![default model: 6L transformer](docs/badges/model.svg) ![trained on: NVIDIA GeForce RTX 3070 Laptop GPU](docs/badges/device.svg) ![data plane: byte-exact](docs/badges/determinism.svg) ![runtime: 185s](docs/badges/runtime.svg)
 
 [Quick start](#quick-start) · [Evidence](#evidence) · [**Live dashboard**](https://rahulni.github.io/Indic_LLM/6_build_dataset/submission_artifacts/dashboard.html) ·
 [Two backends](#two-backends-one-data-plane) ·
@@ -68,7 +68,7 @@ them.
 
 ```bash
 pip install -r requirements-torch.txt   # torch; the default model is a transformer
-python run_demo.py                      # → submission_artifacts/   (~157s)
+python run_demo.py                      # → submission_artifacts/   (~185s)
 
 # No GPU, or no PyTorch? The same data path, driven by a stdlib model:
 python run_demo.py --profile demo --out submission_artifacts_stdlib
@@ -91,6 +91,25 @@ non-zero if any evidence row fails.
 > Run the suites by name as above rather than `unittest discover`: discovery also
 > picks up `tests/test_evidence.py`, which executes the whole demo to corrupt its
 > artifacts, so it takes minutes instead of seconds. CI runs both, separately.
+
+## Does it meet the completion criterion?
+
+> The assignment is complete only when the system can prove **what it consumed**,
+> **why it consumed it**, **what the model learned from it** and **how the run can
+> be reconstructed**.
+
+| Clause | Answered by | From this run |
+|---|---|---|
+| What it consumed | Consumption ledger: token spans to `doc_id` + `shard_id` + offsets, both hashes, masks, policies, stage, rank, ledger offset | 1,120 batch records |
+| Why it consumed it | `selection_reason` per sample, from the apportioner branch that allocated the slot — plus floors, tier rule, scarcity policy and the advisory OPUS decision id | 4,480 slots, all attributed: `lane_quota` 3,054, `carry_over_debt` 890, `protected_floor` 536 |
+| What the model learned | Learning ledger per token and per shard: cross-entropy, perplexity, gradient alignment, loss delta before/after exposure, repeated pass, usefulness | alignment on 17/24 shards, exposure delta on 24/24 |
+| How it can be reconstructed | Checkpoint keyed to ledger offset; crash → resume matches the pre-recorded next batch id; replay matches on 5 fields; fork verified distinct; audit isolates a token interval | replay 40/40, audit window 370,784-865,162 (430/1120 records) |
+
+> [!NOTE]
+> Clauses 2 and 3 were **not** answered until recently. Three fields the assignment
+> names existed in the schema and were `null` in every record; the audit window was
+> `null`, making its "in window" counts cover the whole run. Both are fixed, and the
+> evidence bundle now fails if either regresses — see the table further down.
 
 ## Evidence
 
@@ -143,8 +162,8 @@ backprop and no dependencies at all. Both drive the identical pipeline.
 | Batches in the ledger | 1,120 | 240 |
 | Loss, first → last | 9.0859 → 5.6228 | 6.3210 → 5.3867 |
 | ln(V), the anchor | 9.0109 | 6.2383 |
-| Useful tokens/sec | 11,539.8 | 321.9 |
-| Wall clock | 157s | 212s |
+| Useful tokens/sec | 9,192.4 | 309.3 |
+| Wall clock | 185s | 238s |
 | Evidence | **9/9** | **9/9** |
 
 > [!IMPORTANT]
@@ -170,6 +189,8 @@ objecting to something, not by reading the code.
 
 | Mechanism | What it caught |
 |---|---|
+| Auditing the completion criterion | **Three fields the assignment names, present in the schema and `null` in every record**: `opus_decision_ids` (0 of 4,480 slots), `gradient_alignment` and `loss_delta_before_after_exposure` (0 of 24 shards each). A schema check would have passed on all three |
+| The same audit, on the audit | `audit.token_window` was `null`, so "which shards trained between token X and Y" reported *every* record and *every* shard — a question that could not come back empty |
 | Evaluation firewall | A real train/validation **leak at 100% 8-gram overlap** — the corpus was split *before* deduplication, so a duplicate's twin sat in train while its copy sat in validation |
 | Replay's dual hash | `batch_id` matched but `batch_content_hash` did not: role spans were missing from the ledger, so replayed SFT samples silently lost their prompt masking |
 | Packing equivalence test | A **loss-mask off-by-one at every document boundary** — the packer inserts no separator, so each document's last token was trained to predict the *next* document's first token, which attention forbids it from seeing |
@@ -192,7 +213,7 @@ Live check of the third one, recomputed from this run's artifacts: the mask call
 | Steps served | 298 across 4 curriculum stages |
 | Loss | 9.0859 → 5.6228 against ln V = 9.0109 |
 | Held-out registered | 40 documents, **0** gradient-bearing reads |
-| OPUS decisions | 64 — accepted 24, protected_override 9, rejected 31 |
+| OPUS decisions | 64 — accepted 24, protected_override 8, rejected 32 |
 | Crash → resume | discarded 76 uncommitted records; next batch matched: **True** |
 | Replay | 40/40 batches matched on batch_id, batch_content_hash, loss_mask_hash, token_spans, shard_ids |
 | Fork | `exp-b` diverged at step 80 |
@@ -248,13 +269,13 @@ Six policies are implemented and all six are measured on every lane —
 
 | metric | value | formula |
 |---|---|---|
-| raw tokens/sec | 13,251.2 | `positions_total / train_seconds` |
-| **useful loss-bearing tokens/sec** | **11,539.8** | `tokens_loss_bearing / train_seconds` |
-| accepted tokens/sec after OPUS | 4,327.4 | `× opus_accepted / opus_candidates` |
+| raw tokens/sec | 10,555.7 | `positions_total / train_seconds` |
+| **useful loss-bearing tokens/sec** | **9,192.4** | `tokens_loss_bearing / train_seconds` |
+| accepted tokens/sec after OPUS | 3,447.1 | `× opus_accepted / opus_candidates` |
 | packing utilization | 89.03% | `tokens_real / positions_total` |
 | pad fraction | 10.97% | `tokens_pad / positions_total` |
-| cache hit rate | 90.6% | `hits / (hits + misses)` |
-| loader wait | 0.458s | time the trainer blocked on `queue.get` |
+| cache hit rate | 90.5% | `hits / (hits + misses)` |
+| loader wait | 0.388s | time the trainer blocked on `queue.get` |
 
 Every derived rate ships beside the raw counters it came from, in the same file:
 
@@ -344,11 +365,11 @@ Rs 2700.0/hour
 
 | | |
 |---|---|
-| Padding, this run | Rs 9.2858 |
-| Per billion positions | Rs 56,599 |
-| Lost to padding per billion | Rs 6,211 |
-| At risk between checkpoints | Rs 5.6790 |
-| Cost of one replay | 4.499s |
+| Padding, this run | Rs 11.6571 |
+| Per billion positions | Rs 71,052 |
+| Lost to padding per billion | Rs 7,797 |
+| At risk between checkpoints | Rs 7.1292 |
+| Cost of one replay | 4.527s |
 
 Every input is a named, sourced constant. The projection is arithmetic on this
 run's measured pad fraction, not a forecast.
@@ -381,13 +402,13 @@ run's artifacts and it computes nothing of its own.
 
 ## Tests
 
-99 tests, no framework beyond `unittest`.
+108 tests, no framework beyond `unittest`.
 
 | file | tests | covers |
 |---|---|---|
 | `tests/test_evidence.py` | 14 | corrupts each artifact and asserts the matching row flips to FAIL |
 | `tests/test_invariants.py` | 49 | shard immutability, masks, floors, batch identity, rank disjointness, the model |
-| `tests/test_recovery.py` | 18 | torn-tail recovery, resume, the Indic tier rule, perf reconstructibility |
+| `tests/test_recovery.py` | 27 | torn-tail recovery, resume, the Indic tier rule, perf reconstructibility |
 | `tests/test_torch_backend.py` | 18 | document masking vs the oracle, packed-vs-unpacked equivalence, gradcheck, anti-vacuity |
 
 ## Artifacts

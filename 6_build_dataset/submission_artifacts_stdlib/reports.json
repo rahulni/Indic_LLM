@@ -503,6 +503,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.7521,
           "epochs_needed": 0.7521,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -517,6 +518,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.2437,
           "epochs_needed": 0.2437,
+          "is_protected": false,
           "lane": "code",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -531,6 +533,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.064,
           "epochs_needed": 0.064,
+          "is_protected": true,
           "lane": "indic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -545,6 +548,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0302,
           "epochs_needed": 0.0302,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -559,6 +563,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.12,
           "epochs_needed": 0.12,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -573,6 +578,7 @@
           "epoch_cap": 4.0,
           "epochs": 1.8209,
           "epochs_needed": 1.8209,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "repeat",
           "reason": "demand needs 1.82 passes, within the 4.0 epoch cap; repeating existing data",
@@ -587,6 +593,7 @@
           "epoch_cap": 4.0,
           "epochs": 1.5504,
           "epochs_needed": 1.5504,
+          "is_protected": false,
           "lane": "web",
           "policy": "repeat",
           "reason": "demand needs 1.55 passes, within the 4.0 epoch cap; repeating existing data",
@@ -604,6 +611,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.1175,
           "epochs_needed": 0.1175,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -618,6 +626,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0498,
           "epochs_needed": 0.0498,
+          "is_protected": false,
           "lane": "code",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -632,6 +641,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0187,
           "epochs_needed": 0.0187,
+          "is_protected": true,
           "lane": "indic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -646,6 +656,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0054,
           "epochs_needed": 0.0054,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -660,6 +671,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0554,
           "epochs_needed": 0.0554,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -674,6 +686,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.2914,
           "epochs_needed": 0.2914,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -688,6 +701,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.6489,
           "epochs_needed": 0.6489,
+          "is_protected": false,
           "lane": "web",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -702,6 +716,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.1175,
           "epochs_needed": 0.1175,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -716,6 +731,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0603,
           "epochs_needed": 0.0603,
+          "is_protected": false,
           "lane": "code",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -730,6 +746,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0158,
           "epochs_needed": 0.0158,
+          "is_protected": true,
           "lane": "indic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -744,6 +761,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0054,
           "epochs_needed": 0.0054,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -758,6 +776,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0369,
           "epochs_needed": 0.0369,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -772,6 +791,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.3642,
           "epochs_needed": 0.3642,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -786,6 +806,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.4224,
           "epochs_needed": 0.4224,
+          "is_protected": false,
           "lane": "web",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -800,6 +821,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.3761,
           "epochs_needed": 0.3761,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -814,6 +836,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.1232,
           "epochs_needed": 0.1232,
+          "is_protected": false,
           "lane": "code",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -828,6 +851,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0256,
           "epochs_needed": 0.0256,
+          "is_protected": true,
           "lane": "indic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -842,6 +866,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0173,
           "epochs_needed": 0.0173,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -856,6 +881,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0277,
           "epochs_needed": 0.0277,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -870,6 +896,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.9226,
           "epochs_needed": 0.9226,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -884,6 +911,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.4529,
           "epochs_needed": 0.4529,
+          "is_protected": false,
           "lane": "web",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -898,6 +926,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.141,
           "epochs_needed": 0.141,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -912,6 +941,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0105,
           "epochs_needed": 0.0105,
+          "is_protected": false,
           "lane": "code",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -926,6 +956,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0039,
           "epochs_needed": 0.0039,
+          "is_protected": true,
           "lane": "indic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -940,6 +971,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0022,
           "epochs_needed": 0.0022,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -954,6 +986,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.2428,
           "epochs_needed": 0.2428,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -968,6 +1001,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0863,
           "epochs_needed": 0.0863,
+          "is_protected": false,
           "lane": "web",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -1183,13 +1217,13 @@
     "accept_ratio": 0.4,
     "by_lane": {
       "code": {
-        "accepted": 3,
-        "deferred": 1,
+        "accepted": 2,
+        "deferred": 2,
         "rejected": 3
       },
       "indic": {
-        "accepted": 1,
-        "protected_override": 2
+        "accepted": 2,
+        "protected_override": 1
       },
       "multiling": {
         "deferred": 1
@@ -1199,29 +1233,28 @@
       },
       "web": {
         "accepted": 6,
-        "deferred": 2,
-        "rejected": 10
+        "deferred": 3,
+        "rejected": 9
       }
     },
     "by_rejection_reason": {
-      "below_threshold": 1,
       "duplication": 12,
-      "stage_mismatch": 4
+      "stage_mismatch": 6
     },
     "by_status": {
       "accepted": 10,
-      "deferred": 4,
-      "protected_override": 3,
-      "rejected": 13
+      "deferred": 6,
+      "protected_override": 2,
+      "rejected": 12
     },
     "method": "cosine similarity between a candidate's prefix gradient and the validation-probe gradient direction",
     "pool_health": {
       "available": true,
-      "early_accepted_score_mean": 0.05953228,
+      "early_accepted_score_mean": 0.10754005,
       "interpretation": "acceptance ratio is fixed, so the accepted COUNT cannot reveal pool exhaustion; only the score distribution can. A large drop means OPUS is selecting the best of a bad set.",
-      "late_accepted_score_mean": 0.2146542,
+      "late_accepted_score_mean": 0.26650366,
       "pool_exhausting": false,
-      "relative_drop": -2.605677
+      "relative_drop": -1.478181
     },
     "prefix_tokens": 32,
     "protected_lanes": [
@@ -1981,99 +2014,147 @@
   "probe_history": [
     {
       "by_lane": {
-        "validation": 6.278561
+        "agentic": 6.297318,
+        "code": 6.215988,
+        "indic": 6.270652,
+        "longctx": 6.292185,
+        "multiling": 6.251248,
+        "reasoning": 6.257096,
+        "web": 6.328843
       },
       "global_step": 0,
       "gradient_bearing": false,
       "label": "pre-training",
-      "mean_loss": 6.267426535133478,
-      "perplexity": 527.119108391988,
-      "samples": 12,
-      "tokens": 693
+      "mean_loss": 6.275613959510905,
+      "perplexity": 531.4525719751407,
+      "samples": 21,
+      "tokens": 1181
     },
     {
       "by_lane": {
-        "validation": 6.058081
+        "agentic": 6.153118,
+        "code": 5.72344,
+        "indic": 6.162992,
+        "longctx": 6.169068,
+        "multiling": 6.17347,
+        "reasoning": 6.128173,
+        "web": 6.186853
       },
       "global_step": 10,
       "gradient_bearing": false,
       "label": "step-10",
-      "mean_loss": 6.0434219345544244,
-      "perplexity": 421.33234257579306,
-      "samples": 12,
-      "tokens": 693
+      "mean_loss": 6.098224932548281,
+      "perplexity": 445.067044470019,
+      "samples": 21,
+      "tokens": 1181
     },
     {
       "by_lane": {
-        "validation": 5.312501
+        "agentic": 5.718255,
+        "code": 4.041766,
+        "indic": 5.918632,
+        "longctx": 5.781206,
+        "multiling": 5.900472,
+        "reasoning": 5.747854,
+        "web": 5.721536
       },
       "global_step": 20,
       "gradient_bearing": false,
       "label": "step-20",
-      "mean_loss": 5.277223560691477,
-      "perplexity": 195.82542248078622,
-      "samples": 12,
-      "tokens": 693
+      "mean_loss": 5.5219346174127235,
+      "perplexity": 250.11845294095673,
+      "samples": 21,
+      "tokens": 1181
     },
     {
       "by_lane": {
-        "validation": 4.914481
+        "agentic": 5.382315,
+        "code": 3.722573,
+        "indic": 6.187718,
+        "longctx": 5.324754,
+        "multiling": 5.522565,
+        "reasoning": 5.41615,
+        "web": 5.175197
       },
       "global_step": 30,
       "gradient_bearing": false,
       "label": "step-30",
-      "mean_loss": 4.862929162532639,
-      "perplexity": 129.40268902021901,
-      "samples": 12,
-      "tokens": 693
+      "mean_loss": 5.183755082577506,
+      "perplexity": 178.35127891187963,
+      "samples": 21,
+      "tokens": 1181
     },
     {
       "by_lane": {
-        "validation": 4.761213
+        "agentic": 5.332231,
+        "code": 3.566004,
+        "indic": 6.618219,
+        "longctx": 5.199408,
+        "multiling": 5.383169,
+        "reasoning": 5.47665,
+        "web": 5.069959
       },
       "global_step": 40,
       "gradient_bearing": false,
       "label": "step-40",
-      "mean_loss": 4.690185693279467,
-      "perplexity": 108.87339498820837,
-      "samples": 12,
-      "tokens": 693
+      "mean_loss": 5.138144368835585,
+      "perplexity": 170.39927655817465,
+      "samples": 21,
+      "tokens": 1181
     },
     {
       "by_lane": {
-        "validation": 4.52445
+        "agentic": 5.13486,
+        "code": 3.116886,
+        "indic": 6.470239,
+        "longctx": 5.075066,
+        "multiling": 5.225031,
+        "reasoning": 5.511381,
+        "web": 4.998622
       },
       "global_step": 50,
       "gradient_bearing": false,
       "label": "step-50",
-      "mean_loss": 4.456990784216329,
-      "perplexity": 86.22764071498432,
-      "samples": 12,
-      "tokens": 693
+      "mean_loss": 4.97193115423211,
+      "perplexity": 144.3052942407829,
+      "samples": 21,
+      "tokens": 1181
     },
     {
       "by_lane": {
-        "validation": 4.526582
+        "agentic": 5.110265,
+        "code": 3.243708,
+        "indic": 6.548106,
+        "longctx": 5.053861,
+        "multiling": 5.18336,
+        "reasoning": 5.470434,
+        "web": 4.990398
       },
       "global_step": 60,
       "gradient_bearing": false,
       "label": "step-60",
-      "mean_loss": 4.458065911328532,
-      "perplexity": 86.32039624239476,
-      "samples": 12,
-      "tokens": 693
+      "mean_loss": 4.979249205605111,
+      "perplexity": 145.36520129439404,
+      "samples": 21,
+      "tokens": 1181
     },
     {
       "by_lane": {
-        "validation": 4.106876
+        "agentic": 5.038873,
+        "code": 1.911278,
+        "indic": 6.51632,
+        "longctx": 5.004704,
+        "multiling": 5.183752,
+        "reasoning": 5.466934,
+        "web": 4.916658
       },
       "global_step": 100,
       "gradient_bearing": false,
       "label": "final",
-      "mean_loss": 4.009389003592615,
-      "perplexity": 55.113186315196245,
-      "samples": 12,
-      "tokens": 693
+      "mean_loss": 4.72936058248637,
+      "perplexity": 113.2231423376567,
+      "samples": 21,
+      "tokens": 1181
     }
   ],
   "shards": {

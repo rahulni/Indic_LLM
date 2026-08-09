@@ -36,13 +36,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 0,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 0,
       "gradient_bearing": false,
@@ -57,6 +50,48 @@
       "split": "validation"
     },
     {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
+      "global_step": 0,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
       "doc_id": "val_agentic_0000",
       "global_step": 20,
       "gradient_bearing": false,
@@ -92,13 +127,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 20,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 20,
       "gradient_bearing": false,
@@ -113,6 +141,48 @@
       "split": "validation"
     },
     {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
+      "global_step": 20,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
       "doc_id": "val_agentic_0000",
       "global_step": 40,
       "gradient_bearing": false,
@@ -148,13 +218,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 40,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 40,
       "gradient_bearing": false,
@@ -169,6 +232,48 @@
       "split": "validation"
     },
     {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
+      "global_step": 40,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
       "doc_id": "val_agentic_0000",
       "global_step": 60,
       "gradient_bearing": false,
@@ -204,13 +309,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 60,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 60,
       "gradient_bearing": false,
@@ -219,6 +317,48 @@
     },
     {
       "doc_id": "val_eng_en_0032",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 60,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
       "global_step": 60,
       "gradient_bearing": false,
       "purpose": "validation_probe",
@@ -260,13 +400,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 80,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 80,
       "gradient_bearing": false,
@@ -275,6 +408,48 @@
     },
     {
       "doc_id": "val_eng_en_0032",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 80,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
       "global_step": 80,
       "gradient_bearing": false,
       "purpose": "validation_probe",
@@ -316,13 +491,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 100,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 100,
       "gradient_bearing": false,
@@ -331,6 +499,48 @@
     },
     {
       "doc_id": "val_eng_en_0032",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 100,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
       "global_step": 100,
       "gradient_bearing": false,
       "purpose": "validation_probe",
@@ -372,13 +582,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 120,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 120,
       "gradient_bearing": false,
@@ -387,6 +590,48 @@
     },
     {
       "doc_id": "val_eng_en_0032",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 120,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
       "global_step": 120,
       "gradient_bearing": false,
       "purpose": "validation_probe",
@@ -428,13 +673,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 140,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 140,
       "gradient_bearing": false,
@@ -443,6 +681,48 @@
     },
     {
       "doc_id": "val_eng_en_0032",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 140,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
       "global_step": 140,
       "gradient_bearing": false,
       "purpose": "validation_probe",
@@ -484,13 +764,6 @@
       "split": "validation"
     },
     {
-      "doc_id": "val_code_train__02_class_Lanes",
-      "global_step": 240,
-      "gradient_bearing": false,
-      "purpose": "validation_probe",
-      "split": "validation"
-    },
-    {
       "doc_id": "val_eng_en_0008",
       "global_step": 240,
       "gradient_bearing": false,
@@ -499,6 +772,48 @@
     },
     {
       "doc_id": "val_eng_en_0032",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0008",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_hin_hi_0029",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_kan_kn_0002",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_reasoning_0006",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0002",
+      "global_step": 240,
+      "gradient_bearing": false,
+      "purpose": "validation_probe",
+      "split": "validation"
+    },
+    {
+      "doc_id": "val_spa_es_0036",
       "global_step": 240,
       "gradient_bearing": false,
       "purpose": "validation_probe",
@@ -1004,7 +1319,7 @@
     }
   ],
   "registry": {
-    "access_log_entries": 72,
+    "access_log_entries": 117,
     "blocked": [
       {
         "blocked": true,
@@ -1033,7 +1348,7 @@
     },
     "gradient_bearing_reads": 0,
     "reads_by_split": {
-      "validation": 72
+      "validation": 117
     },
     "registered": 40
   },

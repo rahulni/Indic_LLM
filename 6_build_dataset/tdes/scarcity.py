@@ -64,6 +64,10 @@ def resolve(lane: str, demand_tokens: int, supply_tokens: int, *,
         "demand_tokens": demand_tokens, "supply_tokens": supply_tokens,
         "epochs_needed": round(epochs_needed, 4),
         "epoch_cap": epoch_cap,
+        # Recorded on the decision because only a protected lane may exceed the
+        # cap, and a checker should not have to re-derive which lanes those are
+        # from the stage table to know whether a breach was legitimate.
+        "is_protected": bool(is_protected),
     }
 
     if epochs_needed <= 1.0:

@@ -1,8 +1,8 @@
 {
   "efficiency": {
     "context_only_fraction": 0.045523,
-    "gpu_idle_proxy_seconds": 0.583156,
-    "loader_wait_fraction_of_train_time": 0.003413,
+    "gpu_idle_proxy_seconds": 0.642497,
+    "loader_wait_fraction_of_train_time": 0.003614,
     "loss_bearing_fraction_of_positions": 0.918086,
     "loss_bearing_fraction_of_real": 0.952758,
     "opus_acceptance_rate": 0.333333,
@@ -24,21 +24,21 @@
     "cache": {
       "capacity": 8,
       "evictions": 438,
-      "hit_rate": 0.680516,
+      "hit_rate": 0.681004,
       "hits": 950,
-      "lookups": 1396,
-      "misses": 446,
+      "lookups": 1395,
+      "misses": 445,
       "resident": 8
     },
-    "loader_wait_events": 446,
-    "loader_wait_seconds": 0.583156,
-    "mean_shard_read_ms": 1.1972,
-    "mean_wait_ms": 1.3075,
+    "loader_wait_events": 445,
+    "loader_wait_seconds": 0.642497,
+    "mean_shard_read_ms": 1.3235,
+    "mean_wait_ms": 1.4438,
     "note": "delivery is strictly in plan order; threads affect only how long the consumer waited, never which data it received",
     "prefetch_depth": 3,
-    "prefetch_hits": 445,
+    "prefetch_hits": 444,
     "prefetch_requests": 445,
-    "shard_read_seconds": 0.533929,
+    "shard_read_seconds": 0.590273,
     "shard_reads": 446,
     "workers": 3
   },
@@ -466,18 +466,18 @@
     }
   },
   "phase_seconds": {
-    "build": 15.778,
-    "replay": 0.3041,
-    "resume": 0.2515,
-    "train": 169.132
+    "build": 17.4348,
+    "replay": 0.4684,
+    "resume": 0.2476,
+    "train": 190.6431
   },
   "rates": {
-    "accepted_tokens_per_second_after_opus": 107.287,
-    "raw_tokens_per_second": 350.579,
-    "samples_per_second": 4.495,
-    "seconds_per_step": 1.334933,
-    "steps_per_second": 0.749,
-    "useful_loss_bearing_tokens_per_second": 321.862
+    "accepted_tokens_per_second_after_opus": 103.104,
+    "raw_tokens_per_second": 336.911,
+    "samples_per_second": 4.319,
+    "seconds_per_step": 1.389091,
+    "steps_per_second": 0.72,
+    "useful_loss_bearing_tokens_per_second": 309.313
   },
   "raw_counters": {
     "microbatches": 256,
@@ -490,6 +490,6 @@
   },
   "reconstruction_note": "every rate above is recomputable by hand from raw_counters, train_seconds and loader. No figure in this file is reported without the inputs that produce it.",
   "steps": 128,
-  "train_seconds": 170.8714,
-  "wall_clock_seconds": 211.5021
+  "train_seconds": 177.8037,
+  "wall_clock_seconds": 238.0112
 }

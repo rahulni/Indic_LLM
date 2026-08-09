@@ -37,7 +37,7 @@ Evidence: `ledgers/firewall.json` (blocked_probe and leak_scan)
 - `blocked_on_probe`: True
 - `block_reasons`: ['held-out canary string present in text', '100.0% of 8-grams overlap held-out data (threshold 10%)']
 - `heldout_docs_found_in_training_batches`: 0
-- `validation_reads`: 72
+- `validation_reads`: 117
 - `gradient_bearing_reads`: 0
 
 ### Packing correctness — PASS
@@ -67,7 +67,7 @@ Evidence: `ledgers/opus_decisions.jsonl` (one record per candidate)
 - `statuses_seen`: ['accepted', 'protected_override', 'rejected']
 - `rejection_reasons_seen`: ['below_threshold', 'duplication']
 - `every_decision_scored`: True
-- `protected_overrides`: 9
+- `protected_overrides`: 8
 
 ### Crash recovery — PASS
 
@@ -100,6 +100,8 @@ Evidence: `ledgers/learning_tokens.jsonl` (per-token records with shard_id + doc
 - `shard_report_rows`: 24
 - `steps_recorded`: 298
 - `tokens_linked_to_shard_and_doc`: 2000/2000 sampled
+- `shards_with_gradient_alignment`: 17/24
+- `shards_with_exposure_loss_delta`: 24/24
 - `usefulness_classes`: ['useful']
 - `eos_tracked`: True
 
@@ -107,17 +109,17 @@ Evidence: `ledgers/learning_tokens.jsonl` (per-token records with shard_id + doc
 
 Evidence: `performance.json` (rates + raw_counters + formulas)
 
-- `useful_loss_bearing_tokens_per_second`: 11539.753
-- `raw_tokens_per_second`: 13251.214
+- `useful_loss_bearing_tokens_per_second`: 9192.38
+- `raw_tokens_per_second`: 10555.703
 - `packing_utilization`: 0.89026
-- `cache_hit_rate`: 0.905546
+- `cache_hit_rate`: 0.904988
 - `rate_recomputed_from_raw_counters`: True
 - `formulas_published`: True
 
 ## Artifacts read
 
-- `run.log`: 135
-- `events.jsonl`: 87
+- `run.log`: 136
+- `events.jsonl`: 88
 - `consumption.jsonl`: 1120
 - `learning_tokens.jsonl`: 12000
 - `opus_decisions.jsonl`: 64

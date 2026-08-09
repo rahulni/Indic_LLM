@@ -34,6 +34,31 @@ from .config import (ANNEAL_RESERVE_FRACTION, INDIC_VERIFIED_FLOOR_FRACTION,
 from .determinism import stable_shuffle
 from .scarcity import resolve as resolve_scarcity, summarise as summarise_scarcity
 
+# Why a sample was served. The single source of truth for the vocabulary, so a
+# reason cannot drift by being typed twice -- the same discipline
+# ``logging_.PASS_TOKENS`` applies to the [PASS] strings.
+#
+#   protected_floor   a floor claimed the slot before larger lanes could
+#   lane_quota        the lane's own whole entitlement for this step
+#   carry_over_debt   a leftover slot went to the largest accumulated residual,
+#                     which is how a lane weighted below one sample per step is
+#                     served at all
+#
+# MEASURED, and worth knowing before reading a zero as a broken floor:
+# `protected_floor` does not appear at all at 4 samples/step, and appears 278
+# times over 240 steps at 16. The leftover pass hands slots to the largest
+# residual even when it is below 1.0, which drives that residual negative, so in
+# a small batch a floor lane is served *through* carry-over before the dedicated
+# floor pass ever sees its residual reach 1.0. The floor is still met -- that is
+# checked independently over a window by `verify_floors` -- but the mechanism
+# that met it differs with batch size, and these reasons report the mechanism
+# honestly rather than flattening it to "floor".
+SELECTION_REASONS = ("protected_floor", "lane_quota", "carry_over_debt")
+
+# Refinements recorded alongside the reason. These do not explain why the slot
+# existed, only something true about the sample that filled it.
+SELECTION_NOTES = ("repeat_pass", "anneal_reserve", "tier_rule_forced")
+
 
 class LaneApportioner:
     """Apportion samples to lanes with **carry-over** between steps.
@@ -58,12 +83,25 @@ class LaneApportioner:
 
     def __init__(self) -> None:
         self.residual: dict[str, float] = {}
+        # Which branch below allocated each slot, per lane, for the most recent
+        # call. The assignment requires the system to prove *why* it consumed
+        # something; for a lane the honest answer is which of the three passes
+        # produced the slot, so it is recorded here rather than re-derived later
+        # from numbers that cannot distinguish the cases.
+        self.last_reasons: dict[str, dict[str, int]] = {}
 
     def state(self) -> dict:
         return {k: round(v, 12) for k, v in sorted(self.residual.items())}
 
+    def _credit(self, lane: str, reason: str, k: int) -> None:
+        if k:
+            self.last_reasons.setdefault(lane, {})
+            self.last_reasons[lane][reason] = (
+                self.last_reasons[lane].get(reason, 0) + k)
+
     def apportion(self, weights: dict[str, float], n: int,
                   floors: dict[str, float] | None = None) -> dict[str, int]:
+        self.last_reasons = {}
         if n <= 0:
             return {}
         total = sum(weights.values()) or 1.0
@@ -86,6 +124,7 @@ class LaneApportioner:
                     alloc[lane] = alloc.get(lane, 0) + take
                     self.residual[lane] -= take
                     remaining -= take
+                    self._credit(lane, "protected_floor", take)
 
         # Then everyone else, largest whole entitlement first.
         order = sorted(weights, key=lambda l: (-self.residual.get(l, 0.0), l))
@@ -98,6 +137,7 @@ class LaneApportioner:
                 alloc[lane] = alloc.get(lane, 0) + take
                 self.residual[lane] -= take
                 remaining -= take
+                self._credit(lane, "lane_quota", take)
 
         # Any slots left over go to the largest fractional residual. This keeps
         # the batch exactly full without letting rounding leak away capacity.
@@ -106,6 +146,7 @@ class LaneApportioner:
             alloc[lane] = alloc.get(lane, 0) + 1
             self.residual[lane] -= 1.0
             remaining -= 1
+            self._credit(lane, "carry_over_debt", 1)
 
         return {k: v for k, v in sorted(alloc.items()) if v}
 
@@ -233,6 +274,7 @@ def compile_schedule(cfg: RunConfig, manifests: list[dict], *,
             t = min(1.0, (local + 1) / warm)
             mix = _blend(prev_mix, stage.mixture, t) if local < warm else dict(stage.mixture)
             quota = apportioner.apportion(mix, samples, stage.protected_floors)
+            reasons = {l: dict(r) for l, r in sorted(apportioner.last_reasons.items())}
 
             for lane, k in quota.items():
                 if k:
@@ -250,6 +292,9 @@ def compile_schedule(cfg: RunConfig, manifests: list[dict], *,
                 "warmup_t": round(t, 4),
                 "lane_weights": {k: round(v, 6) for k, v in sorted(mix.items())},
                 "lane_quota": {k: v for k, v in sorted(quota.items()) if v},
+                # lane -> {reason: slots}. Sums to lane_quota[lane] by
+                # construction; asserted in tests/test_invariants.py.
+                "lane_quota_reasons": reasons,
                 "anneal_release": stage.anneal_reserve_only,
                 "tokens_this_step": samples * seq_len,
             })

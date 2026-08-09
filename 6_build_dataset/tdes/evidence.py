@@ -183,14 +183,26 @@ def build(out_dir: str) -> dict:
     linked = sum(1 for t in tokens[:2000]
                  if t.get("shard_id") and t.get("shard_id") != "?" and t.get("doc_id"))
     sample = tokens[:2000]
+    # Two fields the assignment names by name were present in the schema and null
+    # in every row: gradient_alignment and loss_delta_before_after_exposure. A
+    # declared-but-empty field is not evidence, so the row now requires both to
+    # be populated for at least some shard. Neither can be true of every shard --
+    # alignment exists only where OPUS scored, and a delta needs two probe
+    # evaluations bracketing the exposure -- so the bar is "computed", not "total".
+    aligned = sum(1 for r in learn_shards if r.get("gradient_alignment") is not None)
+    delta_n = sum(1 for r in learn_shards
+                  if r.get("loss_delta_before_after_exposure") is not None)
     ok = (len(tokens) > 0 and len(learn_shards) > 0
           and linked >= 0.95 * max(1, len(sample))
+          and aligned > 0 and delta_n > 0
           and all("cross_entropy" in t and "perplexity" in t for t in sample))
     add("learning_trace", "Learning trace", "Loss linked to source data", ok,
         {"token_records": len(tokens),
          "shard_report_rows": len(learn_shards),
          "steps_recorded": len(learn_steps),
          "tokens_linked_to_shard_and_doc": f"{linked}/{len(sample)} sampled",
+         "shards_with_gradient_alignment": f"{aligned}/{len(learn_shards)}",
+         "shards_with_exposure_loss_delta": f"{delta_n}/{len(learn_shards)}",
          "usefulness_classes": sorted({r.get("usefulness") for r in learn_shards}),
          "eos_tracked": any(t.get("is_eos_boundary") for t in sample)},
         "ledgers/learning_tokens.jsonl", "per-token records with shard_id + doc_id")

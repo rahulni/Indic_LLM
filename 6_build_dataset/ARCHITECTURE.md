@@ -65,6 +65,49 @@ hypotheticals.
 
 ---
 
+## Declared-but-null: the failure mode that keeps recurring
+
+Three separate times, a field the assignment names existed in the schema and was
+empty in every record. It is worth naming as a class, because a schema check
+passes on all of it and a reader skims straight past it:
+
+| Field | State | Why it was empty |
+|---|---|---|
+| `dedup_status`, `pii_status` | asserted, never computed | fixed early: both now run real screens |
+| `opus_decision_ids` | **null in 4,480 / 4,480** sample slots | the ledger accepted a mapping and nothing ever passed one |
+| `gradient_alignment` | **null in 24 / 24** shards | `shard_report()` accepted the map; the caller passed only `epochs` |
+| `loss_delta_before_after_exposure` | **null in 24 / 24** shards | same call site |
+| `repeated_pass_number` | `0` for every shard | hardcoded `{shard_id: 0}` at the call site |
+| `audit.token_window` | `null`, so "in window" covered the whole run | the caller never passed a window |
+
+The last two are the instructive ones. `repeated_pass_number` was not merely
+absent, it was **hardcoded to a plausible-looking zero** — and the run really did
+repeat data 58 times, which the number flatly contradicted. And a `null` audit
+window is the same vacuity as a protected-floor check that passes because it
+cannot fail: reporting `records_in_window: 1120` out of 1,120 proves no ability to
+isolate an interval at all. The audit now asserts
+`window_is_strict_subset`, and the evidence bundle fails if the alignment or the
+exposure delta goes back to null.
+
+**Why "why it consumed it" is answered by the apportioner, not by OPUS.** The
+selector computes honest gradient cosines but does not gate the stream — that is
+deliberate, and it is what keeps the served order free of any float and therefore
+byte-identical across both backends. So the recorded cause is the apportioner
+branch that actually allocated the slot (`protected_floor`, `lane_quota`,
+`carry_over_debt`), with the OPUS decision id attached as *advisory* provenance
+for a score. Claiming the selector chose the data would have been the easier
+story and a false one.
+
+A measured surprise from doing this: `protected_floor` never fires at 4
+samples/step, and fires 536 times at 16. The leftover pass hands slots to the
+largest residual even when it is below 1.0, driving that residual negative, so in
+a small batch a floor lane is served *through* carry-over before the floor pass
+ever sees it reach 1.0. The floor is still met — `verify_floors` checks that
+independently over a window — but the mechanism differs with batch width, and the
+reasons report the mechanism rather than flattening it.
+
+---
+
 ## Reproducibility: two defects found by measuring
 
 **Cross-platform hash drift.** The authoring machine has `core.autocrlf=true` and

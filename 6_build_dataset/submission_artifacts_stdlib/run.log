@@ -10,12 +10,12 @@
 ==============================================================================
   1-6  Corpus, tokenizer, firewall, shards, manifests, mixture
 ==============================================================================
-[   3.30s] admitted 234 documents (0 exact + 0 near duplicates removed, 0 PII-redacted)
+[   3.17s] admitted 234 documents (0 exact + 0 near duplicates removed, 0 PII-redacted)
 [PASS] tokenizer_hash_verified
-[  15.35s] EVENT  shards created
-[  15.35s] EVENT  manifests validated
-[  15.42s] EVENT  mixture compiled
-[  15.78s] model: stdlib NeuralLM ln(V)=6.2383
+[  16.95s] EVENT  shards created
+[  16.95s] EVENT  manifests validated
+[  17.02s] EVENT  mixture compiled
+[  17.44s] model: stdlib NeuralLM ln(V)=6.2383
   shards by lane
   lane       shards  tokens  docs
   ---------  ------  ------  ----
@@ -26,7 +26,7 @@
   multiling  4       13861   22  
   reasoning  1       2636    10  
   web        4       14696   20  
-[  15.81s] EVENT  batches packed
+[  17.47s] EVENT  batches packed
   fertility (tokens per word, lower is better)
   language  fertility  words
   --------  ---------  -----
@@ -42,93 +42,94 @@
 ==============================================================================
   7  Evaluation firewall
 ==============================================================================
-[  15.81s] injected an evaluation document into the candidate pool: blocked=True reasons=['held-out canary string present in text', '100.0% of 8-grams overlap held-out data (threshold 10%)']
-[  15.81s] EVENT  evaluation data blocked
+[  17.48s] injected an evaluation document into the candidate pool: blocked=True reasons=['held-out canary string present in text', '100.0% of 8-grams overlap held-out data (threshold 10%)']
+[  17.48s] EVENT  evaluation data blocked
 [PASS] eval_shard_blocked
-[  15.81s] structure-preserving packing never merged two documents: True
+[  17.48s] structure-preserving packing never merged two documents: True
 
 ==============================================================================
   8-10  Training, OPUS, ledgers, checkpoints
 ==============================================================================
-[  18.81s] validation probe: 12 samples, loss=6.2674, ln(V)=6.2383
-[  19.52s] EVENT  OPUS decisions recorded
-[  20.57s]   step    0 [A] loss=6.3210 ppl=  556.15 |g|=0.209 lr=0.03000 lanes={'code': 1, 'indic': 1, 'web': 4}
-[  30.88s] EVENT  checkpoint saved
+[  23.62s] validation probe: 21 samples, loss=6.2756, ln(V)=6.2383
+[  24.30s] EVENT  OPUS decisions recorded
+[  25.54s]   step    0 [A] loss=6.3210 ppl=  556.15 |g|=0.209 lr=0.03000 lanes={'code': 1, 'indic': 1, 'web': 4}
+[  36.50s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[  33.67s]   probe@10: loss=6.0434 ppl=421.33 delta=-0.224005
-[  34.82s]   step   10 [A] loss=6.2072 ppl=  496.29 |g|=0.198 lr=0.30000 lanes={'code': 1, 'longctx': 1, 'web': 4}
-[  41.06s] EVENT  OPUS decisions recorded
-[  45.89s] EVENT  checkpoint saved
+[  41.70s]   probe@10: loss=6.0982 ppl=445.07 delta=-0.177389
+[  43.29s]   step   10 [A] loss=6.2072 ppl=  496.29 |g|=0.198 lr=0.30000 lanes={'code': 1, 'longctx': 1, 'web': 4}
+[  49.26s] EVENT  OPUS decisions recorded
+[  54.18s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[  48.78s]   probe@20: loss=5.2772 ppl=195.83 delta=-0.766198
-[  49.93s]   step   20 [A] loss=5.8459 ppl=  345.80 |g|=0.260 lr=0.29186 lanes={'agentic': 1, 'code': 1, 'web': 4}
-[  59.98s] EVENT  checkpoint saved
+[  58.79s]   probe@20: loss=5.5219 ppl=250.12 delta=-0.57629
+[  59.80s]   step   20 [A] loss=5.8459 ppl=  345.80 |g|=0.260 lr=0.29186 lanes={'agentic': 1, 'code': 1, 'web': 4}
+[  69.59s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[  62.78s]   probe@30: loss=4.8629 ppl=129.40 delta=-0.414294
-[  63.91s]   step   30 [A] loss=5.4101 ppl=  223.66 |g|=0.227 lr=0.26842 lanes={'code': 1, 'indic': 1, 'web': 4}
-[  65.71s] EVENT  OPUS decisions recorded
-[  75.07s] EVENT  checkpoint saved
+[  74.64s]   probe@30: loss=5.1838 ppl=178.35 delta=-0.33818
+[  76.35s]   step   30 [A] loss=5.4101 ppl=  223.66 |g|=0.227 lr=0.26842 lanes={'code': 1, 'indic': 1, 'web': 4}
+[  78.68s] EVENT  OPUS decisions recorded
+[  91.63s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[  77.98s]   probe@40: loss=4.6902 ppl=108.87 delta=-0.172743
-[  79.14s]   step   40 [B] loss=5.3127 ppl=  202.91 |g|=0.293 lr=0.23250 lanes={'code': 2, 'indic': 1, 'web': 3}
-[  87.39s] EVENT  OPUS decisions recorded
-[  90.05s] EVENT  checkpoint saved
+[  98.14s]   probe@40: loss=5.1381 ppl=170.40 delta=-0.045611
+[  99.61s]   step   40 [B] loss=5.3127 ppl=  202.91 |g|=0.293 lr=0.23250 lanes={'code': 2, 'indic': 1, 'web': 3}
+[ 110.77s] EVENT  OPUS decisions recorded
+[ 114.24s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[  92.58s]   probe@50: loss=4.4570 ppl=86.23 delta=-0.233195
-[  93.83s]   step   50 [B] loss=4.8444 ppl=  127.02 |g|=0.260 lr=0.18844 lanes={'agentic': 1, 'code': 1, 'reasoning': 1, 'web': 3}
-[ 104.72s] EVENT  checkpoint saved
+[ 118.74s]   probe@50: loss=4.9719 ppl=144.31 delta=-0.166213
+[ 119.72s]   step   50 [B] loss=4.8444 ppl=  127.02 |g|=0.260 lr=0.18844 lanes={'agentic': 1, 'code': 1, 'reasoning': 1, 'web': 3}
+[ 129.90s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[ 107.54s]   probe@60: loss=4.4581 ppl=86.32 delta=0.001075
-[ 108.49s]   step   60 [B] loss=4.8892 ppl=  132.84 |g|=0.250 lr=0.14156 lanes={'code': 2, 'reasoning': 1, 'web': 3}
-[ 112.70s] EVENT  OPUS decisions recorded
-[ 117.25s] EVENT  crash simulated
-[ 117.25s] CRASH: injected fault at global step 68: 138 ledger records written, last checkpoint ccd209db6c2e
+[ 134.70s]   probe@60: loss=4.9792 ppl=145.37 delta=0.007318
+[ 135.68s]   step   60 [B] loss=4.8892 ppl=  132.84 |g|=0.250 lr=0.14156 lanes={'code': 2, 'reasoning': 1, 'web': 3}
+[ 139.61s] EVENT  OPUS decisions recorded
+[ 144.28s] EVENT  crash simulated
+[ 144.28s] CRASH: injected fault at global step 68: 138 ledger records written, last checkpoint ccd209db6c2e
 
 ==============================================================================
   11  Crash recovery
 ==============================================================================
-[ 117.49s] EVENT  run resumed
-[ 117.49s] ledger rewound to offset 120: 18 uncommitted record(s) discarded
+[ 144.51s] EVENT  run resumed
+[ 144.51s] ledger rewound to offset 120: 18 uncommitted record(s) discarded
 [PASS] resume_next_batch_matched
 [PASS] no_duplicate_or_skipped_batches
-[ 128.14s] EVENT  checkpoint saved
+[ 155.08s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[ 147.85s] EVENT  checkpoint saved
+[ 174.75s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[ 167.67s] EVENT  checkpoint saved
+[ 194.10s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[ 188.14s] EVENT  checkpoint saved
+[ 214.46s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
-[ 188.20s] EVENT  checkpoint saved
+[ 214.52s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
 
 ==============================================================================
   12  Replay
 ==============================================================================
-[ 189.04s] EVENT  historical stream replayed
+[ 215.90s] EVENT  historical stream replayed
 [PASS] replay_hash_matched
 
 ==============================================================================
   13  Fork
 ==============================================================================
-[ 189.30s] EVENT  branch forked
-[ 211.45s] EVENT  checkpoint saved
+[ 216.19s] EVENT  branch forked
+[ 237.95s] EVENT  checkpoint saved
 [PASS] checkpoint_saved
 [PASS] fork_diverged_at_expected_step
 
 ==============================================================================
   14  Audit
 ==============================================================================
-[ 211.48s] EVENT  audit completed
+[ 237.98s] EVENT  audit completed
 
 ==============================================================================
   15  Performance, cost, evidence
 ==============================================================================
 [PASS] protected_floor_held
 [PASS] indic_verified_floor_held
+[PASS] epoch_cap_respected_or_breach_recorded
 [PASS] validation_never_gradient_bearing
-[ 211.50s] EVENT  performance measured
-[ 211.68s] checkpoint retention: kept [20, 40, 80, 90, 100], removed [10, 30, 50, 60, 70]
+[ 238.01s] EVENT  performance measured
+[ 238.20s] checkpoint retention: kept [20, 40, 80, 90, 100], removed [10, 30, 50, 60, 70]
 
 ==============================================================================
   Evidence
@@ -145,7 +146,7 @@
   Replay               PASS    ledgers/replay.json          
   Learning trace       PASS    ledgers/learning_tokens.jsonl
   Throughput           PASS    performance.json             
-[ 212.67s] generated dashboard.html and README.md inside submission_artifacts_stdlib (the committed README.md describes submission_artifacts/ and was left alone)
-[ 212.67s] loss 6.3210 -> 5.3867 (ln V = 6.2383); probe 6.2674 -> 4.0094
-[ 212.67s] evidence: 9/9 passed in 212.7s
-[ 212.67s] artifacts: submission_artifacts_stdlib
+[ 239.25s] generated dashboard.html and README.md inside submission_artifacts_stdlib (the committed README.md describes submission_artifacts/ and was left alone)
+[ 239.26s] loss 6.3210 -> 5.3867 (ln V = 6.2383); probe 6.2756 -> 4.7294
+[ 239.26s] evidence: 9/9 passed in 239.3s
+[ 239.26s] artifacts: submission_artifacts_stdlib

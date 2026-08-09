@@ -23,7 +23,7 @@
   "ledger_offset": 560,
   "matched": true,
   "records_discarded": 76,
-  "resume_seconds": 0.4316,
+  "resume_seconds": 0.3472,
   "resumed_at_step": 140,
   "torn_tail_repaired": false
 }

@@ -200,10 +200,19 @@ class LearningLedger:
 
     def shard_report(self, *, gradient_alignment: dict[str, float] | None = None,
                      probe_deltas: dict[str, float] | None = None,
-                     epochs: dict[str, int] | None = None) -> list[dict]:
+                     epochs: dict[str, int] | None = None,
+                     alignment_sources: dict[str, list[str]] | None = None,
+                     exposure: tuple[dict, dict] | None = None) -> list[dict]:
         gradient_alignment = gradient_alignment or {}
         probe_deltas = probe_deltas or {}
         epochs = epochs or {}
+        alignment_sources = alignment_sources or {}
+        first, last = exposure or ({}, {})
+        # A within-run ranking beside the absolute verdict. The lecture's
+        # thresholds are cited authority and are not retuned here, but at a young
+        # model every shard clears 2.0 and classifies `useful`, so the absolute
+        # verdict alone cannot rank. The percentile can.
+        means = sorted((e["sum"] / e["n"]) for e in self.by_shard.values() if e["n"])
         rows = []
         for shard_id, e in sorted(self.by_shard.items()):
             mean = e["sum"] / e["n"] if e["n"] else 0.0
@@ -217,15 +226,90 @@ class LearningLedger:
                 "high_perplexity_tokens": e["high_ppl"],
                 "high_perplexity_fraction": round(e["high_ppl"] / e["n"], 6) if e["n"] else 0.0,
                 "gradient_alignment": gradient_alignment.get(shard_id),
+                "gradient_alignment_from": alignment_sources.get(shard_id) or None,
                 "loss_delta_before_after_exposure": probe_deltas.get(shard_id),
+                "exposure_steps": ([first[shard_id], last[shard_id]]
+                                   if shard_id in first else None),
                 "repeated_pass_number": epochs.get(shard_id, 0),
                 "usefulness": classify(mean),
+                "usefulness_percentile": (
+                    round(100.0 * sum(1 for m in means if m <= mean) / len(means), 1)
+                    if means else None),
                 "usefulness_rule": (
                     f"<= {USEFULNESS_THRESHOLDS['broken_below']} broken; "
                     f"<= {USEFULNESS_THRESHOLDS['already_learned_below']} already_learned; "
                     f"< {USEFULNESS_THRESHOLDS['neutral_below']} neutral; else useful"),
             })
         return rows
+
+    def provenance_maps(self, records: list[dict], probe_history: list[dict],
+                        decisions: list[dict]) -> dict[str, dict]:
+        """Join the three per-shard facts the assignment names but the trainer
+        cannot know on its own.
+
+        Each needs data from a different place, which is why they were null: the
+        alignment lives in the selector's decisions, the exposure delta needs two
+        probe evaluations bracketing the shard's use, and the repeated-pass
+        number needs the pool epoch observed at draw time. All three are joins
+        over records that already exist -- nothing new is measured here, and
+        nothing is invented where the join finds no data.
+        """
+        # -- gradient alignment: mean over the decisions touching this shard ---
+        align_sum: dict[str, float] = {}
+        align_n: dict[str, int] = {}
+        align_src: dict[str, list[str]] = {}
+        for d in decisions:
+            g = d.get("gradient_alignment")
+            if g is None:
+                continue
+            for sid in d.get("shard_ids", []):
+                align_sum[sid] = align_sum.get(sid, 0.0) + g
+                align_n[sid] = align_n.get(sid, 0) + 1
+                align_src.setdefault(sid, []).append(d.get("candidate_id"))
+        alignment = {s: round(align_sum[s] / align_n[s], 8) for s in align_sum}
+
+        # -- exposure window and repeated pass, from the consumption ledger ----
+        first: dict[str, int] = {}
+        last: dict[str, int] = {}
+        epoch: dict[str, int] = {}
+        for r in records:
+            step = r.get("global_step", 0)
+            for s in r.get("samples", []):
+                ep = s.get("pool_epoch", 0)
+                for sp in s.get("spans", []):
+                    sid = sp.get("shard_id")
+                    if sid is None:
+                        continue
+                    first[sid] = min(first.get(sid, step), step)
+                    last[sid] = max(last.get(sid, step), step)
+                    epoch[sid] = max(epoch.get(sid, 0), ep)
+
+        # -- loss delta before/after exposure ---------------------------------
+        #
+        # The probe is forward-only, so these are two real measurements of the
+        # same held-out set at different training states, subtracted. A shard
+        # whose exposure is not bracketed by two probes gets None rather than a
+        # delta computed from one point.
+        hist = sorted((p for p in probe_history if p.get("global_step") is not None),
+                      key=lambda p: p["global_step"])
+        deltas: dict[str, float] = {}
+        for sid, f in first.items():
+            before = [p for p in hist if p["global_step"] <= f]
+            after = [p for p in hist if p["global_step"] >= last[sid]]
+            if not before or not after or before[-1] is after[0]:
+                continue
+            lane = self.by_shard.get(sid, {}).get("lane")
+            def pick(p):
+                bl = p.get("by_lane") or {}
+                return bl.get(lane, p["mean_loss"])
+            deltas[sid] = round(pick(after[0]) - pick(before[-1]), 6)
+
+        return {"gradient_alignment": alignment,
+                "gradient_alignment_sources": {s: sorted(v) for s, v in align_src.items()},
+                "probe_deltas": deltas,
+                "epochs": epoch,
+                "exposure_first_step": first,
+                "exposure_last_step": last}
 
     def summary(self) -> dict:
         lanes = {}

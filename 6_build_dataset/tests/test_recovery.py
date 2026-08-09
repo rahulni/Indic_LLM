@@ -30,7 +30,10 @@ from tdes.batching import LaneSequencePool, sequence_tier                # noqa:
 from tdes.config import INDIC_VERIFIED_FLOOR_FRACTION                    # noqa: E402
 from tdes.hashing import read_jsonl                                      # noqa: E402
 from tdes.ledger.consumption import ConsumptionLedger, verify_integrity  # noqa: E402
-from tdes.mixture import verify_indic_tier_floor                         # noqa: E402
+from tdes.ledger.learning import LearningLedger                          # noqa: E402
+from tdes.mixture import (LaneApportioner, SELECTION_REASONS,             # noqa: E402
+                          verify_indic_tier_floor)
+from tdes.orchestrator import audit                                       # noqa: E402
 from tdes.perf import PerfMeter, actual_lane_shares                      # noqa: E402
 from tdes.scarcity import resolve, summarise                             # noqa: E402
 
@@ -256,6 +259,146 @@ class TestPerfReconstructible(unittest.TestCase):
                 {"branch_id": "exp-b", "lane_counts": {"code": 1},
                  "loss_bearing_tokens": 999}]
         self.assertEqual(sorted(actual_lane_shares(rows)), ["web"])
+
+
+class TestSelectionReasons(unittest.TestCase):
+    """The 'why it consumed it' clause.
+
+    These exist because the field that was supposed to answer it,
+    ``opus_decision_ids``, was null in 4,480 of 4,480 sample slots -- present in
+    the schema and empty in every record. A test that only checked the key
+    existed would have passed on that.
+    """
+
+    def test_reasons_sum_to_the_quota(self):
+        ap = LaneApportioner()
+        w = {"web": 0.6, "code": 0.3, "indic": 0.08, "longctx": 0.02}
+        floors = {"indic": 0.03, "longctx": 0.015}
+        for _ in range(40):
+            quota = ap.apportion(w, 6, floors)
+            for lane, k in quota.items():
+                credited = sum(ap.last_reasons.get(lane, {}).values())
+                self.assertEqual(credited, k,
+                                 f"{lane}: {credited} reasons for {k} slots")
+
+    def test_every_reason_is_registered(self):
+        ap = LaneApportioner()
+        w = {"web": 0.5, "code": 0.3, "indic": 0.15, "longctx": 0.05}
+        for _ in range(60):
+            ap.apportion(w, 8, {"indic": 0.03, "longctx": 0.015})
+            for lane, rs in ap.last_reasons.items():
+                for reason in rs:
+                    self.assertIn(reason, SELECTION_REASONS,
+                                  f"unregistered selection reason {reason!r}")
+
+    def test_reasons_are_reset_between_steps(self):
+        """A stale reason map would attribute this step's slots to the last one."""
+        ap = LaneApportioner()
+        ap.apportion({"web": 1.0}, 4)
+        first = {l: dict(r) for l, r in ap.last_reasons.items()}
+        ap.apportion({}, 0)                      # n <= 0 returns early
+        self.assertEqual(ap.last_reasons, {}, "reasons survived an empty step")
+        self.assertTrue(first, "sanity: the first step did credit something")
+
+    def test_floor_pass_is_reachable(self):
+        """At a realistic batch size the dedicated floor pass must actually fire.
+
+        It genuinely does not at 4 samples/step -- the leftover pass drains a
+        floor lane's residual first -- so this asserts the mechanism exists at the
+        default profile's width rather than asserting it always fires.
+        """
+        ap = LaneApportioner()
+        w = {"web": 0.62, "code": 0.16, "indic": 0.08, "multiling": 0.05,
+             "reasoning": 0.05, "agentic": 0.02, "longctx": 0.02}
+        floors = {"indic": 0.03, "longctx": 0.015, "reasoning": 0.01, "agentic": 0.01}
+        seen = set()
+        for _ in range(240):
+            ap.apportion(w, 16, floors)
+            for rs in ap.last_reasons.values():
+                seen.update(rs)
+        self.assertIn("protected_floor", seen)
+        self.assertIn("carry_over_debt", seen)
+
+
+class TestLearningProvenance(unittest.TestCase):
+    """The 'what the model learned' clause: the two fields that were null."""
+
+    def test_alignment_joins_from_decisions(self):
+        led = _make_ledger({"web_0000": "web", "code_0000": "code"})
+        maps = led.provenance_maps(
+            records=[],
+            probe_history=[],
+            decisions=[{"candidate_id": "c1", "shard_ids": ["web_0000"],
+                        "gradient_alignment": 0.4},
+                       {"candidate_id": "c2", "shard_ids": ["web_0000"],
+                        "gradient_alignment": 0.2},
+                       {"candidate_id": "c3", "shard_ids": ["code_0000"],
+                        "gradient_alignment": None}])
+        self.assertAlmostEqual(maps["gradient_alignment"]["web_0000"], 0.3, places=6)
+        self.assertEqual(maps["gradient_alignment_sources"]["web_0000"], ["c1", "c2"])
+        # A decision carrying no alignment must not become a zero.
+        self.assertNotIn("code_0000", maps["gradient_alignment"])
+
+    def test_exposure_delta_needs_two_bracketing_probes(self):
+        led = _make_ledger({"web_0000": "web"})
+        records = [{"global_step": 5, "samples": [
+            {"pool_epoch": 0, "spans": [{"shard_id": "web_0000"}]}]}]
+        probes = [{"global_step": 0, "mean_loss": 6.0, "by_lane": {"web": 6.5}},
+                  {"global_step": 9, "mean_loss": 5.0, "by_lane": {"web": 5.5}}]
+        maps = led.provenance_maps(records, probes, [])
+        # Lane-specific values are preferred over the aggregate.
+        self.assertAlmostEqual(maps["probe_deltas"]["web_0000"], -1.0, places=6)
+        self.assertEqual(maps["exposure_first_step"]["web_0000"], 5)
+
+        # One probe on one side only => no delta, rather than a delta from a
+        # single measurement.
+        maps2 = led.provenance_maps(records, [probes[0]], [])
+        self.assertNotIn("web_0000", maps2["probe_deltas"])
+
+    def test_repeated_pass_is_the_observed_epoch(self):
+        led = _make_ledger({"web_0000": "web"})
+        records = [{"global_step": 1, "samples": [
+                       {"pool_epoch": 0, "spans": [{"shard_id": "web_0000"}]}]},
+                   {"global_step": 7, "samples": [
+                       {"pool_epoch": 2, "spans": [{"shard_id": "web_0000"}]}]}]
+        maps = led.provenance_maps(records, [], [])
+        self.assertEqual(maps["epochs"]["web_0000"], 2,
+                         "repeated_pass_number must be the epoch actually seen, "
+                         "not a hardcoded zero")
+
+
+def _make_ledger(shard_lanes: dict[str, str]):
+    """A LearningLedger with by_shard prepopulated, without running a model."""
+    led = LearningLedger.__new__(LearningLedger)
+    led.by_shard = {sid: {"lane": lane, "sum": 5.0, "n": 1, "max": 5.0, "high_ppl": 0}
+                    for sid, lane in shard_lanes.items()}
+    return led
+
+
+class TestAuditWindow(unittest.TestCase):
+    """The 'how it can be reconstructed' clause: the window must be real."""
+
+    def _records(self, n=10):
+        return [{"ledger_offset": i, "global_step": i, "loss_bearing_tokens": 100,
+                 "shard_ids": [f"s{i//2}"]} for i in range(n)]
+
+    def _manifests(self):
+        return [{"shard_id": f"s{i}", "capability_lane": "web",
+                 "content_sha256": "x" * 64, "document_ids": []} for i in range(5)]
+
+    def test_window_selects_a_strict_subset(self):
+        out = audit(self._records(), [], [], self._manifests(),
+                    token_window=(300, 700))
+        self.assertTrue(out["window_is_strict_subset"])
+        self.assertLess(out["records_in_window"], out["records_total"])
+
+    def test_whole_run_window_is_reported_as_not_a_subset(self):
+        """The bug this replaces: token_window=None reported every record and
+        every shard as 'in window', which cannot come back empty and therefore
+        proves no ability to isolate an interval."""
+        out = audit(self._records(), [], [], self._manifests(), token_window=None)
+        self.assertEqual(out["records_in_window"], out["records_total"])
+        self.assertFalse(out["window_is_strict_subset"])
 
 
 if __name__ == "__main__":

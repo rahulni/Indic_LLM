@@ -213,10 +213,28 @@ def _build_probe(cfg: RunConfig, adm: dict, tok, thash: str, out_dir: str,
     vtoks = {s["shard_id"]: load_shard_tokens(s["path"], tok.vocab_size) for s in vshards}
     vitems = [dict(sp, shard_id=s["shard_id"]) for s in vshards for sp in s["spans"]]
     seq_len = cfg.profile.seq_len_early
-    seqs = pack(vitems, seq_len, "concat_chop")[:12]
-    samples = [build_sample(q, vtoks, seq_len=seq_len,
-                            attention_policy=cfg.attention_policy,
-                            position_policy=cfg.position_policy_early,
-                            lane="validation", sample_index=i)
-               for i, q in enumerate(seqs)]
+
+    # Pack per capability lane, not across all validation text at once.
+    #
+    # The validation split carries the lane each document came from, and the
+    # learning ledger's "loss delta before and after exposure" is only meaningful
+    # per lane -- an aggregate cannot say that exposure to code helped code.
+    # Packing everything together with concat_chop merges lanes into one
+    # sequence, which is what collapsed `by_lane` to a single `validation` key.
+    lane_of = {d["doc_id"]: d.get("lane", "validation") for d in vdocs}
+    by_lane: dict[str, list[dict]] = {}
+    for it in vitems:
+        by_lane.setdefault(lane_of.get(it.get("doc_id"), "validation"), []).append(it)
+
+    samples, i = [], 0
+    for lane in sorted(by_lane):
+        # A couple of sequences per lane keeps the probe cheap; it runs at every
+        # checkpoint boundary and is forward-only.
+        for q in pack(by_lane[lane], seq_len, "concat_chop")[:3]:
+            samples.append(build_sample(
+                q, vtoks, seq_len=seq_len,
+                attention_policy=cfg.attention_policy,
+                position_policy=cfg.position_policy_early,
+                lane=lane, sample_index=i))
+            i += 1
     return ValidationProbe(samples, registry=registry)

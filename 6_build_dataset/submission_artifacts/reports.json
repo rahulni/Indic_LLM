@@ -502,6 +502,7 @@
           "epoch_cap": 4.0,
           "epochs": 39.4937,
           "epochs_needed": 39.4937,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -517,6 +518,7 @@
           "epoch_cap": 4.0,
           "epochs": 4.0,
           "epochs_needed": 11.7865,
+          "is_protected": false,
           "lane": "code",
           "policy": "reduce_share",
           "reason": "demand needs 11.79 passes, beyond the 4.0 epoch cap; reducing this lane's share",
@@ -531,6 +533,7 @@
           "epoch_cap": 4.0,
           "epochs": 4.4102,
           "epochs_needed": 4.4102,
+          "is_protected": true,
           "lane": "indic",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -546,6 +549,7 @@
           "epoch_cap": 4.0,
           "epochs": 1.8416,
           "epochs_needed": 1.8416,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "repeat",
           "reason": "demand needs 1.84 passes, within the 4.0 epoch cap; repeating existing data",
@@ -560,6 +564,7 @@
           "epoch_cap": 4.0,
           "epochs": 4.0,
           "epochs_needed": 6.7716,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "reduce_share",
           "reason": "demand needs 6.77 passes, beyond the 4.0 epoch cap; reducing this lane's share",
@@ -574,6 +579,7 @@
           "epoch_cap": 4.0,
           "epochs": 99.3339,
           "epochs_needed": 99.3339,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -589,6 +595,7 @@
           "epoch_cap": 4.0,
           "epochs": 4.0,
           "epochs_needed": 85.8589,
+          "is_protected": false,
           "lane": "web",
           "policy": "reduce_share",
           "reason": "demand needs 85.86 passes, beyond the 4.0 epoch cap; reducing this lane's share",
@@ -606,6 +613,7 @@
           "epoch_cap": 4.0,
           "epochs": 6.0759,
           "epochs_needed": 6.0759,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -621,6 +629,7 @@
           "epoch_cap": 4.0,
           "epochs": 2.4406,
           "epochs_needed": 2.4406,
+          "is_protected": false,
           "lane": "code",
           "policy": "repeat",
           "reason": "demand needs 2.44 passes, within the 4.0 epoch cap; repeating existing data",
@@ -635,6 +644,7 @@
           "epoch_cap": 4.0,
           "epochs": 1.2885,
           "epochs_needed": 1.2885,
+          "is_protected": true,
           "lane": "indic",
           "policy": "repeat",
           "reason": "demand needs 1.29 passes, within the 4.0 epoch cap; repeating existing data",
@@ -649,6 +659,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.3189,
           "epochs_needed": 0.3189,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -663,6 +674,7 @@
           "epoch_cap": 4.0,
           "epochs": 3.0853,
           "epochs_needed": 3.0853,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "repeat",
           "reason": "demand needs 3.09 passes, within the 4.0 epoch cap; repeating existing data",
@@ -677,6 +689,7 @@
           "epoch_cap": 4.0,
           "epochs": 16.1706,
           "epochs_needed": 16.1706,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -692,6 +705,7 @@
           "epoch_cap": 4.0,
           "epochs": 4.0,
           "epochs_needed": 35.7401,
+          "is_protected": false,
           "lane": "web",
           "policy": "defer_to_later_stage",
           "reason": "demand needs 35.74 passes, beyond the 4.0 epoch cap; deferring the excess to a later stage",
@@ -706,6 +720,7 @@
           "epoch_cap": 4.0,
           "epochs": 7.4937,
           "epochs_needed": 7.4937,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -721,6 +736,7 @@
           "epoch_cap": 4.0,
           "epochs": 2.8573,
           "epochs_needed": 2.8573,
+          "is_protected": false,
           "lane": "code",
           "policy": "repeat",
           "reason": "demand needs 2.86 passes, within the 4.0 epoch cap; repeating existing data",
@@ -735,6 +751,7 @@
           "epoch_cap": 4.0,
           "epochs": 1.0266,
           "epochs_needed": 1.0266,
+          "is_protected": true,
           "lane": "indic",
           "policy": "repeat",
           "reason": "demand needs 1.03 passes, within the 4.0 epoch cap; repeating existing data",
@@ -749,6 +766,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.3704,
           "epochs_needed": 0.3704,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -763,6 +781,7 @@
           "epoch_cap": 4.0,
           "epochs": 2.0034,
           "epochs_needed": 2.0034,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "repeat",
           "reason": "demand needs 2.00 passes, within the 4.0 epoch cap; repeating existing data",
@@ -777,6 +796,7 @@
           "epoch_cap": 4.0,
           "epochs": 20.1608,
           "epochs_needed": 20.1608,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -792,6 +812,7 @@
           "epoch_cap": 4.0,
           "epochs": 4.0,
           "epochs_needed": 23.5389,
+          "is_protected": false,
           "lane": "web",
           "policy": "defer_to_later_stage",
           "reason": "demand needs 23.54 passes, beyond the 4.0 epoch cap; deferring the excess to a later stage",
@@ -806,6 +827,7 @@
           "epoch_cap": 4.0,
           "epochs": 19.038,
           "epochs_needed": 19.038,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -821,6 +843,7 @@
           "epoch_cap": 4.0,
           "epochs": 4.0,
           "epochs_needed": 5.9925,
+          "is_protected": false,
           "lane": "code",
           "policy": "defer_to_later_stage",
           "reason": "demand needs 5.99 passes, beyond the 4.0 epoch cap; deferring the excess to a later stage",
@@ -835,6 +858,7 @@
           "epoch_cap": 4.0,
           "epochs": 1.8018,
           "epochs_needed": 1.8018,
+          "is_protected": true,
           "lane": "indic",
           "policy": "repeat",
           "reason": "demand needs 1.80 passes, within the 4.0 epoch cap; repeating existing data",
@@ -849,6 +873,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.9671,
           "epochs_needed": 0.9671,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -863,6 +888,7 @@
           "epoch_cap": 4.0,
           "epochs": 1.6028,
           "epochs_needed": 1.6028,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "repeat",
           "reason": "demand needs 1.60 passes, within the 4.0 epoch cap; repeating existing data",
@@ -877,6 +903,7 @@
           "epoch_cap": 4.0,
           "epochs": 50.822,
           "epochs_needed": 50.822,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -892,6 +919,7 @@
           "epoch_cap": 4.0,
           "epochs": 4.0,
           "epochs_needed": 25.3034,
+          "is_protected": false,
           "lane": "web",
           "policy": "defer_to_later_stage",
           "reason": "demand needs 25.30 passes, beyond the 4.0 epoch cap; deferring the excess to a later stage",
@@ -906,6 +934,7 @@
           "epoch_cap": 4.0,
           "epochs": 6.8861,
           "epochs_needed": 6.8861,
+          "is_protected": true,
           "lane": "agentic",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -921,6 +950,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.4961,
           "epochs_needed": 0.4961,
+          "is_protected": false,
           "lane": "code",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -935,6 +965,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.2933,
           "epochs_needed": 0.2933,
+          "is_protected": true,
           "lane": "indic",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -949,6 +980,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.1852,
           "epochs_needed": 0.1852,
+          "is_protected": true,
           "lane": "longctx",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -963,6 +995,7 @@
           "epoch_cap": 4.0,
           "epochs": 0.0801,
           "epochs_needed": 0.0801,
+          "is_protected": false,
           "lane": "multiling",
           "policy": "none",
           "reason": "supply covers demand within a single pass",
@@ -977,6 +1010,7 @@
           "epoch_cap": 4.0,
           "epochs": 12.1805,
           "epochs_needed": 12.1805,
+          "is_protected": true,
           "lane": "reasoning",
           "policy": "repeat_over_cap",
           "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -992,6 +1026,7 @@
           "epoch_cap": 4.0,
           "epochs": 1.2764,
           "epochs_needed": 1.2764,
+          "is_protected": false,
           "lane": "web",
           "policy": "repeat",
           "reason": "demand needs 1.28 passes, within the 4.0 epoch cap; repeating existing data",
@@ -1014,6 +1049,7 @@
             "epoch_cap": 4.0,
             "epochs": 39.4937,
             "epochs_needed": 39.4937,
+            "is_protected": true,
             "lane": "agentic",
             "policy": "repeat_over_cap",
             "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -1029,6 +1065,7 @@
             "epoch_cap": 4.0,
             "epochs": 4.4102,
             "epochs_needed": 4.4102,
+            "is_protected": true,
             "lane": "indic",
             "policy": "repeat_over_cap",
             "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -1044,6 +1081,7 @@
             "epoch_cap": 4.0,
             "epochs": 99.3339,
             "epochs_needed": 99.3339,
+            "is_protected": true,
             "lane": "reasoning",
             "policy": "repeat_over_cap",
             "reason": "lane is protected, so its floor is honoured even past the repetition cap; the cap breach is recorded",
@@ -1244,11 +1282,11 @@
     "accept_ratio": 0.4,
     "by_lane": {
       "agentic": {
-        "protected_override": 1
+        "accepted": 1
       },
       "code": {
-        "accepted": 8,
-        "rejected": 4
+        "accepted": 7,
+        "rejected": 5
       },
       "indic": {
         "accepted": 1,
@@ -1271,21 +1309,21 @@
     },
     "by_rejection_reason": {
       "below_threshold": 8,
-      "duplication": 23
+      "duplication": 24
     },
     "by_status": {
       "accepted": 24,
-      "protected_override": 9,
-      "rejected": 31
+      "protected_override": 8,
+      "rejected": 32
     },
     "method": "cosine similarity between a candidate's prefix gradient and the validation-probe gradient direction",
     "pool_health": {
       "available": true,
-      "early_accepted_score_mean": 0.26671992,
+      "early_accepted_score_mean": 0.30085176,
       "interpretation": "acceptance ratio is fixed, so the accepted COUNT cannot reveal pool exhaustion; only the score distribution can. A large drop means OPUS is selecting the best of a bad set.",
-      "late_accepted_score_mean": 0.12046165,
+      "late_accepted_score_mean": 0.1144876,
       "pool_exhausting": true,
-      "relative_drop": 0.548359
+      "relative_drop": 0.619455
     },
     "prefix_tokens": 64,
     "protected_lanes": [
@@ -2041,111 +2079,165 @@
   "probe_history": [
     {
       "by_lane": {
-        "validation": 9.007152
+        "agentic": 9.111353,
+        "code": 8.946543,
+        "indic": 9.080566,
+        "longctx": 9.083693,
+        "multiling": 9.111971,
+        "reasoning": 9.060089,
+        "web": 9.109548
       },
       "global_step": 0,
       "gradient_bearing": false,
       "label": "pre-training",
-      "mean_loss": 9.01077389512248,
-      "perplexity": 8190.857687582234,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 9.063500796064229,
+      "perplexity": 8634.32481674775,
+      "samples": 16,
+      "tokens": 3652
     },
     {
       "by_lane": {
-        "validation": 6.676946
+        "agentic": 7.74953,
+        "code": 6.102787,
+        "indic": 9.298345,
+        "longctx": 7.392911,
+        "multiling": 7.907738,
+        "reasoning": 7.369287,
+        "web": 7.621309
       },
       "global_step": 20,
       "gradient_bearing": false,
       "label": "step-20",
-      "mean_loss": 6.710795461146625,
-      "perplexity": 821.2236311927203,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 7.659266092691077,
+      "perplexity": 2120.20082656454,
+      "samples": 16,
+      "tokens": 3652
     },
     {
       "by_lane": {
-        "validation": 6.700875
+        "agentic": 7.56146,
+        "code": 6.467517,
+        "indic": 9.111116,
+        "longctx": 7.083019,
+        "multiling": 7.755464,
+        "reasoning": 7.038032,
+        "web": 7.384769
       },
       "global_step": 40,
       "gradient_bearing": false,
       "label": "step-40",
-      "mean_loss": 6.715729465724141,
-      "perplexity": 825.2855649075184,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 7.559489572949111,
+      "perplexity": 1918.8658223416794,
+      "samples": 16,
+      "tokens": 3652
     },
     {
       "by_lane": {
-        "validation": 6.117988
+        "agentic": 7.010856,
+        "code": 5.468326,
+        "indic": 8.556179,
+        "longctx": 6.947861,
+        "multiling": 7.744426,
+        "reasoning": 6.932805,
+        "web": 7.300248
       },
       "global_step": 60,
       "gradient_bearing": false,
       "label": "step-60",
-      "mean_loss": 6.149726176844948,
-      "perplexity": 468.5890586791451,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 7.183125816587551,
+      "perplexity": 1317.0185893810963,
+      "samples": 16,
+      "tokens": 3652
     },
     {
       "by_lane": {
-        "validation": 5.952441
+        "agentic": 6.568031,
+        "code": 5.192294,
+        "indic": 8.043134,
+        "longctx": 7.045375,
+        "multiling": 7.638178,
+        "reasoning": 6.99347,
+        "web": 7.26865
       },
       "global_step": 80,
       "gradient_bearing": false,
       "label": "step-80",
-      "mean_loss": 5.985349444624453,
-      "perplexity": 397.5614226808047,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 7.007751907733027,
+      "perplexity": 1105.1671922754542,
+      "samples": 16,
+      "tokens": 3652
     },
     {
       "by_lane": {
-        "validation": 5.903464
+        "agentic": 6.286191,
+        "code": 5.068694,
+        "indic": 7.956734,
+        "longctx": 6.981471,
+        "multiling": 7.653771,
+        "reasoning": 6.809721,
+        "web": 7.535104
       },
       "global_step": 100,
       "gradient_bearing": false,
       "label": "step-100",
-      "mean_loss": 5.936951974489322,
-      "perplexity": 378.7786412737796,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 6.977005890661367,
+      "perplexity": 1071.7047572251454,
+      "samples": 16,
+      "tokens": 3652
     },
     {
       "by_lane": {
-        "validation": 5.890404
+        "agentic": 6.280004,
+        "code": 4.925443,
+        "indic": 7.782631,
+        "longctx": 6.98987,
+        "multiling": 7.647963,
+        "reasoning": 6.73636,
+        "web": 7.848256
       },
       "global_step": 120,
       "gradient_bearing": false,
       "label": "step-120",
-      "mean_loss": 5.924438980818583,
-      "perplexity": 374.0685168685001,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 6.947667651474149,
+      "perplexity": 1040.7195745338167,
+      "samples": 16,
+      "tokens": 3652
     },
     {
       "by_lane": {
-        "validation": 5.990224
+        "agentic": 6.250455,
+        "code": 4.945639,
+        "indic": 7.685674,
+        "longctx": 7.33561,
+        "multiling": 7.606139,
+        "reasoning": 6.838587,
+        "web": 8.134132
       },
       "global_step": 140,
       "gradient_bearing": false,
       "label": "step-140",
-      "mean_loss": 6.024540550095784,
-      "perplexity": 413.4516380622146,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 7.034411176533192,
+      "perplexity": 1135.0263852177593,
+      "samples": 16,
+      "tokens": 3652
     },
     {
       "by_lane": {
-        "validation": 6.216366
+        "agentic": 6.162644,
+        "code": 4.852022,
+        "indic": 7.695853,
+        "longctx": 7.897707,
+        "multiling": 7.342564,
+        "reasoning": 6.89296,
+        "web": 8.711248
       },
       "global_step": 240,
       "gradient_bearing": false,
       "label": "final",
-      "mean_loss": 6.2533077182000785,
-      "perplexity": 519.7291020324928,
-      "samples": 12,
-      "tokens": 3026
+      "mean_loss": 7.145354689799682,
+      "perplexity": 1268.201063428948,
+      "samples": 16,
+      "tokens": 3652
     }
   ],
   "shards": {

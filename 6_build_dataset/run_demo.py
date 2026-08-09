@@ -245,8 +245,18 @@ def main() -> int:
 
     # --------------------------------------------------------------- audit
     log.section("14  Audit")
+    # A real token window, not the whole run.
+    #
+    # "Which shards trained the model between token X and Y" is only answered if
+    # X and Y are set. Passing None made the audit report every record and every
+    # shard as "in window" -- a question that cannot come back empty, which is
+    # the same vacuity the protected-floor check was fixed for. The middle 40% of
+    # the token stream is a genuine interior interval: it excludes the warm-up and
+    # the tail, so the answer has to be a strict subset.
+    _total_lb = sum(r["loss_bearing_tokens"] for r in all_records)
+    _window = (int(_total_lb * 0.30), int(_total_lb * 0.70)) if _total_lb else None
     aud = audit(all_records, state.learn.step_history, state.selector.decisions,
-                built["manifests"], log=log)
+                built["manifests"], token_window=_window, log=log)
     write_json(os.path.join(out_dir, "audit", "audit.json"), aud)
 
     # --------------------------------------------------- ledgers + reports
@@ -270,6 +280,25 @@ def main() -> int:
     built["reports"]["indic_tier_floor"] = {
         **tier, "supply_shortfalls": state.indic_tier_shortfalls[:20]}
 
+    # The epoch cap and the protected floors conflict on a corpus this small: a
+    # protected lane can need more passes than the cap allows, and the floor
+    # wins. So the checkable claim is not "the cap held" -- it demonstrably does
+    # not for three lanes -- but that every breach is recorded with the lane, the
+    # pass count and a reason, and that only protected lanes are ever allowed to
+    # breach. A silent breach would be the actual failure.
+    _sc = built["reports"]["mixture"]["scarcity"]["summary"]
+    _breaches = _sc.get("cap_breaches", [])
+    log.check("epoch_cap_respected_or_breach_recorded",
+              all(b.get("is_protected") and b.get("warning")
+                  and b.get("policy") == "repeat_over_cap" for b in _breaches),
+              breaches=len(_breaches),
+              lanes=sorted({b.get("lane") for b in _breaches}),
+              cap=_sc.get("epoch_cap"),
+              worst_passes=round(max((b.get("epochs", 0) for b in _breaches),
+                                     default=0.0), 2),
+              note=("protected floors outrank the cap by design; each breach "
+                    "carries a warning that supply must grow before a real run"))
+
     log.check("validation_never_gradient_bearing",
               reg.summary()["gradient_bearing_reads"] == 0,
               reads=reg.summary()["reads_by_split"])
@@ -284,9 +313,19 @@ def main() -> int:
     write_json(os.path.join(out_dir, "ledgers", "opus_rounds.json"), state.selector.rounds)
     write_json(os.path.join(out_dir, "ledgers", "learning_steps.json"),
                state.learn.step_history)
+    # The three per-shard facts the trainer cannot know by itself: the alignment
+    # lives in the selector's decisions, the exposure delta needs two probe
+    # evaluations bracketing the shard's use, and the repeated-pass number needs
+    # the pool epoch seen at draw time. Joined here rather than left null.
+    prov = state.learn.provenance_maps(all_records, state.probe.history,
+                                       state.selector.decisions)
     write_json(os.path.join(out_dir, "ledgers", "learning_shards.json"),
                state.learn.shard_report(
-                   epochs={m["shard_id"]: 0 for m in built["manifests"]}))
+                   gradient_alignment=prov["gradient_alignment"],
+                   alignment_sources=prov["gradient_alignment_sources"],
+                   probe_deltas=prov["probe_deltas"],
+                   epochs=prov["epochs"],
+                   exposure=(prov["exposure_first_step"], prov["exposure_last_step"])))
     write_json(os.path.join(out_dir, "ledgers", "learning_summary.json"),
                state.learn.summary())
 
@@ -402,6 +441,10 @@ def _run_opus(state, proxy, gs, log) -> None:
     for d in r["decisions"]:
         for sid in d["shard_ids"]:
             state.opus_scores_by_shard[sid] = d["opus_score"]
+            # Keep the decision's identity too, so a consumption record can point
+            # at the decision its score came from instead of carrying a bare
+            # float with no provenance.
+            state.opus_decision_by_shard[sid] = d["candidate_id"]
     log.event("OPUS decisions recorded", step=gs, **{
         k: r["round"][k] for k in ("candidates", "accepted", "rejected",
                                    "deferred", "protected_override")})

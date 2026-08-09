@@ -1,8 +1,8 @@
 {
   "efficiency": {
     "context_only_fraction": 0.019416,
-    "gpu_idle_proxy_seconds": 0.457505,
-    "loader_wait_fraction_of_train_time": 0.004055,
+    "gpu_idle_proxy_seconds": 0.387575,
+    "loader_wait_fraction_of_train_time": 0.002736,
     "loss_bearing_fraction_of_positions": 0.870845,
     "loss_bearing_fraction_of_real": 0.978191,
     "opus_acceptance_rate": 0.375,
@@ -20,26 +20,26 @@
     "useful_loss_bearing_tokens_per_second": "tokens_loss_bearing / train_seconds"
   },
   "loader": {
-    "bytes_read": 5383212,
+    "bytes_read": 5474530,
     "cache": {
       "capacity": 16,
-      "evictions": 647,
-      "hit_rate": 0.905546,
-      "hits": 6107,
-      "lookups": 6744,
-      "misses": 637,
+      "evictions": 648,
+      "hit_rate": 0.904988,
+      "hits": 6096,
+      "lookups": 6736,
+      "misses": 640,
       "resident": 16
     },
-    "loader_wait_events": 637,
-    "loader_wait_seconds": 0.457505,
-    "mean_shard_read_ms": 0.6013,
-    "mean_wait_ms": 0.7182,
+    "loader_wait_events": 640,
+    "loader_wait_seconds": 0.387575,
+    "mean_shard_read_ms": 0.5049,
+    "mean_wait_ms": 0.6056,
     "note": "delivery is strictly in plan order; threads affect only how long the consumer waited, never which data it received",
     "prefetch_depth": 4,
-    "prefetch_hits": 617,
+    "prefetch_hits": 609,
     "prefetch_requests": 653,
-    "shard_read_seconds": 0.404665,
-    "shard_reads": 673,
+    "shard_read_seconds": 0.345376,
+    "shard_reads": 684,
     "workers": 3
   },
   "mixture_compliance": {
@@ -466,18 +466,18 @@
     }
   },
   "phase_seconds": {
-    "build": 22.6622,
-    "replay": 4.4992,
-    "resume": 0.4316,
-    "train": 113.4685
+    "build": 22.4395,
+    "replay": 4.5267,
+    "resume": 0.3472,
+    "train": 137.8672
   },
   "rates": {
-    "accepted_tokens_per_second_after_opus": 4327.407,
-    "raw_tokens_per_second": 13251.214,
-    "samples_per_second": 42.261,
-    "seconds_per_step": 0.3786,
-    "steps_per_second": 2.641,
-    "useful_loss_bearing_tokens_per_second": 11539.753
+    "accepted_tokens_per_second_after_opus": 3447.143,
+    "raw_tokens_per_second": 10555.703,
+    "samples_per_second": 33.664,
+    "seconds_per_step": 0.47528,
+    "steps_per_second": 2.104,
+    "useful_loss_bearing_tokens_per_second": 9192.38
   },
   "raw_counters": {
     "microbatches": 1192,
@@ -490,6 +490,6 @@
   },
   "reconstruction_note": "every rate above is recomputable by hand from raw_counters, train_seconds and loader. No figure in this file is reported without the inputs that produce it.",
   "steps": 298,
-  "train_seconds": 112.8229,
-  "wall_clock_seconds": 156.6814
+  "train_seconds": 141.6334,
+  "wall_clock_seconds": 184.4953
 }
