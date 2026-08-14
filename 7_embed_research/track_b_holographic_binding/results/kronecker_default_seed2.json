@@ -1,0 +1,121 @@
+{
+  "arm": "kronecker",
+  "dress": false,
+  "profile": "default",
+  "seed": 2,
+  "d_model": 192,
+  "n_layer": 6,
+  "n_head": 6,
+  "d_ff": 768,
+  "vocab_size": 3000,
+  "context_len": 16,
+  "n_params_total": 3460728,
+  "n_params_embedding_learned": 209088,
+  "corpus_raw_bytes": 1115394,
+  "corpus_n_word_tokens": 252268,
+  "corpus_max_natural_word_length": 15,
+  "steps": 2000,
+  "batch_size": 128,
+  "elapsed_seconds": 46.94552540779114,
+  "device": {
+    "device": "cuda",
+    "cuda_device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "torch_version": "2.11.0+cu128"
+  },
+  "loss_curve": [
+    {
+      "step": 250,
+      "loss": 5.578734397888184
+    },
+    {
+      "step": 500,
+      "loss": 5.186862468719482
+    },
+    {
+      "step": 750,
+      "loss": 4.902257442474365
+    },
+    {
+      "step": 1000,
+      "loss": 4.658177852630615
+    },
+    {
+      "step": 1250,
+      "loss": 4.529878616333008
+    },
+    {
+      "step": 1500,
+      "loss": 4.230655670166016
+    },
+    {
+      "step": 1750,
+      "loss": 4.118608474731445
+    },
+    {
+      "step": 2000,
+      "loss": 3.60347056388855
+    }
+  ],
+  "val_perplexity_curve": [
+    {
+      "step": 250,
+      "val_perplexity": 265.1139403788807
+    },
+    {
+      "step": 500,
+      "val_perplexity": 189.4474293731589
+    },
+    {
+      "step": 750,
+      "val_perplexity": 156.02902980824652
+    },
+    {
+      "step": 1000,
+      "val_perplexity": 141.65791067259966
+    },
+    {
+      "step": 1250,
+      "val_perplexity": 134.83544667688793
+    },
+    {
+      "step": 1500,
+      "val_perplexity": 135.5744640943952
+    },
+    {
+      "step": 1750,
+      "val_perplexity": 146.398242166061
+    },
+    {
+      "step": 2000,
+      "val_perplexity": 168.90022987386953
+    }
+  ],
+  "final_val_perplexity": 168.90022987386953,
+  "perplexity_by_length_bucket": {
+    "1-3": {
+      "perplexity": 43.755096435546875,
+      "n_tokens": 13038
+    },
+    "4-6": {
+      "perplexity": 512.017822265625,
+      "n_tokens": 8857
+    },
+    "7-9": {
+      "perplexity": 11692.2890625,
+      "n_tokens": 1771
+    },
+    "10-12": {
+      "perplexity": 16239.17578125,
+      "n_tokens": 60
+    },
+    "13-20": {
+      "perplexity": 16963.111328125,
+      "n_tokens": 2
+    }
+  },
+  "truncation_information_loss": {
+    "mean_cosine_similarity": 1.000000016093254,
+    "n_pairs": 100
+  },
+  "raw_slot_width": 1088
+}

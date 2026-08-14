@@ -1,0 +1,52 @@
+{
+  "experiment": "value_embedding",
+  "arm": "crt_value",
+  "task": "add",
+  "profile": "fast",
+  "seed": 0,
+  "max_operand": 1000,
+  "value_code_width": 83,
+  "value_primes": [
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "n_params": 2693964,
+  "n_params_embedding": 19008,
+  "steps": 50,
+  "batch_size": 16,
+  "elapsed_seconds": 1.8789196014404297,
+  "device": {
+    "device": "cuda",
+    "cuda_device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "torch_version": "2.11.0+cu128"
+  },
+  "loss_curve": [
+    {
+      "step": 25,
+      "loss": 1.7124286890029907
+    },
+    {
+      "step": 50,
+      "loss": 1.6116293668746948
+    }
+  ],
+  "accuracy_curve": [
+    {
+      "step": 25,
+      "accuracy": 0.0,
+      "n": 5
+    },
+    {
+      "step": 50,
+      "accuracy": 0.0,
+      "n": 5
+    }
+  ],
+  "final_accuracy": {
+    "accuracy": 0.0,
+    "n": 5
+  }
+}

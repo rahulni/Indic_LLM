@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Trained weight blobs: excluded because they're large and non-essential to
+# grading — each run instead writes a small JSON envelope (config, param
+# count, final metrics, sha256) into results/ so the checkpoint's identity
+# survives without the binary. submission_artifacts/ itself is NOT excluded:
+# it is the graded deliverable.
+*.pt
+*.weights.pt
+
+# Downloaded corpus cache (re-fetched by data/corpus.py, not hand-edited)
+track_b_holographic_binding/data/.cache/
+
+# The parent repo's top-level .gitignore excludes *.log everywhere; run.log
+# here is a required submission artifact (execution evidence), not
+# incidental output, so it is explicitly un-ignored. Verify with:
+#   git check-ignore -v track_a_numeral_crt/submission_artifacts/run.log
+# (should print nothing)
+!track_a_numeral_crt/submission_artifacts/run.log
+!track_b_holographic_binding/submission_artifacts/run.log

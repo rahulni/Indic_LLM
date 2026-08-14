@@ -1,0 +1,95 @@
+{
+  "seed": 0,
+  "elapsed_seconds": 2.677182197570801,
+  "position_primes": [
+    2,
+    3,
+    7
+  ],
+  "position_N": 42,
+  "value_primes": [
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "value_N": 1062347,
+  "all_passed": true,
+  "checks": [
+    {
+      "check": "crt_bijection[position]",
+      "exhaustive": true,
+      "n_tested": 42,
+      "passed": true,
+      "detail": "42/42 distinct residue tuples for N=42, primes=[2, 3, 7]"
+    },
+    {
+      "check": "crt_bijection[value]",
+      "exhaustive": true,
+      "n_tested": 1062347,
+      "passed": true,
+      "detail": "1062347/1062347 distinct residue tuples for N=1062347, primes=[11, 13, 17, 19, 23]"
+    },
+    {
+      "check": "additive_homomorphism_per_modulus",
+      "exhaustive": true,
+      "n_tested": 62,
+      "passed": true,
+      "detail": "all (residue, shift) pairs verified for primes=[2, 3, 7] (62 pairs = sum(p_i^2))"
+    },
+    {
+      "check": "additive_homomorphism_per_modulus",
+      "exhaustive": true,
+      "n_tested": 1469,
+      "passed": true,
+      "detail": "all (residue, shift) pairs verified for primes=[11, 13, 17, 19, 23] (1469 pairs = sum(p_i^2))"
+    },
+    {
+      "check": "full_pipeline_addition",
+      "exhaustive": true,
+      "n_tested": 5311735,
+      "passed": true,
+      "detail": "exhaustive: all a in [0,1062347) x 5 fixed b values (5311735 pairs) match; sampled: 1000000 random (a,b) pairs match",
+      "n_sampled": 1000000,
+      "sampled_passed": true
+    },
+    {
+      "check": "multiplicative_homomorphism_via_discrete_log",
+      "exhaustive": true,
+      "n_tested": 62,
+      "passed": true,
+      "detail": "all (a,b) residue pairs verified for primes=[2, 3, 7] (62 pairs total, 21 of them zero-cases where a=0 or b=0 mod p, all correctly resolved to product 0)"
+    },
+    {
+      "check": "multiplicative_homomorphism_via_discrete_log",
+      "exhaustive": true,
+      "n_tested": 1469,
+      "passed": true,
+      "detail": "all (a,b) residue pairs verified for primes=[11, 13, 17, 19, 23] (1469 pairs total, 161 of them zero-cases where a=0 or b=0 mod p, all correctly resolved to product 0)"
+    },
+    {
+      "check": "full_pipeline_multiplication",
+      "exhaustive": true,
+      "n_tested": 1062961,
+      "passed": true,
+      "detail": "exhaustive: all a,b in [0,1030] (1062961 pairs, a*b < N=1062347 guaranteed) match; wraparound demo: 1500*1500=2250000 (>= N), recovered=125306, (a*b) mod N=125306 (correctly wraps, does NOT equal raw product)"
+    },
+    {
+      "check": "full_pipeline_subtraction",
+      "exhaustive": true,
+      "n_tested": 5313204,
+      "passed": true,
+      "detail": "per-modulus: all (residue, k) pairs (1469); full pipeline: all a in [0,1062347) x 5 fixed b match; underflow demo: 5-12 recovers 1062340 = (a-b) mod N (wraps, does NOT equal -7)"
+    },
+    {
+      "check": "division_by_units_via_negated_log",
+      "exhaustive": true,
+      "n_tested": 1386,
+      "passed": true,
+      "detail": "per-modulus: all (a, b!=0) pairs (1386) invert exactly; full pipeline: 100000 sampled (b|a, gcd(b,N)=1) cases recover the exact quotient; gcd(11, N)=11 so 11 has NO inverse (division undefined, demonstrated); 7*2^-1 mod N = 531177 != 3 (a valid ring element, NOT integer division -- demonstrated, not hidden)",
+      "n_sampled": 100000,
+      "sampled_passed": true
+    }
+  ]
+}

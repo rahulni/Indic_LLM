@@ -1,0 +1,72 @@
+{
+  "arm": "kronecker",
+  "profile": "fast",
+  "seed": 0,
+  "d_model": 192,
+  "n_layer": 6,
+  "n_head": 6,
+  "d_ff": 768,
+  "vocab_size": 3000,
+  "context_len": 16,
+  "n_params_total": 3460728,
+  "n_params_embedding_learned": 209088,
+  "corpus_raw_bytes": 1115394,
+  "corpus_n_word_tokens": 252268,
+  "corpus_max_natural_word_length": 15,
+  "steps": 50,
+  "batch_size": 16,
+  "elapsed_seconds": 2.37235426902771,
+  "device": {
+    "device": "cuda",
+    "cuda_device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "torch_version": "2.11.0+cu128"
+  },
+  "loss_curve": [
+    {
+      "step": 25,
+      "loss": 6.476507186889648
+    },
+    {
+      "step": 50,
+      "loss": 5.98954963684082
+    }
+  ],
+  "val_perplexity_curve": [
+    {
+      "step": 25,
+      "val_perplexity": 570.7622821034859
+    },
+    {
+      "step": 50,
+      "val_perplexity": 338.7257508009024
+    }
+  ],
+  "final_val_perplexity": 338.7257508009024,
+  "perplexity_by_length_bucket": {
+    "1-3": {
+      "perplexity": 116.33561706542969,
+      "n_tokens": 13038
+    },
+    "4-6": {
+      "perplexity": 874.2442016601562,
+      "n_tokens": 8857
+    },
+    "7-9": {
+      "perplexity": 6770.25048828125,
+      "n_tokens": 1771
+    },
+    "10-12": {
+      "perplexity": 13963.9765625,
+      "n_tokens": 60
+    },
+    "13-20": {
+      "perplexity": 23281.49609375,
+      "n_tokens": 2
+    }
+  },
+  "truncation_information_loss": {
+    "mean_cosine_similarity": 1.0000000137090683,
+    "n_pairs": 100
+  },
+  "raw_slot_width": 1088
+}

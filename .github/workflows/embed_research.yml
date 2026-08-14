@@ -1,0 +1,97 @@
+name: Kronecker Embedding V2
+
+# Two independent, model-free proofs (no GPU needed) plus a CPU-only smoke
+# test of both tracks' trainers via --profile fast. The real reported
+# numbers (--profile default) need a GPU-capable budget of a few minutes
+# per run and are never run in CI -- see each track's README for those.
+
+on:
+  push:
+    paths: ['7_embed_research/**']
+  pull_request:
+    paths: ['7_embed_research/**']
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: 7_embed_research
+
+jobs:
+  proofs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install (numpy, matplotlib only)
+        run: python -m pip install --quiet -r requirements.txt
+
+      - name: Track A -- exact-arithmetic proof
+        run: python track_a_numeral_crt/proofs/analytic_proof.py
+
+      - name: Track A -- proof unit tests
+        run: python -m unittest track_a_numeral_crt.proofs.test_analytic_proof -v
+
+      - name: Track A -- proof figures
+        run: python track_a_numeral_crt/proofs/make_plots.py
+
+      - name: Track B -- capacity/decode proof
+        run: python track_b_holographic_binding/proofs/capacity_proof.py
+
+      - name: Track B -- proof unit tests
+        run: python -m unittest track_b_holographic_binding.proofs.test_capacity_proof -v
+
+      - name: Track B -- proof figures
+        run: python track_b_holographic_binding/proofs/make_plots.py
+
+      - name: Shared-module smoke tests
+        run: python -m unittest tests.test_common -v
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: proof-results
+          path: |
+            7_embed_research/track_a_numeral_crt/results/
+            7_embed_research/track_b_holographic_binding/results/
+
+  fast-profile-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install CPU-only torch + requirements
+        run: |
+          python -m pip install --quiet -r requirements.txt
+          python -m pip install --quiet torch --index-url https://download.pytorch.org/whl/cpu
+
+      # --profile fast runs a handful of steps on a tiny batch -- it proves
+      # the training path is wired correctly end to end (data generation,
+      # model construction, loss masking, evaluation, results.json), not
+      # that the model has converged.
+      - name: Track A -- fast-profile smoke test, every arm
+        run: |
+          python track_a_numeral_crt/model/train.py --arm baseline --task add --profile fast
+          python track_a_numeral_crt/model/train.py --arm abacus --task mul --profile fast
+          python track_a_numeral_crt/model/train.py --arm crt --dress --task add --profile fast
+
+      - name: Track A -- random-offset augmentation path
+        run: python track_a_numeral_crt/model/train.py --arm crt --task add --profile fast --random-offset 24
+
+      - name: Track A -- value-embedding experiment (both arms)
+        run: |
+          python track_a_numeral_crt/model/value_train.py --arm crt_value --task add --profile fast
+          python track_a_numeral_crt/model/value_train.py --arm learned --task mul --profile fast
+
+      - name: Track B -- fast-profile smoke test, every arm
+        run: |
+          python track_b_holographic_binding/model/train.py --arm kronecker --profile fast
+          python track_b_holographic_binding/model/train.py --arm holographic --profile fast
+          python track_b_holographic_binding/model/train.py --arm holographic --dress --profile fast

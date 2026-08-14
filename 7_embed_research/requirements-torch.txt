@@ -1,0 +1,7 @@
+# Verified working on this machine:
+#   torch==2.11.0+cu128, Python 3.14, NVIDIA GeForce RTX 3070 Laptop GPU (8GB, CUDA 12.8)
+#   Install with: pip install torch --index-url https://download.pytorch.org/whl/cu128
+# CPU-only machines: `pip install torch` (plain PyPI wheel) works too — every
+# trainer in this repo auto-detects the device via common/device.py and falls
+# back to CPU rather than failing.
+torch>=2.4

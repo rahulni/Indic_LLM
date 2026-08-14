@@ -1,0 +1,167 @@
+{
+  "arm": "crt",
+  "task": "add",
+  "profile": "default",
+  "dress": false,
+  "seed": 0,
+  "random_offset_max": 24,
+  "d_model": 192,
+  "n_layer": 6,
+  "n_head": 6,
+  "d_ff": 768,
+  "n_params": 2675163,
+  "train_len_range": [
+    1,
+    4
+  ],
+  "steps": 3000,
+  "batch_size": 256,
+  "elapsed_seconds": 77.0570170879364,
+  "device": {
+    "device": "cuda",
+    "cuda_device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "torch_version": "2.11.0+cu128"
+  },
+  "loss_curve": [
+    {
+      "step": 250,
+      "loss": 1.2575193643569946
+    },
+    {
+      "step": 500,
+      "loss": 0.2133151888847351
+    },
+    {
+      "step": 750,
+      "loss": 0.11895795911550522
+    },
+    {
+      "step": 1000,
+      "loss": 0.018313053995370865
+    },
+    {
+      "step": 1250,
+      "loss": 0.02118823304772377
+    },
+    {
+      "step": 1500,
+      "loss": 0.005924191791564226
+    },
+    {
+      "step": 1750,
+      "loss": 0.005836084950715303
+    },
+    {
+      "step": 2000,
+      "loss": 0.0032310374081134796
+    },
+    {
+      "step": 2250,
+      "loss": 0.004465460777282715
+    },
+    {
+      "step": 2500,
+      "loss": 0.0013110828585922718
+    },
+    {
+      "step": 2750,
+      "loss": 0.0011230702511966228
+    },
+    {
+      "step": 3000,
+      "loss": 0.008863585069775581
+    }
+  ],
+  "quick_accuracy_curve": [
+    {
+      "step": 250,
+      "accuracy": 0.0
+    },
+    {
+      "step": 500,
+      "accuracy": 0.1
+    },
+    {
+      "step": 750,
+      "accuracy": 0.35
+    },
+    {
+      "step": 1000,
+      "accuracy": 0.8
+    },
+    {
+      "step": 1250,
+      "accuracy": 0.85
+    },
+    {
+      "step": 1500,
+      "accuracy": 1.0
+    },
+    {
+      "step": 1750,
+      "accuracy": 0.85
+    },
+    {
+      "step": 2000,
+      "accuracy": 1.0
+    },
+    {
+      "step": 2250,
+      "accuracy": 1.0
+    },
+    {
+      "step": 2500,
+      "accuracy": 0.95
+    },
+    {
+      "step": 2750,
+      "accuracy": 1.0
+    },
+    {
+      "step": 3000,
+      "accuracy": 0.9
+    }
+  ],
+  "final_eval_by_length": {
+    "1": {
+      "accuracy": 1.0,
+      "n": 200,
+      "max_answer_digits": 3
+    },
+    "2": {
+      "accuracy": 1.0,
+      "n": 200,
+      "max_answer_digits": 5
+    },
+    "3": {
+      "accuracy": 1.0,
+      "n": 200,
+      "max_answer_digits": 7
+    },
+    "4": {
+      "accuracy": 0.935,
+      "n": 200,
+      "max_answer_digits": 9
+    },
+    "5": {
+      "accuracy": 0.125,
+      "n": 200,
+      "max_answer_digits": 11
+    },
+    "6": {
+      "accuracy": 0.0,
+      "n": 200,
+      "max_answer_digits": 13
+    },
+    "7": {
+      "accuracy": 0.0,
+      "n": 200,
+      "max_answer_digits": 15
+    },
+    "8": {
+      "accuracy": 0.0,
+      "n": 200,
+      "max_answer_digits": 17
+    }
+  }
+}

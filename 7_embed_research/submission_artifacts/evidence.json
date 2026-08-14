@@ -1,0 +1,198 @@
+[
+  {
+    "requirement": "Track A analytic proof: crt_bijection",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\analytic_proof_report.json",
+    "compared": "checks[].passed",
+    "detail": "42/42 distinct residue tuples for N=42, primes=[2, 3, 7]"
+  },
+  {
+    "requirement": "Track A analytic proof: additive_homomorphism_per_modulus",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\analytic_proof_report.json",
+    "compared": "checks[].passed",
+    "detail": "all (residue, shift) pairs verified for primes=[2, 3, 7] (62 pairs = sum(p_i^2))"
+  },
+  {
+    "requirement": "Track A analytic proof: full_pipeline_addition",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\analytic_proof_report.json",
+    "compared": "checks[].passed",
+    "detail": "exhaustive: all a in [0,1062347) x 5 fixed b values (5311735 pairs) match; sampled: 1000000 random (a,b) pairs match"
+  },
+  {
+    "requirement": "Track A analytic proof: multiplicative_homomorphism_via_discrete_log",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\analytic_proof_report.json",
+    "compared": "checks[].passed",
+    "detail": "all (a,b) residue pairs verified for primes=[2, 3, 7] (62 pairs total, 21 of them zero-cases where a=0 or b=0 mod p, all correctly resolved to product 0)"
+  },
+  {
+    "requirement": "Track A analytic proof: full_pipeline_multiplication",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\analytic_proof_report.json",
+    "compared": "checks[].passed",
+    "detail": "exhaustive: all a,b in [0,1030] (1062961 pairs, a*b < N=1062347 guaranteed) match; wraparound demo: 1500*1500=2250000 (>= N), recovered=125306, (a*b) mod N=125306 (correctly wraps, does NOT equal raw product)"
+  },
+  {
+    "requirement": "Track A analytic proof: full_pipeline_subtraction",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\analytic_proof_report.json",
+    "compared": "checks[].passed",
+    "detail": "per-modulus: all (residue, k) pairs (1469); full pipeline: all a in [0,1062347) x 5 fixed b match; underflow demo: 5-12 recovers 1062340 = (a-b) mod N (wraps, does NOT equal -7)"
+  },
+  {
+    "requirement": "Track A analytic proof: division_by_units_via_negated_log",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\analytic_proof_report.json",
+    "compared": "checks[].passed",
+    "detail": "per-modulus: all (a, b!=0) pairs (1386) invert exactly; full pipeline: 100000 sampled (b|a, gcd(b,N)=1) cases recover the exact quotient; gcd(11, N)=11 so 11 has NO inverse (division undefined, demonstrated); 7*2^-1 mod N = 531177 != 3 (a valid ring element, NOT integer division -- demonstrated, not hidden)"
+  },
+  {
+    "requirement": "Track A training run completed: baseline_add (default profile)",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\baseline_add_default.json",
+    "compared": "final_eval_by_length keys",
+    "detail": "final_eval_by_length covers lengths ['1', '2', '3', '4', '5', '6', '7', '8']"
+  },
+  {
+    "requirement": "Track A training run completed: baseline_mul (default profile)",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\baseline_mul_default.json",
+    "compared": "final_eval_by_length keys",
+    "detail": "final_eval_by_length covers lengths ['1', '2', '3', '4', '5', '6', '7', '8']"
+  },
+  {
+    "requirement": "Track A training run completed: abacus_add (default profile)",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\abacus_add_default.json",
+    "compared": "final_eval_by_length keys",
+    "detail": "final_eval_by_length covers lengths ['1', '2', '3', '4', '5', '6', '7', '8']"
+  },
+  {
+    "requirement": "Track A training run completed: abacus_mul (default profile)",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\abacus_mul_default.json",
+    "compared": "final_eval_by_length keys",
+    "detail": "final_eval_by_length covers lengths ['1', '2', '3', '4', '5', '6', '7', '8']"
+  },
+  {
+    "requirement": "Track A training run completed: crt_add (default profile)",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\crt_add_default.json",
+    "compared": "final_eval_by_length keys",
+    "detail": "final_eval_by_length covers lengths ['1', '2', '3', '4', '5', '6', '7', '8']"
+  },
+  {
+    "requirement": "Track A training run completed: crt_mul (default profile)",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\crt_mul_default.json",
+    "compared": "final_eval_by_length keys",
+    "detail": "final_eval_by_length covers lengths ['1', '2', '3', '4', '5', '6', '7', '8']"
+  },
+  {
+    "requirement": "Track A: random-offset training improves OOD length generalization (abacus)",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\abacus_offset_add_default.json",
+    "compared": "final_eval_by_length['5'].accuracy vs the no-offset run",
+    "detail": "abacus OOD (length 5) accuracy: 85.5% with random-offset training vs 0.0% without"
+  },
+  {
+    "requirement": "Track A: random-offset training improves OOD length generalization (crt)",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\crt_offset_add_default.json",
+    "compared": "final_eval_by_length['5'].accuracy vs the no-offset run",
+    "detail": "crt OOD (length 5) accuracy: 12.5% with random-offset training vs 0.0% without"
+  },
+  {
+    "requirement": "Track A value-embedding run completed: crt_value / add",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\value_crt_value_add_default.json",
+    "compared": "final_accuracy.accuracy",
+    "detail": "exact-match 0.5% (n=200), embedding params 19,392"
+  },
+  {
+    "requirement": "Track A value-embedding run completed: crt_value / mul",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\value_crt_value_mul_default.json",
+    "compared": "final_accuracy.accuracy",
+    "detail": "exact-match 1.0% (n=200), embedding params 19,392"
+  },
+  {
+    "requirement": "Track A value-embedding run completed: learned / add",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\value_learned_add_default.json",
+    "compared": "final_accuracy.accuracy",
+    "detail": "exact-match 0.5% (n=200), embedding params 195,264"
+  },
+  {
+    "requirement": "Track A value-embedding run completed: learned / mul",
+    "result": "PASS",
+    "file": "track_a_numeral_crt\\results\\value_learned_mul_default.json",
+    "compared": "final_accuracy.accuracy",
+    "detail": "exact-match 1.0% (n=200), embedding params 195,264"
+  },
+  {
+    "requirement": "Track B analytic proof: single-pair unbind is exact",
+    "result": "PASS",
+    "file": "track_b_holographic_binding\\results\\capacity_proof_report.json",
+    "compared": "single_pair_unbind_exact",
+    "detail": "assertion checked inside run_all()"
+  },
+  {
+    "requirement": "Track B analytic proof: decode accuracy at L=1 is perfect for every D",
+    "result": "PASS",
+    "file": "track_b_holographic_binding\\results\\capacity_proof_report.json",
+    "compared": "cells[L==1].accuracy",
+    "detail": "checked cells where L == 1 across the full D sweep"
+  },
+  {
+    "requirement": "Track B: the derived capacity bound actually predicts the measurements",
+    "result": "PASS",
+    "file": "track_b_holographic_binding\\results\\capacity_proof_report.json",
+    "compared": "cells[].accuracy vs cells[].theoretical_accuracy",
+    "detail": "our derived SNR bound predicts measured decode accuracy across all 84 (L, D) cells to within 5.1% worst-case, 0.9% mean"
+  },
+  {
+    "requirement": "Track B: the literal shift-role construction was tested, not just described",
+    "result": "PASS",
+    "file": "track_b_holographic_binding\\results\\capacity_proof_report.json",
+    "compared": "shift_role_cells[]",
+    "detail": "the instructor's literal 'character as a Fourier wave' (deterministic shift roles) was swept across 84 (L, D) cells and is exact at L=1 for every D"
+  },
+  {
+    "requirement": "Track B training run completed: kronecker (default profile)",
+    "result": "PASS",
+    "file": "track_b_holographic_binding\\results\\kronecker_default.json",
+    "compared": "final_val_perplexity, truncation_information_loss",
+    "detail": "final_val_perplexity=174.62212012816167"
+  },
+  {
+    "requirement": "Track B training run completed: holographic (default profile)",
+    "result": "PASS",
+    "file": "track_b_holographic_binding\\results\\holographic_default.json",
+    "compared": "final_val_perplexity, truncation_information_loss",
+    "detail": "final_val_perplexity=188.39558186983885"
+  },
+  {
+    "requirement": "Track B: Kronecker arm's 32-char truncation is measurably total (similarity == 1.0)",
+    "result": "PASS",
+    "file": "track_b_holographic_binding\\results\\kronecker_default.json",
+    "compared": "truncation_information_loss.mean_cosine_similarity",
+    "detail": "mean_cosine_similarity=1.000000 (expect ~1.0: identical after truncation)"
+  },
+  {
+    "requirement": "Track B: the perplexity gap was probed with a learned-dressing ablation",
+    "result": "PASS",
+    "file": "track_b_holographic_binding\\results\\holographic_dress_default.json",
+    "compared": "final_val_perplexity, dressed vs plain",
+    "detail": "dressed holographic perplexity 213.10 vs plain holographic 188.40 -- tests whether the Kronecker arm's edge is explained by having a learned projection"
+  },
+  {
+    "requirement": "Headline results are reported over multiple seeds, not a single run",
+    "result": "PASS",
+    "file": "submission_artifacts/seed_aggregate.json",
+    "compared": "n_seeds per config",
+    "detail": "seeds per config: baseline=3, abacus=3, crt=3, abacus+offset=3, crt+offset=3, B/kronecker=3, B/holographic=3"
+  }
+]

@@ -1,0 +1,77 @@
+=== arm=baseline task=add ===
+arm=baseline task=add profile=default params=2,675,343 device=cuda elapsed=122.8s
+final accuracy by test digit-length (train range was [1, 4]):
+  len= 1 [ID]  acc=100.00%  (n=50)
+  len= 2 [ID]  acc=100.00%  (n=50)
+  len= 3 [ID]  acc=100.00%  (n=50)
+  len= 4 [ID]  acc=98.00%  (n=50)
+  len= 5 [OOD]  acc=34.00%  (n=50)
+  len= 6 [OOD]  acc=0.00%  (n=50)
+  len= 7 [OOD]  acc=0.00%  (n=50)
+  len= 8 [OOD]  acc=0.00%  (n=50)
+=== arm=baseline task=mul ===
+arm=baseline task=mul profile=default params=2,675,343 device=cuda elapsed=146.3s
+final accuracy by test digit-length (train range was [1, 4]):
+  len= 1 [ID]  acc=100.00%  (n=50)
+  len= 2 [ID]  acc=36.00%  (n=50)
+  len= 3 [ID]  acc=4.00%  (n=50)
+  len= 4 [ID]  acc=0.00%  (n=50)
+  len= 5 [OOD]  acc=0.00%  (n=50)
+  len= 6 [OOD]  acc=0.00%  (n=50)
+  len= 7 [OOD]  acc=0.00%  (n=50)
+  len= 8 [OOD]  acc=0.00%  (n=50)
+=== arm=abacus task=add ===
+arm=abacus task=add profile=default params=2,675,547 device=cuda elapsed=125.3s
+final accuracy by test digit-length (train range was [1, 4]):
+  len= 1 [ID]  acc=100.00%  (n=50)
+  len= 2 [ID]  acc=100.00%  (n=50)
+  len= 3 [ID]  acc=100.00%  (n=50)
+  len= 4 [ID]  acc=100.00%  (n=50)
+  len= 5 [OOD]  acc=0.00%  (n=50)
+  len= 6 [OOD]  acc=0.00%  (n=50)
+  len= 7 [OOD]  acc=0.00%  (n=50)
+  len= 8 [OOD]  acc=0.00%  (n=50)
+=== arm=abacus task=mul ===
+arm=abacus task=mul profile=default params=2,675,547 device=cuda elapsed=224.5s
+final accuracy by test digit-length (train range was [1, 4]):
+  len= 1 [ID]  acc=100.00%  (n=50)
+  len= 2 [ID]  acc=92.00%  (n=50)
+  len= 3 [ID]  acc=8.00%  (n=50)
+  len= 4 [ID]  acc=0.00%  (n=50)
+  len= 5 [OOD]  acc=0.00%  (n=50)
+  len= 6 [OOD]  acc=0.00%  (n=50)
+  len= 7 [OOD]  acc=0.00%  (n=50)
+  len= 8 [OOD]  acc=0.00%  (n=50)
+=== arm=crt task=add ===
+arm=crt task=add profile=default params=2,675,163 device=cuda elapsed=170.1s
+final accuracy by test digit-length (train range was [1, 4]):
+  len= 1 [ID]  acc=100.00%  (n=50)
+  len= 2 [ID]  acc=100.00%  (n=50)
+  len= 3 [ID]  acc=100.00%  (n=50)
+  len= 4 [ID]  acc=100.00%  (n=50)
+  len= 5 [OOD]  acc=0.00%  (n=50)
+  len= 6 [OOD]  acc=0.00%  (n=50)
+  len= 7 [OOD]  acc=0.00%  (n=50)
+  len= 8 [OOD]  acc=0.00%  (n=50)
+=== arm=crt task=mul ===
+arm=crt task=mul profile=default params=2,675,163 device=cuda elapsed=148.7s
+final accuracy by test digit-length (train range was [1, 4]):
+  len= 1 [ID]  acc=100.00%  (n=50)
+  len= 2 [ID]  acc=74.00%  (n=50)
+  len= 3 [ID]  acc=4.00%  (n=50)
+  len= 4 [ID]  acc=0.00%  (n=50)
+  len= 5 [OOD]  acc=0.00%  (n=50)
+  len= 6 [OOD]  acc=0.00%  (n=50)
+  len= 7 [OOD]  acc=0.00%  (n=50)
+  len= 8 [OOD]  acc=0.00%  (n=50)
+=== arm=crt+dress task=add ===
+arm=crt+dress task=add profile=default params=2,712,219 device=cuda elapsed=134.6s
+final accuracy by test digit-length (train range was [1, 4]):
+  len= 1 [ID]  acc=100.00%  (n=50)
+  len= 2 [ID]  acc=100.00%  (n=50)
+  len= 3 [ID]  acc=100.00%  (n=50)
+  len= 4 [ID]  acc=100.00%  (n=50)
+  len= 5 [OOD]  acc=0.00%  (n=50)
+  len= 6 [OOD]  acc=0.00%  (n=50)
+  len= 7 [OOD]  acc=0.00%  (n=50)
+  len= 8 [OOD]  acc=0.00%  (n=50)

@@ -1,0 +1,142 @@
+{
+  "experiment": "value_embedding",
+  "arm": "learned",
+  "task": "add",
+  "profile": "default",
+  "seed": 0,
+  "max_operand": 1000,
+  "value_code_width": 83,
+  "value_primes": [
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "n_params": 2870220,
+  "n_params_embedding": 195264,
+  "steps": 3000,
+  "batch_size": 256,
+  "elapsed_seconds": 111.25209093093872,
+  "device": {
+    "device": "cuda",
+    "cuda_device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "torch_version": "2.11.0+cu128"
+  },
+  "loss_curve": [
+    {
+      "step": 250,
+      "loss": 1.5674841403961182
+    },
+    {
+      "step": 500,
+      "loss": 1.4093074798583984
+    },
+    {
+      "step": 750,
+      "loss": 1.1718461513519287
+    },
+    {
+      "step": 1000,
+      "loss": 1.0683807134628296
+    },
+    {
+      "step": 1250,
+      "loss": 1.0201879739761353
+    },
+    {
+      "step": 1500,
+      "loss": 1.019588828086853
+    },
+    {
+      "step": 1750,
+      "loss": 1.0289390087127686
+    },
+    {
+      "step": 2000,
+      "loss": 1.5562677383422852
+    },
+    {
+      "step": 2250,
+      "loss": 1.5220551490783691
+    },
+    {
+      "step": 2500,
+      "loss": 1.132383108139038
+    },
+    {
+      "step": 2750,
+      "loss": 1.0347769260406494
+    },
+    {
+      "step": 3000,
+      "loss": 1.028245449066162
+    }
+  ],
+  "accuracy_curve": [
+    {
+      "step": 250,
+      "accuracy": 0.0,
+      "n": 25
+    },
+    {
+      "step": 500,
+      "accuracy": 0.0,
+      "n": 25
+    },
+    {
+      "step": 750,
+      "accuracy": 0.0,
+      "n": 25
+    },
+    {
+      "step": 1000,
+      "accuracy": 0.04,
+      "n": 25
+    },
+    {
+      "step": 1250,
+      "accuracy": 0.0,
+      "n": 25
+    },
+    {
+      "step": 1500,
+      "accuracy": 0.0,
+      "n": 25
+    },
+    {
+      "step": 1750,
+      "accuracy": 0.04,
+      "n": 25
+    },
+    {
+      "step": 2000,
+      "accuracy": 0.0,
+      "n": 25
+    },
+    {
+      "step": 2250,
+      "accuracy": 0.0,
+      "n": 25
+    },
+    {
+      "step": 2500,
+      "accuracy": 0.0,
+      "n": 25
+    },
+    {
+      "step": 2750,
+      "accuracy": 0.04,
+      "n": 25
+    },
+    {
+      "step": 3000,
+      "accuracy": 0.0,
+      "n": 25
+    }
+  ],
+  "final_accuracy": {
+    "accuracy": 0.005,
+    "n": 200
+  }
+}

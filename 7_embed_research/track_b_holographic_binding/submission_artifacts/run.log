@@ -1,0 +1,20 @@
+=== arm=kronecker ===
+arm=kronecker profile=default params_total=3,460,728 params_embedding_learned=209,088 device=cuda elapsed=123.4s
+final val perplexity: 174.62
+perplexity by natural word-length bucket:
+  1-3: ppl=45.95  (n=13038)
+  4-6: ppl=531.77  (n=8857)
+  7-9: ppl=10473.11  (n=1771)
+  10-12: ppl=19887.98  (n=60)
+  13-20: ppl=13268.64  (n=2)
+truncation probe (pairs sharing first 32 chars, differing after): mean cosine similarity=1.0000 over 100 pairs (INDISTINGUISHABLE, as expected for a 32-slot cap)
+=== arm=holographic ===
+arm=holographic profile=default params_total=3,251,640 params_embedding_learned=0 device=cuda elapsed=98.6s
+final val perplexity: 188.40
+perplexity by natural word-length bucket:
+  1-3: ppl=49.69  (n=13038)
+  4-6: ppl=571.68  (n=8857)
+  7-9: ppl=11364.04  (n=1771)
+  10-12: ppl=19261.54  (n=60)
+  13-20: ppl=5767.28  (n=2)
+truncation probe (pairs sharing first 32 chars, differing after): mean cosine similarity=0.7858 over 100 pairs (distinguishable)
