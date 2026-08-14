@@ -39,13 +39,22 @@ concatenates across primes, and verifies the shift/decode identity above — exh
 computationally feasible, sampled (with the sample size always stated) where not. It runs in
 under 2 seconds, needs no GPU, and needs nothing but numpy.
 
-**The trained-model experiment** is a second, separate question: does a *fixed* CRT
-positional code change a small transformer's ability to generalize arithmetic to longer
-operands than it was trained on, compared to a *learned* positional code (a lightweight
-reimplementation of Abacus embeddings, McLeish et al. 2024) or *no* positional code at all
-(NoPE — see [ARCHITECTURE.md](../ARCHITECTURE.md), point 1, for why this is a fair baseline
-and not a strawman)? All three arms share an identical transformer trunk and identical
-per-digit tokenization — the embedding is the only thing that differs.
+**The trained-model experiments** are a second, separate question, run in three parts. All
+arms share an identical transformer trunk (`common/transformer.py`) — the embedding is the
+only thing that differs.
+
+1. **Three positional arms** (`model/train.py`, `model/embeddings.py`): does a *fixed* CRT
+   positional code help a small transformer generalize arithmetic to longer operands than it
+   was trained on, versus a *learned* positional code (a lightweight reimplementation of
+   Abacus embeddings, McLeish et al. 2024) or *no* positional code at all (NoPE — see
+   [ARCHITECTURE.md](../ARCHITECTURE.md) point 1 for why that is a fair baseline, not a
+   strawman)? Identical per-digit tokenization across all three.
+2. **Random-offset training** (`--random-offset`): the mechanism McLeish et al. actually pair
+   Abacus embeddings with, and the thing that turned the first round's flat negative result
+   into a real one. See "The missing ingredient" below.
+3. **The value-embedding experiment** (`model/value_train.py`): the instructor's literal ask —
+   each whole operand is one token carrying the fixed CRT code *of its value*. Different
+   tokenization, so deliberately not compared against arms 1-3.
 
 ## Evidence
 
@@ -186,15 +195,36 @@ real property — but parity at ~1% accuracy is not a win, and it is not present
 
 ## Reproduce
 
-```bash
-python proofs/analytic_proof.py           # exact-arithmetic proof, < 2s
-python proofs/make_plots.py               # clock-structure + shift-scatter figures
-python -m unittest proofs.test_analytic_proof
+All paths are relative to this directory; run them from the repo root with the
+`track_a_numeral_crt/` prefix, or from here directly.
 
-pip install -r ../requirements-torch.txt
-python model/train.py --arm crt --task add --profile fast      # smoke test, seconds
-python model/train.py --arm crt --task add --profile default   # real numbers, ~3 min, needs a GPU-capable machine to be fast (falls back to CPU otherwise)
+```bash
+# the proof -- no GPU, no torch, nothing to configure
+python proofs/analytic_proof.py           # all 8 checks, < 3s
+python proofs/make_plots.py               # clock-structure + shift-scatter figures
+python -m unittest proofs.test_analytic_proof   # 12 tests incl. the RNS ordering limitation
+
+pip install -r ../requirements-torch.txt        # everything below needs torch
+
+# the three positional arms (--arm baseline|abacus|crt, --task add|mul)
+python model/train.py --arm crt --task add --profile fast       # smoke test, seconds
+python model/train.py --arm crt --task add --profile default    # real numbers, ~2 min on GPU
+
+# random-offset training -- the run that produced OOD generalization
+python model/train.py --arm abacus --task add --profile default --random-offset 24 --eval-examples 200
+
+# the instructor's literal ask (--arm crt_value|learned)
+python model/value_train.py --arm crt_value --task add --profile default
+
+# reproduce the 3-seed headline table
+for s in 0 1 2; do
+  python model/train.py --arm crt --task add --profile default --random-offset 24 --eval-examples 200 --seed $s
+done
+python ../tools/aggregate_seeds.py        # -> mean +/- std, written to submission_artifacts/
 ```
+
+Every run writes a JSON file into `results/`, which is what the READMEs, `evidence.json` and
+the dashboard all read from — no number in the docs is typed by hand.
 
 ## Honest limitations
 

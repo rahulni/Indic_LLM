@@ -44,18 +44,64 @@ Both tracks reuse the same non-negotiable structure: **the exact/provable claim 
 first, analytically, with no model involved — the trained transformer answers a second,
 separate, honestly-labeled empirical question, and the two are never conflated.**
 
+## Where to start reading
+
+**In 5 minutes:** open the two dashboards linked above. Each opens with its proof table, then
+an interactive widget you can type into, then the trained-model results and the limitations.
+That is the whole story, in order, with every number rendered from the result files.
+
+**In 30 minutes, to understand what was actually built**, read in this order:
+
+| # | Read | Why |
+|---|---|---|
+| 1 | this README | the two problems, the headline results, the limitations |
+| 2 | [`track_a_numeral_crt/proofs/analytic_proof.py`](track_a_numeral_crt/proofs/analytic_proof.py) | **the heart of Track A.** The module docstring states exactly what is proven and how; the `check_*` functions are the proof. No model, no torch — pure numpy, runs in 2s |
+| 3 | [`track_b_holographic_binding/proofs/capacity_proof.py`](track_b_holographic_binding/proofs/capacity_proof.py) | **the heart of Track B.** Same shape: docstring states the claim, `theoretical_decode_accuracy()` derives the bound with assumptions written out, `sweep_cell()` measures it |
+| 4 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | **why** every non-obvious choice was made, and 13 judgment calls stated explicitly rather than buried — including the two mistakes that were caught and corrected |
+| 5 | each track's README ([A](track_a_numeral_crt/README.md), [B](track_b_holographic_binding/README.md)) | the claim stated precisely, all results in tables, per-track limitations |
+| 6 | [`CITATIONS.md`](CITATIONS.md) | every citation, with what was verified vs. what was not — including one paper title I got wrong and corrected |
+
+**If you only care about one thing per track:**
+
+- **Track A** — the proof is exact and unconditional; the trained model is a *negative*
+  result. Read `analytic_proof.py`, then Track A README's "The missing ingredient" and
+  "The instructor's literal ask, tested" sections.
+- **Track B** — binding is exactly invertible for one pair and degrades predictably for many.
+  Read `capacity_proof.py`, then Track B README's truncation-probe table.
+
+**Map of the code**, if you want to trace a claim to the line that produces it:
+
+| To understand… | Read |
+|---|---|
+| how a number becomes an embedding | `analytic_proof.py` → `encode_onehot`, `crt_decode_array` |
+| why `+` and `×` become shifts | `analytic_proof.py` → `check_additive_per_modulus`, `mod_mul_via_log_array` |
+| how a word becomes one vector | `capacity_proof.py` → `random_unitary_vector`, `sweep_cell` |
+| the three Track A embedding arms | `track_a_numeral_crt/model/embeddings.py` (~120 lines, one class each) |
+| the two Track B embedding arms | `track_b_holographic_binding/model/embeddings.py` |
+| the shared transformer (identical across every arm) | `common/transformer.py` |
+| the instructor's literal "embedding(9) knows it is 9" | `track_a_numeral_crt/model/value_train.py` |
+| how nothing here can fake a PASS | `common/evidence.py` + `tools/run_all.py` |
+
 ## Quick start
 
 ```bash
-pip install -r requirements.txt              # numpy, matplotlib -- the proofs need nothing else
-python track_a_numeral_crt/proofs/analytic_proof.py     # < 2 seconds, exhaustive checks
-python track_b_holographic_binding/proofs/capacity_proof.py   # < 20 seconds
+pip install -r requirements.txt              # numpy + matplotlib; the proofs need nothing else
+python track_a_numeral_crt/proofs/analytic_proof.py           # < 3s, exhaustive checks
+python track_b_holographic_binding/proofs/capacity_proof.py   # < 20s
 
-pip install -r requirements-torch.txt         # opt-in, only needed for the trained-model runs
-python track_a_numeral_crt/model/train.py --arm crt --task add --profile fast      # smoke test, seconds
-python track_a_numeral_crt/model/train.py --arm crt --task add --profile default   # real numbers, ~3 min
+# the trained-model runs are opt-in and need torch
+pip install -r requirements-torch.txt
+python track_a_numeral_crt/model/train.py --arm crt --task add --profile fast     # smoke test, seconds
+python track_a_numeral_crt/model/train.py --arm crt --task add --profile default  # real numbers, ~2 min
 
-python tools/run_all.py                       # proofs -> evidence.json -> both dashboards, exits non-zero on any FAIL
+# the experiment that changed Track A's headline, and the instructor's literal ask
+python track_a_numeral_crt/model/train.py --arm abacus --task add --profile default --random-offset 24
+python track_a_numeral_crt/model/value_train.py --arm crt_value --task add --profile default
+
+python tools/run_all.py    # proofs -> seed aggregate -> evidence.json -> both dashboards; non-zero exit on any FAIL
+python -m unittest tests.test_common \
+  track_a_numeral_crt.proofs.test_analytic_proof \
+  track_b_holographic_binding.proofs.test_capacity_proof     # 30 tests, no GPU needed
 ```
 
 ## Evidence
@@ -91,13 +137,15 @@ The trained-model story took two rounds, and both are reported:
    length 5 (3 seeds, n=200).
 
 The honest sting is in that gap: the *learned* code exploits the mechanism far better than the
-*fixed* CRT code — and the CRT positional code with offsets only draws level with using no
-positional signal at all. On this evidence it does not earn its place. And the experiment closest to the instructor's literal ask — each operand a
-single token carrying the fixed CRT code *of its value* — **fails almost completely (≤1%
-exact match)** for the CRT code *and* for a learned control, which tie exactly. Handing a
-model provably-exact arithmetic structure does not make it able to do arithmetic. The one real
-positive is efficiency parity: the fixed code matches the learned one on both loss and
-accuracy with **10× fewer embedding parameters**. See
+*fixed* CRT code — and CRT+offset (34.2%) only draws level with using no positional signal at
+all (35.7%). On this evidence the CRT positional code does not earn its place.
+
+The experiment closest to the instructor's literal ask — each operand a single token carrying
+the fixed CRT code *of its value* — **fails almost completely (≤1% exact match)** for the CRT
+code *and* for a learned control, which tie exactly. Handing a model provably-exact arithmetic
+structure does not make it able to do arithmetic; it still has to learn to read that structure
+out. The one real positive is efficiency parity: the fixed code matches the learned one on
+both loss and accuracy with **10× fewer embedding parameters**. See
 [Track A's README](track_a_numeral_crt/README.md).
 
 **Track B.** Single-pair unbind is error-free, and decode accuracy degrades with length
@@ -132,24 +180,64 @@ by its learned projection, since giving the holographic arm one made it *worse* 
 > - **Even with random-offset training, generalization collapses by test length 6-7.** The
 >   gain is real but bounded; McLeish et al.'s larger looped/recurrent architecture is not
 >   reimplemented here, and their far more extreme length ranges are not approached.
-> - **Track B's holographic capacity bound is stated qualitatively, sourced from a secondary
->   citation check, not a page-and-equation reference pulled directly from Plate (1995/2003).**
->   See [`CITATIONS.md`](CITATIONS.md) for exactly what was and wasn't verified.
+> - **Track B's capacity bound is our own derivation, not a formula taken from Plate.** We
+>   could not verify a specific numbered equation in the primary text, so rather than
+>   attribute one we derived the standard SNR argument ourselves, wrote every assumption into
+>   the docstring, and validated it against our own measurements with a test. See
+>   [`CITATIONS.md`](CITATIONS.md) for exactly what was and wasn't verified.
 > - **Track B's word-level perplexity numbers are not comparable** to standard char-level
 >   tiny_shakespeare benchmarks reported elsewhere — different tokenization, different task.
+> - **These GPU runs are not bit-reproducible.** No deterministic-kernel flags are set, so two
+>   identical commands with the same seed gave 91.5% and 85.5%. Every headline number is a
+>   3-seed mean; treat the *ordering* of the arms as the finding, not the exact percentages.
+> - **One reported result was wrong before it was right.** The first value-embedding run made
+>   the CRT arm look broken; the cause was initialisation scale, not the representation. It
+>   was fixed and re-run, and the artifact is documented rather than deleted (Track A README).
+>   Assume other unforced errors of that kind are possible in work at this scale.
 > - This is coursework-scale research (a few million parameters, minutes of compute), not a
 >   claim of state-of-the-art performance on either task.
 
 ## Repository layout
 
+Every `.py` file below is small and single-purpose; the two `proofs/` files are the ones worth
+reading first.
+
 ```
 7_embed_research/
   README.md  ARCHITECTURE.md  CITATIONS.md
-  requirements.txt  requirements-torch.txt
-  common/                        shared trunk, device/seeding/evidence/plotting helpers
-  track_a_numeral_crt/           Track A: proof, data generator, model, results, dashboard
-  track_b_holographic_binding/   Track B: proof, corpus prep, model, results, dashboard
-  submission_artifacts/          top-level landing page + combined evidence.json
-  tools/                         run_all.py, build_dashboard.py, build_index.py, chart_kit.py
-  tests/                         shared-module smoke tests
+  requirements.txt              numpy + matplotlib (proofs only, no GPU)
+  requirements-torch.txt        torch, opt-in, for the trained-model runs
+
+  common/                       shared and track-agnostic
+    transformer.py                the decoder-only trunk EVERY arm shares (embeddings pluggable)
+    evidence.py                   PASS/FAIL harness; grades only from files on disk
+    device.py  seeding.py  plotting.py
+
+  track_a_numeral_crt/
+    proofs/analytic_proof.py      ** the proof: 4 ring ops exact on [0, 1062347) **
+    proofs/test_analytic_proof.py  + the RNS ordering limitation, as a test
+    proofs/make_plots.py          clock-structure and shift-scatter figures
+    data/generate_arithmetic.py   digit tokenizer + random-offset augmentation
+    model/embeddings.py           the 3 arms: NoPE / Abacus-lite / CRT
+    model/train.py                --arm --task --profile --random-offset --seed
+    model/value_train.py          ** the instructor's literal ask: operand = 1 token **
+    model/evaluate.py             greedy decode + length-generalization eval
+    results/                      every run's JSON (committed); *.pt weights are not
+    submission_artifacts/         dashboard.html + run logs
+
+  track_b_holographic_binding/
+    proofs/capacity_proof.py      ** the proof: exact unbind + derived capacity bound **
+    proofs/test_capacity_proof.py  asserts the bound actually predicts measurement
+    proofs/make_plots.py          capacity curve, interference, role comparison
+    data/corpus.py                tiny_shakespeare + synthetic long-word probe set
+    model/embeddings.py           the 2 arms: Kronecker 32-slot / holographic
+    model/train.py  evaluate.py   word-level LM + the truncation probe
+    results/  submission_artifacts/
+
+  submission_artifacts/          index.html, evidence.json, seed_aggregate.json
+  tools/
+    run_all.py                    proofs -> aggregate -> evidence -> dashboards
+    aggregate_seeds.py            multi-seed mean +/- std
+    build_dashboard.py  build_index.py  chart_kit.py
+  tests/test_common.py           trunk, evidence harness, random-offset invariants
 ```

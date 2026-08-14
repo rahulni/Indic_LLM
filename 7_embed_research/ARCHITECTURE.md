@@ -48,23 +48,25 @@ cross-talk from every other superposed pair, with a measured, dimension-dependen
     plotting.py         matplotlib -> PNG + base64 data URI, for inlining into self-contained HTML
 
   track_a_numeral_crt/
-    proofs/analytic_proof.py + test_analytic_proof.py     the exact-arithmetic proof
+    proofs/analytic_proof.py + test_analytic_proof.py     the exact-arithmetic proof (4 ring ops)
     proofs/make_plots.py                                    clock-structure + shift-scatter figures
-    data/generate_arithmetic.py                              digit-tokenized addition/multiplication generator
+    data/generate_arithmetic.py                              digit tokenizer + random-offset augmentation
     model/embeddings.py                                       three positional-embedding arms
     model/train.py + evaluate.py                              trainer + length-generalization eval
+    model/value_train.py                                       the instructor's literal ask: operand = 1 token
     results/  submission_artifacts/dashboard.html
 
   track_b_holographic_binding/
-    proofs/capacity_proof.py + test_capacity_proof.py        decode-accuracy-vs-length/dim proof
-    proofs/make_plots.py                                      capacity curve + interference figures
+    proofs/capacity_proof.py + test_capacity_proof.py        exact unbind, derived bound, shift-role sweep
+    proofs/make_plots.py                                      capacity curve, interference, role comparison
     data/corpus.py                                             tiny_shakespeare fetch + word vocab + synthetic long words
-    model/embeddings.py                                        two word-embedding arms
-    model/train.py + evaluate.py                               word-level LM trainer + evaluation
+    model/embeddings.py                                        two word-embedding arms (+ optional dressing)
+    model/train.py + evaluate.py                               word-level LM trainer + truncation probe
     results/  submission_artifacts/dashboard.html
 
-  submission_artifacts/index.html + evidence.json      top-level landing page + combined evidence
-  tools/run_all.py, build_dashboard.py, build_index.py, chart_kit.py
+  submission_artifacts/     index.html, evidence.json, seed_aggregate.json
+  tools/run_all.py, aggregate_seeds.py, build_dashboard.py, build_index.py, chart_kit.py
+  tests/test_common.py      trunk, evidence harness, random-offset invariants
 ```
 
 `common/` holds only genuinely shared, track-agnostic code (the transformer trunk, device

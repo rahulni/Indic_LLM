@@ -140,14 +140,29 @@ but not the same parameter count: this ablation tests adaptability, not paramete
 ## Reproduce
 
 ```bash
-python proofs/capacity_proof.py           # decode-accuracy sweep, < 20s
-python proofs/make_plots.py               # capacity curve + interference figures
-python -m unittest proofs.test_capacity_proof
+# the proof -- no GPU, no torch
+python proofs/capacity_proof.py     # exact-unbind check + L x D sweep + shift-role sweep, < 20s
+python proofs/make_plots.py         # capacity curve (with the derived bound overlaid),
+                                    # interference, and the role-construction comparison
+python -m unittest proofs.test_capacity_proof   # 7 tests, incl. "the bound predicts measurement"
 
-pip install -r ../requirements-torch.txt
-python model/train.py --arm holographic --profile fast      # smoke test, seconds
-python model/train.py --arm holographic --profile default   # real numbers, ~2 min
+pip install -r ../requirements-torch.txt        # everything below needs torch
+
+python model/train.py --arm holographic --profile fast       # smoke test, seconds
+python model/train.py --arm holographic --profile default    # real numbers, ~1-2 min
+python model/train.py --arm kronecker   --profile default    # the 32-slot baseline
+
+# the ablation that rules out "it's just adaptability"
+python model/train.py --arm holographic --dress --profile default
+
+# reproduce the 3-seed perplexity table
+for s in 0 1 2; do python model/train.py --arm kronecker --profile default --seed $s; done
+python ../tools/aggregate_seeds.py
 ```
+
+The corpus downloads and caches itself on first run (`data/.cache/`, gitignored). Every run
+writes JSON into `results/`, which is the only source the READMEs, `evidence.json` and the
+dashboard read from.
 
 ## Honest limitations
 
