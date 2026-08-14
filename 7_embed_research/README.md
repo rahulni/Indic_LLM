@@ -17,8 +17,10 @@ straight from disk with no server:
 [Track B](track_b_holographic_binding/submission_artifacts/dashboard.html) ·
 [index](submission_artifacts/index.html)
 
-**Docs:** [Architecture & design decisions](ARCHITECTURE.md) · [Citations](CITATIONS.md) ·
-[Track A README](track_a_numeral_crt/README.md) · [Track B README](track_b_holographic_binding/README.md)
+**Docs:** [**Plain-English explainer**](EXPLAIN_LIKE_IM_10.md) (no maths needed — start here if
+you want the ideas without the notation) · [Architecture & design decisions](ARCHITECTURE.md) ·
+[Citations](CITATIONS.md) · [Track A README](track_a_numeral_crt/README.md) ·
+[Track B README](track_b_holographic_binding/README.md)
 
 ---
 
