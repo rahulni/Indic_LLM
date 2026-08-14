@@ -6,11 +6,16 @@ approach confirmed with the person this was built for). Each track ships a stand
 model-free analytic proof and a small trained transformer that asks a second, honestly
 separate question: does the construction actually help a model in practice?
 
-**Live dashboards:** [Track A](https://claude.ai/code/artifact/7b2f859c-7f7b-4d1e-9643-7883c0faeac8) ·
-[Track B](https://claude.ai/code/artifact/439c4917-c4c5-489c-b279-2e7fb3dc826f)
-(also viewable locally, no server needed: [Track A](track_a_numeral_crt/submission_artifacts/dashboard.html) ·
+**Live dashboards** (GitHub Pages):
+[**Track A**](https://rahulni.github.io/Indic_LLM/7_embed_research/track_a_numeral_crt/submission_artifacts/dashboard.html) ·
+[**Track B**](https://rahulni.github.io/Indic_LLM/7_embed_research/track_b_holographic_binding/submission_artifacts/dashboard.html) ·
+[Landing page](https://rahulni.github.io/Indic_LLM/7_embed_research/submission_artifacts/index.html)
+
+Both dashboards are single self-contained HTML files with the data baked in — they also open
+straight from disk with no server:
+[Track A](track_a_numeral_crt/submission_artifacts/dashboard.html) ·
 [Track B](track_b_holographic_binding/submission_artifacts/dashboard.html) ·
-[Landing page](submission_artifacts/index.html))
+[index](submission_artifacts/index.html)
 
 **Docs:** [Architecture & design decisions](ARCHITECTURE.md) · [Citations](CITATIONS.md) ·
 [Track A README](track_a_numeral_crt/README.md) · [Track B README](track_b_holographic_binding/README.md)

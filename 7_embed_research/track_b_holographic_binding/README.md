@@ -1,7 +1,7 @@
 # Track B — Holographic/Fourier Binding
 
 [← top-level README](../README.md) · [Architecture](../ARCHITECTURE.md) · [Citations](../CITATIONS.md) ·
-[Live dashboard](https://claude.ai/code/artifact/439c4917-c4c5-489c-b279-2e7fb3dc826f) ·
+[**Live dashboard**](https://rahulni.github.io/Indic_LLM/7_embed_research/track_b_holographic_binding/submission_artifacts/dashboard.html) ·
 [local copy](submission_artifacts/dashboard.html)
 
 ## The problem

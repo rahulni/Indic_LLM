@@ -1,7 +1,7 @@
 # Track A — Kronecker Numeral Embeddings
 
 [← top-level README](../README.md) · [Architecture](../ARCHITECTURE.md) · [Citations](../CITATIONS.md) ·
-[Live dashboard](https://claude.ai/code/artifact/7b2f859c-7f7b-4d1e-9643-7883c0faeac8) ·
+[**Live dashboard**](https://rahulni.github.io/Indic_LLM/7_embed_research/track_a_numeral_crt/submission_artifacts/dashboard.html) ·
 [local copy](submission_artifacts/dashboard.html)
 
 ## The problem
