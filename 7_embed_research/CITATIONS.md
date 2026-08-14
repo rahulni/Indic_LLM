@@ -2,8 +2,49 @@
 
 Every citation below was checked via live web search during this project
 (not recalled from memory) before being used in a README or ARCHITECTURE.md
-claim. One correction is recorded explicitly because it is exactly the
+claim. Two corrections are recorded explicitly because they are exactly the
 failure mode this file exists to catch.
+
+## The work this project extends
+
+- **Shravan, R. "Kronecker Embeddings: Byte-Level Structured Token
+  Representations for Parameter-Efficient Language Models." arXiv:2605.29459v1,
+  28 May 2026.** Code: <https://github.com/theschoolofai/kronecker-embeddings>
+
+  This is "Kronecker Embedding V1" — the scheme the assignment asks to extend.
+  Its Eq. 1 (§3.2) is:
+
+  ```
+  kappa(b) = (1/sqrt(L)) * SUM_{p=1..L}  c_{b_p} (x) p_p
+  ```
+
+  with `c_{b_p}` a one-hot over the byte value (`d_c = 256`), `p_p` a **one-hot**
+  over byte position (`d_p = 32` in the production setting), `D = d_c * d_p =
+  8192`, followed by a single learned `Linear(D, d_model)`. Tokens longer than
+  `d_p` **bytes** are truncated (UTF-8-safe; the paper reports ≤0.18% of tokens
+  affected at `d_p = 32`). The codec is deterministic and **not invertible**.
+  Track B's `kronecker` arm implements exactly this, and is the baseline every
+  Track B comparison is made against.
+
+  > [!WARNING]
+  > **This citation was added late, and that is itself worth recording.** The
+  > whole project was built and a first version published *before* this paper
+  > and repository were available to me. I verified beforehand that the string
+  > "kronecker" appeared in **zero** files and **zero** commits in this
+  > repository, and reconstructed the scheme from the assignment prose instead,
+  > labelling it as a reconstruction. When the real sources arrived I audited
+  > the implementation against Eq. 1. The reconstruction's *structure* turned
+  > out to be correct — because both factors are one-hot, the sum of Kronecker
+  > products is a coordinate permutation of the block layout I had built, and
+  > the following `Linear` absorbs the permutation — but it had **two real
+  > deviations**, both since fixed: the `1/sqrt(L)` normaliser was missing (so
+  > code norm grew as `sqrt(L)`, 1.0 → 5.66 across L=1..32, instead of staying
+  > at 1.0), and it used a 34-character corpus alphabet rather than the
+  > 256-value byte alphabet (understating the arm's projection parameters by
+  > ~7.5×). Both are documented in
+  > `track_b_holographic_binding/README.md`. Earlier revisions of these docs
+  > described the reconstruction as "V1's actual mechanism", which overstated
+  > what I knew; that wording has been corrected.
 
 ## Track A — numeral embeddings, arithmetic, positional encoding
 

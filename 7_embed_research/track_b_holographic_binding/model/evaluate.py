@@ -85,13 +85,13 @@ def make_truncation_pairs(rng: np.random.Generator, alphabet: list[str], n_pairs
 def embed_word_kronecker(word: str, char_to_id: dict[str, int], projection: torch.nn.Module) -> np.ndarray:
     """Embeds a single arbitrary string directly through the Kronecker arm's
     construction (not via the precomputed vocab lookup table, since these
-    probe words are not vocabulary members)."""
-    from track_b_holographic_binding.model.embeddings import KRONECKER_MAX_SLOTS
+    probe words are not vocabulary members). Reuses the SAME kronecker_encode
+    the table is built from, so the probe cannot silently drift from the
+    trained model's own encoding."""
+    del char_to_id  # the codec is byte-level; no corpus alphabet needed
+    from track_b_holographic_binding.model.embeddings import kronecker_encode
 
-    alphabet_size = len(char_to_id)
-    vec = np.zeros(KRONECKER_MAX_SLOTS * alphabet_size, dtype=np.float32)
-    for pos, ch in enumerate(word[:KRONECKER_MAX_SLOTS]):
-        vec[pos * alphabet_size + char_to_id[ch]] = 1.0
+    vec = kronecker_encode(word)
     device = next(projection.parameters()).device
     with torch.no_grad():
         out = projection(torch.tensor(vec, dtype=torch.float32, device=device))

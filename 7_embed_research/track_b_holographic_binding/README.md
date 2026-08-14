@@ -47,15 +47,44 @@ model's actual `d_model`. Runs in under 20 seconds, pure numpy.
 3,000-word vocabulary, standard learned softmax output, identical across arms) whose *input*
 word embedding is computed one of two ways:
 
-- **Kronecker/tensor (arm `kronecker`)** — V1's actual mechanism: a fixed one-hot code per
-  character position, capped at 32 slots, concatenated (1,088-dim raw), then a **learned**
-  linear projection down to `d_model`. Words over 32 characters are truncated.
+- **Kronecker (arm `kronecker`)** — a faithful implementation of Eq. 1 (§3.2) of
+  [Shravan (2026)](https://arxiv.org/abs/2605.29459), the scheme this assignment extends:
+  `kappa(b) = (1/√L)·Σ_p c_{b_p} ⊗ p_p`, with `c` a one-hot **byte** (`d_c=256`), `p_p` a
+  one-hot byte position (`d_p=32`), giving `D=8192`, then the single **learned**
+  `Linear(D, d_model)` the paper specifies. Tokens over 32 **bytes** are truncated.
+  The `1/√L` factor makes every token's code unit-norm regardless of length.
+
+  *Implementation note:* since both factors are one-hot, each `c ⊗ p` has exactly one nonzero
+  and distinct positions occupy distinct coordinates — so the sum is, up to a fixed coordinate
+  permutation, the same sparse vector as writing each byte's one-hot into its own position
+  block. We build it the block way (O(L) rather than O(L·D)); the following `Linear` absorbs
+  the permutation, so it is equivalent, not an approximation. A unit test asserts this against
+  a literal transcription of Eq. 1.
 - **Holographic (arm `holographic`)** — the construction above, fixed `d_model`-dimensional
   output, **zero** learned embedding parameters, no length cap.
 
 Trained on tiny_shakespeare (Karpathy's `char-rnn` dataset); a synthetic long-word supplement
 is used only for the length-related proofs/probes, kept separate from natural-corpus numbers
 (see [ARCHITECTURE.md](../ARCHITECTURE.md), point 7).
+
+> [!NOTE]
+> **The baseline was wrong in its first published version, and the correction is recorded
+> rather than quietly folded in.** This project was built before the V1 paper and repository
+> were available (the string "kronecker" appears in zero files and zero commits of this repo's
+> prior history), so the baseline was reconstructed from the assignment prose and labelled as
+> a reconstruction. Audited against Eq. 1 once the real sources arrived, the *structure* was
+> correct — the permutation argument above — but two things were not:
+>
+> | | first version | corrected |
+> |---|---|---|
+> | `1/√L` normaliser | **missing** — code norm grew as √L (1.0 → 5.66 over L=1..32) | present; every token unit-norm |
+> | alphabet | 34 corpus **characters** | 256 **bytes**, as specified |
+> | raw width `D` | 1,088 | **8,192** |
+> | learned projection params | 209,088 (understated ~7.5×) | **1,573,056** |
+>
+> Every number in this README was re-measured with the corrected baseline. The truncation
+> probe is the one result provably unaffected: any scheme truncating at 32 maps two strings
+> sharing a 32-prefix to the same code, with or without `1/√L` (cosine ignores magnitude).
 
 ## Evidence
 
@@ -104,7 +133,7 @@ Mean ± std over 3 seeds:
 
 | Arm | Total params | Learned embedding params | Val perplexity | Truncation-pair cosine similarity |
 |---|---|---|---|---|
-| Kronecker/tensor (32-slot cap) | 3,460,728 | 209,088 | **172.4 ± 3.1** | **1.0000** (indistinguishable) |
+| Kronecker (Eq. 1, 32-byte cap) | 4,824,696 | 1,573,056 | **155.7 ± 1.9** | **1.0000** (indistinguishable) |
 | Holographic (circular convolution) | 3,251,640 | **0** | 190.0 ± 7.0 | 0.7895 (distinguishable) |
 
 The truncation-pair test is the sharpest result in this track: 100 pairs of synthetic strings
@@ -113,22 +142,33 @@ mean cosine similarity across all 100 pairs is **exactly 1.0000** — it is *str
 incapable* of telling them apart, not just empirically bad at it. The holographic arm can
 (0.7858), using strictly fewer parameters.
 
-**Reading the perplexity number honestly:** the Kronecker arm is ahead on in-domain perplexity
-(172.4 ± 3.1 vs 190.0 ± 7.0), despite more learned parameters and the information loss above.
-The gap is larger than the seed spread, so it is a real effect, not noise — reported as
-measured. The natural corpus's words never get long enough (max 15 chars) to exercise
-holographic binding's actual structural advantage — see Honest limitations.
+**Reading the perplexity number honestly:** the Kronecker arm wins clearly on in-domain
+perplexity — **155.7 ± 1.9 vs 190.0 ± 7.0**, a 34-point gap, far outside the seed spread. It
+buys that with 1.57M learned projection parameters against holographic's zero, and it still
+cannot represent anything past byte 32. But on the metric the corpus actually measures, it is
+better, and by a wide margin.
+
+> [!WARNING]
+> **This gap doubled when a bug in *our own baseline* was fixed.** The first version of this
+> arm omitted Eq. 1's `1/√L` normaliser, which reported Kronecker at 172.4 and a 17-point gap.
+> Implementing the paper's formula correctly moved it to 155.7 and a 34-point gap. In other
+> words the bug had been *flattering this project's own contribution*, and correcting it made
+> our proposed alternative look worse. That is the direction of error one is least likely to
+> go looking for.
+
+The natural corpus's words never get long enough (max 15 chars) to exercise holographic
+binding's structural advantage — see Honest limitations.
 
 ### Is that gap just adaptability? (ablation: no)
 
 The comparison above is confounded: the Kronecker arm gets a learned projection (from its
-1,088-dim raw slot code), the plain holographic arm gets none. So "which code carries more
+8,192-dim raw code), the plain holographic arm gets none. So "which code carries more
 information" is tangled with "which arm can adapt its code". Giving the holographic table its
 own thin learned layer separates them:
 
 | Arm | Learned embedding params | Val perplexity |
 |---|---|---|
-| Kronecker/tensor (32-slot cap) | 209,088 | 172.4 ± 3.1 (3 seeds) |
+| Kronecker (Eq. 1, 32-byte cap) | 1,573,056 | 155.7 ± 1.9 (3 seeds) |
 | Holographic, no dressing | 0 | 190.0 ± 7.0 (3 seeds) |
 | Holographic + learned dressing | 37,056 | **213.1** (single seed) |
 

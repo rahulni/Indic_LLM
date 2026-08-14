@@ -5,12 +5,27 @@ are composed into a fixed-size vector -- that composition is precomputed
 ONCE per vocabulary word into a lookup table, since both schemes are built
 from fixed (non-learned) per-character pieces.
 
-  (a) Kronecker/tensor-product baseline: literal 32-slot cap, one-hot per
-      position concatenated (V1's actual mechanism). Words over 32
-      characters are truncated -- information is genuinely lost, not just
-      theoretically at risk. This raw (n_words, 32*|alphabet|) table is
-      large, so a LEARNED linear projection down to d_model is required;
-      that projection is where most of this arm's extra parameters live.
+  (a) Kronecker baseline -- a faithful implementation of Eq. 1 of Shravan
+      (2026), "Kronecker Embeddings: Byte-Level Structured Token
+      Representations for Parameter-Efficient Language Models"
+      (arXiv:2605.29459), the scheme this whole assignment extends:
+
+          kappa(b) = (1/sqrt(L)) * SUM_{p=1..L}  c_{b_p} (x) p_p
+
+      with c a one-hot over the BYTE value (d_c = 256), p_p a one-hot over
+      the byte position (d_p = 32), giving D = 8192, followed by a single
+      learned Linear(D, d_model). Tokens longer than d_p bytes are
+      truncated, so information past byte 32 is genuinely lost.
+
+      Implementation note: because BOTH factors are one-hot, each
+      c (x) p has exactly one nonzero and distinct positions occupy
+      distinct coordinates -- so the sum is a sparse vector identical, up
+      to a fixed permutation of coordinates, to writing each byte's
+      one-hot into its own position block. We build it the block way (it
+      is O(L) instead of O(L*D)); the following Linear absorbs the
+      permutation, so this is equivalent, not an approximation. The
+      1/sqrt(L) factor makes every token's code unit-norm regardless of
+      length, which is the property the paper's Section 4 relies on.
 
   (b) Holographic/circular-convolution: fixed dimension d_model regardless
       of word length, built exactly as in proofs/capacity_proof.py (reusing
@@ -38,18 +53,40 @@ from track_b_holographic_binding.proofs.capacity_proof import (  # noqa: E402
     build_roles,
 )
 
-KRONECKER_MAX_SLOTS = 32
+KRONECKER_MAX_SLOTS = 32  # d_p in the paper: byte positions per token
+KRONECKER_BYTE_DIM = 256  # d_c in the paper: full byte alphabet
+KRONECKER_D = KRONECKER_MAX_SLOTS * KRONECKER_BYTE_DIM  # D = 8192
 
 
-def build_kronecker_slot_table(words: list[str], char_to_id: dict[str, int], max_slots: int = KRONECKER_MAX_SLOTS) -> np.ndarray:
-    alphabet_size = len(char_to_id)
-    table = np.zeros((len(words), max_slots * alphabet_size), dtype=np.float32)
+def kronecker_encode(word: str, max_slots: int = KRONECKER_MAX_SLOTS) -> np.ndarray:
+    """Eq. 1 of arXiv:2605.29459, for a single token.
+
+    Byte-level (not character-level): the token is UTF-8 encoded first, so
+    this handles any script, and the 32-slot cap is 32 BYTES -- which for
+    Devanagari is roughly 10-11 characters, not 32.
+    """
+    raw = word.encode("utf-8")[:max_slots]  # truncate past d_p, as the paper does
+    vec = np.zeros(max_slots * KRONECKER_BYTE_DIM, dtype=np.float32)
+    if not raw:
+        return vec
+    for pos, byte_val in enumerate(raw):
+        vec[pos * KRONECKER_BYTE_DIM + byte_val] = 1.0
+    return vec / np.sqrt(len(raw))  # the 1/sqrt(L) factor -> unit norm for every token
+
+
+def build_kronecker_slot_table(
+    words: list[str], char_to_id: dict[str, int] | None = None, max_slots: int = KRONECKER_MAX_SLOTS
+) -> np.ndarray:
+    """(n_words, 8192) table of Eq. 1 codes. `char_to_id` is accepted and
+    ignored: the paper's codec is defined over raw bytes, so it needs no
+    corpus-derived alphabet -- the signature is kept for call-site
+    compatibility with the holographic arm."""
+    del char_to_id
+    table = np.zeros((len(words), max_slots * KRONECKER_BYTE_DIM), dtype=np.float32)
     for wi, word in enumerate(words):
         if wi == 0:
             continue  # UNK: all-zero row, distinguishable from every real word
-        for pos, ch in enumerate(word[:max_slots]):
-            cid = char_to_id[ch]
-            table[wi, pos * alphabet_size + cid] = 1.0
+        table[wi] = kronecker_encode(word, max_slots)
     return table
 
 
@@ -80,9 +117,9 @@ def build_holographic_table(
 
 
 class KroneckerWordEmbedding(nn.Module):
-    """Arm (a): fixed 32-slot one-hot lookup + a learned linear projection
-    down to d_model. This is V1's own mechanism, used here as the baseline
-    to beat."""
+    """Arm (a): the fixed Eq. 1 codec (D = 8192) plus the single learned
+    Linear(D, d_model) the paper specifies -- the scheme this assignment
+    extends, used here as the baseline to beat."""
 
     def __init__(self, slot_table: np.ndarray, d_model: int):
         super().__init__()

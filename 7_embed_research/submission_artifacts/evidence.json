@@ -165,7 +165,7 @@
     "result": "PASS",
     "file": "track_b_holographic_binding\\results\\kronecker_default.json",
     "compared": "final_val_perplexity, truncation_information_loss",
-    "detail": "final_val_perplexity=174.62212012816167"
+    "detail": "final_val_perplexity=153.54493315843868"
   },
   {
     "requirement": "Track B training run completed: holographic (default profile)",

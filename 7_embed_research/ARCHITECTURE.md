@@ -21,7 +21,15 @@ shift, applied in discrete-log space (valid because each `p_i` is prime, so `(Z/
 cyclic — the classical Zech-logarithm trick). Both operations are exact, closed-form, and
 require no learned parameters.
 
-**Track B.** Binding two symbols via circular convolution is, by the Convolution Theorem,
+**Track B.** The scheme being extended is Eq. 1 of Shravan (2026), arXiv:2605.29459:
+`kappa(b) = (1/sqrt(L)) * SUM_p c_{b_p} (x) p_p` — a Kronecker product of a one-hot byte
+(`d_c=256`) with a one-hot position (`d_p=32`), summed over positions, giving `D=8192`. That
+is Smolensky-style tensor-product binding: because the position vectors are *orthogonal*, the
+bound pairs never interfere, which is exactly why the dimension has to be `d_c x d_p` and why
+tokens past 32 bytes have nowhere to go and are truncated. Track B asks what happens if you
+give up that orthogonality on purpose.
+
+Binding two symbols via circular convolution is, by the Convolution Theorem,
 exactly elementwise multiplication of their DFT spectra. Building a role vector whose DFT has
 unit magnitude at every frequency (random phase — literally points on a circle per frequency
 component) makes single-pair binding exactly invertible: multiplying by the conjugate spectrum
@@ -140,6 +148,23 @@ its own `model/embeddings.py`.
     **mean ± std over 3 seeds** rather than a single run, and (b) say so here. Forcing full
     determinism was considered and rejected for now: it would slow training materially and
     would create a false impression of precision that a 3-seed spread communicates better.
+
+14. **The baseline was reconstructed before the source existed, then corrected against it.**
+    This project was built without access to the V1 paper or code — verified, not assumed:
+    "kronecker" appeared in zero files and zero commits of this repository's prior history. The
+    baseline was reconstructed from the assignment prose and labelled as a reconstruction.
+    When the real sources arrived, auditing against Eq. 1 showed the *structure* was right
+    (one-hot ⊗ one-hot summed over positions is a coordinate permutation of block placement,
+    and the following `Linear` absorbs permutations) but two things were wrong: the `1/sqrt(L)`
+    normaliser was missing, and the alphabet was 34 corpus characters rather than 256 bytes.
+    Both are fixed and every affected number re-measured.
+
+    The instructive part is the **direction** of the error. The missing normaliser
+    *weakened* the baseline — correcting it moved Kronecker's perplexity from 174.6 down to
+    ~153, i.e. the bug had been flattering this project's own contribution. A bug that makes
+    your comparison look better than it should is the kind you are least likely to go looking
+    for, which is the argument for implementing a baseline from its specification rather than
+    from your own reading of what it probably does.
 
 12. **Track B's theoretical curve is our own derivation, labeled as such.** The plan called for
     overlaying "the" capacity bound from Plate. We could not verify a specific numbered

@@ -106,6 +106,101 @@ class TestTransformerTrunk(unittest.TestCase):
         self.assertTrue(torch.allclose(y_full[:, :-1], y_perturbed[:, :-1], atol=1e-5))
 
 
+class TestKroneckerCodecMatchesPaper(unittest.TestCase):
+    """The Kronecker arm must implement Eq. 1 of arXiv:2605.29459 exactly:
+
+        kappa(b) = (1/sqrt(L)) * SUM_p  c_{b_p} (x) p_p
+
+    An earlier version of this code omitted the 1/sqrt(L) factor and used a
+    corpus character alphabet instead of the 256-value byte alphabet, so
+    these tests pin down both properties against a literal transcription of
+    the formula rather than against the implementation's own conventions."""
+
+    @staticmethod
+    def _paper_formula(word: str, d_p: int = 32, d_c: int = 256):
+        import numpy as np
+
+        raw = word.encode("utf-8")[:d_p]
+        acc = np.zeros(d_c * d_p)
+        for p, byte_val in enumerate(raw):
+            c = np.zeros(d_c)
+            c[byte_val] = 1.0
+            pos = np.zeros(d_p)
+            pos[p] = 1.0
+            acc += np.kron(c, pos)
+        return acc / np.sqrt(len(raw))
+
+    def test_dimension_is_8192(self):
+        from track_b_holographic_binding.model.embeddings import (
+            KRONECKER_BYTE_DIM,
+            KRONECKER_D,
+            KRONECKER_MAX_SLOTS,
+        )
+
+        self.assertEqual(KRONECKER_BYTE_DIM, 256)
+        self.assertEqual(KRONECKER_MAX_SLOTS, 32)
+        self.assertEqual(KRONECKER_D, 8192)
+
+    def test_matches_paper_formula_up_to_coordinate_permutation(self):
+        """Both factors are one-hot, so the sum of Kronecker products and our
+        block layout differ only by a fixed permutation of coordinates -- one
+        the following Linear absorbs. Assert that equivalence directly."""
+        import numpy as np
+
+        from track_b_holographic_binding.model.embeddings import kronecker_encode
+
+        for word in ["a", "hello", "x" * 40, "नमस्ते"]:
+            mine = kronecker_encode(word)
+            paper = self._paper_formula(word)
+            self.assertTrue(
+                np.array_equal(np.sort(mine), np.sort(paper)),
+                f"{word!r}: not a permutation of the paper's kappa(b)",
+            )
+
+    def test_every_token_is_unit_norm(self):
+        """The 1/sqrt(L) factor exists to make code norm independent of token
+        length. Without it the norm grows as sqrt(L) (1.0 -> 5.66 at L=32)."""
+        import numpy as np
+
+        from track_b_holographic_binding.model.embeddings import kronecker_encode
+
+        for word in ["a", "in", "hello", "elephant", "x" * 16, "x" * 32, "x" * 64]:
+            self.assertAlmostEqual(
+                float(np.linalg.norm(kronecker_encode(word))), 1.0, places=5, msg=f"{word!r} not unit-norm"
+            )
+
+    def test_is_byte_level_not_character_level(self):
+        """d_p = 32 counts BYTES, so multi-byte scripts are capped far earlier
+        in characters than Latin text -- a real property of the scheme."""
+        from track_b_holographic_binding.model.embeddings import kronecker_encode
+
+        devanagari = "नमस्ते"
+        self.assertGreater(len(devanagari.encode("utf-8")), len(devanagari))
+        self.assertEqual(kronecker_encode(devanagari).shape, (8192,))
+
+    def test_truncation_past_32_bytes_loses_information(self):
+        """Two tokens sharing a 32-byte prefix must encode identically -- the
+        claim Track B's truncation probe rests on."""
+        import numpy as np
+
+        from track_b_holographic_binding.model.embeddings import kronecker_encode
+
+        a = kronecker_encode("x" * 32 + "aaaaaaaa")
+        b = kronecker_encode("x" * 32 + "bbbbbbbb")
+        self.assertTrue(np.array_equal(a, b))
+
+    def test_vocab_table_rows_are_unit_norm_except_unk(self):
+        import numpy as np
+
+        from track_b_holographic_binding.model.embeddings import build_kronecker_slot_table
+
+        table = build_kronecker_slot_table(["<unk>", "a", "hello", "elephant"])
+        self.assertEqual(table.shape, (4, 8192))
+        self.assertEqual(np.linalg.norm(table[0]), 0.0, "UNK row is reserved and stays all-zero")
+        for i in range(1, table.shape[0]):
+            self.assertAlmostEqual(float(np.linalg.norm(table[i])), 1.0, places=5)
+
+
 class TestRandomOffset(unittest.TestCase):
     """The random-offset augmentation is the mechanism that unlocked OOD
     length generalization, so its invariants are worth pinning down: it must

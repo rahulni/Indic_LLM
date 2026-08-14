@@ -22,19 +22,42 @@ straight from disk with no server:
 
 ---
 
-## What "Kronecker Embedding V1" was
+## What "Kronecker Embedding V1" is
 
-Described only verbally in the assignment (no code for it exists anywhere in this repository
-— checked exhaustively against the full git history before writing a line of this project):
-every word, regardless of length, is encoded into a fixed **32 character-position slots**.
-Short words waste slots; words longer than 32 characters are silently truncated. Two of the
-instructor's five stated extension problems are addressed here:
+**Shravan (2026), [*Kronecker Embeddings: Byte-Level Structured Token Representations for
+Parameter-Efficient Language Models*](https://arxiv.org/abs/2605.29459)** ([code](https://github.com/theschoolofai/kronecker-embeddings)).
+Equation 1, §3.2:
+
+```
+kappa(b) = (1/sqrt(L)) * SUM_{p=1..L}  c_{b_p} (x) p_p
+```
+
+`c_{b_p}` is a one-hot over the **byte** value (`d_c = 256`), `p_p` a one-hot over byte
+position (`d_p = 32`), so `D = 8192`, followed by one learned `Linear(D, d_model)` — replacing
+the `|V| x d_model` embedding table entirely. Tokens longer than 32 **bytes** are truncated;
+the codec is deterministic and not invertible.
+
+> [!NOTE]
+> This project was built **before** that paper and repository were available to me. I verified
+> that "kronecker" appeared in zero files and zero commits of this repo's prior history, and
+> reconstructed the scheme from the assignment prose, labelling it a reconstruction. Audited
+> against Eq. 1 afterwards, the reconstruction's structure was right but had two real
+> deviations — a missing `1/√L` normaliser and a character rather than byte alphabet. Both are
+> fixed, all affected numbers re-measured, and the episode is recorded in
+> [`CITATIONS.md`](CITATIONS.md) and [Track B's README](track_b_holographic_binding/README.md)
+> rather than smoothed over.
+
+Two of the instructor's five stated extension problems are addressed here:
 
 - **Track A** (the instructor's problem 1 — arithmetic-preserving embeddings): *"What if
   embeddings can store mathematical structure... when we do 9+9, the mathematical meaning
-  part is itself 18."* Solved by appending new dimensions beyond the 32 character slots that
-  encode an integer via its residues modulo a set of coprime primes — the Kronecker/CRT
-  decomposition of a finite abelian group.
+  part is itself 18."* Solved by encoding an integer via its residues modulo a set of coprime
+  primes — the Kronecker/CRT decomposition of a finite abelian group.
+  **Scope note:** the assignment says to append these dimensions to V1's existing code. Track A
+  instead builds a self-contained digit-arithmetic experiment, so it proves the arithmetic
+  claim but never literally concatenates onto V1's 8,192-dim byte codec. That is a deliberate
+  scoping decision, not an oversight — the proof and the ablation are both cleaner in
+  isolation — but it does mean Track A is not a drop-in patch to V1.
 - **Track B** (the instructor's problem 4 — a real Fourier alternative to Kronecker): *"Why
   can't I represent each character like a Fourier wave, and just add them to make a word?"*
   Solved by replacing tensor-product binding with circular-convolution superposition, which
@@ -157,13 +180,16 @@ maps to deterministic *shift* roles; swept head-to-head against random-phase rol
 literal reading is **not worse** — contradicting our own prior expectation, reported over the
 prediction.
 
-The controlled truncation probe is unambiguous: **the Kronecker/tensor arm cannot distinguish
-two words differing only after character 32 (cosine similarity 1.0000, exactly)**, while the
-holographic arm can (0.7895) — with *zero* learned embedding parameters against the Kronecker
-arm's 209,088. On raw perplexity the Kronecker arm is ahead (172.4 ± 3.1 vs 190.0 ± 7.0 over
-3 seeds — a real gap, larger than the seed spread); an ablation shows this is **not** explained
-by its learned projection, since giving the holographic arm one made it *worse* (213.1). See
-[Track B's README](track_b_holographic_binding/README.md).
+The controlled truncation probe is unambiguous: **the Kronecker arm cannot distinguish two
+words differing only after byte 32 (cosine similarity 1.0000, exactly)**, while the holographic
+arm can (0.7895) — with *zero* learned embedding parameters against Kronecker's 1,573,056.
+
+But on the metric the corpus actually measures, **Kronecker wins clearly**: 155.7 ± 1.9 vs
+190.0 ± 7.0 perplexity, a 34-point gap far outside the seed spread. That gap *doubled* when a
+bug in our own baseline was fixed — the first version omitted Eq. 1's `1/√L` normaliser and
+reported Kronecker at 172.4, i.e. the bug had been flattering this project's own alternative.
+An ablation rules out "it's just the learned projection": giving the holographic arm one made
+it *worse* (213.1). See [Track B's README](track_b_holographic_binding/README.md).
 
 ## Honest limitations
 

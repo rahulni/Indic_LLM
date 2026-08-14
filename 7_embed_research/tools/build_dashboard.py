@@ -418,7 +418,10 @@ renderCrtDemo();
 # Track B
 # ---------------------------------------------------------------------------
 
-ARM_LABEL_B = {"kronecker": "Kronecker/tensor (32-slot cap)", "holographic": "Holographic (circular convolution)"}
+ARM_LABEL_B = {
+    "kronecker": "Kronecker (Eq. 1, 32-byte cap)",
+    "holographic": "Holographic (circular convolution)",
+}
 ARM_COLOR_B = {"kronecker": SERIES["blue"], "holographic": SERIES["orange"]}
 D_MODEL = 192  # must match track_b_holographic_binding/model/train.py's D_MODEL
 
@@ -613,9 +616,9 @@ after — the minimal, controlled test of whether an embedding scheme can tell t
 
 <div class="card">
 <h2>5. Parameter count</h2>
-<p>The Kronecker arm needs a learned projection from its 1,088-dim raw slot code down to d_model; the
-holographic arm needs zero learned embedding parameters at all — its table is entirely fixed role/filler
-vectors.</p>
+<p>The Kronecker arm needs a learned projection from its 8,192-dim raw code (d_c=256 bytes &times;
+d_p=32 positions, per Eq. 1 of arXiv:2605.29459) down to d_model; the holographic arm needs zero learned
+embedding parameters at all — its table is entirely fixed role/filler vectors.</p>
 <div id="chart-params"></div>
 {dress_section}
 </div>

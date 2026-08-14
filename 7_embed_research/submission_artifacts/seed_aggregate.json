@@ -275,15 +275,15 @@
       ],
       "n_seeds": 3,
       "val_perplexity": {
-        "mean": 172.4145246653011,
-        "std": 3.076622234205334,
+        "mean": 155.69391253377748,
+        "std": 1.893464450107073,
         "n": 3
       },
-      "n_params_total": 3460728,
-      "n_params_embedding_learned": 209088,
+      "n_params_total": 4824696,
+      "n_params_embedding_learned": 1573056,
       "truncation_cosine_similarity": {
-        "mean": 1.0000000174840291,
-        "std": 7.547306980801426e-09,
+        "mean": 1.000000006953875,
+        "std": 3.785403455348528e-09,
         "n": 3
       }
     },

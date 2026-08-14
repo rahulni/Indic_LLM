@@ -9,14 +9,14 @@
   "d_ff": 768,
   "vocab_size": 3000,
   "context_len": 16,
-  "n_params_total": 3460728,
-  "n_params_embedding_learned": 209088,
+  "n_params_total": 4824696,
+  "n_params_embedding_learned": 1573056,
   "corpus_raw_bytes": 1115394,
   "corpus_n_word_tokens": 252268,
   "corpus_max_natural_word_length": 15,
   "steps": 2000,
   "batch_size": 128,
-  "elapsed_seconds": 46.273399353027344,
+  "elapsed_seconds": 55.47321915626526,
   "device": {
     "device": "cuda",
     "cuda_device_name": "NVIDIA GeForce RTX 3070 Laptop GPU",
@@ -25,97 +25,97 @@
   "loss_curve": [
     {
       "step": 250,
-      "loss": 5.505080699920654
+      "loss": 5.636964321136475
     },
     {
       "step": 500,
-      "loss": 5.090102195739746
+      "loss": 5.180344581604004
     },
     {
       "step": 750,
-      "loss": 4.898993492126465
+      "loss": 5.00723123550415
     },
     {
       "step": 1000,
-      "loss": 4.669735431671143
+      "loss": 4.817437171936035
     },
     {
       "step": 1250,
-      "loss": 4.4737114906311035
+      "loss": 4.648371696472168
     },
     {
       "step": 1500,
-      "loss": 4.263070106506348
+      "loss": 4.484675407409668
     },
     {
       "step": 1750,
-      "loss": 3.9903078079223633
+      "loss": 4.31959867477417
     },
     {
       "step": 2000,
-      "loss": 3.6437363624572754
+      "loss": 3.9951977729797363
     }
   ],
   "val_perplexity_curve": [
     {
       "step": 250,
-      "val_perplexity": 262.2829624163002
+      "val_perplexity": 303.7063385471734
     },
     {
       "step": 500,
-      "val_perplexity": 192.00947802408567
+      "val_perplexity": 202.88193532293405
     },
     {
       "step": 750,
-      "val_perplexity": 154.96948101571476
+      "val_perplexity": 165.86166791390193
     },
     {
       "step": 1000,
-      "val_perplexity": 140.23842116441503
+      "val_perplexity": 151.11756236862513
     },
     {
       "step": 1250,
-      "val_perplexity": 135.46138688776244
+      "val_perplexity": 144.40975338055364
     },
     {
       "step": 1500,
-      "val_perplexity": 136.7753975661501
+      "val_perplexity": 140.2585082194096
     },
     {
       "step": 1750,
-      "val_perplexity": 150.25453377335143
+      "val_perplexity": 145.7953716508963
     },
     {
       "step": 2000,
-      "val_perplexity": 173.721223993872
+      "val_perplexity": 156.41965681703903
     }
   ],
-  "final_val_perplexity": 173.721223993872,
+  "final_val_perplexity": 156.41965681703903,
   "perplexity_by_length_bucket": {
     "1-3": {
-      "perplexity": 44.13525390625,
+      "perplexity": 39.975013732910156,
       "n_tokens": 13038
     },
     "4-6": {
-      "perplexity": 553.2720336914062,
+      "perplexity": 481.4578857421875,
       "n_tokens": 8857
     },
     "7-9": {
-      "perplexity": 10840.880859375,
+      "perplexity": 10980.5693359375,
       "n_tokens": 1771
     },
     "10-12": {
-      "perplexity": 18034.298828125,
+      "perplexity": 18504.998046875,
       "n_tokens": 60
     },
     "13-20": {
-      "perplexity": 2628.797607421875,
+      "perplexity": 204208.390625,
       "n_tokens": 2
     }
   },
   "truncation_information_loss": {
-    "mean_cosine_similarity": 1.000000010728836,
+    "mean_cosine_similarity": 1.0000000047683715,
     "n_pairs": 100
   },
-  "raw_slot_width": 1088
+  "raw_slot_width": 8192
 }
