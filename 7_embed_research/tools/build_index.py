@@ -16,6 +16,24 @@ from tools.chart_kit import PALETTE_CSS  # noqa: E402
 TRACK_A = ROOT / "track_a_numeral_crt"
 TRACK_B = ROOT / "track_b_holographic_binding"
 
+REPO_TREE_URL = "https://github.com/rahulni/Indic_LLM/tree/main/7_embed_research"
+REPO_EVIDENCE_URL = (
+    "https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research"
+    "/submission_artifacts/evidence.json"
+)
+
+
+def evidence_label() -> str:
+    """Counts PASS rows off the artifact rather than hardcoding a total, so the
+    landing page cannot keep advertising a pass rate the evidence no longer shows.
+    """
+    path = ROOT / "submission_artifacts" / "evidence.json"
+    if not path.exists():  # build_index.py is runnable standalone, before run_all.py
+        return "Evidence (raw JSON)"
+    rows = load_json(path)
+    n_pass = sum(1 for r in rows if r["result"] == "PASS")
+    return f"Evidence ({n_pass}/{len(rows)} PASS)"
+
 
 def summarize_track_a() -> dict:
     results_dir = TRACK_A / "results"
@@ -62,6 +80,7 @@ h1 {{ font-size: 1.8rem; margin: 0 0 6px 0; }}
 .status {{ font-size: 0.82rem; color: var(--good); font-weight: 600; }}
 .footer {{ margin-top: 30px; font-size: 0.82rem; color: var(--text-muted); }}
 .footer a {{ color: var(--text-secondary); }}
+.footer-source {{ margin-top: 8px; }}
 </style>
 <div class="viz-root page">
 <h1>Kronecker Embedding V2</h1>
@@ -84,8 +103,9 @@ construction helps in practice.</p>
 <div class="footer">
 <a href="../README.md">README</a> ·
 <a href="../ARCHITECTURE.md">Architecture &amp; design decisions</a> ·
-<a href="../CITATIONS.md">Citations</a> ·
-<a href="evidence.json">Evidence (raw JSON)</a>
+<a href="../CITATIONS.md">Citations</a>
+<div class="footer-source">Source: <a href="{REPO_TREE_URL}">Code + README</a> ·
+<a href="{REPO_EVIDENCE_URL}">{evidence_label()}</a></div>
 </div>
 </div>
 """
