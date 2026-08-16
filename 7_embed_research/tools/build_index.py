@@ -11,16 +11,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from common.evidence import load_json  # noqa: E402
-from tools.chart_kit import PALETTE_CSS  # noqa: E402
+from tools.chart_kit import PALETTE_CSS, REPO_EVIDENCE_URL, REPO_TREE_URL  # noqa: E402
 
 TRACK_A = ROOT / "track_a_numeral_crt"
 TRACK_B = ROOT / "track_b_holographic_binding"
-
-REPO_TREE_URL = "https://github.com/rahulni/Indic_LLM/tree/main/7_embed_research"
-REPO_EVIDENCE_URL = (
-    "https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research"
-    "/submission_artifacts/evidence.json"
-)
 
 
 def evidence_label() -> str:

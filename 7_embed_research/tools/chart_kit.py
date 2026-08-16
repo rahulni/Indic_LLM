@@ -101,7 +101,18 @@ table.evtable th { color: var(--text-muted); font-weight: 600; font-size: 0.76re
 code, pre { font-family: ui-monospace, "SF Mono", Consolas, monospace; }
 pre { background: var(--page); padding: 12px 14px; border-radius: 8px; overflow-x: auto; font-size: 0.82rem;
   border: 1px solid var(--border); }
+.page-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
+  font-size: 0.82rem; color: var(--text-muted); }
+.page-footer a { color: var(--text-secondary); }
 """
+
+# Shared by build_dashboard.py (via page_shell) and build_index.py. Defined once
+# here because both generators emit it and a duplicated literal would drift.
+REPO_TREE_URL = "https://github.com/rahulni/Indic_LLM/tree/main/7_embed_research"
+REPO_EVIDENCE_URL = (
+    "https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research"
+    "/submission_artifacts/evidence.json"
+)
 
 CHART_JS = """
 function vizTooltip(root) {
@@ -310,5 +321,9 @@ const DATA = {data_json};
 </script>
 <div class="viz-root page">
 {body}
+<div class="page-footer">
+<a href="../../submission_artifacts/index.html">&larr; All tracks</a> &middot;
+<a href="{REPO_TREE_URL}">Code + README on GitHub</a>
+</div>
 </div>
 """

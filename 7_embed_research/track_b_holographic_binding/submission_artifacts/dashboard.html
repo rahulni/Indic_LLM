@@ -91,6 +91,9 @@ table.evtable th { color: var(--text-muted); font-weight: 600; font-size: 0.76re
 code, pre { font-family: ui-monospace, "SF Mono", Consolas, monospace; }
 pre { background: var(--page); padding: 12px 14px; border-radius: 8px; overflow-x: auto; font-size: 0.82rem;
   border: 1px solid var(--border); }
+.page-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
+  font-size: 0.82rem; color: var(--text-muted); }
+.page-footer a { color: var(--text-secondary); }
 
 .page { max-width: 900px; margin: 0 auto; padding: 28px 20px 60px 20px; }
 </style>
@@ -433,4 +436,8 @@ document.getElementById('word-input').addEventListener('input', renderWordDemo);
 renderWordDemo();
 </script>
 
+<div class="page-footer">
+<a href="../../submission_artifacts/index.html">&larr; All tracks</a> &middot;
+<a href="https://github.com/rahulni/Indic_LLM/tree/main/7_embed_research">Code + README on GitHub</a>
+</div>
 </div>
