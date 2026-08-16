@@ -17,7 +17,13 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from common.evidence import load_json  # noqa: E402
-from tools.chart_kit import evidence_table_html, legend_html, page_shell  # noqa: E402
+from tools.chart_kit import (  # noqa: E402
+    evidence_table_html,
+    figure_html,
+    legend_html,
+    page_shell,
+    stat_tiles_html,
+)
 from track_a_numeral_crt.proofs.analytic_proof import VALUE_PRIMES, crt_constants  # noqa: E402
 from track_b_holographic_binding.data.corpus import load_corpus  # noqa: E402
 
@@ -146,6 +152,17 @@ def build_track_a() -> str:
         s = cfg["accuracy_by_length"][length]
         return f"{s['mean']:.1%} &plusmn; {s['std']:.1%}"
 
+    def agg_mean(config: str, length: str) -> str | None:
+        """The mean alone. A headline tile has to be readable at a glance, and
+        two full mean±std strings side by side wrap mid-number; the spread is
+        reported in the tile's note and in full in the tables below."""
+        if not agg:
+            return None
+        cfg = agg["track_a"].get(config)
+        if not cfg or length not in cfg["accuracy_by_length"]:
+            return None
+        return f"{cfg['accuracy_by_length'][length]['mean']:.1%}"
+
     if offset_runs:
         rows_html = ""
         for arm in ["abacus", "crt"]:
@@ -228,6 +245,44 @@ a finding, because they measured an artifact rather than the representation.</p>
 
     crt_N, crt_consts = crt_constants(VALUE_PRIMES)
 
+    # Headline tiles. Every value is read from the artifacts loaded above, never
+    # typed in, so a re-run that changes a number changes the tile with it.
+    n_checks = len(proof_report["checks"])
+    n_checks_pass = sum(1 for c in proof_report["checks"] if c["passed"])
+    tiles_a = [
+        {
+            "label": "Ring operations proved exact",
+            "value": f"{n_checks_pass}/{n_checks}",
+            "note": f"zero error on [0, {proof_report['value_N']:,}), verified in "
+            f"{proof_report['elapsed_seconds']:.1f}s with no model involved",
+            "accent": "accent-good" if n_checks_pass == n_checks else None,
+        }
+    ]
+    abacus5, crt5 = agg_mean("abacus+offset", "5"), agg_mean("crt+offset", "5")
+    if abacus5 and crt5:
+        tiles_a.append(
+            {
+                "label": "OOD accuracy, length 5",
+                "values": (abacus5, crt5),
+                "note": f"learned Abacus-lite ({agg_cell('abacus+offset', '5')}) vs fixed CRT "
+                f"({agg_cell('crt+offset', '5')}), both with random-offset training — "
+                "the fixed algebraic code is the weaker of the two",
+            }
+        )
+    value_accs = [
+        r["final_accuracy"]["accuracy"] for r in value_runs.values() if "final_accuracy" in r
+    ]
+    if value_accs:
+        tiles_a.append(
+            {
+                "label": "The instructor's literal ask",
+                "value": f"{max(value_accs):.1%}",
+                "note": "best exact-match when each operand is one token carrying "
+                "the CRT code of its value — exact structure is not enough",
+                "accent": "accent-2",
+            }
+        )
+
     body = f"""
 <h1>Track A — Kronecker Numeral Embeddings</h1>
 <p class="subtitle">Arithmetic-preserving embeddings via a Residue Number System (CRT) decomposition.
@@ -240,6 +295,8 @@ honestly-labeled empirical question).</p>
   <span class="badge">train digit-length: {train_range[0]}-{train_range[1]}</span>
   <span class="badge">device: {any_run['device']['device'] if any_run else 'n/a'}</span>
 </div>
+
+{stat_tiles_html(tiles_a)}
 
 <div class="card">
 <h2>1. The proof (no model, no training)</h2>
@@ -267,9 +324,9 @@ lookup table).</p>
 
 <div class="card">
 <h2>3. What the proof looks like</h2>
-<div class="figure"><img src="{proof_figures['clock_structure']}" alt="Clock structure of the value-code residue slots"></div>
+{figure_html(proof_figures['clock_structure'], "Clock structure of the value-code residue slots")}
 <p class="subtitle">Each residue slot is literally a clock: n mod p sits at angle 2&pi;(n mod p)/p.</p>
-<div class="figure"><img src="{proof_figures['shift_scatter']}" alt="Shift scatter: decode(shift(encode(a),k)) vs (a+k) mod N"></div>
+{figure_html(proof_figures['shift_scatter'], "Shift scatter: decode(shift(encode(a),k)) vs (a+k) mod N")}
 <p class="subtitle">Shifting the embedding IS modular addition — max error is exactly zero, not "usually small".</p>
 </div>
 
@@ -541,6 +598,67 @@ Kronecker arm's projection but not the same parameter count
             f"<td>{t['n_pairs']}</td><td>{verdict}</td></tr>"
         )
 
+    # Headline tiles. These read the multi-seed aggregate rather than the single
+    # default run, because this project's stated rule is that headline numbers
+    # are 3-seed means -- a tile quoting seed 0 beside a README quoting the mean
+    # would look like two different results for the same experiment.
+    agg_path = ROOT / "submission_artifacts" / "seed_aggregate.json"
+    agg_b = (load_json(agg_path).get("track_b") if agg_path.exists() else None) or {}
+
+    def headline(arm: str, metric: str, fallback: float, fmt: str) -> tuple[str, str]:
+        """(value, spread-note) from the aggregate, falling back to the single run."""
+        stats = agg_b.get(arm, {}).get(metric)
+        if not stats:
+            return format(fallback, fmt), ""
+        return format(stats["mean"], fmt), f" &plusmn; {format(stats['std'], fmt)}"
+
+    tiles_b = []
+    if runs.get("kronecker") and runs.get("holographic"):
+        kron_v, kron_s = headline("kronecker", "val_perplexity", kron_ppl, ".1f")
+        holo_v, holo_s = headline("holographic", "val_perplexity", plain_ppl, ".1f")
+        n_seeds_b = agg_b.get("kronecker", {}).get("n_seeds")
+        seeds_note = f" over {n_seeds_b} seeds" if n_seeds_b else ""
+        tiles_b.append(
+            {
+                "label": "Val perplexity — Kronecker wins",
+                "values": (kron_v, holo_v),
+                "note": f"{kron_v}{kron_s} vs {holo_v}{holo_s}{seeds_note} — on the metric "
+                "the corpus actually measures, V1's capped codec beats this track's "
+                "uncapped alternative",
+                "accent": "accent-2",
+            }
+        )
+    kron_trunc = (runs.get("kronecker") or {}).get("truncation_information_loss")
+    holo_trunc = (runs.get("holographic") or {}).get("truncation_information_loss")
+    if kron_trunc and holo_trunc:
+        kt, _ = headline(
+            "kronecker", "truncation_cosine_similarity",
+            kron_trunc["mean_cosine_similarity"], ".4f",
+        )
+        ht, _ = headline(
+            "holographic", "truncation_cosine_similarity",
+            holo_trunc["mean_cosine_similarity"], ".4f",
+        )
+        tiles_b.append(
+            {
+                "label": "Words differing only after byte 32",
+                "values": (kt, ht),
+                "note": "cosine similarity: Kronecker cannot tell them apart at all "
+                "(exactly 1.0), the holographic code can",
+            }
+        )
+        tiles_b.append(
+            {
+                "label": "Learned embedding parameters",
+                "values": (
+                    f"{runs['holographic']['n_params_embedding_learned']:,}",
+                    f"{runs['kronecker']['n_params_embedding_learned']:,}",
+                ),
+                "note": "the holographic code carries no learned embedding table at all",
+                "accent": "accent-good",
+            }
+        )
+
     body = f"""
 <h1>Track B — Holographic/Fourier Binding</h1>
 <p class="subtitle">Replacing Kronecker/tensor-product binding (V1's fixed 32-character-slot cap) with
@@ -552,19 +670,21 @@ cost of a provable, measured capacity/crosstalk tradeoff.</p>
   <span class="badge">device: {any_run['device']['device'] if any_run else 'n/a'}</span>
 </div>
 
+{stat_tiles_html(tiles_b)}
+
 <div class="card">
 <h2>1. The proof (no model, no training)</h2>
 <p>Run in {proof_report['elapsed_seconds']:.2f}s. Single-pair unbind is <strong>exact</strong> for a unitary
 role vector (verified per dimension, max error &lt; 1e-8) — the interesting behavior is what happens once
 multiple bound pairs are superposed into one word vector.</p>
-<div class="figure"><img src="{proof_figures['capacity_curve']}" alt="Decode accuracy vs word length, by dimension"></div>
+{figure_html(proof_figures['capacity_curve'], "Decode accuracy vs word length, by dimension")}
 <p class="subtitle">Dotted lines are our own derivation of the standard VSA signal-to-noise argument
 (written out step by step in <code>theoretical_decode_accuracy()</code>, assumptions stated) — deliberately
 not presented as a formula lifted from Plate. It predicts the measurement to within
 {max_theory_delta:.1%} worst-case across every (L, D) cell, and is mildly optimistic at small D exactly as
 its Gaussian-independence approximation predicts.</p>
-<div class="figure"><img src="{proof_figures['interference']}" alt="Interference: true filler vs best distractor similarity"></div>
-<div class="figure"><img src="{proof_figures['role_comparison']}" alt="Random-phase roles vs literal shift roles"></div>
+{figure_html(proof_figures['interference'], "Interference: true filler vs best distractor similarity")}
+{figure_html(proof_figures['role_comparison'], "Random-phase roles vs literal shift roles")}
 <p class="subtitle">The instructor's phrasing — "represent each character like a Fourier wave, and just add
 them" — reads most literally as deterministic <em>shift</em> roles (position p is a pure phase ramp) rather
 than the random-phase roles used elsewhere. Both are unitary, so both give exact single-pair unbind; swept

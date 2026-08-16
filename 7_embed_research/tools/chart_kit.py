@@ -9,10 +9,37 @@ from __future__ import annotations
 
 import json
 
+# Dark is the DEFAULT, unconditionally -- bare :root carries the black palette
+# and the OS preference is deliberately not consulted, so the page is black on
+# load regardless of the visitor's system setting. Light is reachable only by
+# the toggle, which stamps [data-theme="light"] on <html>. Both series sets are
+# validated against their own surface (see dataviz six checks); the light set's
+# green and amber sit below 3:1 contrast, which is why every chart also ships a
+# legend and the evidence tables repeat the numbers in text.
 PALETTE_CSS = """
 :root {
+  color-scheme: dark;
+  --surface-1:      #141413;
+  --surface-2:      #1c1c1a;
+  --page:           #0a0a0a;
+  --text-primary:   #f5f5f3;
+  --text-secondary: #b8b7b0;
+  --text-muted:     #8a8880;
+  --gridline:       #262624;
+  --baseline:       #3a3a37;
+  --border:         rgba(255,255,255,0.09);
+  --border-strong:  rgba(255,255,255,0.16);
+  --good:           #3fbf5f;
+  --series-1:       #3987e5;
+  --series-2:       #d95926;
+  --series-3:       #199e70;
+  --series-4:       #c98500;
+  --shadow:         0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.28);
+}
+:root[data-theme="light"] {
   color-scheme: light;
   --surface-1:      #fcfcfb;
+  --surface-2:      #f4f4f1;
   --page:           #f9f9f7;
   --text-primary:   #0b0b0b;
   --text-secondary: #52514e;
@@ -20,64 +47,58 @@ PALETTE_CSS = """
   --gridline:       #e1e0d9;
   --baseline:       #c3c2b7;
   --border:         rgba(11,11,11,0.10);
+  --border-strong:  rgba(11,11,11,0.18);
   --good:           #006300;
   --series-1:       #2a78d6;
   --series-2:       #eb6834;
   --series-3:       #1baf7a;
   --series-4:       #eda100;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --surface-1:      #1a1a19;
-    --page:           #0d0d0d;
-    --text-primary:   #ffffff;
-    --text-secondary: #c3c2b7;
-    --text-muted:     #898781;
-    --gridline:       #2c2c2a;
-    --baseline:       #383835;
-    --border:         rgba(255,255,255,0.10);
-    --good:           #0ca30c;
-    --series-1:       #3987e5;
-    --series-2:       #d95926;
-    --series-3:       #199e70;
-    --series-4:       #c98500;
-  }
-}
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --surface-1:      #1a1a19;
-  --page:           #0d0d0d;
-  --text-primary:   #ffffff;
-  --text-secondary: #c3c2b7;
-  --text-muted:     #898781;
-  --gridline:       #2c2c2a;
-  --baseline:       #383835;
-  --border:         rgba(255,255,255,0.10);
-  --good:           #0ca30c;
-  --series-1:       #3987e5;
-  --series-2:       #d95926;
-  --series-3:       #199e70;
-  --series-4:       #c98500;
+  --shadow:         0 1px 2px rgba(11,11,11,0.05), 0 8px 24px rgba(11,11,11,0.06);
 }
 body { background: var(--page); color: var(--text-primary); margin: 0; }
 """
 
 BASE_CSS = """
 .viz-root { background: var(--page); color: var(--text-primary);
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }
-.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 10px;
-  padding: 20px 22px; margin: 0 0 20px 0; }
-h1 { font-size: 1.6rem; margin: 0 0 4px 0; }
-h2 { font-size: 1.1rem; margin: 0 0 12px 0; }
-.subtitle { color: var(--text-secondary); margin: 0 0 18px 0; }
-.badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 22px 0; }
-.badge { font-size: 0.78rem; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--border);
-  color: var(--text-secondary); background: var(--page); }
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px;
+  padding: 26px 28px; margin: 0 0 22px 0; box-shadow: var(--shadow); }
+h1 { font-size: 2rem; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 8px 0; }
+/* Headings keep their hand-written "1." / "2." numbers: the prose cross-refers
+   to them ("proved in section 1"), so a CSS counter could silently drift out of
+   step with the text it is being cited by. */
+h2 { font-size: 1.18rem; line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 14px 0; }
+h3 { font-size: 0.96rem; margin: 22px 0 8px 0; color: var(--text-primary); }
+.subtitle { color: var(--text-secondary); margin: 0 0 18px 0; max-width: 72ch; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 26px 0; }
+.badge { font-size: 0.78rem; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border);
+  color: var(--text-secondary); background: var(--surface-1); }
+/* Headline numbers. The dataviz form heuristic: a single value with no
+   comparison across categories is a stat tile, not a chart. */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px; margin: 0 0 22px 0; }
+.stat-tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px 22px; box-shadow: var(--shadow); }
+.stat-value { font-size: 1.85rem; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; }
+.stat-value.compare { font-size: 1.32rem; line-height: 1.25; }
+.stat-vs { font-size: 0.78em; font-weight: 500; color: var(--text-muted);
+  margin: 0 0.42em; letter-spacing: 0; }
+.stat-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-muted); font-weight: 600; margin-bottom: 9px; }
+.stat-note { font-size: 0.82rem; color: var(--text-secondary); margin-top: 7px; }
+.stat-tile .accent-1 { color: var(--series-1); }
+.stat-tile .accent-2 { color: var(--series-2); }
+.stat-tile .accent-good { color: var(--good); }
 table.evtable { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
-table.evtable th, table.evtable td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--gridline); }
+table.evtable th, table.evtable td { text-align: left; padding: 9px 11px; border-bottom: 1px solid var(--gridline); }
+table.evtable td { font-variant-numeric: tabular-nums; }
+table.evtable tbody tr:last-child td { border-bottom: none; }
+table.evtable tbody tr:hover td { background: var(--surface-2); }
 table.evtable th { color: var(--text-muted); font-weight: 600; font-size: 0.76rem; text-transform: uppercase;
   letter-spacing: 0.03em; }
+.table-scroll { overflow-x: auto; }
 .pass { color: var(--good); font-weight: 600; }
 .fail { color: var(--series-2); font-weight: 600; }
 .legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 6px 0 14px 0; font-size: 0.82rem; color: var(--text-secondary); }
@@ -95,15 +116,43 @@ table.evtable th { color: var(--text-muted); font-weight: 600; font-size: 0.76re
 .grid-line { stroke: var(--gridline); stroke-width: 1; }
 .bar-rect { cursor: pointer; }
 .bar-rect:hover { filter: brightness(1.08); }
-.limitations { border-left: 3px solid var(--series-2); padding: 4px 16px; background: var(--page); border-radius: 0 8px 8px 0; }
-.limitations li { margin: 6px 0; }
-.figure img { max-width: 100%; border-radius: 6px; border: 1px solid var(--border); }
+.limitations { border-left: 3px solid var(--series-2); padding: 4px 18px; background: var(--surface-2);
+  border-radius: 0 10px 10px 0; }
+.limitations li { margin: 8px 0; }
+.figure { margin: 18px 0; }
+.figure img { max-width: 100%; border-radius: 10px; border: 1px solid var(--border); display: block; }
+/* A PNG's ink is baked in, so each figure ships twice and CSS picks the copy
+   matching the active theme. Dark is default, hence .fig-light starts hidden. */
+.fig-light { display: none; }
+.fig-dark { display: block; }
+:root[data-theme="light"] .fig-light { display: block; }
+:root[data-theme="light"] .fig-dark { display: none; }
 code, pre { font-family: ui-monospace, "SF Mono", Consolas, monospace; }
-pre { background: var(--page); padding: 12px 14px; border-radius: 8px; overflow-x: auto; font-size: 0.82rem;
+code { background: var(--surface-2); padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
+pre { background: var(--surface-2); padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 0.82rem;
   border: 1px solid var(--border); }
-.page-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border);
+pre code { background: none; padding: 0; }
+a { color: var(--series-1); text-decoration-color: var(--border-strong); text-underline-offset: 2px; }
+a:hover { text-decoration-color: currentColor; }
+.theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 20;
+  width: 38px; height: 38px; border-radius: 10px; cursor: pointer;
+  background: var(--surface-1); border: 1px solid var(--border-strong); color: var(--text-secondary);
+  font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); }
+.theme-toggle:hover { color: var(--text-primary); border-color: var(--text-muted); }
+.theme-toggle .icon-dark { display: inline; }
+.theme-toggle .icon-light { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-dark { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-light { display: inline; }
+.page-footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--border);
   font-size: 0.82rem; color: var(--text-muted); }
 .page-footer a { color: var(--text-secondary); }
+@media (max-width: 620px) {
+  .viz-root { font-size: 14px; }
+  .card { padding: 20px 17px; border-radius: 12px; }
+  h1 { font-size: 1.55rem; }
+  .theme-toggle { top: 10px; right: 10px; }
+}
 """
 
 # Shared by build_dashboard.py (via page_shell) and build_index.py. Defined once
@@ -113,6 +162,82 @@ REPO_EVIDENCE_URL = (
     "https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research"
     "/submission_artifacts/evidence.json"
 )
+
+# Applied before first paint so a light-mode visitor never sees a black flash.
+# Absent a stored choice this does nothing, which leaves the CSS default (dark).
+THEME_BOOT_JS = """
+(function () {
+  try {
+    var t = localStorage.getItem('kv2-theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+"""
+
+THEME_TOGGLE_HTML = """
+<button class="theme-toggle" id="theme-toggle" type="button"
+  aria-label="Switch between dark and light theme" title="Switch theme">
+<span class="icon-dark">&#9788;</span><span class="icon-light">&#9789;</span>
+</button>
+"""
+
+THEME_TOGGLE_JS = """
+document.getElementById('theme-toggle').addEventListener('click', function () {
+  var root = document.documentElement;
+  var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  root.setAttribute('data-theme', next);
+  try { localStorage.setItem('kv2-theme', next); } catch (e) {}
+});
+"""
+
+
+def stat_tiles_html(tiles: list[dict]) -> str:
+    """A row of headline numbers. Each tile is {label, note?, accent?} plus
+    either `value` (one number) or `values` (a pair, rendered as "a vs b").
+
+    The helper owns the "vs" markup so a two-value tile also gets the smaller
+    type size that keeps both numbers on one line -- leaving that to the caller
+    meant every comparison had to remember to shrink itself, and one that forgot
+    wrapped raggedly mid-number.
+
+    Used instead of a chart wherever the figure is a single number with no
+    across-category comparison to make -- plotting one value as a lone bar is
+    the classic form error.
+    """
+    cells = ""
+    for t in tiles:
+        accent = f" {t['accent']}" if t.get("accent") else ""
+        note = f'<div class="stat-note">{t["note"]}</div>' if t.get("note") else ""
+        if t.get("values"):
+            left, right = t["values"]
+            inner = f'{left}<span class="stat-vs">vs</span>{right}'
+            size = " compare"
+        else:
+            inner = t["value"]
+            size = ""
+        cells += (
+            '<div class="stat-tile">'
+            f'<div class="stat-label">{t["label"]}</div>'
+            f'<div class="stat-value{size}{accent}">{inner}</div>'
+            f"{note}</div>"
+        )
+    return f'<div class="stat-grid">{cells}</div>'
+
+
+def figure_html(uris, alt: str) -> str:
+    """Emits a figure as its light and dark renderings, letting CSS show one.
+
+    Accepts the plain string an older proof_figures.json holds, so a dashboard
+    can still be built from figure data generated before render_themed existed.
+    """
+    if isinstance(uris, str):
+        return f'<div class="figure"><img src="{uris}" alt="{alt}"></div>'
+    return (
+        '<div class="figure">'
+        f'<img class="fig-dark" src="{uris["dark"]}" alt="{alt}">'
+        f'<img class="fig-light" src="{uris["light"]}" alt="{alt}">'
+        "</div>"
+    )
 
 CHART_JS = """
 function vizTooltip(root) {
@@ -310,15 +435,17 @@ def page_shell(title: str, favicon_note: str, body: str, script_data: dict) -> s
     # own trailing <script> (which calls them) runs -- scripts execute in
     # document order, so this block goes first, ahead of the body markup.
     return f"""<title>{title}</title>
+<script>{THEME_BOOT_JS}</script>
 <style>
 {PALETTE_CSS}
 {BASE_CSS}
-.page {{ max-width: 900px; margin: 0 auto; padding: 28px 20px 60px 20px; }}
+.page {{ max-width: 900px; margin: 0 auto; padding: 40px 20px 64px 20px; }}
 </style>
 <script>
 const DATA = {data_json};
 {CHART_JS}
 </script>
+{THEME_TOGGLE_HTML}
 <div class="viz-root page">
 {body}
 <div class="page-footer">
@@ -326,4 +453,5 @@ const DATA = {data_json};
 <a href="{REPO_TREE_URL}">Code + README on GitHub</a>
 </div>
 </div>
+<script>{THEME_TOGGLE_JS}</script>
 """

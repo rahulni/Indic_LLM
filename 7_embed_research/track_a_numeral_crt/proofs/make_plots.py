@@ -23,12 +23,12 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from common.plotting import save_and_embed  # noqa: E402
+from common.plotting import render_themed  # noqa: E402
 
 RESULTS_DIR = Path(__file__).resolve().parents[1] / "results"
 
 
-def plot_clock_structure(data: dict) -> plt.Figure:
+def plot_clock_structure(data: dict, theme: dict) -> plt.Figure:
     primes = data["primes"]
     n_sample = np.array(data["n_sample"])
     residues = np.array(data["residues"])  # (n_samples, len(primes))
@@ -41,7 +41,7 @@ def plot_clock_structure(data: dict) -> plt.Figure:
         x, y = np.cos(angles), np.sin(angles)
         ax.scatter(x, y, c=n_sample, cmap=cmap, norm=norm, s=10, alpha=0.6, linewidths=0)
         theta = np.linspace(0, 2 * np.pi, 200)
-        ax.plot(np.cos(theta), np.sin(theta), color="0.85", linewidth=1, zorder=0)
+        ax.plot(np.cos(theta), np.sin(theta), color=theme["faint"], linewidth=1, zorder=0)
         ax.set_title(f"mod {p}", fontsize=10)
         ax.set_xticks([])
         ax.set_yticks([])
@@ -54,7 +54,7 @@ def plot_clock_structure(data: dict) -> plt.Figure:
     return fig
 
 
-def plot_shift_scatter(data: dict) -> plt.Figure:
+def plot_shift_scatter(data: dict, theme: dict) -> plt.Figure:
     scatter = data["shift_scatter"]
     ks = list(scatter.keys())
     fig, axes = plt.subplots(1, len(ks), figsize=(3.6 * len(ks), 3.6))
@@ -63,9 +63,9 @@ def plot_shift_scatter(data: dict) -> plt.Figure:
     for ax, k in zip(axes, ks):
         expected = np.array(scatter[k]["expected"])
         decoded = np.array(scatter[k]["decoded"])
-        ax.scatter(expected, decoded, s=6, alpha=0.4, color="#3b6fa0", linewidths=0)
+        ax.scatter(expected, decoded, s=6, alpha=0.4, color=theme["series"][0], linewidths=0)
         lo, hi = expected.min(), expected.max()
-        ax.plot([lo, hi], [lo, hi], color="#c0392b", linewidth=1, linestyle="--", label="y = x")
+        ax.plot([lo, hi], [lo, hi], color=theme["series"][1], linewidth=1, linestyle="--", label="y = x")
         ax.set_title(f"k = {k}\nmax |error| = {scatter[k]['max_abs_error']}", fontsize=10)
         ax.set_xlabel("(a + k) mod N")
         ax.set_ylabel("decode(shift(encode(a), k))")
@@ -79,11 +79,12 @@ def main() -> None:
     data = json.loads((RESULTS_DIR / "proof_plot_data.json").read_text())
 
     figures = {}
-    fig1 = plot_clock_structure(data)
-    figures["clock_structure"] = save_and_embed(fig1, RESULTS_DIR / "clock_structure.png")
-
-    fig2 = plot_shift_scatter(data)
-    figures["shift_scatter"] = save_and_embed(fig2, RESULTS_DIR / "shift_scatter.png")
+    figures["clock_structure"] = render_themed(
+        lambda theme: plot_clock_structure(data, theme), RESULTS_DIR / "clock_structure.png"
+    )
+    figures["shift_scatter"] = render_themed(
+        lambda theme: plot_shift_scatter(data, theme), RESULTS_DIR / "shift_scatter.png"
+    )
 
     (RESULTS_DIR / "proof_figures.json").write_text(json.dumps(figures))
     print(f"wrote {len(figures)} figures to {RESULTS_DIR}")

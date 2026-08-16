@@ -1,2 +1,4 @@
 numpy>=2.0
 matplotlib>=3.8
+# Only tools/build_readme.py needs this -- the proofs import neither it nor matplotlib.
+markdown-it-py>=3.0

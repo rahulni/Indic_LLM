@@ -1,0 +1,528 @@
+<title>Kronecker Embedding V2 — README</title>
+<script>
+(function () {
+  try {
+    var t = localStorage.getItem('kv2-theme');
+    if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  } catch (e) {}
+})();
+</script>
+<style>
+
+:root {
+  color-scheme: dark;
+  --surface-1:      #141413;
+  --surface-2:      #1c1c1a;
+  --page:           #0a0a0a;
+  --text-primary:   #f5f5f3;
+  --text-secondary: #b8b7b0;
+  --text-muted:     #8a8880;
+  --gridline:       #262624;
+  --baseline:       #3a3a37;
+  --border:         rgba(255,255,255,0.09);
+  --border-strong:  rgba(255,255,255,0.16);
+  --good:           #3fbf5f;
+  --series-1:       #3987e5;
+  --series-2:       #d95926;
+  --series-3:       #199e70;
+  --series-4:       #c98500;
+  --shadow:         0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.28);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --surface-1:      #fcfcfb;
+  --surface-2:      #f4f4f1;
+  --page:           #f9f9f7;
+  --text-primary:   #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted:     #898781;
+  --gridline:       #e1e0d9;
+  --baseline:       #c3c2b7;
+  --border:         rgba(11,11,11,0.10);
+  --border-strong:  rgba(11,11,11,0.18);
+  --good:           #006300;
+  --series-1:       #2a78d6;
+  --series-2:       #eb6834;
+  --series-3:       #1baf7a;
+  --series-4:       #eda100;
+  --shadow:         0 1px 2px rgba(11,11,11,0.05), 0 8px 24px rgba(11,11,11,0.06);
+}
+body { background: var(--page); color: var(--text-primary); margin: 0; }
+
+
+.viz-root { background: var(--page); color: var(--text-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px; line-height: 1.62; -webkit-font-smoothing: antialiased; }
+.card { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px;
+  padding: 26px 28px; margin: 0 0 22px 0; box-shadow: var(--shadow); }
+h1 { font-size: 2rem; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 8px 0; }
+/* Headings keep their hand-written "1." / "2." numbers: the prose cross-refers
+   to them ("proved in section 1"), so a CSS counter could silently drift out of
+   step with the text it is being cited by. */
+h2 { font-size: 1.18rem; line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 14px 0; }
+h3 { font-size: 0.96rem; margin: 22px 0 8px 0; color: var(--text-primary); }
+.subtitle { color: var(--text-secondary); margin: 0 0 18px 0; max-width: 72ch; }
+.badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 26px 0; }
+.badge { font-size: 0.78rem; padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border);
+  color: var(--text-secondary); background: var(--surface-1); }
+/* Headline numbers. The dataviz form heuristic: a single value with no
+   comparison across categories is a stat tile, not a chart. */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px; margin: 0 0 22px 0; }
+.stat-tile { background: var(--surface-1); border: 1px solid var(--border); border-radius: 14px;
+  padding: 20px 22px; box-shadow: var(--shadow); }
+.stat-value { font-size: 1.85rem; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums; }
+.stat-value.compare { font-size: 1.32rem; line-height: 1.25; }
+.stat-vs { font-size: 0.78em; font-weight: 500; color: var(--text-muted);
+  margin: 0 0.42em; letter-spacing: 0; }
+.stat-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--text-muted); font-weight: 600; margin-bottom: 9px; }
+.stat-note { font-size: 0.82rem; color: var(--text-secondary); margin-top: 7px; }
+.stat-tile .accent-1 { color: var(--series-1); }
+.stat-tile .accent-2 { color: var(--series-2); }
+.stat-tile .accent-good { color: var(--good); }
+table.evtable { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+table.evtable th, table.evtable td { text-align: left; padding: 9px 11px; border-bottom: 1px solid var(--gridline); }
+table.evtable td { font-variant-numeric: tabular-nums; }
+table.evtable tbody tr:last-child td { border-bottom: none; }
+table.evtable tbody tr:hover td { background: var(--surface-2); }
+table.evtable th { color: var(--text-muted); font-weight: 600; font-size: 0.76rem; text-transform: uppercase;
+  letter-spacing: 0.03em; }
+.table-scroll { overflow-x: auto; }
+.pass { color: var(--good); font-weight: 600; }
+.fail { color: var(--series-2); font-weight: 600; }
+.legend { display: flex; gap: 16px; flex-wrap: wrap; margin: 6px 0 14px 0; font-size: 0.82rem; color: var(--text-secondary); }
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-swatch { width: 14px; height: 2px; border-radius: 1px; }
+.legend-swatch.dot { width: 8px; height: 8px; border-radius: 50%; }
+.chart-wrap { position: relative; }
+.tooltip { position: absolute; pointer-events: none; background: var(--surface-1); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 10px; font-size: 0.8rem; box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  opacity: 0; transition: opacity 0.08s; z-index: 5; white-space: nowrap; }
+.tooltip .t-value { font-weight: 700; color: var(--text-primary); }
+.tooltip .t-label { color: var(--text-secondary); }
+.crosshair { stroke: var(--baseline); stroke-width: 1; pointer-events: none; opacity: 0; }
+.axis-label { fill: var(--text-muted); font-size: 11px; }
+.grid-line { stroke: var(--gridline); stroke-width: 1; }
+.bar-rect { cursor: pointer; }
+.bar-rect:hover { filter: brightness(1.08); }
+.limitations { border-left: 3px solid var(--series-2); padding: 4px 18px; background: var(--surface-2);
+  border-radius: 0 10px 10px 0; }
+.limitations li { margin: 8px 0; }
+.figure { margin: 18px 0; }
+.figure img { max-width: 100%; border-radius: 10px; border: 1px solid var(--border); display: block; }
+/* A PNG's ink is baked in, so each figure ships twice and CSS picks the copy
+   matching the active theme. Dark is default, hence .fig-light starts hidden. */
+.fig-light { display: none; }
+.fig-dark { display: block; }
+:root[data-theme="light"] .fig-light { display: block; }
+:root[data-theme="light"] .fig-dark { display: none; }
+code, pre { font-family: ui-monospace, "SF Mono", Consolas, monospace; }
+code { background: var(--surface-2); padding: 1px 5px; border-radius: 4px; font-size: 0.88em; }
+pre { background: var(--surface-2); padding: 14px 16px; border-radius: 10px; overflow-x: auto; font-size: 0.82rem;
+  border: 1px solid var(--border); }
+pre code { background: none; padding: 0; }
+a { color: var(--series-1); text-decoration-color: var(--border-strong); text-underline-offset: 2px; }
+a:hover { text-decoration-color: currentColor; }
+.theme-toggle { position: fixed; top: 16px; right: 16px; z-index: 20;
+  width: 38px; height: 38px; border-radius: 10px; cursor: pointer;
+  background: var(--surface-1); border: 1px solid var(--border-strong); color: var(--text-secondary);
+  font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); }
+.theme-toggle:hover { color: var(--text-primary); border-color: var(--text-muted); }
+.theme-toggle .icon-dark { display: inline; }
+.theme-toggle .icon-light { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-dark { display: none; }
+:root[data-theme="light"] .theme-toggle .icon-light { display: inline; }
+.page-footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--border);
+  font-size: 0.82rem; color: var(--text-muted); }
+.page-footer a { color: var(--text-secondary); }
+@media (max-width: 620px) {
+  .viz-root { font-size: 14px; }
+  .card { padding: 20px 17px; border-radius: 12px; }
+  h1 { font-size: 1.55rem; }
+  .theme-toggle { top: 10px; right: 10px; }
+}
+
+
+.md { max-width: 82ch; }
+.md h1 { font-size: 2.1rem; margin: 0 0 18px 0; }
+.md h2 { font-size: 1.4rem; margin: 44px 0 14px 0; padding-top: 20px;
+  border-top: 1px solid var(--border); }
+.md h3 { font-size: 1.06rem; margin: 30px 0 10px 0; }
+.md p, .md li { color: var(--text-secondary); }
+.md li { margin: 6px 0; }
+.md strong { color: var(--text-primary); }
+/* A bold link is still a link: without this, `[**Track A**](...)` inherits the
+   strong colour and reads as plain bold text. */
+.md a strong { color: inherit; }
+.md table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin: 20px 0; }
+.md th, .md td { text-align: left; padding: 9px 11px; border-bottom: 1px solid var(--gridline);
+  vertical-align: top; }
+.md th { color: var(--text-muted); font-weight: 600; font-size: 0.76rem;
+  text-transform: uppercase; letter-spacing: 0.03em; }
+.md td { color: var(--text-secondary); }
+.md tbody tr:hover td { background: var(--surface-2); }
+.md blockquote { margin: 20px 0; padding: 2px 20px; border-left: 3px solid var(--border-strong);
+  background: var(--surface-1); border-radius: 0 10px 10px 0; }
+.md hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+.md .alert { margin: 22px 0; padding: 16px 20px; border-radius: 12px;
+  border: 1px solid var(--border); border-left-width: 3px; background: var(--surface-1); }
+.md .alert > p:first-child { margin-top: 0; }
+.md .alert > p:last-child { margin-bottom: 0; }
+.md .alert-title { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.07em;
+  text-transform: uppercase; margin-bottom: 8px; }
+.md .alert-note { border-left-color: var(--series-1); }
+.md .alert-note .alert-title { color: var(--series-1); }
+.md .alert-warning, .md .alert-caution { border-left-color: var(--series-2); }
+.md .alert-warning .alert-title, .md .alert-caution .alert-title { color: var(--series-2); }
+.md .alert-tip, .md .alert-important { border-left-color: var(--good); }
+.md .alert-tip .alert-title, .md .alert-important .alert-title { color: var(--good); }
+.md .table-scroll { overflow-x: auto; }
+.readme-nav { margin: 0 0 28px 0; font-size: 0.85rem; }
+
+.page { max-width: 900px; margin: 0 auto; padding: 40px 20px 64px 20px; }
+</style>
+
+<button class="theme-toggle" id="theme-toggle" type="button"
+  aria-label="Switch between dark and light theme" title="Switch theme">
+<span class="icon-dark">&#9788;</span><span class="icon-light">&#9789;</span>
+</button>
+
+<div class="viz-root page">
+<div class="readme-nav"><a href="index.html">&larr; All tracks</a></div>
+<div class="md">
+<h1>Kronecker Embedding V2</h1>
+<p>Two of the instructor's five extension problems, chosen deliberately and proven <strong>separately</strong>
+(&quot;each are separate, don't try and mix them&quot; — the instructor's own instruction, and the
+approach confirmed with the person this was built for). Each track ships a standalone,
+model-free analytic proof and a small trained transformer that asks a second, honestly
+separate question: does the construction actually help a model in practice?</p>
+<p><strong>Live dashboards</strong> (GitHub Pages):
+<a href="https://rahulni.github.io/Indic_LLM/7_embed_research/track_a_numeral_crt/submission_artifacts/dashboard.html"><strong>Track A</strong></a> ·
+<a href="https://rahulni.github.io/Indic_LLM/7_embed_research/track_b_holographic_binding/submission_artifacts/dashboard.html"><strong>Track B</strong></a> ·
+<a href="https://rahulni.github.io/Indic_LLM/7_embed_research/submission_artifacts/index.html">Landing page</a></p>
+<p>Both dashboards are single self-contained HTML files with the data baked in — they also open
+straight from disk with no server:
+<a href="../track_a_numeral_crt/submission_artifacts/dashboard.html">Track A</a> ·
+<a href="../track_b_holographic_binding/submission_artifacts/dashboard.html">Track B</a> ·
+<a href="../submission_artifacts/index.html">index</a></p>
+<p><strong>Docs:</strong> <a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/EXPLAIN_LIKE_IM_10.md"><strong>Plain-English explainer</strong></a> (no maths needed — start here if
+you want the ideas without the notation) · <a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/ARCHITECTURE.md">Architecture &amp; design decisions</a> ·
+<a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/CITATIONS.md">Citations</a> · <a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_a_numeral_crt/README.md">Track A README</a> ·
+<a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_b_holographic_binding/README.md">Track B README</a></p>
+<hr />
+<h2>What &quot;Kronecker Embedding V1&quot; is</h2>
+<p><strong>Shravan (2026), <a href="https://arxiv.org/abs/2605.29459"><em>Kronecker Embeddings: Byte-Level Structured Token Representations for
+Parameter-Efficient Language Models</em></a></strong> (<a href="https://github.com/theschoolofai/kronecker-embeddings">code</a>).
+Equation 1, §3.2:</p>
+<pre><code>kappa(b) = (1/sqrt(L)) * SUM_{p=1..L}  c_{b_p} (x) p_p
+</code></pre>
+<p><code>c_{b_p}</code> is a one-hot over the <strong>byte</strong> value (<code>d_c = 256</code>), <code>p_p</code> a one-hot over byte
+position (<code>d_p = 32</code>), so <code>D = 8192</code>, followed by one learned <code>Linear(D, d_model)</code> — replacing
+the <code>|V| x d_model</code> embedding table entirely. Tokens longer than 32 <strong>bytes</strong> are truncated;
+the codec is deterministic and not invertible.</p>
+<div class="alert alert-note"><div class="alert-title">note</div><p>This project was built <strong>before</strong> that paper and repository were available to me. I verified
+that &quot;kronecker&quot; appeared in zero files and zero commits of this repo's prior history, and
+reconstructed the scheme from the assignment prose, labelling it a reconstruction. Audited
+against Eq. 1 afterwards, the reconstruction's structure was right but had two real
+deviations — a missing <code>1/√L</code> normaliser and a character rather than byte alphabet. Both are
+fixed, all affected numbers re-measured, and the episode is recorded in
+<a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/CITATIONS.md"><code>CITATIONS.md</code></a> and <a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_b_holographic_binding/README.md">Track B's README</a>
+rather than smoothed over.</p>
+</div>
+<p>Two of the instructor's five stated extension problems are addressed here:</p>
+<ul>
+<li><strong>Track A</strong> (the instructor's problem 1 — arithmetic-preserving embeddings): <em>&quot;What if
+embeddings can store mathematical structure... when we do 9+9, the mathematical meaning
+part is itself 18.&quot;</em> Solved by encoding an integer via its residues modulo a set of coprime
+primes — the Kronecker/CRT decomposition of a finite abelian group.
+<strong>Scope note:</strong> the assignment says to append these dimensions to V1's existing code. Track A
+instead builds a self-contained digit-arithmetic experiment, so it proves the arithmetic
+claim but never literally concatenates onto V1's 8,192-dim byte codec. That is a deliberate
+scoping decision, not an oversight — the proof and the ablation are both cleaner in
+isolation — but it does mean Track A is not a drop-in patch to V1.</li>
+<li><strong>Track B</strong> (the instructor's problem 4 — a real Fourier alternative to Kronecker): <em>&quot;Why
+can't I represent each character like a Fourier wave, and just add them to make a word?&quot;</em>
+Solved by replacing tensor-product binding with circular-convolution superposition, which
+removes the 32-character cap entirely at the cost of a measured, provable capacity tradeoff.</li>
+</ul>
+<p>Both tracks reuse the same non-negotiable structure: <strong>the exact/provable claim is verified
+first, analytically, with no model involved — the trained transformer answers a second,
+separate, honestly-labeled empirical question, and the two are never conflated.</strong></p>
+<h2>Where to start reading</h2>
+<p><strong>In 5 minutes:</strong> open the two dashboards linked above. Each opens with its proof table, then
+an interactive widget you can type into, then the trained-model results and the limitations.
+That is the whole story, in order, with every number rendered from the result files.</p>
+<p><strong>In 30 minutes, to understand what was actually built</strong>, read in this order:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>Read</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>this README</td>
+<td>the two problems, the headline results, the limitations</td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_a_numeral_crt/proofs/analytic_proof.py"><code>track_a_numeral_crt/proofs/analytic_proof.py</code></a></td>
+<td><strong>the heart of Track A.</strong> The module docstring states exactly what is proven and how; the <code>check_*</code> functions are the proof. No model, no torch — pure numpy, runs in 2s</td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_b_holographic_binding/proofs/capacity_proof.py"><code>track_b_holographic_binding/proofs/capacity_proof.py</code></a></td>
+<td><strong>the heart of Track B.</strong> Same shape: docstring states the claim, <code>theoretical_decode_accuracy()</code> derives the bound with assumptions written out, <code>sweep_cell()</code> measures it</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/ARCHITECTURE.md"><code>ARCHITECTURE.md</code></a></td>
+<td><strong>why</strong> every non-obvious choice was made, and 13 judgment calls stated explicitly rather than buried — including the two mistakes that were caught and corrected</td>
+</tr>
+<tr>
+<td>5</td>
+<td>each track's README (<a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_a_numeral_crt/README.md">A</a>, <a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_b_holographic_binding/README.md">B</a>)</td>
+<td>the claim stated precisely, all results in tables, per-track limitations</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/CITATIONS.md"><code>CITATIONS.md</code></a></td>
+<td>every citation, with what was verified vs. what was not — including one paper title I got wrong and corrected</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>If you only care about one thing per track:</strong></p>
+<ul>
+<li><strong>Track A</strong> — the proof is exact and unconditional; the trained model is a <em>negative</em>
+result. Read <code>analytic_proof.py</code>, then Track A README's &quot;The missing ingredient&quot; and
+&quot;The instructor's literal ask, tested&quot; sections.</li>
+<li><strong>Track B</strong> — binding is exactly invertible for one pair and degrades predictably for many.
+Read <code>capacity_proof.py</code>, then Track B README's truncation-probe table.</li>
+</ul>
+<p><strong>Map of the code</strong>, if you want to trace a claim to the line that produces it:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>To understand…</th>
+<th>Read</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>how a number becomes an embedding</td>
+<td><code>analytic_proof.py</code> → <code>encode_onehot</code>, <code>crt_decode_array</code></td>
+</tr>
+<tr>
+<td>why <code>+</code> and <code>×</code> become shifts</td>
+<td><code>analytic_proof.py</code> → <code>check_additive_per_modulus</code>, <code>mod_mul_via_log_array</code></td>
+</tr>
+<tr>
+<td>how a word becomes one vector</td>
+<td><code>capacity_proof.py</code> → <code>random_unitary_vector</code>, <code>sweep_cell</code></td>
+</tr>
+<tr>
+<td>the three Track A embedding arms</td>
+<td><code>track_a_numeral_crt/model/embeddings.py</code> (~120 lines, one class each)</td>
+</tr>
+<tr>
+<td>the two Track B embedding arms</td>
+<td><code>track_b_holographic_binding/model/embeddings.py</code></td>
+</tr>
+<tr>
+<td>the shared transformer (identical across every arm)</td>
+<td><code>common/transformer.py</code></td>
+</tr>
+<tr>
+<td>the instructor's literal &quot;embedding(9) knows it is 9&quot;</td>
+<td><code>track_a_numeral_crt/model/value_train.py</code></td>
+</tr>
+<tr>
+<td>how nothing here can fake a PASS</td>
+<td><code>common/evidence.py</code> + <code>tools/run_all.py</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2>Quick start</h2>
+<pre><code class="language-bash">pip install -r requirements.txt              # numpy + matplotlib; the proofs need nothing else
+python track_a_numeral_crt/proofs/analytic_proof.py           # &lt; 3s, exhaustive checks
+python track_b_holographic_binding/proofs/capacity_proof.py   # &lt; 20s
+
+# the trained-model runs are opt-in and need torch
+pip install -r requirements-torch.txt
+python track_a_numeral_crt/model/train.py --arm crt --task add --profile fast     # smoke test, seconds
+python track_a_numeral_crt/model/train.py --arm crt --task add --profile default  # real numbers, ~2 min
+
+# the experiment that changed Track A's headline, and the instructor's literal ask
+python track_a_numeral_crt/model/train.py --arm abacus --task add --profile default --random-offset 24
+python track_a_numeral_crt/model/value_train.py --arm crt_value --task add --profile default
+
+python tools/run_all.py    # proofs -&gt; seed aggregate -&gt; evidence.json -&gt; both dashboards; non-zero exit on any FAIL
+python -m unittest tests.test_common \
+  track_a_numeral_crt.proofs.test_analytic_proof \
+  track_b_holographic_binding.proofs.test_capacity_proof     # 30 tests, no GPU needed
+</code></pre>
+<h2>Evidence</h2>
+<p>28 of 28 requirements pass. Every row is graded by re-reading an artifact file on disk, never
+from in-memory state — see <a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/submission_artifacts/evidence.json"><code>submission_artifacts/evidence.json</code></a>
+for the full machine-readable list, or each track's dashboard for the same table rendered.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Track</th>
+<th>Proof (no model)</th>
+<th>Trained-model runs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A — Kronecker Numeral Embeddings</td>
+<td>7/7 checks — all four ring operations exact on <code>[0, 1,062,347)</code>, run in ~2s</td>
+<td>6 arms × task + 5 offset/ablation + 4 value-embedding runs</td>
+</tr>
+<tr>
+<td>B — Holographic Binding</td>
+<td>4/4 checks — unbind exact, derived bound predicts measurement, literal shift roles swept</td>
+<td>2 arms + dressing ablation</td>
+</tr>
+</tbody>
+</table></div>
+<p>Headline results are 3-seed means; one evidence row exists purely to assert that
+(<code>Headline results are reported over multiple seeds, not a single run</code>), because these GPU
+runs are not bit-reproducible.</p>
+<h2>Headline results</h2>
+<p><strong>Track A.</strong> The proof is unconditional: <strong>all four ring operations</strong> — addition, subtraction,
+multiplication and division-by-units — are exactly recoverable from the embedding via fixed
+shift operators, zero error, verified exhaustively wherever exhaustive was feasible. The proof
+is equally explicit about the limits: division is undefined for non-units, and residue codes
+provably destroy <em>ordering</em> (you cannot compare magnitudes without reconstructing).</p>
+<p>The trained-model story took two rounds, and both are reported:</p>
+<ol>
+<li>Initially <strong>neither structured arm</strong> generalized past the 1–4 digit training range (0.0% at
+test length 5), while the no-positional-signal NoPE baseline managed 35.7% ± 9.0%.</li>
+<li>A reviewer pass found the cause: McLeish et al. pair Abacus embeddings with <strong>random
+position-offset training</strong>, which had not been implemented. Adding it produced real OOD
+generalization — <strong>Abacus-lite 0% → 93.8% ± 7.2%</strong> and <strong>CRT 0% → 34.2% ± 19.1%</strong> at test
+length 5 (3 seeds, n=200).</li>
+</ol>
+<p>The honest sting is in that gap: the <em>learned</em> code exploits the mechanism far better than the
+<em>fixed</em> CRT code — and CRT+offset (34.2%) only draws level with using no positional signal at
+all (35.7%). On this evidence the CRT positional code does not earn its place.</p>
+<p>The experiment closest to the instructor's literal ask — each operand a single token carrying
+the fixed CRT code <em>of its value</em> — <strong>fails almost completely (≤1% exact match)</strong> for the CRT
+code <em>and</em> for a learned control, which tie exactly. Handing a model provably-exact arithmetic
+structure does not make it able to do arithmetic; it still has to learn to read that structure
+out. The one real positive is efficiency parity: the fixed code matches the learned one on
+both loss and accuracy with <strong>10× fewer embedding parameters</strong>. See
+<a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_a_numeral_crt/README.md">Track A's README</a>.</p>
+<p><strong>Track B.</strong> Single-pair unbind is error-free, and decode accuracy degrades with length
+exactly as a <strong>derived</strong> SNR bound predicts — that bound is our own write-up of the standard
+VSA argument (assumptions stated in the docstring, validated against measurement by a unit
+test), deliberately <em>not</em> attributed to Plate since we could not verify a specific equation
+from the primary text. The instructor's literal phrasing (&quot;each character a Fourier wave&quot;)
+maps to deterministic <em>shift</em> roles; swept head-to-head against random-phase roles, the
+literal reading is <strong>not worse</strong> — contradicting our own prior expectation, reported over the
+prediction.</p>
+<p>The controlled truncation probe is unambiguous: <strong>the Kronecker arm cannot distinguish two
+words differing only after byte 32 (cosine similarity 1.0000, exactly)</strong>, while the holographic
+arm can (0.7895) — with <em>zero</em> learned embedding parameters against Kronecker's 1,573,056.</p>
+<p>But on the metric the corpus actually measures, <strong>Kronecker wins clearly</strong>: 155.7 ± 1.9 vs
+190.0 ± 7.0 perplexity, a 34-point gap far outside the seed spread. That gap <em>doubled</em> when a
+bug in our own baseline was fixed — the first version omitted Eq. 1's <code>1/√L</code> normaliser and
+reported Kronecker at 172.4, i.e. the bug had been flattering this project's own alternative.
+An ablation rules out &quot;it's just the learned projection&quot;: giving the holographic arm one made
+it <em>worse</em> (213.1). See <a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/track_b_holographic_binding/README.md">Track B's README</a>.</p>
+<h2>Honest limitations</h2>
+<div class="alert alert-warning"><div class="alert-title">warning</div></p>
+<ul>
+<li><strong>Track A's exact-arithmetic claim holds only within a bounded range</strong> — <code>[0, 1,062,347)</code>
+for the value code, <code>[0, 42)</code> for the position code. Outside that range the construction
+wraps modulo N (demonstrated deliberately in the proof, not hidden).</li>
+<li><strong>A trained transformer's behavior does not demonstrate it performs exact arithmetic in
+embedding space.</strong> That would require circuit-level mechanistic verification (in the style
+of Nanda et al. 2023 or Zhong et al. 2023) — explicitly out of scope here.</li>
+<li><strong>Neither trained-model experiment used a large model or a long training run.</strong> Every run
+finishes in minutes on a single consumer GPU by design, so nothing here claims to
+generalize to larger scale without re-running.</li>
+<li><strong>Even with random-offset training, generalization collapses by test length 6-7.</strong> The
+gain is real but bounded; McLeish et al.'s larger looped/recurrent architecture is not
+reimplemented here, and their far more extreme length ranges are not approached.</li>
+<li><strong>Track B's capacity bound is our own derivation, not a formula taken from Plate.</strong> We
+could not verify a specific numbered equation in the primary text, so rather than
+attribute one we derived the standard SNR argument ourselves, wrote every assumption into
+the docstring, and validated it against our own measurements with a test. See
+<a href="https://github.com/rahulni/Indic_LLM/blob/main/7_embed_research/CITATIONS.md"><code>CITATIONS.md</code></a> for exactly what was and wasn't verified.</li>
+<li><strong>Track B's word-level perplexity numbers are not comparable</strong> to standard char-level
+tiny_shakespeare benchmarks reported elsewhere — different tokenization, different task.</li>
+<li><strong>These GPU runs are not bit-reproducible.</strong> No deterministic-kernel flags are set, so two
+identical commands with the same seed gave 91.5% and 85.5%. Every headline number is a
+3-seed mean; treat the <em>ordering</em> of the arms as the finding, not the exact percentages.</li>
+<li><strong>One reported result was wrong before it was right.</strong> The first value-embedding run made
+the CRT arm look broken; the cause was initialisation scale, not the representation. It
+was fixed and re-run, and the artifact is documented rather than deleted (Track A README).
+Assume other unforced errors of that kind are possible in work at this scale.</li>
+<li>This is coursework-scale research (a few million parameters, minutes of compute), not a
+claim of state-of-the-art performance on either task.</li>
+</ul>
+</div>
+<h2>Repository layout</h2>
+<p>Every <code>.py</code> file below is small and single-purpose; the two <code>proofs/</code> files are the ones worth
+reading first.</p>
+<pre><code>7_embed_research/
+  README.md  ARCHITECTURE.md  CITATIONS.md
+  requirements.txt              numpy + matplotlib (proofs only, no GPU)
+  requirements-torch.txt        torch, opt-in, for the trained-model runs
+
+  common/                       shared and track-agnostic
+    transformer.py                the decoder-only trunk EVERY arm shares (embeddings pluggable)
+    evidence.py                   PASS/FAIL harness; grades only from files on disk
+    device.py  seeding.py  plotting.py
+
+  track_a_numeral_crt/
+    proofs/analytic_proof.py      ** the proof: 4 ring ops exact on [0, 1062347) **
+    proofs/test_analytic_proof.py  + the RNS ordering limitation, as a test
+    proofs/make_plots.py          clock-structure and shift-scatter figures
+    data/generate_arithmetic.py   digit tokenizer + random-offset augmentation
+    model/embeddings.py           the 3 arms: NoPE / Abacus-lite / CRT
+    model/train.py                --arm --task --profile --random-offset --seed
+    model/value_train.py          ** the instructor's literal ask: operand = 1 token **
+    model/evaluate.py             greedy decode + length-generalization eval
+    results/                      every run's JSON (committed); *.pt weights are not
+    submission_artifacts/         dashboard.html + run logs
+
+  track_b_holographic_binding/
+    proofs/capacity_proof.py      ** the proof: exact unbind + derived capacity bound **
+    proofs/test_capacity_proof.py  asserts the bound actually predicts measurement
+    proofs/make_plots.py          capacity curve, interference, role comparison
+    data/corpus.py                tiny_shakespeare + synthetic long-word probe set
+    model/embeddings.py           the 2 arms: Kronecker 32-slot / holographic
+    model/train.py  evaluate.py   word-level LM + the truncation probe
+    results/  submission_artifacts/
+
+  submission_artifacts/          index.html, evidence.json, seed_aggregate.json
+  tools/
+    run_all.py                    proofs -&gt; aggregate -&gt; evidence -&gt; dashboards
+    aggregate_seeds.py            multi-seed mean +/- std
+    build_dashboard.py  build_index.py  chart_kit.py
+  tests/test_common.py           trunk, evidence harness, random-offset invariants
+</code></pre>
+
+</div>
+<div class="page-footer">
+<a href="index.html">&larr; All tracks</a> &middot;
+<a href="https://github.com/rahulni/Indic_LLM/tree/main/7_embed_research">Code + README on GitHub</a>
+</div>
+</div>
+<script>
+document.getElementById('theme-toggle').addEventListener('click', function () {
+  var root = document.documentElement;
+  var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  root.setAttribute('data-theme', next);
+  try { localStorage.setItem('kv2-theme', next); } catch (e) {}
+});
+</script>

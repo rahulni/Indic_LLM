@@ -11,7 +11,14 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from common.evidence import load_json  # noqa: E402
-from tools.chart_kit import PALETTE_CSS, REPO_EVIDENCE_URL, REPO_TREE_URL  # noqa: E402
+from tools.chart_kit import (  # noqa: E402
+    PALETTE_CSS,
+    REPO_EVIDENCE_URL,
+    REPO_TREE_URL,
+    THEME_BOOT_JS,
+    THEME_TOGGLE_HTML,
+    THEME_TOGGLE_JS,
+)
 
 TRACK_A = ROOT / "track_a_numeral_crt"
 TRACK_B = ROOT / "track_b_holographic_binding"
@@ -59,23 +66,46 @@ def main() -> int:
     b = summarize_track_b()
 
     body = f"""<title>Kronecker Embedding V2</title>
+<script>{THEME_BOOT_JS}</script>
 <style>
 {PALETTE_CSS}
 body {{ margin: 0; background: var(--page); color: var(--text-primary);
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif; }}
-.page {{ max-width: 820px; margin: 0 auto; padding: 48px 20px 60px 20px; }}
-h1 {{ font-size: 1.8rem; margin: 0 0 6px 0; }}
-.subtitle {{ color: var(--text-secondary); margin: 0 0 36px 0; max-width: 60ch; }}
-.card {{ background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px;
-  padding: 24px 26px; margin: 0 0 18px 0; text-decoration: none; display: block; color: inherit; }}
-.card:hover {{ border-color: var(--series-1); }}
-.card h2 {{ font-size: 1.15rem; margin: 0 0 6px 0; }}
-.card p {{ color: var(--text-secondary); margin: 0 0 10px 0; }}
-.status {{ font-size: 0.82rem; color: var(--good); font-weight: 600; }}
-.footer {{ margin-top: 30px; font-size: 0.82rem; color: var(--text-muted); }}
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px; line-height: 1.62; -webkit-font-smoothing: antialiased; }}
+.page {{ max-width: 820px; margin: 0 auto; padding: 64px 20px 64px 20px; }}
+h1 {{ font-size: 2.4rem; line-height: 1.12; letter-spacing: -0.025em; margin: 0 0 12px 0; }}
+.subtitle {{ color: var(--text-secondary); margin: 0 0 40px 0; max-width: 62ch; font-size: 1.02rem; }}
+.card {{ background: var(--surface-1); border: 1px solid var(--border); border-radius: 16px;
+  padding: 26px 28px; margin: 0 0 16px 0; text-decoration: none; display: block; color: inherit;
+  box-shadow: var(--shadow); transition: border-color 0.12s, transform 0.12s; }}
+.card:hover {{ border-color: var(--border-strong); transform: translateY(-2px); }}
+.card h2 {{ font-size: 1.2rem; letter-spacing: -0.01em; margin: 0 0 7px 0; }}
+.card p {{ color: var(--text-secondary); margin: 0 0 14px 0; }}
+.status {{ font-size: 0.8rem; color: var(--good); font-weight: 600;
+  display: inline-flex; align-items: center; gap: 7px; }}
+.status::before {{ content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: currentColor; flex: none; }}
+.footer {{ margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--border);
+  font-size: 0.82rem; color: var(--text-muted); }}
 .footer a {{ color: var(--text-secondary); }}
 .footer-source {{ margin-top: 8px; }}
+.theme-toggle {{ position: fixed; top: 16px; right: 16px; z-index: 20;
+  width: 38px; height: 38px; border-radius: 10px; cursor: pointer;
+  background: var(--surface-1); border: 1px solid var(--border-strong); color: var(--text-secondary);
+  font-size: 15px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); }}
+.theme-toggle:hover {{ color: var(--text-primary); border-color: var(--text-muted); }}
+.theme-toggle .icon-dark {{ display: inline; }}
+.theme-toggle .icon-light {{ display: none; }}
+:root[data-theme="light"] .theme-toggle .icon-dark {{ display: none; }}
+:root[data-theme="light"] .theme-toggle .icon-light {{ display: inline; }}
+@media (max-width: 620px) {{
+  .page {{ padding: 44px 18px 52px 18px; }}
+  h1 {{ font-size: 1.8rem; }}
+  .theme-toggle {{ top: 10px; right: 10px; }}
+}}
 </style>
+{THEME_TOGGLE_HTML}
 <div class="viz-root page">
 <h1>Kronecker Embedding V2</h1>
 <p class="subtitle">Two of the instructor's five extension problems, proven separately, each with a
@@ -95,13 +125,14 @@ construction helps in practice.</p>
 </a>
 
 <div class="footer">
-<a href="../README.md">README</a> ·
+<a href="readme.html">README</a> ·
 <a href="../ARCHITECTURE.md">Architecture &amp; design decisions</a> ·
 <a href="../CITATIONS.md">Citations</a>
 <div class="footer-source">Source: <a href="{REPO_TREE_URL}">Code + README</a> ·
 <a href="{REPO_EVIDENCE_URL}">{evidence_label()}</a></div>
 </div>
 </div>
+<script>{THEME_TOGGLE_JS}</script>
 """
 
     out = ROOT / "submission_artifacts" / "index.html"

@@ -321,6 +321,7 @@ def main() -> int:
     subprocess.run([sys.executable, str(ROOT / "tools" / "build_dashboard.py"), "--track", "a"], check=True)
     subprocess.run([sys.executable, str(ROOT / "tools" / "build_dashboard.py"), "--track", "b"], check=True)
     subprocess.run([sys.executable, str(ROOT / "tools" / "build_index.py")], check=True)
+    subprocess.run([sys.executable, str(ROOT / "tools" / "build_readme.py")], check=True)
 
     print(f"\n{'ALL EVIDENCE PASSED' if all_passed else 'SOME EVIDENCE FAILED'}")
     return 0 if all_passed else 1

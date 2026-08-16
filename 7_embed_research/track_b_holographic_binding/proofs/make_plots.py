@@ -19,12 +19,12 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from common.plotting import save_and_embed  # noqa: E402
+from common.plotting import render_themed  # noqa: E402
 
 RESULTS_DIR = Path(__file__).resolve().parents[1] / "results"
 
 
-def plot_capacity_curve(report: dict) -> plt.Figure:
+def plot_capacity_curve(report: dict, theme: dict) -> plt.Figure:
     cells = report["cells"]
     by_d: dict[int, list[tuple[int, float, float]]] = {}
     for c in cells:
@@ -42,8 +42,8 @@ def plot_capacity_curve(report: dict) -> plt.Figure:
         theory = [p[2] for p in pts]
         if all(t is not None for t in theory):
             ax.plot(xs, theory, color=color, linewidth=1, linestyle=":", alpha=0.8)
-    ax.axvline(32, color="0.3", linestyle="--", linewidth=1, label="V1's 32-char cap")
-    ax.plot([], [], color="0.35", linestyle=":", linewidth=1, label="derived SNR bound (dotted)")
+    ax.axvline(32, color=theme["muted"], linestyle="--", linewidth=1, label="V1's 32-char cap")
+    ax.plot([], [], color=theme["muted"], linestyle=":", linewidth=1, label="derived SNR bound (dotted)")
     ax.set_xlabel("word length L (number of superposed bound pairs)")
     ax.set_ylabel("decode accuracy")
     ax.set_ylim(0, 1.02)
@@ -53,7 +53,7 @@ def plot_capacity_curve(report: dict) -> plt.Figure:
     return fig
 
 
-def plot_role_comparison(report: dict) -> plt.Figure:
+def plot_role_comparison(report: dict, theme: dict) -> plt.Figure:
     """The instructor's literal "each character is a Fourier wave, just add
     them" (deterministic shift roles) against random-phase roles, at the
     model's actual d_model."""
@@ -64,13 +64,13 @@ def plot_role_comparison(report: dict) -> plt.Figure:
     fig, ax = plt.subplots(figsize=(7, 5))
     ax.plot(
         [p[0] for p in rand_pts], [p[1] for p in rand_pts],
-        marker="o", markersize=4, color="#2a78d6", label="random-phase roles",
+        marker="o", markersize=4, color=theme["series"][0], label="random-phase roles",
     )
     ax.plot(
         [p[0] for p in shift_pts], [p[1] for p in shift_pts],
-        marker="o", markersize=4, color="#eb6834", label="shift roles (the literal reading)",
+        marker="o", markersize=4, color=theme["series"][1], label="shift roles (the literal reading)",
     )
-    ax.axvline(32, color="0.3", linestyle="--", linewidth=1, label="V1's 32-char cap")
+    ax.axvline(32, color=theme["muted"], linestyle="--", linewidth=1, label="V1's 32-char cap")
     ax.set_xlabel("word length L")
     ax.set_ylabel("decode accuracy")
     ax.set_ylim(0, 1.02)
@@ -80,7 +80,7 @@ def plot_role_comparison(report: dict) -> plt.Figure:
     return fig
 
 
-def plot_interference(report: dict) -> plt.Figure:
+def plot_interference(report: dict, theme: dict) -> plt.Figure:
     cells = report["cells"]
     target_d = report["d_sweep"][len(report["d_sweep"]) // 2]  # a middle D, where the effect is visible
     pts = sorted((c["L"], c["mean_true_sim"], c["mean_best_distractor_sim"]) for c in cells if c["D"] == target_d)
@@ -89,9 +89,9 @@ def plot_interference(report: dict) -> plt.Figure:
     distractor_sims = [p[2] for p in pts]
 
     fig, ax = plt.subplots(figsize=(7, 5))
-    ax.plot(xs, true_sims, marker="o", markersize=4, color="#2e7d32", label="cosine sim to TRUE filler")
-    ax.plot(xs, distractor_sims, marker="o", markersize=4, color="#c0392b", label="cosine sim to best DISTRACTOR")
-    ax.axvline(32, color="0.3", linestyle="--", linewidth=1, label="V1's 32-char cap")
+    ax.plot(xs, true_sims, marker="o", markersize=4, color=theme["series"][2], label="cosine sim to TRUE filler")
+    ax.plot(xs, distractor_sims, marker="o", markersize=4, color=theme["series"][1], label="cosine sim to best DISTRACTOR")
+    ax.axvline(32, color=theme["muted"], linestyle="--", linewidth=1, label="V1's 32-char cap")
     ax.set_xlabel("word length L")
     ax.set_ylabel("mean cosine similarity")
     ax.set_title(f"Crosstalk made visible (D={target_d}): the two curves converging IS the failure mode")
@@ -104,14 +104,15 @@ def main() -> None:
     report = json.loads((RESULTS_DIR / "capacity_proof_report.json").read_text())
 
     figures = {}
-    fig1 = plot_capacity_curve(report)
-    figures["capacity_curve"] = save_and_embed(fig1, RESULTS_DIR / "capacity_curve.png")
-
-    fig2 = plot_interference(report)
-    figures["interference"] = save_and_embed(fig2, RESULTS_DIR / "interference.png")
-
-    fig3 = plot_role_comparison(report)
-    figures["role_comparison"] = save_and_embed(fig3, RESULTS_DIR / "role_comparison.png")
+    figures["capacity_curve"] = render_themed(
+        lambda theme: plot_capacity_curve(report, theme), RESULTS_DIR / "capacity_curve.png"
+    )
+    figures["interference"] = render_themed(
+        lambda theme: plot_interference(report, theme), RESULTS_DIR / "interference.png"
+    )
+    figures["role_comparison"] = render_themed(
+        lambda theme: plot_role_comparison(report, theme), RESULTS_DIR / "role_comparison.png"
+    )
 
     (RESULTS_DIR / "proof_figures.json").write_text(json.dumps(figures))
     print(f"wrote {len(figures)} figures to {RESULTS_DIR}")
