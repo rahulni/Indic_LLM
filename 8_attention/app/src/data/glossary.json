@@ -1,0 +1,22 @@
+{
+  "query": "What a word is looking for in the other words. One of three things every word produces, alongside a key and a value.",
+  "key": "The label a word advertises, so other words can decide whether it is worth reading. Matched against queries.",
+  "value": "The content a word passes on when another word decides to read it. Kept separate from the key so a word can be easy to find without that being what it contributes.",
+  "softmax": "Turns a row of raw scores into percentages that add up to exactly 100%. That forced total is why a model must spend attention somewhere even when nothing is worth reading.",
+  "kv-cache": "The keys and values already computed for earlier words, kept in memory so they need not be recomputed for every new word. It grows with the length of the text and again with every simultaneous user, which is the bill most of this timeline is paying down.",
+  "head": "One of several attentions running side by side on different slices of each word, so they can specialise. Each head normally keeps its own keys and values, which is what multiplies the memory cost.",
+  "logits": "The raw scores a model produces before they are turned into percentages by a softmax.",
+  "prefill": "Reading the prompt. All of it can be processed at once, so this stage is limited by raw computing power.",
+  "decode": "Writing the answer, one word at a time. Each word has to re-read the stored keys and values, so this stage is limited by memory speed rather than computing power.",
+  "extrapolation": "Running a model on text longer than anything it was trained on. Most positional schemes technically allow it and still get noticeably worse.",
+  "state": "A fixed-size memory that a model carries forward and updates as it reads, instead of keeping every past word. It never grows, and it cannot hold everything.",
+  "latent": "A compressed code standing in for something larger. Multi-head Latent Attention stores one of these per word instead of a full set of keys and values.",
+  "indexer": "A small, cheap scorer that decides which parts of the history are worth reading properly, so the expensive attention only runs on those.",
+  "kernel": "A hand-written program that runs directly on the graphics card. Several entries here are the same mathematics as before, made much faster by a better kernel.",
+  "perplexity": "How surprised a model is by text it is shown. Lower is better, and a sudden jump usually means something has broken.",
+  "quadratic": "Cost that grows with the square of the length: twice the words means four times the work. This is the original bill that attention arrives with.",
+  "checkpoint": "A saved set of trained weights. Some methods can be retrofitted to one cheaply; others must be designed in before training begins, which is a real practical difference.",
+  "uptraining": "A short extra spell of training used to adapt an existing model to a change, rather than training it again from scratch.",
+  "needle-in-a-haystack": "A test that hides one specific fact in a very long document and checks whether the model can find it. Methods with fixed-size memory tend to do badly on it.",
+  "moe": "Mixture of experts: a model with many specialised sub-networks where a router sends each word to only a few, so it can be large without every part running every time."
+}

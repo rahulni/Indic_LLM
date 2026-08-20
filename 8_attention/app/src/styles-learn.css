@@ -1,0 +1,467 @@
+/* ===========================================================================
+   Styles for the comprehension layer: the on-ramp, glossary terms, self-checks,
+   the time axis, and the attention-vs-cache explainer.
+
+   Kept separate from styles.css because these support the teaching scaffolding
+   rather than the reference material, and the two get edited for different reasons.
+   =========================================================================== */
+
+/* Five families rather than nine categories. Nine categorical hues is past the point
+   where a reader can hold them apart; five stays legible, and the coarser grouping is
+   the more interesting signal anyway - memory work clusters in 2023-24, sparsity in
+   2025, and you can see that at a glance. */
+:root {
+  --cat-mech: #b4451f;
+  --cat-memory: #2f6b8f;
+  --cat-sparse: #8a6212;
+  --cat-recur: #2f6b45;
+  --cat-eng: #6b5a8f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --cat-mech: #e8794b;
+    --cat-memory: #64a9d0;
+    --cat-sparse: #d8ab54;
+    --cat-recur: #6bbf8c;
+    --cat-eng: #a894d0;
+  }
+}
+
+:root[data-theme='dark'] {
+  --cat-mech: #e8794b;
+  --cat-memory: #64a9d0;
+  --cat-sparse: #d8ab54;
+  --cat-recur: #6bbf8c;
+  --cat-eng: #a894d0;
+}
+
+/* ------------------------------------------------------------- on-ramp steps */
+
+.step {
+  display: grid;
+  grid-template-columns: 2.4rem 1fr;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.step:first-of-type {
+  border-top: none;
+}
+
+.step-n {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  font-weight: 600;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: grid;
+  place-items: center;
+}
+
+:root[data-theme='dark'] .step-n {
+  color: #14130f;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .step-n {
+    color: #14130f;
+  }
+}
+
+.step-body h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-body p {
+  max-width: var(--measure);
+}
+
+.step-body .aside {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  border-left: 2px solid var(--border-strong);
+  padding-left: 0.9rem;
+}
+
+.plant {
+  background: var(--warn-soft);
+  border-left: 3px solid var(--warn);
+  padding: 0.85rem 1rem;
+  border-radius: 0 6px 6px 0;
+  max-width: var(--measure);
+  margin: 1rem 0;
+  font-size: 0.93rem;
+}
+
+@media (max-width: 560px) {
+  .step {
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+  }
+}
+
+/* ------------------------------------------------------------------- q/k/v */
+
+.qkv {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+@media (max-width: 720px) {
+  .qkv {
+    grid-template-columns: 1fr;
+  }
+}
+
+.qkv-box {
+  border: 1px solid var(--border);
+  border-top-width: 3px;
+  border-radius: 8px;
+  padding: 0.8rem 0.9rem;
+  background: var(--bg-raised);
+}
+
+.qkv-box.q {
+  border-top-color: var(--cat-mech);
+}
+
+.qkv-box.k {
+  border-top-color: var(--cat-memory);
+}
+
+.qkv-box.v {
+  border-top-color: var(--cat-recur);
+}
+
+.qkv-box h4 {
+  font-family: var(--sans);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+
+.qkv-box p {
+  margin: 0;
+  font-size: 0.94rem;
+  font-style: italic;
+}
+
+/* ------------------------------------------------------------- score bars */
+
+.bars {
+  margin: 1rem 0;
+  max-width: 30rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr 3rem;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.bar-label {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  text-align: right;
+}
+
+.bar-track {
+  background: var(--bg-sunken);
+  border-radius: 4px;
+  height: 18px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+.bar-num {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  text-align: right;
+}
+
+/* ------------------------------------------------------------ 100% budget */
+
+.budget {
+  display: flex;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 1rem 0;
+  border: 1px solid var(--border);
+}
+
+.budget-seg {
+  background: var(--accent);
+  border-right: 1px solid var(--bg);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  min-width: 2px;
+}
+
+.budget-seg:nth-child(2) {
+  background: color-mix(in srgb, var(--accent) 72%, var(--bg));
+}
+
+.budget-seg:nth-child(3) {
+  background: color-mix(in srgb, var(--accent) 52%, var(--bg));
+}
+
+.budget-seg:nth-child(n + 4) {
+  background: color-mix(in srgb, var(--accent) 32%, var(--bg));
+}
+
+.budget-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  color: var(--bg);
+  white-space: nowrap;
+}
+
+.budget-seg:nth-child(n + 3) .budget-label {
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------- n-squared grids */
+
+.grid-compare {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 1.2rem 0;
+  flex-wrap: wrap;
+}
+
+.grid-compare figure {
+  margin: 0;
+  text-align: center;
+}
+
+.grid-compare figcaption {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  margin-top: 0.45rem;
+  font-family: var(--mono);
+}
+
+.grid-arrow {
+  font-size: 1.5rem;
+  color: var(--ink-faint);
+}
+
+/* ------------------------------------------------------------------ terms */
+
+.term-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+button.term {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: help;
+  border-bottom: 1px dotted var(--accent);
+}
+
+button.term:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.term-pop {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(19rem, 70vw);
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 0.83rem;
+  line-height: 1.5;
+  font-style: normal;
+  font-weight: 400;
+  padding: 0.6rem 0.75rem;
+  border-radius: 7px;
+  z-index: 60;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+  text-align: left;
+}
+
+/* ------------------------------------------------------------- self-checks */
+
+.selfcheck {
+  border: 1px solid var(--border-strong);
+  border-left: 3px solid var(--buys);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.1rem 1.25rem;
+  margin-top: 2rem;
+  background: var(--bg-raised);
+  max-width: var(--measure);
+}
+
+.selfcheck h4 {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--buys);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.selfcheck .q {
+  font-weight: 600;
+  margin: 0 0 0.8rem;
+}
+
+.selfcheck .hint {
+  color: var(--ink-muted);
+  font-style: italic;
+  margin: 0 0 0.8rem;
+}
+
+.selfcheck .a {
+  margin: 0;
+  padding: 0.8rem 0.9rem;
+  background: var(--buys-soft);
+  border-radius: 7px;
+  font-size: 0.94rem;
+}
+
+/* --------------------------------------------------------------- time axis */
+
+.axis-dot {
+  cursor: pointer;
+}
+
+.axis-dot:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* -------------------------------------------------- attention vs kv cache */
+
+.vs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 720px) {
+  .vs {
+    grid-template-columns: 1fr;
+  }
+}
+
+.vs-col {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  background: var(--bg-raised);
+}
+
+.vs-col h3 {
+  font-size: 1.15rem;
+  margin: 0.3rem 0 0.6rem;
+}
+
+.vs-col p {
+  margin: 0 0 0.7rem;
+  font-size: 0.94rem;
+}
+
+.vs-tag {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.vs-fix {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 0.6rem;
+  margin-bottom: 0;
+}
+
+/* --------------------------------------------------------- search + cards */
+
+input.search {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.7rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: var(--bg-raised);
+  color: var(--ink);
+  min-width: 12rem;
+  flex: 1 1 12rem;
+  max-width: 20rem;
+}
+
+input.search:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.card-viz {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--bg-sunken);
+  border-radius: 8px;
+}
+
+.register-toggle {
+  border: 1px solid var(--border-strong);
+  font-family: var(--mono);
+  font-size: 0.76rem;
+}

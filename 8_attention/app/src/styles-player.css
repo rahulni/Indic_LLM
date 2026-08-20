@@ -1,0 +1,408 @@
+/* ===========================================================================
+   The animated scenes, the level picker, and the equation blocks.
+   =========================================================================== */
+
+/* ---------------------------------------------------------- level picker */
+
+.level-picker {
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--border);
+}
+
+.level-ask {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-faint);
+  font-weight: 600;
+}
+
+.level-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.7rem;
+}
+
+@media (max-width: 640px) {
+  .level-options {
+    grid-template-columns: 1fr;
+  }
+}
+
+.level-card {
+  text-align: left;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  padding: 0.75rem 0.9rem;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.level-card:hover {
+  border-color: var(--accent);
+}
+
+.level-card[aria-pressed='true'] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.level-card strong {
+  font-size: 0.95rem;
+}
+
+.level-card span {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.level-note {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  margin: 0.6rem 0 0;
+  max-width: var(--measure);
+}
+
+.topbar-sep {
+  width: 1px;
+  height: 18px;
+  background: var(--border-strong);
+  flex-shrink: 0;
+  margin: 0 0.2rem;
+}
+
+.level-btn {
+  font-size: 0.76rem;
+}
+
+/* ------------------------------------------------------------- equations */
+
+pre.math {
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  line-height: 1.75;
+  background: var(--bg-sunken);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  padding: 0.85rem 1rem;
+  margin: 0 0 0.6rem;
+  overflow-x: auto;
+  white-space: pre;
+  color: var(--ink);
+}
+
+.math-note {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin: 0;
+  max-width: var(--measure);
+}
+
+/* ---------------------------------------------------------- scene slots */
+
+.scene-slot {
+  margin: 2.25rem 0;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+}
+
+.scene-title {
+  font-size: 1.1rem;
+  margin-bottom: 0.4rem;
+}
+
+.scene-intro {
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+  max-width: var(--measure);
+  margin: 0 0 1.1rem;
+}
+
+/* --------------------------------------------------------- player chrome */
+
+.player-stage {
+  min-height: 60px;
+}
+
+.player-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.chip.play {
+  min-width: 2.6rem;
+  font-size: 0.78rem;
+}
+
+.chip.play:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.player-dots {
+  display: flex;
+  gap: 0.3rem;
+  margin-left: 0.3rem;
+}
+
+.player-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  cursor: pointer;
+}
+
+.player-dot[aria-selected='true'] {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.player-step {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+.player-caption {
+  margin-top: 0.85rem;
+  padding: 0.85rem 1rem;
+  background: var(--bg-sunken);
+  border-radius: 8px;
+  min-height: 5.4rem;
+  max-width: var(--measure);
+}
+
+.player-caption strong {
+  display: block;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+
+.player-caption span {
+  font-size: 0.93rem;
+}
+
+/* ------------------------------------------------------- attention flow */
+
+.flow {
+  max-width: 34rem;
+}
+
+.flow-row,
+.flow-total {
+  display: grid;
+  grid-template-columns: 5rem 1fr 3.4rem;
+  gap: 0.6rem;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.flow-total {
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+}
+
+.flow-label {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.flow-row.is-focus .flow-label {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.flow-label em {
+  font-style: normal;
+  font-size: 0.7rem;
+  color: var(--accent);
+}
+
+.flow-track {
+  background: var(--bg-sunken);
+  border-radius: 4px;
+  height: 20px;
+  overflow: hidden;
+}
+
+.flow-track.is-total {
+  outline: 1px solid var(--buys);
+}
+
+.flow-fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.flow-num {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  text-align: right;
+}
+
+/* ---------------------------------------------------------- decode loop */
+
+.decode-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1.1rem;
+  min-height: 2rem;
+}
+
+.decode-word {
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  color: var(--ink-faint);
+  opacity: 0.35;
+}
+
+.decode-word.is-written {
+  opacity: 1;
+  color: var(--ink);
+  background: var(--bg-sunken);
+}
+
+.decode-word.is-current {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.decode-label {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.4rem;
+}
+
+.decode-count {
+  font-family: var(--mono);
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.82rem;
+}
+
+.decode-blocks {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+  min-height: 2.6rem;
+  align-items: flex-start;
+}
+
+.decode-block {
+  width: 3rem;
+  height: 2.2rem;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  border: 1px solid var(--border-strong);
+  color: var(--ink-muted);
+}
+
+.decode-block.is-kept {
+  background: var(--cat-memory);
+  border-color: var(--cat-memory);
+  color: var(--bg);
+}
+
+.decode-block.is-sink {
+  background: var(--warn);
+  border-color: var(--warn);
+  color: var(--bg);
+}
+
+.decode-block.is-dropped {
+  background: transparent;
+  border-style: dashed;
+  opacity: 0.4;
+}
+
+.decode-block.is-future {
+  border-color: var(--border);
+  opacity: 0.18;
+}
+
+.decode-block.is-state {
+  width: 8rem;
+  height: 2.6rem;
+  background: var(--buys);
+  border-color: var(--buys);
+  color: var(--bg);
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.decode-block.is-state em {
+  font-style: normal;
+  font-size: 0.62rem;
+  opacity: 0.85;
+}
+
+.decode-key {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin: 0.8rem 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.swatch {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid var(--border-strong);
+}
+
+.swatch.is-sink {
+  background: var(--warn);
+  border-color: var(--warn);
+}
+
+.swatch.is-kept {
+  background: var(--cat-memory);
+  border-color: var(--cat-memory);
+}
+
+.swatch.is-dropped {
+  background: transparent;
+  border-style: dashed;
+}

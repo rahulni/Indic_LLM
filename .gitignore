@@ -64,3 +64,9 @@ Thumbs.db
 # own writing and stay. This repository is public.
 *Transcript.docx
 *Transcript.txt
+
+# Transcript-derived working notes for 8_attention. Same reasoning as above: they
+# paraphrase a lecture and record classroom discussion, so they stay local. The
+# conclusions drawn from them - dates, trade-offs, the fact-check page - are our
+# own writing and are published.
+8_attention/research/

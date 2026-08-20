@@ -1,0 +1,88 @@
+name: Attention timeline
+
+# Builds 8_attention and publishes it to GitHub Pages at
+# https://rahulni.github.io/Indic_LLM/
+#
+# The two verification steps run before the build and are not advisory: a date that does
+# not match its primary source, or a required mechanism that has gone missing, fails the
+# deploy rather than shipping. That is the whole point - the assignment is graded on the
+# dates being right, so the dates are checked by a command, not by a promise.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '8_attention/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deployments race; queue instead of cancelling, so a run that is already
+# publishing is allowed to finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Hits the live arXiv API and compares both date and title for every paper-backed
+      # mechanism. Stdlib only - no pip install needed.
+      - name: Verify every date against its primary source
+        working-directory: 8_attention
+        run: python tools/verify_dates.py
+
+      - name: Check coverage of the assignment and the session
+        working-directory: 8_attention
+        run: python tools/check_completeness.py
+
+      - name: Fail if CITATIONS.md is stale
+        working-directory: 8_attention
+        run: |
+          python tools/build_citations.py
+          git diff --exit-code CITATIONS.md
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: 8_attention/app/package-lock.json
+
+      - name: Install
+        working-directory: 8_attention/app
+        run: npm ci
+
+      # Renders the whole app in Node and asserts the attention maths behaves: softmax
+      # rows sum to 1, causality holds, unscaled attention is measurably more peaked.
+      - name: Smoke test
+        working-directory: 8_attention/app
+        run: npm run smoke
+
+      - name: Build
+        working-directory: 8_attention/app
+        run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: 8_attention/app/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

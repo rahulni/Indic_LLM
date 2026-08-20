@@ -1,0 +1,66 @@
+[
+  {
+    "id": "origins",
+    "range": "2014 – 2016",
+    "title": "Attention is a patch, not a model",
+    "bill": "A sentence has to fit through one fixed-size vector.",
+    "story": "Sequence-to-sequence models crushed an entire input sentence into a single hidden state, and long sentences fell apart. Attention was invented as a repair: let the decoder look back at every encoder state and weight them. Nobody yet imagined removing the recurrence underneath.",
+    "mind_change": null
+  },
+  {
+    "id": "transformer",
+    "range": "2017 – 2018",
+    "title": "Attention becomes the whole model",
+    "bill": "Recurrence is sequential, and sequential means slow on a GPU.",
+    "story": "The Transformer deletes recurrence entirely and keeps only attention. This buys perfect parallelism across the sequence, and immediately creates two new debts that the next decade spends paying: the model now has no idea what order the tokens are in, and every token attends to every token, so cost grows with the square of the length.",
+    "mind_change": "Position stops being free. Once recurrence is gone, order has to be injected by hand — and every positional scheme after this is an argument about how."
+  },
+  {
+    "id": "quadratic-bill",
+    "range": "2019 – 2020",
+    "title": "The bill arrives — O(n²)",
+    "bill": "Attention is quadratic in sequence length, in both time and memory.",
+    "story": "The field's first instinct is to attack the quadratic term directly: don't let every token see every token. Hand-drawn sparsity patterns (strided, local, global, random) and low-rank or kernel approximations arrive in a burst. Almost all of them trade exactness for a complexity class.",
+    "mind_change": "MQA appears in 2019 and is then ignored for roughly four years. The KV-cache bill it solves is not yet due, because nobody is serving long contexts to many users."
+  },
+  {
+    "id": "position-exactness",
+    "range": "2021 – 2022",
+    "title": "Position gets rethought, and exactness wins",
+    "bill": "Learned position tables cannot extrapolate; and the approximations are not actually fast.",
+    "story": "RoPE and ALiBi replace additive position tables with something relative and extrapolable — the single most durable idea of the period. Then FlashAttention reframes the problem entirely: attention was never compute-bound, it was memory-bandwidth-bound. Exact attention, tiled to stay in SRAM, beats the clever approximations on real hardware.",
+    "mind_change": "The field wants exactness back. Linformer/Performer-style approximation quietly loses, not because the maths was wrong but because the constant factors were."
+  },
+  {
+    "id": "serving-crisis",
+    "range": "2023",
+    "title": "The serving crisis — two bills at once",
+    "bill": "KV cache per user, and context length per request.",
+    "story": "Models leave the lab and meet users. Suddenly the binding constraint is not training FLOPs but the KV cache: gigabytes per user, multiplied by every concurrent session. GQA becomes the default overnight. In parallel, everyone wants longer contexts without retraining, so RoPE rescaling tricks — interpolation, NTK-aware, YaRN — arrive from the community as fast as from the labs.",
+    "mind_change": "The field wants memory back and length at the same time, and discovers they are different problems with different fixes."
+  },
+  {
+    "id": "compress-and-learn",
+    "range": "2024",
+    "title": "Compress the cache, learn the state",
+    "bill": "Even a shared KV cache is too big, and a fixed state forgets.",
+    "story": "Two strands converge. MLA compresses keys and values into a low-rank latent so the cache shrinks without dropping heads. Meanwhile the linear-attention line finally gets serious: the delta rule makes the recurrent state *overwrite* rather than merely accumulate, and gating lets it forget on purpose. State stops being a dumb running sum and becomes something trained.",
+    "mind_change": "Linear attention returns from the dead — but nobody ships it pure. It comes back as one layer type among several."
+  },
+  {
+    "id": "native-sparsity",
+    "range": "2025",
+    "title": "Sparsity becomes native, trainable, and hybrid",
+    "bill": "Hand-drawn masks lose context; pure linear models lose recall.",
+    "story": "Sparsity stops being a fixed pattern chosen by a human and becomes a learned decision made by the model: an indexer scores which blocks are worth reading, and it is trained end to end rather than bolted on at inference. At the same time the dominant architecture shape settles into a hybrid — a few cheap linear or sliding layers for every one exact global layer.",
+    "mind_change": "The field stops looking for the one true attention. The answer is a schedule of several, chosen per layer."
+  },
+  {
+    "id": "frontier",
+    "range": "2026",
+    "title": "Where it is going",
+    "bill": "Everything above, simultaneously, at agent-scale context.",
+    "story": "The three surviving ideas — trainable sparsity, latent KV compression, and hybrid layer schedules — are converging into a single default recipe. What is still unsettled is the ratio: how many cheap layers per exact layer, and whether the indexer that picks blocks can be shared across layers rather than paid for at each one.",
+    "mind_change": null
+  }
+]

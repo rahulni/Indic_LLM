@@ -1,0 +1,37 @@
+[
+  {
+    "id": "why-quadratic",
+    "after": "onramp",
+    "question": "A sentence of 10 words needs 100 comparisons. Why does a sentence of 20 words need 400, and not 200?",
+    "answer": "Because every word compares itself against every word. Adding a word adds one new question to ask, and it also adds one new label for all the existing questions to check. Both sides of the grid grow at once, so the count is n × n. This single fact is why almost everything after 2017 exists.",
+    "hint": "Count what a new word adds — is it one thing, or two?"
+  },
+  {
+    "id": "cache-and-users",
+    "after": "memory",
+    "question": "The stored keys and values grow with the length of the conversation. Why do they also grow with the number of people using the model at once?",
+    "answer": "Because the cache holds one conversation's words, and no two users are having the same conversation. Nothing can be shared between them, so serving 32 people at 128k words costs 32 separate caches. That is why the calculator multiplies by users, and why this is a serving problem rather than a training one — you can train a model you cannot afford to serve.",
+    "hint": "Could two different users share the same stored keys?"
+  },
+  {
+    "id": "topk-still-quadratic",
+    "after": "sparsity",
+    "question": "Top-k attention keeps only the best few matches per query and throws the rest away. So why does it not remove the quadratic cost?",
+    "answer": "Because you cannot know which matches are best until you have scored them all. The ranking happens after the comparisons, so the comparisons still happen. It saves memory, not work. This is exactly the gap NSA and DSA close in 2025, by adding a cheap scorer that estimates importance without doing the full comparison first.",
+    "hint": "What has to happen before you can sort anything?"
+  },
+  {
+    "id": "delta-writes-15",
+    "after": "state",
+    "question": "A memory slot holds 40. The model wants it to be 55. Plain linear attention writes 95. What does the delta rule write, and why is that number the point?",
+    "answer": "It writes 15. It reads the slot first, finds 40 already there, and works out that 55 − 40 = 15 is all that is missing. The number matters because it shows the state is being edited rather than accumulated: capacity gets reused instead of filling up with sums nobody asked for. That is the whole reason the fixed-size memory stops saturating.",
+    "hint": "The rule reads before it writes. What does it find?"
+  },
+  {
+    "id": "mqa-gap",
+    "after": "timeline",
+    "question": "MQA was published in November 2019 and then essentially ignored until 2023. It was not wrong, and nobody found a flaw in it. What changed?",
+    "answer": "The bill came due. MQA reduces the memory needed to serve a model, and in 2019 hardly anyone was serving long contexts to many simultaneous users, so it solved a problem that did not yet hurt. By 2023 models had users, and the same idea was suddenly urgent enough that GQA — a gentler version of it — became the default within months. The lesson the timeline teaches: a mechanism's launch date and the date it starts mattering can be years apart.",
+    "hint": "Look at what happened to how models were being used between those two dates."
+  }
+]
