@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { attention, dot, TOKENS } from '../../lib/attention'
 import { Player, type Beat } from './Player'
+import { Formula } from '../../components/Formula'
 import { ease, lerp, useBeats } from './useBeats'
 
 const FOCUS = 2 // "bank" - the word whose sense has to be resolved
@@ -77,6 +78,16 @@ export function AttentionFlow() {
     },
   ]
 
+  // The equation term each beat is actually performing. This is the binding that turns
+  // a formula printed next to a picture into a formula explained by one.
+  const FORMULA_AT: { id: 'attention' | 'qkv'; part: string }[] = [
+    { id: 'qkv', part: 'q' },
+    { id: 'attention', part: 'qk' },
+    { id: 'attention', part: 'scale' },
+    { id: 'attention', part: 'softmax' },
+    { id: 'attention', part: 'v' },
+  ]
+
   const ctl = useBeats(beats.length, 2000)
   const { beat, t } = ctl
   const e = ease(t)
@@ -148,6 +159,8 @@ export function AttentionFlow() {
           </div>
         )}
       </div>
+
+      <Formula id={FORMULA_AT[beat].id} active={FORMULA_AT[beat].part} />
     </Player>
   )
 }

@@ -16,6 +16,9 @@ import { LevelProvider, LEVELS, LEVEL_CONFIG, type Level } from './components/Le
 import { GLOSSARY } from './components/Term'
 import { CHECKS } from './components/SelfCheck'
 import { VIZ, MECHANISMS } from './components/Timeline'
+import { SelfAttentionArcs } from './viz/SelfAttentionArcs'
+import { Breakthrough } from './components/Breakthrough'
+import { FORMULAS } from './data/formulas'
 import { AttentionFlow } from './viz/player/AttentionFlow'
 import { DecodeLoop } from './viz/player/DecodeLoop'
 import { MaskMorph } from './viz/player/MaskMorph'
@@ -79,7 +82,29 @@ for (const needle of [
   check(`page contains "${needle}"`, html.includes(needle))
 }
 
-// 3. The levels must actually differ in composition, not just wording. If these ever
+// 3. REGRESSION GUARD. Formulas were written, verified, and then rendered in exactly
+//    one gated place, so the default view carried none of them. They are now bound to
+//    the visuals and must appear at EVERY level - including the beginner one, where a
+//    glossed formula next to a picture teaches rather than intimidates.
+for (const l of LEVELS) {
+  check(
+    `level "${l.id}" shows the attention equation`,
+    pages[l.id].includes('Attention(Q, K, V)'),
+  )
+  check(`level "${l.id}" shows a formula gloss`, pages[l.id].includes('formula-gloss'))
+}
+
+// The opening picture and the breakthrough section must both be on the page.
+check('self-attention arcs render', html.includes('how strongly each word attends'))
+check('breakthrough section present', html.includes('What attention actually bought'))
+check('breakthrough cites scaling laws', html.includes('2001.08361'))
+
+// Every formula must have at least one glossed part, or its highlight explains nothing.
+for (const [id, def] of Object.entries(FORMULAS)) {
+  check(`formula "${id}" has a glossed part`, def.parts.some((p) => p.gloss))
+}
+
+// 4. The levels must actually differ in composition, not just wording. If these ever
 //    collapse to the same output, the level selector has silently become decorative.
 check('research level shows equations', pages.research.includes('The essential maths'))
 check('building level hides equations', !pages.building.includes('The essential maths'))
@@ -91,18 +116,18 @@ check(
   `new=${pages.new.length} building=${pages.building.length}`,
 )
 
-// 4. Trade-offs must survive at every level. Hiding what a technique costs would be the
+// 5. Trade-offs must survive at every level. Hiding what a technique costs would be the
 //    one thing the level system must never do.
 for (const l of LEVELS) {
   check(`level "${l.id}" still shows costs`, pages[l.id].includes('What it costs'))
 }
 
-// 5. Every mechanism needs the plain-English line, since two levels render it.
+// 6. Every mechanism needs the plain-English line, since two levels render it.
 for (const m of MECHANISMS) {
   check(`${m.id} has plain text`, Boolean(m.plain && m.plain.trim()))
 }
 
-// 6. Any equation present must be non-empty and carry its provenance note.
+// 7. Any equation present must be non-empty and carry its provenance note.
 const withMath = MECHANISMS.filter((m) => m.math)
 check('some equations exist', withMath.length > 10, `${withMath.length}`)
 for (const m of withMath) {
@@ -110,7 +135,7 @@ for (const m of withMath) {
   check(`${m.id} equation states provenance`, Boolean(m.math_note && m.math_note.trim()))
 }
 
-// 7. Every `viz` value must map to a real component, or a card silently loses its diagram.
+// 8. Every `viz` value must map to a real component, or a card silently loses its diagram.
 for (const m of MECHANISMS) {
   if (m.viz) check(`${m.id} viz "${m.viz}" resolves`, m.viz in VIZ)
 }
@@ -118,11 +143,13 @@ for (const key of ['flow', 'decode', 'morph', 'multihead']) {
   check(`VIZ registry has "${key}"`, key in VIZ)
 }
 
-// 8. Each animated scene renders standalone without throwing.
+// 9. Each animated scene renders standalone without throwing.
 for (const [name, Scene] of [
   ['AttentionFlow', AttentionFlow],
   ['DecodeLoop', DecodeLoop],
   ['MaskMorph', MaskMorph],
+  ['SelfAttentionArcs', SelfAttentionArcs],
+  ['Breakthrough', Breakthrough],
 ] as const) {
   try {
     const out = renderToString(
@@ -136,14 +163,14 @@ for (const [name, Scene] of [
   }
 }
 
-// 9. The interpolation helpers the scenes depend on.
+// 10. The interpolation helpers the scenes depend on.
 check('ease(0) === 0', ease(0) === 0)
 check('ease(1) === 1', ease(1) === 1)
 check('ease is monotonic', ease(0.3) < ease(0.6))
 check('lerp clamps low', lerp(10, 20, -5) === 10)
 check('lerp clamps high', lerp(10, 20, 5) === 20)
 
-// 10. Glossary keys used in the source must exist.
+// 11. Glossary keys used in the source must exist.
 for (const k of [
   'query', 'key', 'value', 'softmax', 'quadratic',
   'kv-cache', 'state', 'kernel', 'prefill', 'decode',
@@ -151,18 +178,18 @@ for (const k of [
   check(`glossary defines "${k}"`, k in GLOSSARY)
 }
 
-// 11. Self-checks complete.
+// 12. Self-checks complete.
 check('five self-checks defined', CHECKS.length === 5, `got ${CHECKS.length}`)
 for (const c of CHECKS) {
   check(`check ${c.id} complete`, Boolean(c.question && c.answer && c.hint))
 }
 
-// 12. Level config must cover every declared level.
+// 13. Level config must cover every declared level.
 for (const l of LEVELS) {
   check(`config for "${l.id}"`, l.id in LEVEL_CONFIG)
 }
 
-// 13. The maths is real: scaling must genuinely change the distribution.
+// 14. The maths is real: scaling must genuinely change the distribution.
 const scaled = attention(undefined, { scaled: true })
 const unscaled = attention(undefined, { scaled: false })
 const meanH = (r: typeof scaled) => r.entropies.reduce((a, b) => a + b, 0) / r.entropies.length
@@ -207,5 +234,6 @@ if (failures.length) {
 console.log(
   `OK - 3 levels render (${pages.new.length.toLocaleString()} / ` +
     `${pages.building.length.toLocaleString()} / ${pages.research.length.toLocaleString()} chars), ` +
-    `${MECHANISMS.length} mechanisms, ${withMath.length} equations, 3 scenes, maths verified.`,
+    `${MECHANISMS.length} mechanisms, ${withMath.length} card equations, ` +
+    `${Object.keys(FORMULAS).length} bound formulas, 5 scenes, maths verified.`,
 )

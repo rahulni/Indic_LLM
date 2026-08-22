@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { applyRope, dot, ropeRelativeCheck } from '../lib/attention'
+import { Formula } from '../components/Formula'
 
 const R = 78
 const CX = 100
@@ -143,6 +144,8 @@ export function RoPEDial() {
             <span className="em">{spread.toExponential(1)}</span>
           </div>
         </div>
+
+        <Formula id="ropeIdentity" active="rhs" />
 
         <p className="viz-note" style={{ marginTop: '0.9rem' }}>
           The spread is floating-point noise, not a modelling effect. Raising the base

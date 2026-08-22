@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { attention, dot, TOKENS } from '../lib/attention'
 import { Term } from './Term'
 import { useLevel } from './LevelContext'
+import { Formula } from './Formula'
 
 /**
  * The on-ramp: what attention actually does, before any matrix appears.
@@ -151,6 +152,8 @@ export function Onramp() {
             meant, but what it <em>contributes</em> is the financial reading, not the word
             itself.
           </p>
+
+          <Formula id="qkv" active={null} />
         </div>
       </div>
 
@@ -190,6 +193,8 @@ export function Onramp() {
             a trace. Hold on to that, because changing it is exactly what every
             &ldquo;sparse&rdquo; mechanism further down is trying to do.
           </p>
+
+          <Formula id="attention" active="qk" />
         </div>
       </div>
 
@@ -237,6 +242,8 @@ export function Onramp() {
             footnote. It is the reason <strong>attention sinks</strong> had to be invented
             in 2023, and you will meet it again on the timeline below.
           </div>
+
+          <Formula id="attention" active="softmax" />
         </div>
       </div>
 
@@ -287,6 +294,8 @@ export function Onramp() {
             only look at the words before it, never ahead. That is a separate idea called
             causal masking, and you can switch it on and off in the next section.
           </p>
+
+          <Formula id="attention" active={null} />
         </div>
       </div>
     </div>

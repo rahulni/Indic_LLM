@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Player, type Beat } from './Player'
+import { Formula } from '../../components/Formula'
 import { useBeats } from './useBeats'
 
 const WORDS = [
@@ -110,6 +111,30 @@ export function DecodeLoop() {
     }
   }
 
+  // Which term of the cache expression this mode is acting on, and what it does to it.
+  const FORMULA_FOR: Record<Mode, { part: string; gloss: string }> = {
+    full: {
+      part: 'tokens',
+      gloss:
+        'T is every token ever written, and it never stops climbing. This is the term the three mechanisms below each attack.',
+    },
+    window: {
+      part: 'tokens',
+      gloss:
+        'T is capped at the window size w. The cache stops growing entirely - and everything older than w is gone from this layer.',
+    },
+    sink: {
+      part: 'tokens',
+      gloss:
+        'T becomes w + s: the rolling window plus a handful of permanently pinned tokens. Four extra entries buys unlimited streaming.',
+    },
+    linear: {
+      part: 'tokens',
+      gloss:
+        'There is no T at all. A fixed-size state replaces the whole expression, so memory is the same at one token and at a million - and no single earlier token can be recovered exactly.',
+    },
+  }
+
   const beats: Beat[] = WORDS.map((w, i) => ({
     label: `Writing word ${i + 1}: “${w}”`,
     caption: caption(),
@@ -195,6 +220,12 @@ export function DecodeLoop() {
             </p>
           )}
         </div>
+
+        <Formula
+          id="kvCache"
+          active={FORMULA_FOR[mode].part}
+          glossOverride={FORMULA_FOR[mode].gloss}
+        />
       </Player>
     </div>
   )

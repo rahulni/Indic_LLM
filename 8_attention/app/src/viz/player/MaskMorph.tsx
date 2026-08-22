@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { attention, buildMask, maskDensity, type MaskKind } from '../../lib/attention'
 import { Player, type Beat } from './Player'
+import { Formula } from '../../components/Formula'
 import { ease, lerp, useBeats } from './useBeats'
 
 const N = 22
@@ -168,6 +169,12 @@ export function MaskMorph() {
           </div>
         </div>
       </div>
+
+      <Formula
+        id="sparseOutput"
+        active="set"
+        glossOverride={`𝒮(i) right now: ${PATTERNS[beat].rule}`}
+      />
     </Player>
   )
 }

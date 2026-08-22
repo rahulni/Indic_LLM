@@ -3,10 +3,12 @@ import { MECHANISMS, Timeline } from './components/Timeline'
 import { FactCheck } from './components/FactCheck'
 import { Onramp } from './components/Onramp'
 import { AttentionVsCache } from './components/AttentionVsCache'
+import { Breakthrough } from './components/Breakthrough'
 import { SelfCheck } from './components/SelfCheck'
 import { Term } from './components/Term'
 import { useLevel, LevelPicker } from './components/LevelContext'
 import { AttentionMatrix } from './viz/AttentionMatrix'
+import { SelfAttentionArcs } from './viz/SelfAttentionArcs'
 import { MaskPatterns } from './viz/MaskPatterns'
 import { RoPEDial } from './viz/RoPEDial'
 import { KVCacheBar } from './viz/KVCacheBar'
@@ -18,6 +20,7 @@ import { MaskMorph } from './viz/player/MaskMorph'
 
 const SECTIONS = [
   { id: 'onramp', label: 'Start here' },
+  { id: 'why', label: 'Why it mattered' },
   { id: 'baseline', label: 'The matrix' },
   { id: 'timeline', label: 'Timeline' },
   { id: 'positions', label: 'Position' },
@@ -195,6 +198,16 @@ export default function App() {
           </>
         }
       >
+        <div className="scene-slot">
+          <h3 className="scene-title">What attention does to a sentence</h3>
+          <p className="scene-intro">
+            Before any arithmetic: this is the thing itself. Words reaching across to
+            each other, harder or more weakly depending on how well they match. Click
+            any word to follow it.
+          </p>
+          <SelfAttentionArcs />
+        </div>
+
         <Onramp />
 
         <div className="scene-slot">
@@ -207,6 +220,21 @@ export default function App() {
         </div>
 
         {config.checks && <SelfCheck after="onramp" />}
+      </Section>
+
+      <Section
+        id="why"
+        eyebrow="Why this one idea took over"
+        title="What attention actually bought"
+        intro={
+          <>
+            You now know what it computes and roughly what it costs. This is the part
+            that explains why a 2017 paper about a matrix multiply turned into an
+            industry &mdash; and it is not mainly about accuracy.
+          </>
+        }
+      >
+        <Breakthrough />
       </Section>
 
       <Section

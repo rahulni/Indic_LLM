@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { attentionCost, type CostModel } from '../lib/attention'
+import { Formula } from '../components/Formula'
 
 const LENGTHS = [2_048, 8_192, 32_768, 131_072, 524_288, 1_048_576]
 
@@ -146,6 +147,8 @@ export function ScalingCurves() {
             </div>
           )
         })}
+
+        <Formula id="cost" active={null} />
 
         <p className="viz-note" style={{ marginTop: '1rem' }}>
           At 2K these curves are almost indistinguishable, which is why a chatbot can

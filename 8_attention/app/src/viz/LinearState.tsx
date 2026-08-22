@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { FormulaPair } from '../components/Formula'
 
 /**
  * The delta rule, using the exact example from the session.
@@ -148,6 +149,14 @@ export function LinearState() {
           reads the slot first, computes 55 − 40 = 15, and writes only that, landing on
           55.
         </p>
+
+        <FormulaPair
+          left="linearUpdate"
+          right="deltaUpdate"
+          leftLabel="plain linear attention"
+          rightLabel="the delta rule"
+          activeSide={additive[step] > WRITES[step].target ? 'left' : 'right'}
+        />
 
         <p className="viz-note" style={{ marginTop: '0.7rem' }}>
           Over many writes the additive state climbs without bound and saturates, which

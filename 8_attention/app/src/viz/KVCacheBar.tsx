@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Formula } from '../components/Formula'
 import {
   DEFAULT_KV,
   formatBytes,
@@ -144,6 +145,8 @@ export function KVCacheBar() {
           </tbody>
         </table>
       </div>
+
+      <Formula id="kvCache" active="nkv" />
 
       <div className="readout">
         <div>
