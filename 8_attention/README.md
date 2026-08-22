@@ -1,6 +1,6 @@
 # Attention, in the order it actually happened
 
-**Live site:** https://rahulni.github.io/Indic_LLM/
+**Live site:** https://rahulni.github.io/Indic_LLM/8_attention/
 **Repository:** https://github.com/rahulni/Indic_LLM/tree/main/8_attention
 
 A web app explaining every attention mechanism from 2014 to 2026, ordered by the date
@@ -45,9 +45,9 @@ total mechanisms                     : 52
 OK - every date is backed by a primary source.
 ```
 
-It exits non-zero on any mismatch and runs in CI **before** the site is built, so a wrong
-date fails the deploy instead of shipping. The full table is in
-[CITATIONS.md](CITATIONS.md), generated from the same file.
+It exits non-zero on any mismatch and runs in CI on every push, so a date that stops
+matching its source turns the build red rather than sitting there quietly. The full table
+is in [CITATIONS.md](CITATIONS.md), generated from the same file.
 
 ### A warning about arXiv identifiers
 
@@ -223,5 +223,20 @@ local, consistent with the existing `.gitignore` policy for transcripts. The con
 drawn from it (dates, trade-offs, the fact-check section) are original writing and are
 published here.
 
-Deployment is via GitHub Actions to GitHub Pages, configured in
-[`.github/workflows/pages.yml`](../.github/workflows/pages.yml).
+## Deployment
+
+GitHub Pages on this repository serves the committed branch contents directly, so the
+site is simply the files committed at `8_attention/index.html` and `8_attention/assets/`
+— the same pattern as the earlier submissions. Pushing to `main` publishes it; there is
+no deploy step.
+
+To republish after a change:
+
+```bash
+cd app && npm run build
+cd .. && python tools/publish_site.py
+```
+
+[`.github/workflows/attention-checks.yml`](../.github/workflows/attention-checks.yml)
+runs the date verification, the coverage check and the smoke test on every push, and
+fails if the committed bundle no longer matches a fresh build of the source.

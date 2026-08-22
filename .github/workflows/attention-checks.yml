@@ -1,0 +1,88 @@
+name: Attention timeline checks
+
+# GitHub Pages on this repository serves the committed branch contents directly, so the
+# site at https://rahulni.github.io/Indic_LLM/8_attention/ is simply the files committed
+# at 8_attention/index.html and 8_attention/assets/. There is nothing here to deploy -
+# pushing to main publishes it.
+#
+# What this workflow does instead is guard the two things that would otherwise rot
+# silently: a date that stops matching its primary source, and a published bundle that
+# no longer matches the source it was built from.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '8_attention/**'
+      - '.github/workflows/attention-checks.yml'
+  pull_request:
+    paths:
+      - '8_attention/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      # Hits the live arXiv API and compares both the v1 date and the paper title for
+      # every paper-backed mechanism. Stdlib only, so no pip install. The assignment is
+      # graded on the dates being right, so they are checked by a command rather than
+      # promised.
+      - name: Verify every date against its primary source
+        working-directory: 8_attention
+        run: python tools/verify_dates.py
+
+      - name: Check coverage of the assignment and the session
+        working-directory: 8_attention
+        run: python tools/check_completeness.py
+
+      - name: Fail if CITATIONS.md is stale
+        working-directory: 8_attention
+        run: |
+          python tools/build_citations.py
+          git diff --exit-code CITATIONS.md
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: 8_attention/app/package-lock.json
+
+      - name: Install
+        working-directory: 8_attention/app
+        run: npm ci
+
+      # Renders every proficiency level in Node and asserts the attention maths behaves:
+      # softmax rows sum to 1, causality holds, unscaled attention is measurably more
+      # peaked than scaled, and MHA > GQA > MQA > MLA.
+      - name: Smoke test
+        working-directory: 8_attention/app
+        run: npm run smoke
+
+      - name: Build
+        working-directory: 8_attention/app
+        run: npm run build
+
+      # The published bundle is committed, so it can drift from the source it came from.
+      # Rebuilding and re-publishing must be a no-op; if it is not, what is live no
+      # longer matches what is in the repository.
+      - name: Fail if the published site is stale
+        working-directory: 8_attention
+        run: |
+          python tools/publish_site.py
+          if [ -n "$(git status --porcelain -- index.html assets)" ]; then
+            echo "The committed site does not match a fresh build. Run:"
+            echo "  cd 8_attention/app && npm run build"
+            echo "  cd .. && python tools/publish_site.py"
+            git status --porcelain -- index.html assets
+            exit 1
+          fi

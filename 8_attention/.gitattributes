@@ -1,0 +1,7 @@
+# The published bundle is committed, and CI rebuilds it and fails if the result differs
+# from what is checked in. That comparison has to mean the same thing on Windows, where
+# this repository is authored with core.autocrlf=true, and on the Linux runner that
+# performs the check. Vite emits LF; pinning these to LF everywhere stops a line-ending
+# conversion from being mistaken for a stale build.
+index.html   text eol=lf
+assets/**    text eol=lf

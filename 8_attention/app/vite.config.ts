@@ -1,15 +1,17 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// The site is published at the root of this repository's GitHub Pages site, which is
-// served from https://rahulni.github.io/Indic_LLM/. Vite needs that prefix baked in or
-// every asset URL resolves against the domain root and 404s.
+// GitHub Pages on this repository serves the committed branch contents directly, so a
+// file at 8_attention/index.html appears at
+// https://rahulni.github.io/Indic_LLM/8_attention/ - the same pattern the earlier
+// submissions use. Vite needs that full prefix baked in, or every asset URL resolves
+// against the domain root and 404s.
 //
-// `npm run dev` and `npm run preview` serve from '/', so the base is applied only for
-// the production build. Override with BASE_PATH if publishing somewhere else.
+// `npm run dev` serves from '/', so the base applies only to the production build.
+// Override with BASE_PATH if publishing somewhere else.
 export default defineConfig(({ command }) => ({
   plugins: [react()],
-  base: command === 'build' ? process.env.BASE_PATH ?? '/Indic_LLM/' : '/',
+  base: command === 'build' ? process.env.BASE_PATH ?? '/Indic_LLM/8_attention/' : '/',
   build: {
     outDir: 'dist',
     // One bundle. The page must work as a single self-contained artifact, and at this
