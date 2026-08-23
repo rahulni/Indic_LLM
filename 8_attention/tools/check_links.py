@@ -1,22 +1,27 @@
 #!/usr/bin/env python3
 """Check that every URL this project points at still resolves.
 
-Adding further-reading links creates a maintenance surface the rest of the project did
+Adding further-reading links created a maintenance surface the rest of the project did
 not have: a paper's date cannot rot, but a repository can be renamed and a blog can go
 away. This is the guard for that.
 
-The distinction it draws matters more than the check itself:
+The rule is **fail only on certainty**. A checker that cries wolf gets ignored, and an
+ignored check is worse than no check at all.
 
-  * A **4xx** is a real broken link - the resource is gone or the URL was wrong. That
-    fails the build, because it is the same class of error as a wrong date. During
-    development a guessed repository URL for Multi-Token Attention returned 404, which is
-    exactly what this catches.
+  * **404 and 410 fail the build.** Those mean the resource is genuinely not there, which
+    is the same class of error as a wrong date. During development a guessed repository
+    URL for Multi-Token Attention returned 404, which is exactly what this is for.
 
-  * A **5xx, a timeout, or a connection error** is the internet having a bad day. Those
-    are reported and do not fail the build. A CI job that goes red because GitHub was
-    briefly slow trains people to ignore red CI, which costs more than it saves.
+  * **401, 403 and 429 are reported, not failed.** They mean "not for you", not "gone".
+    Reddit and Substack both refuse datacenter IPs, so those URLs open fine in a browser
+    and return 403 from a CI runner. Treating that as a broken link is simply wrong - and
+    it is what made this workflow red on every run until it was fixed.
 
-  * A **429** is rate limiting, not breakage, and is treated as transient.
+  * **5xx, timeouts and connection errors are reported, not failed.** That is the internet
+    having a bad day. CI that goes red because GitHub was briefly slow trains people to
+    ignore red CI, which costs more than it saves.
+
+  * **Anything else is reported, not failed.** Ambiguous is not the same as broken.
 
 Usage:
     python tools/check_links.py            # check everything
@@ -38,6 +43,12 @@ RESOURCES = ROOT / "app" / "src" / "data" / "resources.ts"
 
 TIMEOUT = 25
 
+# The only statuses that prove a link is dead.
+GONE = {404, 410}
+
+# Access control and bot protection: the resource exists, this client was refused.
+BLOCKED = {401, 403, 429}
+
 
 def collect() -> dict[str, list[str]]:
     """Every URL in the project, mapped to the places that reference it."""
@@ -52,7 +63,7 @@ def collect() -> dict[str, list[str]]:
         for r in m.get("reading", []):
             add(r["url"], f"{m['id']} (reading)")
 
-    # resources.ts is TypeScript, so the URLs are pulled out by pattern rather than by
+    # resources.ts is TypeScript, so URLs are pulled out by pattern rather than by
     # importing it. A stricter parse would mean a Node dependency for no real gain.
     for url in re.findall(r"url:\s*'([^']+)'", RESOURCES.read_text(encoding="utf-8")):
         add(url, "resources.ts")
@@ -63,18 +74,25 @@ def collect() -> dict[str, list[str]]:
 def status(url: str) -> tuple[int | None, str]:
     """HTTP status for a URL, or None if the request could not be completed.
 
-    curl rather than urllib: this machine's Python has an incomplete CA bundle, and curl
-    carries its own. Some hosts reject HEAD, so this issues a GET but discards the body.
+    curl rather than urllib: this machine's Python has an incomplete CA bundle and curl
+    carries its own. Some hosts reject HEAD, so this issues a GET and discards the body.
     """
     try:
         out = subprocess.run(
-            ["curl", "-s", "-o", "/dev/null", "-L", "--max-time", str(TIMEOUT),
-             "-w", "%{http_code}", "-A", "Mozilla/5.0 (link-check)", url],
-            capture_output=True, text=True, timeout=TIMEOUT + 10,
+            [
+                "curl", "-s", "-o", "/dev/null", "-L",
+                "--max-time", str(TIMEOUT),
+                "-w", "%{http_code}",
+                "-A", "Mozilla/5.0 (compatible; attention-timeline link check)",
+                url,
+            ],
+            capture_output=True,
+            text=True,
+            timeout=TIMEOUT + 10,
         )
         code = int(out.stdout.strip() or 0)
         return (code if code else None), ""
-    except Exception as err:  # noqa: BLE001 - any failure here is "could not reach"
+    except Exception as err:  # noqa: BLE001 - any failure here means "could not reach"
         return None, str(err)
 
 
@@ -83,7 +101,7 @@ def main() -> int:
     where = collect()
 
     broken: list[str] = []
-    transient: list[str] = []
+    reported: list[str] = []
     counts: Counter[str] = Counter()
 
     for url in sorted(where):
@@ -92,39 +110,40 @@ def main() -> int:
 
         if code is None:
             counts["unreachable"] += 1
-            transient.append(f"{url}\n      could not connect ({err[:80]}) - referenced by {refs}")
-        elif code == 429:
-            counts["rate-limited"] += 1
-            transient.append(f"{url}\n      429 rate limited - referenced by {refs}")
-        elif 400 <= code < 500:
+            reported.append(f"{url}\n      could not connect ({err[:80]}) - {refs}")
+        elif code in GONE:
             counts["broken"] += 1
             broken.append(f"{url}\n      HTTP {code} - referenced by {refs}")
-        elif code >= 500:
-            counts["server-error"] += 1
-            transient.append(f"{url}\n      HTTP {code} - referenced by {refs}")
+        elif code in BLOCKED:
+            # Bot protection, not breakage. These open fine in a browser.
+            counts["blocked"] += 1
+            reported.append(f"{url}\n      HTTP {code} refused for automated clients - {refs}")
+        elif code >= 400:
+            counts["other"] += 1
+            reported.append(f"{url}\n      HTTP {code} - {refs}")
         else:
             counts["ok"] += 1
             if not quiet:
                 print(f"  {code}  {url}")
 
     print(f"\nchecked {len(where)} unique URLs")
-    for k in ("ok", "broken", "server-error", "rate-limited", "unreachable"):
-        if counts[k]:
-            print(f"  {k:14} {counts[k]}")
+    for key in ("ok", "broken", "blocked", "other", "unreachable"):
+        if counts[key]:
+            print(f"  {key:12} {counts[key]}")
 
-    if transient:
-        print(f"\nTransient, not failing the build ({len(transient)}):")
-        for t in transient:
-            print(f"  - {t}")
+    if reported:
+        print(f"\nReported, not failing the build ({len(reported)}):")
+        for r in reported:
+            print(f"  - {r}")
 
     if broken:
         print(f"\nBROKEN ({len(broken)}):")
         for b in broken:
             print(f"  - {b}")
-        print("\nA 4xx means the resource moved or the URL was wrong. Fix or remove it.")
+        print("\nA 404 or 410 means the resource is gone. Fix or remove the link.")
         return 1
 
-    print("\nOK - no broken links.")
+    print("\nOK - nothing is gone.")
     return 0
 
 

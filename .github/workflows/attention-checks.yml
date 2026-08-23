@@ -45,9 +45,10 @@ jobs:
         working-directory: 8_attention
         run: python tools/check_completeness.py
 
-      # Fails on a 4xx, which is a genuinely broken link. Timeouts and 5xx are reported
-      # but do not fail the build - a red CI caused by GitHub being briefly slow teaches
-      # people to ignore red CI, which costs more than it saves.
+      # Fails only on 404/410, which prove a link is dead. A 403 is reported and
+      # tolerated: Reddit and Substack refuse datacenter IPs, so those URLs open fine in
+      # a browser and 403 from a runner. Treating that as breakage is what made this
+      # workflow red on every run before it was fixed.
       - name: Check every link still resolves
         working-directory: 8_attention
         run: python tools/check_links.py --quiet
