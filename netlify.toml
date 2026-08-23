@@ -1,0 +1,35 @@
+# Netlify configuration for the attention timeline.
+#
+# The site is also published to GitHub Pages, which serves it from a subpath
+# (/Indic_LLM/8_attention/). Netlify serves from the domain root instead, so the two
+# builds need different asset bases. `npm run build:netlify` passes --base=./ and writes
+# to its own directory, which keeps the two from ever being confused for each other.
+#
+# A relative base is used rather than "/" so the same bundle works at a root, in a
+# subfolder, and in a deploy preview without rebuilding.
+
+[build]
+  base = "8_attention/app"
+  command = "npm run build:netlify"
+  publish = "8_attention/app/dist-netlify"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# No SPA fallback rule on purpose. This app navigates entirely with hash fragments
+# (#timeline, #m-drope), never with paths, so there is nothing for Netlify to rewrite - a
+# catch-all redirect to index.html would only mask genuine 404s.
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    # Vite fingerprints these filenames, so a changed file is always a new URL and the
+    # old one can be cached indefinitely.
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    # The entry point must never be cached, or a redeploy leaves visitors pointed at
+    # asset filenames that no longer exist.
+    Cache-Control = "public, max-age=0, must-revalidate"

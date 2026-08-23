@@ -8,7 +8,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "smoke": "vite build --ssr src/ssr-smoke.tsx --outDir dist-ssr --logLevel warn && node dist-ssr/ssr-smoke.js"
+    "smoke": "vite build --ssr src/ssr-smoke.tsx --outDir dist-ssr --logLevel warn && node dist-ssr/ssr-smoke.js",
+    "build:netlify": "tsc -b && vite build --base=./ --outDir dist-netlify"
   },
   "dependencies": {
     "react": "^18.3.1",
