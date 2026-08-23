@@ -4,6 +4,7 @@ import { FactCheck } from './components/FactCheck'
 import { Onramp } from './components/Onramp'
 import { AttentionVsCache } from './components/AttentionVsCache'
 import { Breakthrough } from './components/Breakthrough'
+import { FurtherReading } from './components/FurtherReading'
 import { SelfCheck } from './components/SelfCheck'
 import { Term } from './components/Term'
 import { useLevel, LevelPicker } from './components/LevelContext'
@@ -30,6 +31,7 @@ const SECTIONS = [
   { id: 'cost', label: 'Cost' },
   { id: 'factcheck', label: 'Fact-check' },
   { id: 'next', label: "What's next" },
+  { id: 'reading', label: 'Read on' },
 ]
 
 /**
@@ -491,6 +493,21 @@ export default function App() {
             </p>
           </div>
         </div>
+      </Section>
+
+      <Section
+        id="reading"
+        eyebrow="Where to go from here"
+        title="Further reading"
+        intro={
+          <>
+            Grouped by what you want next rather than by type. Each one says what it is
+            good for <em>and</em> what it is not &mdash; a resource recommended without
+            its limits costs you an afternoon before you find out it was the wrong one.
+          </>
+        }
+      >
+        <FurtherReading />
       </Section>
 
       <footer className="site">

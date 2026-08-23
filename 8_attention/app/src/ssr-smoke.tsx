@@ -19,6 +19,7 @@ import { VIZ, MECHANISMS } from './components/Timeline'
 import { SelfAttentionArcs } from './viz/SelfAttentionArcs'
 import { Breakthrough } from './components/Breakthrough'
 import { FORMULAS } from './data/formulas'
+import { RESOURCE_GROUPS } from './data/resources'
 import { AttentionFlow } from './viz/player/AttentionFlow'
 import { DecodeLoop } from './viz/player/DecodeLoop'
 import { MaskMorph } from './viz/player/MaskMorph'
@@ -102,6 +103,31 @@ check('breakthrough cites scaling laws', html.includes('2001.08361'))
 // Every formula must have at least one glossed part, or its highlight explains nothing.
 for (const [id, def] of Object.entries(FORMULAS)) {
   check(`formula "${id}" has a glossed part`, def.parts.some((p) => p.gloss))
+}
+
+// Cross-links must resolve, or a card renders a chip that goes nowhere.
+const ALL_IDS = new Set(MECHANISMS.map((m) => m.id))
+for (const m of MECHANISMS) {
+  check(`${m.id} has see_also`, Array.isArray(m.see_also) && m.see_also.length > 0)
+  for (const target of m.see_also ?? []) {
+    check(`${m.id} -> "${target}" resolves`, ALL_IDS.has(target))
+    check(`${m.id} does not link to itself`, target !== m.id)
+  }
+  for (const r of m.reading ?? []) {
+    check(`${m.id} reading has a label`, Boolean(r.label && r.label.trim()))
+    check(`${m.id} reading url is https`, r.url.startsWith('https://'))
+  }
+}
+
+// Further reading must be present, and every resource must state its limits - that
+// is the whole reason the section is worth having rather than being a link dump.
+check('further reading section renders', html.includes('Further reading'))
+for (const g of RESOURCE_GROUPS) {
+  check(`group "${g.intent}" has items`, g.items.length > 0)
+  for (const r of g.items) {
+    check(`resource "${r.label}" states a limit`, Boolean(r.limit && r.limit.trim()))
+    check(`resource "${r.label}" url is https`, r.url.startsWith('https://'))
+  }
 }
 
 // 4. The levels must actually differ in composition, not just wording. If these ever
@@ -235,5 +261,6 @@ console.log(
   `OK - 3 levels render (${pages.new.length.toLocaleString()} / ` +
     `${pages.building.length.toLocaleString()} / ${pages.research.length.toLocaleString()} chars), ` +
     `${MECHANISMS.length} mechanisms, ${withMath.length} card equations, ` +
-    `${Object.keys(FORMULAS).length} bound formulas, 5 scenes, maths verified.`,
+    `${Object.keys(FORMULAS).length} bound formulas, ` +
+    `${MECHANISMS.reduce((n, m) => n + m.see_also.length, 0)} cross-links, maths verified.`,
 )

@@ -1,0 +1,93 @@
+/* ===========================================================================
+   Cross-links on the cards, and the further-reading section.
+   =========================================================================== */
+
+/* ------------------------------------------------- see also / go deeper */
+
+.seealso {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+}
+
+ul.reading {
+  margin: 0.2rem 0 0;
+  padding-left: 1.05rem;
+  font-size: 0.9rem;
+}
+
+ul.reading li {
+  margin-bottom: 0.25rem;
+}
+
+/* ------------------------------------------------------ further reading */
+
+.rgroup {
+  margin-bottom: 2.25rem;
+}
+
+.rgroup-intent {
+  font-size: 1.15rem;
+  margin-bottom: 0.3rem;
+}
+
+.rgroup-blurb {
+  color: var(--ink-muted);
+  font-size: 0.92rem;
+  margin: 0 0 1rem;
+  max-width: var(--measure);
+}
+
+.rlist {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+  gap: 0.75rem;
+}
+
+.rcard {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+  text-decoration: none;
+  color: inherit;
+}
+
+.rcard:hover {
+  border-color: var(--accent);
+}
+
+.rcard:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.rcard-label {
+  font-weight: 600;
+  font-size: 0.98rem;
+  color: var(--accent-ink);
+}
+
+.rcard-what {
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+/* The limit is the point of the card, so it gets its own visual weight rather than
+   being tucked away as a footnote nobody reads. */
+.rcard-limit {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 0.5rem;
+  margin-top: 0.1rem;
+}
+
+.rcard-limit strong {
+  color: var(--costs);
+  font-weight: 600;
+}

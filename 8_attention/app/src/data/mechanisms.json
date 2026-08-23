@@ -28,7 +28,17 @@
     ],
     "pick_when": "Historical interest only. Its idea survives everywhere; its implementation survives nowhere.",
     "viz": "matrix",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "luong-attention",
+      "scaled-dot-product-attention"
+    ],
+    "reading": [
+      {
+        "label": "Lilian Weng — attention, from the RNN era forward",
+        "url": "https://lilianweng.github.io/posts/2018-06-24-attention/"
+      }
+    ]
   },
   {
     "id": "luong-attention",
@@ -59,7 +69,11 @@
     ],
     "pick_when": "Historical interest, but this is the moment attention became a matrix multiply, which is why it won.",
     "viz": "matrix",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "bahdanau-attention",
+      "scaled-dot-product-attention"
+    ]
   },
   {
     "id": "learned-absolute-positions",
@@ -91,7 +105,12 @@
     ],
     "pick_when": "Short, fixed-length inputs where you will never exceed the training length — classification heads, encoders over capped-length text. Never for a model you intend to extend.",
     "viz": "rope",
-    "confused_with": "Often attributed to BERT or to the Transformer paper. Both used it, but it appears earlier, in ConvS2S."
+    "confused_with": "Often attributed to BERT or to the Transformer paper. Both used it, but it appears earlier, in ConvS2S.",
+    "see_also": [
+      "sinusoidal-positions",
+      "shaw-relative-positions",
+      "rope"
+    ]
   },
   {
     "id": "scaled-dot-product-attention",
@@ -126,7 +145,22 @@
     ],
     "pick_when": "The default, and still correct for anything up to a few thousand tokens where exactness matters more than throughput. Every mechanism below is a way of paying less than this — and each one gives something up to do it.",
     "viz": "flow",
-    "confused_with": "Commonly dated to 2018. The arXiv v1 is 12 June 2017; NeurIPS publication is December 2017. There is no 2018 version."
+    "confused_with": "Commonly dated to 2018. The arXiv v1 is 12 June 2017; NeurIPS publication is December 2017. There is no 2018 version.",
+    "see_also": [
+      "multi-head-attention",
+      "flashattention",
+      "sinusoidal-positions"
+    ],
+    "reading": [
+      {
+        "label": "The Annotated Transformer — the paper as runnable code",
+        "url": "https://nlp.seas.harvard.edu/annotated-transformer/"
+      },
+      {
+        "label": "The Illustrated Transformer — intuition first",
+        "url": "https://jalammar.github.io/illustrated-transformer/"
+      }
+    ]
   },
   {
     "id": "multi-head-attention",
@@ -159,7 +193,19 @@
     ],
     "pick_when": "Still the quality ceiling, and correct when memory is not your constraint — training, or short-context inference. For serving, its KV cost is why GQA exists.",
     "viz": "multihead",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "mqa",
+      "gqa",
+      "mla",
+      "scaled-dot-product-attention"
+    ],
+    "reading": [
+      {
+        "label": "Hugging Face: swapping attention implementations",
+        "url": "https://huggingface.co/docs/transformers/en/attention_interface"
+      }
+    ]
   },
   {
     "id": "sinusoidal-positions",
@@ -192,7 +238,12 @@
     ],
     "pick_when": "Largely superseded by RoPE. Worth understanding because it is the first attempt at a positional scheme that is computed rather than memorised, which is the idea RoPE gets right.",
     "viz": "rope",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "learned-absolute-positions",
+      "rope",
+      "alibi"
+    ]
   },
   {
     "id": "shaw-relative-positions",
@@ -223,7 +274,12 @@
     ],
     "pick_when": "Superseded by RoPE and ALiBi, which get relative position without the per-pair tensor. Important as the conceptual bridge: this is where the field decided relative beats absolute.",
     "viz": "rope",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "transformer-xl",
+      "rope",
+      "alibi"
+    ]
   },
   {
     "id": "transformer-xl",
@@ -254,7 +310,12 @@
     ],
     "pick_when": "Superseded, but its cached-state idea is the direct ancestor of both the modern KV cache and sliding-window attention.",
     "viz": "mask",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "shaw-relative-positions",
+      "attention-sinks",
+      "infini-attention"
+    ]
   },
   {
     "id": "sparse-transformer",
@@ -286,7 +347,12 @@
     ],
     "pick_when": "Rarely by itself now — learned sparsity (NSA, MoBA, DSA) beats fixed patterns. Still the right mental model for what all sparse attention is doing.",
     "viz": "mask",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "longformer",
+      "bigbird",
+      "topk-attention"
+    ]
   },
   {
     "id": "mqa",
@@ -319,7 +385,13 @@
     ],
     "pick_when": "When memory bandwidth is the hard limit and you can afford some quality: very high-throughput serving, or small models where the cache dominates. Most systems now choose GQA instead, as a better point on the same curve.",
     "viz": "kv",
-    "confused_with": "Proposed in November 2019 and then largely ignored until around 2023. 'Launched' and 'mattered' are four years apart — the KV-cache bill was not yet due."
+    "confused_with": "Proposed in November 2019 and then largely ignored until around 2023. 'Launched' and 'mattered' are four years apart — the KV-cache bill was not yet due.",
+    "see_also": [
+      "gqa",
+      "mla",
+      "tpa",
+      "multi-head-attention"
+    ]
   },
   {
     "id": "longformer",
@@ -351,7 +423,18 @@
     ],
     "pick_when": "Long documents with mostly-local structure and a few known anchor points. The window idea survives into modern hybrids; the hand-picked global tokens mostly did not.",
     "viz": "mask",
-    "confused_with": "Sliding-window attention is frequently attributed to Mistral (2023). Mistral productionised it in a major LLM; the mechanism is from here and from Sparse Transformers before it."
+    "confused_with": "Sliding-window attention is frequently attributed to Mistral (2023). Mistral productionised it in a major LLM; the mechanism is from here and from Sparse Transformers before it.",
+    "see_also": [
+      "bigbird",
+      "sliding-window-production",
+      "attention-sinks"
+    ],
+    "reading": [
+      {
+        "label": "allenai/longformer",
+        "url": "https://github.com/allenai/longformer"
+      }
+    ]
   },
   {
     "id": "linformer",
@@ -382,7 +465,11 @@
     ],
     "pick_when": "Effectively obsolete, and instructive: it is the clearest example of a method that wins on complexity class and loses on applicability.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "performer",
+      "linear-attention"
+    ]
   },
   {
     "id": "linear-attention",
@@ -416,7 +503,12 @@
     ],
     "pick_when": "Never pure, in 2025+. As one layer type in a hybrid stack — three linear layers per exact layer — it is excellent. The fixed state is what buys you million-token contexts.",
     "viz": "decode",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "delta-rule",
+      "gated-deltanet",
+      "log-linear-attention"
+    ]
   },
   {
     "id": "bigbird",
@@ -447,7 +539,17 @@
     ],
     "pick_when": "Mostly of theoretical interest now. Its lesson — that you need *some* long-range escape hatch, not just local windows — is what modern hybrids encode by keeping full-attention layers.",
     "viz": "mask",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "longformer",
+      "sparse-transformer"
+    ],
+    "reading": [
+      {
+        "label": "google-research/bigbird",
+        "url": "https://github.com/google-research/bigbird"
+      }
+    ]
   },
   {
     "id": "performer",
@@ -478,7 +580,18 @@
     ],
     "pick_when": "Rarely. Its historical role is as the high-water mark of the approximation era, right before exactness won.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "linformer",
+      "linear-attention",
+      "flashattention"
+    ],
+    "reading": [
+      {
+        "label": "lucidrains/performer-pytorch",
+        "url": "https://github.com/lucidrains/performer-pytorch"
+      }
+    ]
   },
   {
     "id": "delta-rule",
@@ -511,7 +624,12 @@
     ],
     "pick_when": "As the foundation of the modern linear-attention family. On its own, superseded by Gated DeltaNet.",
     "viz": "state",
-    "confused_with": "The delta rule idea is from 2021; the *parallelisable* DeltaNet that made it practical is 2024 (arXiv 2406.06484). Class described it as 'that paper came out in 2024', which is right for the parallel formulation."
+    "confused_with": "The delta rule idea is from 2021; the *parallelisable* DeltaNet that made it practical is 2024 (arXiv 2406.06484). Class described it as 'that paper came out in 2024', which is right for the parallel formulation.",
+    "see_also": [
+      "deltanet-parallel",
+      "gated-deltanet",
+      "linear-attention"
+    ]
   },
   {
     "id": "rope",
@@ -546,7 +664,13 @@
     ],
     "pick_when": "The default for essentially every modern LLM. If you intend to extend context later, pretrain with a large base frequency, or plan for YaRN — or plan to drop it entirely (see DroPE).",
     "viz": "rope",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "positional-interpolation",
+      "ntk-aware-scaling",
+      "yarn",
+      "drope"
+    ]
   },
   {
     "id": "topk-attention",
@@ -580,7 +704,12 @@
     ],
     "pick_when": "As a concept it is the direct ancestor of every learned-sparsity method that followed. In its 2021 form, superseded by NSA/MoBA/DSA, which make the selection cheap and trainable.",
     "viz": "mask",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "nsa",
+      "moba",
+      "dsa"
+    ]
   },
   {
     "id": "alibi",
@@ -615,7 +744,12 @@
     ],
     "pick_when": "When you need graceful behaviour past the training length with no finetuning and your task is locality-dominated. For long-context retrieval, RoPE with YaRN beats it.",
     "viz": "rope",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "rope",
+      "nope",
+      "sinusoidal-positions"
+    ]
   },
   {
     "id": "flashattention",
@@ -649,7 +783,18 @@
     ],
     "pick_when": "Always. There is no reason to run unfused attention in 2026. Its deeper significance is strategic: it made exact attention fast enough that most approximate methods stopped being worth their quality cost.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "flashattention-2",
+      "flashattention-3",
+      "performer"
+    ],
+    "reading": [
+      {
+        "label": "Dao-AILab/flash-attention",
+        "url": "https://github.com/Dao-AILab/flash-attention"
+      }
+    ]
   },
   {
     "id": "gqa",
@@ -684,7 +829,12 @@
     ],
     "pick_when": "The default for production serving, and the correct baseline. For a 2K chatbot the saving is nice; at 128K with many concurrent users it is the difference between shipping and not. Choose MLA instead if you are designing a new model and can afford the added complexity.",
     "viz": "kv",
-    "confused_with": "Not the same as GSA (Gated Slot Attention). Similar acronym, unrelated mechanism, different category entirely."
+    "confused_with": "Not the same as GSA (Gated Slot Attention). Similar acronym, unrelated mechanism, different category entirely.",
+    "see_also": [
+      "mqa",
+      "mla",
+      "tpa"
+    ]
   },
   {
     "id": "rwkv",
@@ -715,7 +865,18 @@
     ],
     "pick_when": "Memory-constrained or edge deployment where flat inference memory matters more than peak recall. Its ideas now mostly appear inside hybrids.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "retnet",
+      "mamba",
+      "linear-attention"
+    ],
+    "reading": [
+      {
+        "label": "BlinkDL/RWKV-LM",
+        "url": "https://github.com/BlinkDL/RWKV-LM"
+      }
+    ]
   },
   {
     "id": "nope",
@@ -746,7 +907,12 @@
     ],
     "pick_when": "Not as a from-scratch choice for a large model. Its importance is that it makes DroPE's premise credible: if the model can encode position without RoPE, you can train with RoPE and then take it away.",
     "viz": "rope",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "drope",
+      "alibi",
+      "rope"
+    ]
   },
   {
     "id": "positional-interpolation",
@@ -779,7 +945,12 @@
     ],
     "pick_when": "Superseded by NTK-aware scaling and YaRN, which fix the uniform-squashing flaw. Still the conceptual root of every RoPE-rescaling method.",
     "viz": "rope",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "ntk-aware-scaling",
+      "yarn",
+      "rope"
+    ]
   },
   {
     "id": "ntk-aware-scaling",
@@ -814,7 +985,12 @@
     ],
     "pick_when": "As a zero-shot emergency extension of an existing RoPE model. If you can finetune at all, use YaRN, which dominates it on every axis.",
     "viz": "rope",
-    "confused_with": "There is no NTK-aware scaling *paper*. Any citation with an arXiv ID for this method is citing something that does not exist — the canonical sources are a Reddit post and a GitHub issue. The name references Neural Tangent Kernel theory by analogy; it is not a result derived from NTK theory."
+    "confused_with": "There is no NTK-aware scaling *paper*. Any citation with an arXiv ID for this method is citing something that does not exist — the canonical sources are a Reddit post and a GitHub issue. The name references Neural Tangent Kernel theory by analogy; it is not a result derived from NTK theory.",
+    "see_also": [
+      "positional-interpolation",
+      "yarn",
+      "rope"
+    ]
   },
   {
     "id": "flashattention-2",
@@ -845,7 +1021,17 @@
     ],
     "pick_when": "The practical default on NVIDIA hardware before Hopper-specific FA3.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "flashattention",
+      "flashattention-3"
+    ],
+    "reading": [
+      {
+        "label": "Dao-AILab/flash-attention",
+        "url": "https://github.com/Dao-AILab/flash-attention"
+      }
+    ]
   },
   {
     "id": "retnet",
@@ -878,7 +1064,18 @@
     ],
     "pick_when": "Rarely as a deployment choice now. It belongs on this timeline as the clearest articulation of parallel-train / recurrent-decode duality, an idea that everything from Mamba-2 to Gated DeltaNet later built on with a learned gate instead of a fixed one.",
     "viz": "state",
-    "confused_with": "Retention is not attention with a decay bolted on - the paper derives it from the recurrence/attention connection. But its fixed decay is exactly the thing later linear models replaced, which is the reason it reads as a stepping stone rather than a successor."
+    "confused_with": "Retention is not attention with a decay bolted on - the paper derives it from the recurrence/attention connection. But its fixed decay is exactly the thing later linear models replaced, which is the reason it reads as a stepping stone rather than a successor.",
+    "see_also": [
+      "rwkv",
+      "mamba",
+      "gla"
+    ],
+    "reading": [
+      {
+        "label": "microsoft/torchscale — the RetNet implementation",
+        "url": "https://github.com/microsoft/torchscale"
+      }
+    ]
   },
   {
     "id": "yarn",
@@ -912,7 +1109,18 @@
     ],
     "pick_when": "The right choice for extending an existing RoPE model's context — the standard tool, used in many open-weight long-context releases. If you are training a new model, prefer a large RoPE base from the start, or consider dropping positional encoding entirely.",
     "viz": "rope",
-    "confused_with": "Routinely cited as September 2023. The arXiv v1 is 31 August 2023."
+    "confused_with": "Routinely cited as September 2023. The arXiv v1 is 31 August 2023.",
+    "see_also": [
+      "ntk-aware-scaling",
+      "positional-interpolation",
+      "drope"
+    ],
+    "reading": [
+      {
+        "label": "jquesnelle/yarn",
+        "url": "https://github.com/jquesnelle/yarn"
+      }
+    ]
   },
   {
     "id": "paged-attention",
@@ -943,7 +1151,18 @@
     ],
     "pick_when": "Any production serving stack. Included here because 'reduce the KV cache' and 'stop wasting the KV cache' are different problems, and the second one was worth as much as several architectural tricks.",
     "viz": "kv",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "mqa",
+      "gqa",
+      "ring-attention"
+    ],
+    "reading": [
+      {
+        "label": "vLLM — the serving stack it was built for",
+        "url": "https://docs.vllm.ai/en/latest/"
+      }
+    ]
   },
   {
     "id": "attention-sinks",
@@ -978,7 +1197,18 @@
     ],
     "pick_when": "Long-running chat or streaming where you need bounded memory and coherence, and you accept a bounded effective context. Combine with sliding windows. Do not reach for it if the task needs recall over the whole history.",
     "viz": "decode",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "sliding-window-production",
+      "longformer",
+      "scaled-dot-product-attention"
+    ],
+    "reading": [
+      {
+        "label": "mit-han-lab/streaming-llm",
+        "url": "https://github.com/mit-han-lab/streaming-llm"
+      }
+    ]
   },
   {
     "id": "ring-attention",
@@ -1010,7 +1240,11 @@
     ],
     "pick_when": "Training or inference at very long context on a cluster you already own. It is a systems answer to a systems problem, and composes with everything else here.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "flashattention",
+      "paged-attention"
+    ]
   },
   {
     "id": "sliding-window-production",
@@ -1043,7 +1277,12 @@
     ],
     "pick_when": "Excellent for conversational workloads with bounded memory and mostly-local dependencies. Wrong on its own for long-document retrieval or agents needing precise recall — which is why current models interleave windowed and full-attention layers rather than using windows everywhere.",
     "viz": "decode",
-    "confused_with": "Mistral is frequently credited with inventing sliding-window attention. It productionised it at scale; the mechanism dates to Sparse Transformers (2019) and Longformer (2020)."
+    "confused_with": "Mistral is frequently credited with inventing sliding-window attention. It productionised it at scale; the mechanism dates to Sparse Transformers (2019) and Longformer (2020).",
+    "see_also": [
+      "longformer",
+      "attention-sinks",
+      "hysparse"
+    ]
   },
   {
     "id": "mamba",
@@ -1075,7 +1314,18 @@
     ],
     "pick_when": "As the recurrent half of a hybrid stack. Included because it is the most prominent non-attention challenger, and because its outcome — absorbed into hybrids rather than replacing attention — is the pattern the whole linear family follows.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "mamba-2",
+      "rwkv",
+      "retnet"
+    ],
+    "reading": [
+      {
+        "label": "state-spaces/mamba",
+        "url": "https://github.com/state-spaces/mamba"
+      }
+    ]
   },
   {
     "id": "gla",
@@ -1106,7 +1356,18 @@
     ],
     "pick_when": "As a building block. Its importance is that gating plus the delta rule is exactly the combination Gated DeltaNet lands on a year later.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "gated-deltanet",
+      "gsa",
+      "mamba-2"
+    ],
+    "reading": [
+      {
+        "label": "flash-linear-attention — GLA, DeltaNet, GSA and more, in one place",
+        "url": "https://github.com/fla-org/flash-linear-attention"
+      }
+    ]
   },
   {
     "id": "infini-attention",
@@ -1137,7 +1398,12 @@
     ],
     "pick_when": "Rarely in practice. Included because 'compress what you evict' is a real and recurring idea, and because a technique with strong reported numbers and weak adoption is worth being honest about.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "titans",
+      "kwai-summary-attention",
+      "attention-sinks"
+    ]
   },
   {
     "id": "mla",
@@ -1172,7 +1438,12 @@
     ],
     "pick_when": "When designing a new model where inference memory is a first-class constraint and you can afford the complexity — especially at long context or high concurrency. Stay with GQA if you are adapting an existing checkpoint or want maximum ecosystem support.",
     "viz": "kv",
-    "confused_with": "'MSA' in the spoken assignment brief is ambiguous between MLA and NSA. The lecture described DeepSeek block compression with an indexer, which matches NSA better; both are covered here in full."
+    "confused_with": "'MSA' in the spoken assignment brief is ambiguous between MLA and NSA. The lecture described DeepSeek block compression with an indexer, which matches NSA better; both are covered here in full.",
+    "see_also": [
+      "gqa",
+      "tpa",
+      "dsa"
+    ]
   },
   {
     "id": "xlstm",
@@ -1205,7 +1476,18 @@
     ],
     "pick_when": "Worth knowing rather than deploying. Its importance to this timeline is as evidence that the recurrent line was never fundamentally beaten - it was beaten on parallelism, and once that was fixed the gap largely closed. Whether that matters in practice is exactly what the missing adoption tells you.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "mamba",
+      "rwkv",
+      "retnet"
+    ],
+    "reading": [
+      {
+        "label": "NX-AI/xlstm",
+        "url": "https://github.com/NX-AI/xlstm"
+      }
+    ]
   },
   {
     "id": "mamba-2",
@@ -1238,7 +1520,18 @@
     ],
     "pick_when": "Over Mamba where speed matters. Its real significance is theoretical: after this, 'linear attention' and 'SSM' are the same conversation — which is why Gated DeltaNet is described as an improvement to Mamba-2.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "mamba",
+      "gated-deltanet",
+      "log-linear-attention"
+    ],
+    "reading": [
+      {
+        "label": "state-spaces/mamba",
+        "url": "https://github.com/state-spaces/mamba"
+      }
+    ]
   },
   {
     "id": "deltanet-parallel",
@@ -1270,7 +1563,18 @@
     ],
     "pick_when": "Superseded by Gated DeltaNet, which adds gating. This is the engineering step that made the whole modern linear-attention revival possible.",
     "viz": "state",
-    "confused_with": "This is most likely the paper meant by 'the delta net paper came out in 2024'. The delta rule idea itself is 2021 (arXiv 2102.11174)."
+    "confused_with": "This is most likely the paper meant by 'the delta net paper came out in 2024'. The delta rule idea itself is 2021 (arXiv 2102.11174).",
+    "see_also": [
+      "delta-rule",
+      "gated-deltanet",
+      "gla"
+    ],
+    "reading": [
+      {
+        "label": "flash-linear-attention",
+        "url": "https://github.com/fla-org/flash-linear-attention"
+      }
+    ]
   },
   {
     "id": "flashattention-3",
@@ -1301,7 +1605,17 @@
     ],
     "pick_when": "On H100-class hardware. Its recurring lesson is that a large share of practical attention progress is kernel engineering, not new mathematics.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "flashattention-2",
+      "flashattention"
+    ],
+    "reading": [
+      {
+        "label": "Dao-AILab/flash-attention",
+        "url": "https://github.com/Dao-AILab/flash-attention"
+      }
+    ]
   },
   {
     "id": "gsa",
@@ -1333,7 +1647,18 @@
     ],
     "pick_when": "As the recurrent layer type in a hybrid, especially when you want to convert an existing Transformer rather than pretrain from scratch. This is the mechanism taught in class that the assignment's required list leaves out.",
     "viz": "state",
-    "confused_with": "Not GQA. GSA is a linear-attention method with bounded memory slots; GQA is a KV-head-sharing scheme for softmax attention. The acronyms differ by one letter and the mechanisms have nothing in common."
+    "confused_with": "Not GQA. GSA is a linear-attention method with bounded memory slots; GQA is a KV-head-sharing scheme for softmax attention. The acronyms differ by one letter and the mechanisms have nothing in common.",
+    "see_also": [
+      "gla",
+      "gated-deltanet",
+      "linear-attention"
+    ],
+    "reading": [
+      {
+        "label": "flash-linear-attention",
+        "url": "https://github.com/fla-org/flash-linear-attention"
+      }
+    ]
   },
   {
     "id": "differential-transformer",
@@ -1368,7 +1693,12 @@
     ],
     "pick_when": "Worth considering when long-context retrieval quality is the binding constraint rather than memory. Included because almost everything else on this timeline makes attention cheaper; this one makes it *better*, which is a different and rarer kind of contribution.",
     "viz": "matrix",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "forgetting-transformer",
+      "multi-token-attention",
+      "scaled-dot-product-attention"
+    ]
   },
   {
     "id": "gated-deltanet",
@@ -1403,7 +1733,19 @@
     ],
     "pick_when": "As the cheap layer type in a hybrid stack — the standard is roughly three of these per full-attention layer. That ratio is the actual state of the art for long-context efficiency, and its existence is the honest verdict on pure linear attention.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "delta-rule",
+      "mamba-2",
+      "kimi-linear",
+      "log-linear-attention"
+    ],
+    "reading": [
+      {
+        "label": "flash-linear-attention",
+        "url": "https://github.com/fla-org/flash-linear-attention"
+      }
+    ]
   },
   {
     "id": "titans",
@@ -1435,7 +1777,12 @@
     ],
     "pick_when": "Not production-ready, but included because it is the clearest current attempt at the question the whole timeline is circling: not how to compress memory, but how to *decide* what is worth remembering.",
     "viz": "state",
-    "confused_with": "Dated 2025 in most write-ups because of its arXiv number (2501.*). The v1 submission is 31 December 2024."
+    "confused_with": "Dated 2025 in most write-ups because of its arXiv number (2501.*). The v1 submission is 31 December 2024.",
+    "see_also": [
+      "infini-attention",
+      "kwai-summary-attention",
+      "gated-deltanet"
+    ]
   },
   {
     "id": "tpa",
@@ -1468,7 +1815,18 @@
     ],
     "pick_when": "Worth serious consideration if you are designing a new model, want MLA-class cache savings, and would rather not inherit MLA's RoPE workaround. Stay with GQA if you need to adapt an existing checkpoint, and with MLA if you want the option with the most deployment evidence behind it.",
     "viz": "kv",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "mla",
+      "gqa",
+      "rope"
+    ],
+    "reading": [
+      {
+        "label": "tensorgi/TPA",
+        "url": "https://github.com/tensorgi/TPA"
+      }
+    ]
   },
   {
     "id": "lightning-attention",
@@ -1499,7 +1857,12 @@
     ],
     "pick_when": "As evidence for the hybrid pattern rather than as a component. The 7:1 ratio is a useful anchor next to Kimi Linear's 3:1.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "kimi-linear",
+      "linear-attention",
+      "flashmorph"
+    ]
   },
   {
     "id": "nsa",
@@ -1532,7 +1895,13 @@
     ],
     "pick_when": "New long-context models where you control pretraining and need genuine sparsity that survives contact with hardware. This is the current state of the art for trainable sparsity, and 'hardware-aligned' is what distinguishes it from the 2019–2020 attempts.",
     "viz": "mask",
-    "confused_with": "Probably what 'MSA' referred to in the spoken assignment brief, though MLA is a possible alternative reading. Both are covered here."
+    "confused_with": "Probably what 'MSA' referred to in the spoken assignment brief, though MLA is a possible alternative reading. Both are covered here.",
+    "see_also": [
+      "moba",
+      "dsa",
+      "topk-attention",
+      "hysparse"
+    ]
   },
   {
     "id": "moba",
@@ -1564,7 +1933,18 @@
     ],
     "pick_when": "When you want learned sparsity but need to retrofit an existing model rather than pretrain. NSA is the stronger choice if you control pretraining.",
     "viz": "mask",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "nsa",
+      "dsa",
+      "topk-attention"
+    ],
+    "reading": [
+      {
+        "label": "MoonshotAI/MoBA",
+        "url": "https://github.com/MoonshotAI/MoBA"
+      }
+    ]
   },
   {
     "id": "forgetting-transformer",
@@ -1597,7 +1977,18 @@
     ],
     "pick_when": "When long-context quality is the binding constraint and you can afford exact attention. It is the interesting counter-current on this timeline: almost everything after 2019 makes attention cheaper, and this takes an idea from the cheap models and spends it on making the expensive one better.",
     "viz": "matrix",
-    "confused_with": "Not a linear-attention method despite the forget gate. The gate lives inside softmax attention, and the cost stays quadratic - it borrows the idea from the recurrent family without joining it."
+    "confused_with": "Not a linear-attention method despite the forget gate. The gate lives inside softmax attention, and the cost stays quadratic - it borrows the idea from the recurrent family without joining it.",
+    "see_also": [
+      "differential-transformer",
+      "gated-deltanet",
+      "alibi"
+    ],
+    "reading": [
+      {
+        "label": "zhixuan-lin/forgetting-transformer",
+        "url": "https://github.com/zhixuan-lin/forgetting-transformer"
+      }
+    ]
   },
   {
     "id": "multi-token-attention",
@@ -1630,7 +2021,11 @@
     ],
     "pick_when": "When retrieval inside long context is the failure mode you are actually fighting and you have compute to spare. Not a fit if inference cost is your constraint, since it makes attention more expensive rather than less.",
     "viz": "matrix",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "differential-transformer",
+      "forgetting-transformer"
+    ]
   },
   {
     "id": "log-linear-attention",
@@ -1663,7 +2058,12 @@
     ],
     "pick_when": "When a fixed-size state demonstrably loses too much on your task and quadratic attention costs too much to run - the honest middle that until 2025 did not exist. Its wider significance is that it reframes the choice: efficient attention had been treated as a binary between O(n) and O(n²), and this shows the space in between is real and reachable.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "linear-attention",
+      "gated-deltanet",
+      "mamba-2"
+    ]
   },
   {
     "id": "dsa",
@@ -1697,7 +2097,18 @@
     ],
     "pick_when": "The current frontier design for long-context serving if you are pretraining a model with MLA. Its top-k-with-a-cheap-indexer shape is the direct descendant of 2021's top-k attention, made affordable.",
     "viz": "mask",
-    "confused_with": "DSA (DeepSeek Sparse Attention) is not NSA (Native Sparse Attention). Same lab, different mechanisms, seven months apart: NSA selects blocks with three branches, DSA selects tokens with an indexer feeding sparse MLA."
+    "confused_with": "DSA (DeepSeek Sparse Attention) is not NSA (Native Sparse Attention). Same lab, different mechanisms, seven months apart: NSA selects blocks with three branches, DSA selects tokens with an indexer feeding sparse MLA.",
+    "see_also": [
+      "nsa",
+      "mla",
+      "moba"
+    ],
+    "reading": [
+      {
+        "label": "deepseek-ai/DeepSeek-V3.2-Exp",
+        "url": "https://github.com/deepseek-ai/DeepSeek-V3.2-Exp"
+      }
+    ]
   },
   {
     "id": "kimi-linear",
@@ -1729,7 +2140,18 @@
     ],
     "pick_when": "As the current best-documented instance of the hybrid pattern. Compare its 3:1 ratio against MiniMax-01's 7:1 — that ratio is the real design question now, not which single attention to use.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "gated-deltanet",
+      "mla",
+      "lightning-attention"
+    ],
+    "reading": [
+      {
+        "label": "MoonshotAI/Kimi-Linear",
+        "url": "https://github.com/MoonshotAI/Kimi-Linear"
+      }
+    ]
   },
   {
     "id": "drope",
@@ -1763,7 +2185,18 @@
     ],
     "pick_when": "When you control pretraining and want long context without paying for long-context training — train short, drop, extend. If you only have downloaded weights and no data, YaRN remains the practical choice.",
     "viz": "rope",
-    "confused_with": "CRITICAL: not the same as DRoPE, 'Directional Rotary Position Embedding for Efficient Agent Interaction Modeling' (arXiv 2503.15029, March 2025), which is an autonomous-driving trajectory-modelling paper with no connection to LLM context extension. The names differ only in capitalisation and the papers are nine months and one field apart."
+    "confused_with": "CRITICAL: not the same as DRoPE, 'Directional Rotary Position Embedding for Efficient Agent Interaction Modeling' (arXiv 2503.15029, March 2025), which is an autonomous-driving trajectory-modelling paper with no connection to LLM context extension. The names differ only in capitalisation and the papers are nine months and one field apart.",
+    "see_also": [
+      "nope",
+      "yarn",
+      "rope"
+    ],
+    "reading": [
+      {
+        "label": "SakanaAI/DroPE",
+        "url": "https://github.com/SakanaAI/DroPE"
+      }
+    ]
   },
   {
     "id": "hysparse",
@@ -1796,7 +2229,12 @@
     ],
     "pick_when": "New long-context models where KV memory is the binding constraint. Its idea — stop paying for a separate indexer, reuse what full attention already told you — is the cleanest answer yet to a cost every sparse method before it paid.",
     "viz": "mask",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "nsa",
+      "flashmorph",
+      "sliding-window-production"
+    ]
   },
   {
     "id": "kwai-summary-attention",
@@ -1829,7 +2267,12 @@
     ],
     "pick_when": "When O(1) state loses too much and O(n) costs too much — the honest middle. Notable mainly for rejecting the framing that everyone else accepted, which is usually where the next idea comes from.",
     "viz": "state",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "infini-attention",
+      "mla",
+      "titans"
+    ]
   },
   {
     "id": "bfla",
@@ -1862,7 +2305,12 @@
     ],
     "pick_when": "You have weights you cannot retrain, long prompts, and prefill latency is hurting. This is the accessible counterpart to NSA/DSA — worse in principle, but usable by everyone rather than only by labs that pretrain.",
     "viz": "mask",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "nsa",
+      "moba",
+      "dsa"
+    ]
   },
   {
     "id": "flashmorph",
@@ -1895,6 +2343,11 @@
     ],
     "pick_when": "Converting an existing Transformer into a hybrid, rather than pretraining one. It is the clearest sign of where the field now is: the open question is no longer which attention mechanism to use, but how to schedule several of them across depth.",
     "viz": "curves",
-    "confused_with": null
+    "confused_with": null,
+    "see_also": [
+      "hysparse",
+      "kimi-linear",
+      "lightning-attention"
+    ]
   }
 ]

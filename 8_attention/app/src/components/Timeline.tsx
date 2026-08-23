@@ -66,7 +66,7 @@ function dateKindLabel(m: Mechanism): string {
   }
 }
 
-function MechanismDetail({ m }: { m: Mechanism }) {
+function MechanismDetail({ m, onSelect }: { m: Mechanism; onSelect: (id: string) => void }) {
   const { config } = useLevel()
   const [showViz, setShowViz] = useState(config.diagramOpen)
   const Viz = m.viz ? VIZ[m.viz] : undefined
@@ -153,6 +153,38 @@ function MechanismDetail({ m }: { m: Mechanism }) {
       </div>
       )}
 
+      {m.reading && m.reading.length > 0 && (
+        <div className="block">
+          <h4>Go deeper</h4>
+          <ul className="reading">
+            {m.reading.map((r) => (
+              <li key={r.url}>
+                <a href={r.url} target="_blank" rel="noopener noreferrer">
+                  {r.label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {m.see_also.length > 0 && (
+        <div className="block">
+          <h4>See also</h4>
+          <div className="seealso">
+            {m.see_also.map((id) => {
+              const target = MECHANISMS.find((x) => x.id === id)
+              if (!target) return null
+              return (
+                <button key={id} className="chip" onClick={() => onSelect(id)}>
+                  {target.name}
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
       {config.sources && m.date_evidence && (
         <p
           style={{
@@ -173,10 +205,12 @@ function MechanismRow({
   m,
   open,
   onToggle,
+  onSelect,
 }: {
   m: Mechanism
   open: boolean
   onToggle: () => void
+  onSelect: (id: string) => void
 }) {
   const { config } = useLevel()
   return (
@@ -193,7 +227,7 @@ function MechanismRow({
         </span>
         <span className="oneline">{config.prose === 'plain' ? m.plain : m.problem}</span>
       </button>
-      {open && <MechanismDetail m={m} />}
+      {open && <MechanismDetail m={m} onSelect={onSelect} />}
     </div>
   )
 }
@@ -319,6 +353,7 @@ export function Timeline() {
                   m={m}
                   open={open === m.id}
                   onToggle={() => setOpen(open === m.id ? null : m.id)}
+                  onSelect={select}
                 />
               ))}
             </div>

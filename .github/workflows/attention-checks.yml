@@ -45,6 +45,13 @@ jobs:
         working-directory: 8_attention
         run: python tools/check_completeness.py
 
+      # Fails on a 4xx, which is a genuinely broken link. Timeouts and 5xx are reported
+      # but do not fail the build - a red CI caused by GitHub being briefly slow teaches
+      # people to ignore red CI, which costs more than it saves.
+      - name: Check every link still resolves
+        working-directory: 8_attention
+        run: python tools/check_links.py --quiet
+
       - name: Fail if CITATIONS.md is stale
         working-directory: 8_attention
         run: |

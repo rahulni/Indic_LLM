@@ -6,6 +6,7 @@ import './styles.css'
 import './styles-learn.css'
 import './styles-player.css'
 import './styles-formula.css'
+import './styles-reading.css'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

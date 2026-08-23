@@ -39,6 +39,10 @@ export interface Mechanism {
   /** Provenance of the equation: verbatim from the paper, or the essential form. */
   math_note?: string
   confused_with: string | null
+  /** Ids of related mechanisms, following lineage rather than similarity. */
+  see_also: string[]
+  /** Canonical implementation or writeup, where one exists. Checked by check_links.py. */
+  reading?: { label: string; url: string }[]
 }
 
 export interface Era {
