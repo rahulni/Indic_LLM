@@ -162,19 +162,16 @@ export function LevelPicker({ compact = false }: { compact?: boolean }) {
         {LEVELS.map((l) => (
           <button
             key={l.id}
-            className="level-card"
+            className="level-chip"
             aria-pressed={level === l.id}
             onClick={() => setLevel(l.id)}
+            title={l.blurb}
           >
-            <strong>{l.label}</strong>
-            <span>{l.blurb}</span>
+            {l.label}
           </button>
         ))}
       </div>
-      <p className="level-note">
-        This changes how much the page shows and how it is written. Nothing is locked
-        away &mdash; you can switch, or open everything, at any point.
-      </p>
+      <span className="level-note">Changes how much is shown. Nothing is locked away.</span>
     </div>
   )
 }

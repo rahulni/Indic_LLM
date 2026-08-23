@@ -66,7 +66,7 @@ const html = pages.building
 
 // 2. Content that must be present, including the on-ramp's load-bearing lines.
 for (const needle of [
-  'Attention, in the order it actually happened',
+  'Attention, in order',
   'What attention actually does',
   'Every word writes three things',
   'soft blend, not a lookup', // the mental model that prevents misreading sparsity
@@ -94,6 +94,11 @@ for (const l of LEVELS) {
   )
   check(`level "${l.id}" shows a formula gloss`, pages[l.id].includes('formula-gloss'))
 }
+
+// The landing must show the product, not just describe it. The hero carried no
+// timeline at all until this was added, on a site whose entire argument is one.
+check('hero shows the timeline strip', html.includes('Every mechanism plotted at its real launch date'))
+check('hero offers a way in', html.includes('Start from scratch'))
 
 // The opening picture and the breakthrough section must both be on the page.
 check('self-attention arcs render', html.includes('how strongly each word attends'))

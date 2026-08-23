@@ -53,7 +53,6 @@ const END = Date.UTC(2026, 11, 31)
 const W = 1180
 const PAD_L = 16
 const PAD_R = 16
-const AXIS_Y = 232
 const LANE_H = 17
 const DOT_R = 5.5
 const MIN_GAP = 13 // px between dots before they are pushed to another lane
@@ -62,11 +61,21 @@ export function TimelineAxis({
   mechanisms,
   onSelect,
   selected,
+  /**
+   * The landing-page variant: shorter, quieter, no legend or annotations. The hero needs
+   * to show what this site *is* within the first screen, and the shape of the dots does
+   * that on its own - the explanatory furniture belongs with the full timeline below.
+   */
+  compact = false,
 }: {
   mechanisms: Mechanism[]
   onSelect: (id: string) => void
   selected: string | null
+  compact?: boolean
 }) {
+  const laneH = compact ? 10 : LANE_H
+  const dotR = compact ? 3.6 : DOT_R
+  const axisY = compact ? 132 : 232
   const x = (iso: string) => {
     const t = Date.parse(iso + 'T00:00:00Z')
     return PAD_L + ((t - START) / (END - START)) * (W - PAD_L - PAD_R)
@@ -93,8 +102,8 @@ export function TimelineAxis({
   }, [mechanisms])
 
   const maxLane = Math.max(0, ...placed.map((p) => p.lane))
-  const height = AXIS_Y + 44
-  const laneY = (lane: number) => AXIS_Y - 22 - lane * LANE_H
+  const height = axisY + (compact ? 26 : 44)
+  const laneY = (lane: number) => axisY - (compact ? 14 : 22) - lane * laneH
 
   const years = Array.from({ length: 13 }, (_, i) => 2014 + i)
 
@@ -122,13 +131,13 @@ export function TimelineAxis({
                   x1={px}
                   y1={laneY(maxLane) - 14}
                   x2={px}
-                  y2={AXIS_Y}
+                  y2={axisY}
                   stroke="var(--border)"
                   strokeDasharray="2 5"
                 />
                 <text
                   x={px}
-                  y={AXIS_Y + 20}
+                  y={axisY + 18}
                   fontSize="11"
                   textAnchor="middle"
                   fill="var(--ink-faint)"
@@ -140,24 +149,24 @@ export function TimelineAxis({
             )
           })}
 
-          <line x1={PAD_L} y1={AXIS_Y} x2={W - PAD_R} y2={AXIS_Y} stroke="var(--border-strong)" />
+          <line x1={PAD_L} y1={axisY} x2={W - PAD_R} y2={axisY} stroke="var(--border-strong)" />
 
           {/* The gap that makes the point: published 2019, adopted 2023. */}
-          {mqa && gqa && (
+          {!compact && mqa && gqa && (
             <g>
               <line
                 x1={mqa.px}
-                y1={AXIS_Y + 30}
+                y1={axisY + 30}
                 x2={gqa.px}
-                y2={AXIS_Y + 30}
+                y2={axisY + 30}
                 stroke="var(--warn)"
                 strokeWidth="1.5"
               />
-              <line x1={mqa.px} y1={AXIS_Y + 26} x2={mqa.px} y2={AXIS_Y + 34} stroke="var(--warn)" strokeWidth="1.5" />
-              <line x1={gqa.px} y1={AXIS_Y + 26} x2={gqa.px} y2={AXIS_Y + 34} stroke="var(--warn)" strokeWidth="1.5" />
+              <line x1={mqa.px} y1={axisY + 26} x2={mqa.px} y2={axisY + 34} stroke="var(--warn)" strokeWidth="1.5" />
+              <line x1={gqa.px} y1={axisY + 26} x2={gqa.px} y2={axisY + 34} stroke="var(--warn)" strokeWidth="1.5" />
               <text
                 x={(mqa.px + gqa.px) / 2}
-                y={AXIS_Y + 42}
+                y={axisY + 42}
                 fontSize="10.5"
                 textAnchor="middle"
                 fill="var(--warn)"
@@ -188,7 +197,7 @@ export function TimelineAxis({
                 <circle
                   cx={px}
                   cy={laneY(lane)}
-                  r={isSel ? DOT_R + 2.5 : DOT_R}
+                  r={isSel ? dotR + 2.5 : dotR}
                   fill={FAMILY_VAR[family]}
                   stroke={isSel ? 'var(--ink)' : 'var(--bg)'}
                   strokeWidth={isSel ? 2 : 1}
@@ -200,6 +209,7 @@ export function TimelineAxis({
         </svg>
       </div>
 
+      {!compact && (
       <div className="legend">
         {families.map((f) => (
           <span className="legend-item" key={f}>
@@ -208,13 +218,16 @@ export function TimelineAxis({
           </span>
         ))}
       </div>
+      )}
 
+      {!compact && (
       <p className="viz-note" style={{ marginTop: '0.6rem' }}>
         Each dot is one mechanism at its real launch date; dots stack upward where dates
         crowd together. Click one to jump to it. The shape is the argument: almost nothing
         between 2015 and 2018, a wall of work in 2023 when models met real users, and
         sparsity taking over from 2025.
       </p>
+      )}
     </div>
   )
 }

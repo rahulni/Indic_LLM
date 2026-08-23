@@ -10,6 +10,7 @@ import { Term } from './components/Term'
 import { useLevel, LevelPicker } from './components/LevelContext'
 import { AttentionMatrix } from './viz/AttentionMatrix'
 import { SelfAttentionArcs } from './viz/SelfAttentionArcs'
+import { TimelineAxis } from './components/TimelineAxis'
 import { MaskPatterns } from './viz/MaskPatterns'
 import { RoPEDial } from './viz/RoPEDial'
 import { KVCacheBar } from './viz/KVCacheBar'
@@ -142,7 +143,6 @@ export default function App() {
   }, [])
 
   const arxivDated = MECHANISMS.filter((m) => m.date_kind === 'arxiv_v1').length
-  const taught = MECHANISMS.filter((m) => m.covered_status === 'definitely_covered').length
 
   return (
     <>
@@ -150,41 +150,61 @@ export default function App() {
 
       <header className="hero">
         <div className="shell">
-          <div className="prose">
-            <h1>Attention, in the order it actually happened</h1>
-            <p className="lede">
-              Vanilla attention was never wrong. It was <strong>expensive</strong>. Every
-              mechanism that follows is somebody looking at that bill and trying to pay
-              less of it — and each one gives something up to do it. Laid out by launch
-              date, you can watch the field change its mind: first it wants exactness, then
-              memory, then length, then memory again.
-            </p>
-            <p className="lede" style={{ marginTop: '0.9rem', fontSize: '1rem' }}>
-              No background assumed. It starts from what a word is even doing when it pays
-              attention to another word.
+          <div className="hero-top">
+            <div className="hero-copy">
+              <h1>Attention, in order</h1>
+              <p className="lede">
+                Vanilla attention was never wrong &mdash; it was{' '}
+                <strong>expensive</strong>. Every mechanism since is somebody looking at
+                that bill and trying to pay less of it. Here they are by launch date, with
+                what each one buys and what it costs.
+              </p>
+
+              <div className="hero-cta">
+                <a className="btn-primary" href="#onramp">
+                  Start from scratch
+                </a>
+                <a className="btn-ghost" href="#timeline">
+                  Jump to the timeline
+                </a>
+              </div>
+            </div>
+
+            <dl className="hero-stats">
+              <div>
+                <dt>{MECHANISMS.length}</dt>
+                <dd>mechanisms</dd>
+              </div>
+              <div>
+                <dt>{arxivDated}</dt>
+                <dd>dates verified against arXiv</dd>
+              </div>
+              <div>
+                <dt>2014&ndash;26</dt>
+                <dd>chronological</dd>
+              </div>
+            </dl>
+          </div>
+
+          {/* The product, on the first screen. This site is a timeline; a landing page
+              for it that contains no timeline is describing itself instead of showing
+              itself. Every dot is live - click one and it opens below. */}
+          <div className="hero-axis">
+            <TimelineAxis
+              mechanisms={MECHANISMS}
+              onSelect={(id) => {
+                window.location.hash = `#m-${id}`
+              }}
+              selected={null}
+              compact
+            />
+            <p className="hero-axis-note">
+              58 mechanisms at their real launch dates. Almost nothing between 2015 and
+              2018; a wall of it in 2023, the year models met users. Click any dot.
             </p>
           </div>
 
           <LevelPicker />
-
-          <div className="stat-row">
-            <div className="stat">
-              <span className="n">{MECHANISMS.length}</span>
-              <span className="l">mechanisms</span>
-            </div>
-            <div className="stat">
-              <span className="n">{arxivDated}</span>
-              <span className="l">dates verified against arXiv</span>
-            </div>
-            <div className="stat">
-              <span className="n">2014–2026</span>
-              <span className="l">chronological</span>
-            </div>
-            <div className="stat">
-              <span className="n">{taught}</span>
-              <span className="l">covered in the session</span>
-            </div>
-          </div>
         </div>
       </header>
 

@@ -170,50 +170,8 @@ code {
   max-width: var(--measure);
 }
 
-.hero {
-  padding: clamp(3rem, 10vw, 6rem) 0 clamp(2rem, 5vw, 3.5rem);
-  border-bottom: 1px solid var(--border);
-}
-
-.hero h1 {
-  font-size: clamp(2.2rem, 6vw, 4rem);
-  margin-bottom: 1rem;
-}
-
-.hero .lede {
-  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
-  color: var(--ink-muted);
-  max-width: 58ch;
-}
-
-.hero .lede strong {
-  color: var(--ink);
-  font-weight: 600;
-}
-
-.stat-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(1rem, 4vw, 2.5rem);
-  margin-top: 2.5rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--border);
-}
-
-.stat .n {
-  font-family: var(--serif);
-  font-size: 1.9rem;
-  font-weight: 600;
-  display: block;
-  line-height: 1.1;
-}
-
-.stat .l {
-  font-size: 0.8rem;
-  color: var(--ink-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-}
+/* Hero styles live in styles-hero.css - see the note there on why the
+   original full-viewport hero was replaced. */
 
 /* --------------------------------------------------------------------- nav */
 
