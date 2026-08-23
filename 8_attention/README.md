@@ -83,7 +83,7 @@ This is the trap this assignment is most likely to spring, and it is worth stati
 | | **DroPE** | **DRoPE** |
 |---|---|---|
 | arXiv | 2512.12167 | 2503.15029 |
-| v1 date | 13 Dec 2025 | 20 Mar 2025 |
+| v1 date | 13 Dec 2025 | 19 Mar 2025 |
 | Authors | Gelberg, Eguchi, Akiba, Cetin (Sakana AI) | different group |
 | Field | LLM context extension | autonomous-driving agent trajectories |
 | What it does | Train with RoPE, drop it, recalibrate briefly, extend context zero-shot | Encodes agent heading angles in a rotary embedding |
