@@ -270,8 +270,10 @@ All of these run in CI on every push, before the site is published.
 GitHub Pages on this repository serves committed branch contents directly, so the site is
 simply the files at `8_attention/index.html` and `8_attention/assets/`. Pushing to `main`
 publishes it; there is no deploy step. Rebuild with `npm run build`, then
-`python tools/publish_site.py`. CI fails if the committed bundle no longer matches a fresh
-build of the source.
+`python tools/publish_site.py`, which records a fingerprint of the content files in
+`build-info.json`. CI fails if that fingerprint no longer matches the data in the
+repository — which catches "edited the data, forgot to republish" without demanding
+byte-identical builds across platforms.
 
 ---
 

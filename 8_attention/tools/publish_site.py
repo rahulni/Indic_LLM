@@ -15,6 +15,9 @@ location so exactly one copy is committed.
 merging would silently accumulate every previous build's orphaned bundles - the
 repository would grow forever and nobody would notice.
 
+It also writes build-info.json recording a fingerprint of the content the site was built
+from. See the note on SOURCES below for why that exists.
+
 Usage:
     cd app && npm run build
     cd .. && python tools/publish_site.py
@@ -22,6 +25,8 @@ Usage:
 
 from __future__ import annotations
 
+import hashlib
+import json
 import shutil
 import sys
 from pathlib import Path
@@ -35,6 +40,42 @@ ASSETS = ROOT / "assets"
 # copied wholesale, so a stray file cannot end up published by accident.
 COPY_FILES = ["index.html"]
 COPY_DIRS = ["assets"]
+
+# The content files the site is built from.
+#
+# check_published.py compares a fingerprint of these against the one recorded here at
+# publish time, which answers the question that actually matters - was the live site
+# built from the data currently in the repository - without demanding byte-identical
+# builds across platforms.
+#
+# That distinction was learned the hard way. The previous check diffed the committed
+# bundle against a fresh build, and failed on every CI run: this repository is authored
+# on Windows where the working tree is CRLF, git stores LF, and the Linux runner
+# therefore compiles different source bytes and produces a different content hash. Line
+# endings, npm resolution and per-platform esbuild binaries all move those bytes, and
+# none of them mean the published site is stale.
+SOURCES = [
+    "app/src/data/mechanisms.json",
+    "app/src/data/eras.json",
+    "app/src/data/glossary.json",
+    "app/src/data/checks.json",
+    "app/src/data/formulas.ts",
+    "app/src/data/resources.ts",
+]
+
+
+def fingerprint() -> str:
+    """SHA-256 over the content files, with line endings normalised.
+
+    Normalising CRLF to LF is what makes this comparable between a Windows working tree
+    and a Linux runner, which is the entire point.
+    """
+    digest = hashlib.sha256()
+    for rel in SOURCES:
+        raw = (ROOT / rel).read_bytes().replace(b"\r\n", b"\n")
+        digest.update(rel.encode())
+        digest.update(raw)
+    return digest.hexdigest()
 
 
 def main() -> int:
@@ -68,11 +109,20 @@ def main() -> int:
     for name in COPY_FILES:
         shutil.copy2(DIST / name, ROOT / name)
 
-    published = sorted(p for p in ASSETS.iterdir()) if ASSETS.exists() else []
+    published = sorted(ASSETS.iterdir()) if ASSETS.exists() else []
     total = sum(p.stat().st_size for p in published) + INDEX.stat().st_size
+
+    info = {
+        "data_fingerprint": fingerprint(),
+        "assets": [p.name for p in published],
+    }
+    (ROOT / "build-info.json").write_text(
+        json.dumps(info, indent=2) + "\n", encoding="utf-8"
+    )
 
     print(f"published to {ROOT.name}/")
     print(f"  index.html + {len(published)} asset file(s), {total / 1024:.0f} KB total")
+    print(f"  data fingerprint {info['data_fingerprint'][:12]}")
     print("  live at https://rahulni.github.io/Indic_LLM/8_attention/ once committed")
     return 0
 

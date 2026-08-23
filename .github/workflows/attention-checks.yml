@@ -53,6 +53,15 @@ jobs:
         working-directory: 8_attention
         run: python tools/check_links.py --quiet
 
+      # Compares a fingerprint of the content files against the one recorded at publish
+      # time, rather than diffing the bundle against a fresh build. The old byte
+      # comparison failed on every run: this repo is authored on Windows with a CRLF
+      # working tree, git stores LF, so the Linux runner compiles different bytes and
+      # emits a different content hash. That never meant the site was stale.
+      - name: Fail if the published site is stale
+        working-directory: 8_attention
+        run: python tools/check_published.py
+
       - name: Fail if CITATIONS.md is stale
         working-directory: 8_attention
         run: |
@@ -79,18 +88,3 @@ jobs:
       - name: Build
         working-directory: 8_attention/app
         run: npm run build
-
-      # The published bundle is committed, so it can drift from the source it came from.
-      # Rebuilding and re-publishing must be a no-op; if it is not, what is live no
-      # longer matches what is in the repository.
-      - name: Fail if the published site is stale
-        working-directory: 8_attention
-        run: |
-          python tools/publish_site.py
-          if [ -n "$(git status --porcelain -- index.html assets)" ]; then
-            echo "The committed site does not match a fresh build. Run:"
-            echo "  cd 8_attention/app && npm run build"
-            echo "  cd .. && python tools/publish_site.py"
-            git status --porcelain -- index.html assets
-            exit 1
-          fi
