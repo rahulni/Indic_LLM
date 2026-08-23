@@ -54,8 +54,8 @@ const W = 1180
 const PAD_L = 16
 const PAD_R = 16
 const LANE_H = 17
-const DOT_R = 5.5
-const MIN_GAP = 13 // px between dots before they are pushed to another lane
+const DOT_R = 6.2
+const MIN_GAP = 15 // px between dots before they are pushed to another lane
 
 export function TimelineAxis({
   mechanisms,
@@ -73,9 +73,11 @@ export function TimelineAxis({
   selected: string | null
   compact?: boolean
 }) {
-  const laneH = compact ? 10 : LANE_H
-  const dotR = compact ? 3.6 : DOT_R
-  const axisY = compact ? 132 : 232
+  const laneH = compact ? 13 : LANE_H
+  const dotR = compact ? 4.6 : DOT_R
+  // Sized from the actual lane count rather than guessed: at a 15px gap the dots
+  // stack seven lanes deep at most, so the old 132/232 left a band of dead air.
+  const axisY = compact ? 120 : 190
   const x = (iso: string) => {
     const t = Date.parse(iso + 'T00:00:00Z')
     return PAD_L + ((t - START) / (END - START)) * (W - PAD_L - PAD_R)
@@ -209,8 +211,7 @@ export function TimelineAxis({
         </svg>
       </div>
 
-      {!compact && (
-      <div className="legend">
+      <div className={compact ? 'legend is-compact' : 'legend'}>
         {families.map((f) => (
           <span className="legend-item" key={f}>
             <span className="legend-dot" style={{ background: FAMILY_VAR[f] }} />
@@ -218,7 +219,6 @@ export function TimelineAxis({
           </span>
         ))}
       </div>
-      )}
 
       {!compact && (
       <p className="viz-note" style={{ marginTop: '0.6rem' }}>

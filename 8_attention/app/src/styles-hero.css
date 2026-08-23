@@ -213,3 +213,19 @@
     flex-basis: 100%;
   }
 }
+
+/* ------------------------------------------------------------ strip legend */
+
+/* The compact strip originally shipped without a legend, which made the colour
+   encoding decorative - a reader could see five colours and had no way to learn
+   what they meant. A key is not optional furniture when colour carries meaning. */
+.legend.is-compact {
+  gap: 0.35rem 0.85rem;
+  margin-top: 0.55rem;
+  font-size: 0.73rem;
+}
+
+.legend.is-compact .legend-dot {
+  width: 8px;
+  height: 8px;
+}

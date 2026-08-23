@@ -199,8 +199,9 @@ export default function App() {
               compact
             />
             <p className="hero-axis-note">
-              58 mechanisms at their real launch dates. Almost nothing between 2015 and
-              2018; a wall of it in 2023, the year models met users. Click any dot.
+              Every mechanism at its real launch date, coloured by what problem it
+              attacks. Almost nothing between 2015 and 2018; a wall of it in 2023, the
+              year models met real users. Click any dot.
             </p>
           </div>
 
