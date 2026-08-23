@@ -848,6 +848,39 @@
     "confused_with": null
   },
   {
+    "id": "retnet",
+    "name": "RetNet (retention)",
+    "date": "2023-07-17",
+    "date_kind": "arxiv_v1",
+    "arxiv": "2307.08621",
+    "url": "https://arxiv.org/abs/2307.08621",
+    "title_check": "Retentive Network: A Successor to Transformer for Large Language Models",
+    "authors": "Microsoft Research",
+    "era": "serving-crisis",
+    "category": "linear-recurrent",
+    "required_by_assignment": false,
+    "covered_status": "not_in_transcript",
+    "class_term": null,
+    "plain": "Write the same model three different ways: as a parallel one for training, as a loop for generating, and as a chunked one for very long inputs. You get fast training and constant-memory generation from one architecture - but what it forgets is decided by a fixed rule rather than learned.",
+    "problem": "Linear-attention models forced a choice: train in parallel like a Transformer, or decode cheaply like an RNN. Nobody had one architecture that genuinely did both without a separate implementation for each.",
+    "mechanism": "Replace attention with retention, which the paper derives as the connection between recurrence and attention, and which admits three mathematically equivalent forms: a parallel representation for training, a recurrent one giving O(1) inference, and a chunkwise recurrent one that encodes each chunk in parallel while summarising chunks recurrently for linear-complexity long-sequence work.",
+    "buys": [
+      "One architecture with three equivalent computation forms - the cleanest statement of that idea anyone had made",
+      "O(1) decoding memory and cost, improving throughput and latency without a quality penalty at the scales tested",
+      "The chunkwise form handles long sequences in linear complexity, so long context does not force a different implementation",
+      "Trains in parallel, unlike a true RNN"
+    ],
+    "costs": [
+      "The decay is data-independent - a fixed gamma per head or layer, so the model cannot decide what to forget based on what it is reading. Mamba, GLA and Gated DeltaNet all beat it precisely by making that gate learned and content-dependent",
+      "Fixed-size state, so the recall ceiling of the whole linear family applies unchanged",
+      "The paper's framing as a 'successor to Transformer' did not hold: no frontier model replaced attention with retention, and the field went to hybrids instead",
+      "Tooling and ecosystem never approached the Transformer's, which compounds the adoption problem"
+    ],
+    "pick_when": "Rarely as a deployment choice now. It belongs on this timeline as the clearest articulation of parallel-train / recurrent-decode duality, an idea that everything from Mamba-2 to Gated DeltaNet later built on with a learned gate instead of a fixed one.",
+    "viz": "state",
+    "confused_with": "Retention is not attention with a decay bolted on - the paper derives it from the recurrence/attention connection. But its fixed decay is exactly the thing later linear models replaced, which is the reason it reads as a stepping stone rather than a successor."
+  },
+  {
     "id": "yarn",
     "name": "YaRN (Yet another RoPE extensioN)",
     "date": "2023-08-31",
@@ -1142,6 +1175,39 @@
     "confused_with": "'MSA' in the spoken assignment brief is ambiguous between MLA and NSA. The lecture described DeepSeek block compression with an indexer, which matches NSA better; both are covered here in full."
   },
   {
+    "id": "xlstm",
+    "name": "xLSTM (extended LSTM)",
+    "date": "2024-05-07",
+    "date_kind": "arxiv_v1",
+    "arxiv": "2405.04517",
+    "url": "https://arxiv.org/abs/2405.04517",
+    "title_check": "xLSTM: Extended Long Short-Term Memory",
+    "authors": "Beck et al. (NXAI / JKU Linz)",
+    "era": "compress-and-learn",
+    "category": "linear-recurrent",
+    "required_by_assignment": false,
+    "covered_status": "not_in_transcript",
+    "class_term": null,
+    "plain": "Take the 1990s LSTM, fix the two things that made it lose to Transformers, and scale it to billions of parameters. It competes on quality and scales better with length - and yet no frontier model has actually adopted it, which is worth noticing.",
+    "problem": "LSTMs built the first language models and were then comprehensively beaten by parallelisable self-attention. The open question was whether they lost on fundamentals or on two fixable limitations.",
+    "mechanism": "Two changes. Exponential gating with normalisation and stabilisation, and a modified memory: sLSTM with a scalar memory and new memory mixing, and mLSTM with a matrix memory and a covariance update rule that is fully parallelisable. Both are wrapped in residual blocks and stacked.",
+    "buys": [
+      "Performs favourably against state-of-the-art Transformers and state-space models on both quality and scaling",
+      "mLSTM is fully parallelisable, removing the sequential training bottleneck that sank the original LSTM",
+      "Linear time complexity, so it scales better with context length than a dense Transformer",
+      "A 2026 scaling-law study reports xLSTM Pareto-dominating Transformers on loss for a given compute budget"
+    ],
+    "costs": [
+      "Only mLSTM is fully parallelisable - sLSTM's memory mixing is not, so the architecture is a mix of parallel and sequential parts rather than uniformly parallel",
+      "Fixed-size memory, so the recall ceiling that limits every recurrent model applies here too",
+      "Despite a favourable published scaling curve, no frontier production model has adopted it. A good curve that has not translated into deployment is a real result about the method, not an oversight to explain away",
+      "Small ecosystem: kernels, serving support and tooling all lag the Transformer stack by a wide margin"
+    ],
+    "pick_when": "Worth knowing rather than deploying. Its importance to this timeline is as evidence that the recurrent line was never fundamentally beaten - it was beaten on parallelism, and once that was fixed the gap largely closed. Whether that matters in practice is exactly what the missing adoption tells you.",
+    "viz": "state",
+    "confused_with": null
+  },
+  {
     "id": "mamba-2",
     "name": "Mamba-2 (state space duality)",
     "date": "2024-05-31",
@@ -1372,6 +1438,39 @@
     "confused_with": "Dated 2025 in most write-ups because of its arXiv number (2501.*). The v1 submission is 31 December 2024."
   },
   {
+    "id": "tpa",
+    "name": "Tensor Product Attention (TPA)",
+    "date": "2025-01-11",
+    "date_kind": "arxiv_v1",
+    "arxiv": "2501.06425",
+    "url": "https://arxiv.org/abs/2501.06425",
+    "title_check": "Tensor Product Attention Is All You Need",
+    "authors": "Zhang, Liu et al.",
+    "era": "native-sparsity",
+    "category": "kv-cache",
+    "required_by_assignment": false,
+    "covered_status": "not_in_transcript",
+    "class_term": null,
+    "plain": "Store the queries, keys and values in a factorised form rather than in full, so the cache shrinks a lot. Unlike the compression trick DeepSeek uses, this one fits together with rotary positions cleanly instead of needing an awkward extra dimension.",
+    "problem": "Long context means a large KV cache, and the fixes so far either cost quality by making heads share (MQA, GQA) or, in MLA's case, collide awkwardly with RoPE and require a decoupled extra dimension to work around it.",
+    "mechanism": "Use tensor decompositions to represent queries, keys and values as contextual low-rank components, so only the compact factors are cached and the full tensors are reconstructed when needed. The factorisation is designed to integrate with Rotary Position Embedding directly.",
+    "buys": [
+      "Substantially smaller KV cache at inference, addressing the same bottleneck as MLA",
+      "Reported to match or beat MHA, MQA, GQA and MLA on perplexity and a range of benchmarks - a rare claim of better quality alongside less memory",
+      "Composes with RoPE without a decoupled dimension, which is the ugliest part of MLA's design",
+      "The memory saving translates into genuinely longer sequences under a fixed budget"
+    ],
+    "costs": [
+      "A pretraining-time architecture. Like MLA and unlike GQA, you cannot convert an existing checkpoint into it cheaply",
+      "The decomposition rank is a new hyperparameter, and it trades cache size against fidelity in a way that has to be tuned",
+      "More conceptually involved than head-sharing, which raises the bar for anyone implementing or debugging it",
+      "Adoption is far behind MLA, which has multiple frontier deployments. Reported benchmark wins and production evidence are not the same thing"
+    ],
+    "pick_when": "Worth serious consideration if you are designing a new model, want MLA-class cache savings, and would rather not inherit MLA's RoPE workaround. Stay with GQA if you need to adapt an existing checkpoint, and with MLA if you want the option with the most deployment evidence behind it.",
+    "viz": "kv",
+    "confused_with": null
+  },
+  {
     "id": "lightning-attention",
     "name": "Lightning Attention at scale (MiniMax-01)",
     "date": "2025-01-14",
@@ -1465,6 +1564,105 @@
     ],
     "pick_when": "When you want learned sparsity but need to retrofit an existing model rather than pretrain. NSA is the stronger choice if you control pretraining.",
     "viz": "mask",
+    "confused_with": null
+  },
+  {
+    "id": "forgetting-transformer",
+    "name": "Forgetting Transformer (FoX)",
+    "date": "2025-03-03",
+    "date_kind": "arxiv_v1",
+    "arxiv": "2503.02130",
+    "url": "https://arxiv.org/abs/2503.02130",
+    "title_check": "Forgetting Transformer: Softmax Attention with a Forget Gate",
+    "authors": "Lin et al.",
+    "era": "native-sparsity",
+    "category": "core",
+    "required_by_assignment": false,
+    "covered_status": "not_in_transcript",
+    "class_term": null,
+    "plain": "Recurrent models have a forget gate and Transformers never did. This puts one inside ordinary softmax attention by quietly damping scores the model wants to ignore. It improves quality and needs no position encoding at all - but it does nothing about the cost.",
+    "problem": "The forget gate is essential to every modern recurrent model, and a Transformer has no recurrent form to put one in. So the one mechanism that most clearly helped the linear-attention family had no equivalent in full attention.",
+    "mechanism": "Down-weight the unnormalized attention scores in a data-dependent way before the softmax. That single change acts as a forget gate inside ordinary attention - the paper calls it Forgetting Attention - and because it modifies scores rather than the algorithm's structure, it remains compatible with FlashAttention.",
+    "buys": [
+      "Beats the standard Transformer on long-context language modelling, length extrapolation and short-context downstream tasks, and matches it on long-context downstream tasks",
+      "Needs no positional embeddings at all - the gate supplies the recency structure that RoPE and ALiBi are usually there to provide",
+      "Compatible with FlashAttention, so it keeps the exact-attention speed that most attention modifications sacrifice",
+      "Retains full attention's advantage over Mamba-2, HGRN2 and DeltaNet on needle-in-a-haystack retrieval, which the fixed-state models lose"
+    ],
+    "costs": [
+      "Still quadratic. This improves quality, not cost - none of the bill that drives this timeline gets paid down",
+      "The paper's 'Pro' block, which contributes much of the reported gain, also improves the plain Transformer. Part of the headline improvement is therefore not attributable to the forget gate itself, and the paper is upfront about that",
+      "Adds a per-head data-dependent gate to train and tune",
+      "Recent, with limited independent replication at scale"
+    ],
+    "pick_when": "When long-context quality is the binding constraint and you can afford exact attention. It is the interesting counter-current on this timeline: almost everything after 2019 makes attention cheaper, and this takes an idea from the cheap models and spends it on making the expensive one better.",
+    "viz": "matrix",
+    "confused_with": "Not a linear-attention method despite the forget gate. The gate lives inside softmax attention, and the cost stays quadratic - it borrows the idea from the recurrent family without joining it."
+  },
+  {
+    "id": "multi-token-attention",
+    "name": "Multi-Token Attention (MTA)",
+    "date": "2025-04-01",
+    "date_kind": "arxiv_v1",
+    "arxiv": "2504.00927",
+    "url": "https://arxiv.org/abs/2504.00927",
+    "title_check": "Multi-Token Attention",
+    "authors": "Meta AI",
+    "era": "native-sparsity",
+    "category": "core",
+    "required_by_assignment": false,
+    "covered_status": "not_in_transcript",
+    "class_term": null,
+    "plain": "Normally one word's attention to another is decided by comparing exactly two vectors, which is a surprisingly thin channel. This lets neighbouring words influence each other's scores, so the model can use more evidence to decide what is relevant - at the cost of extra compute in every layer.",
+    "problem": "An attention weight is determined by the similarity of a single query vector and a single key vector. That single-token bottleneck caps how much information is available for telling a relevant passage apart from a similar-looking irrelevant one.",
+    "mechanism": "Apply convolution operations over queries, keys and heads, so nearby queries and keys influence one another's attention weights. A weight is then conditioned on several query and key vectors at once rather than on one pair.",
+    "buys": [
+      "Attention decisions draw on richer evidence than a single vector pair can carry",
+      "Notably better on tasks that require finding information inside long contexts, which is exactly where single-token matching is weakest",
+      "Outperforms Transformer baselines on standard language modelling too, so the gain is not confined to retrieval",
+      "Slots into an existing Transformer without changing the surrounding architecture"
+    ],
+    "costs": [
+      "Convolutions over queries, keys and heads add parameters and compute to every attention layer",
+      "Still quadratic - like FoX, this buys quality rather than paying down the bill",
+      "The convolution window is a fixed design choice, which quietly reintroduces the hand-set locality prior that content-based attention existed to get rid of",
+      "Evaluated at modest scale relative to frontier models, so how it behaves at scale is untested"
+    ],
+    "pick_when": "When retrieval inside long context is the failure mode you are actually fighting and you have compute to spare. Not a fit if inference cost is your constraint, since it makes attention more expensive rather than less.",
+    "viz": "matrix",
+    "confused_with": null
+  },
+  {
+    "id": "log-linear-attention",
+    "name": "Log-Linear Attention",
+    "date": "2025-06-05",
+    "date_kind": "arxiv_v1",
+    "arxiv": "2506.04761",
+    "url": "https://arxiv.org/abs/2506.04761",
+    "title_check": "Log-Linear Attention",
+    "authors": "Guo et al.",
+    "era": "native-sparsity",
+    "category": "linear-recurrent",
+    "required_by_assignment": false,
+    "covered_status": "not_in_transcript",
+    "class_term": null,
+    "plain": "Linear attention keeps one fixed-size memory and forgets detail; full attention keeps everything and costs the square of the length. This keeps a memory that grows slowly - logarithmically - landing in between. It is a genuinely new third option rather than a tweak to either end.",
+    "problem": "Linear attention and state-space models give linear time and constant memory, but at their core they are still RNNs, and a fixed-size hidden state is a fundamental limit on what context can be represented. Softmax attention has no such limit and costs quadratic compute. Nothing occupied the middle.",
+    "mechanism": "Replace the fixed-size hidden state with a logarithmically growing set of hidden states. With a particular growth function this still admits a matmul-rich parallel form, so compute is log-linear in sequence length rather than linear or quadratic. It is a framework rather than one model: it can be layered on top of existing linear-attention variants.",
+    "buys": [
+      "A genuine third point on the map - O(n log n) compute and logarithmic memory, between linear attention's O(n) and softmax's O(n²)",
+      "Lifts the fixed-state ceiling that limits every model in the linear family, without paying full quadratic cost",
+      "Keeps the matmul-rich parallel form that makes linear attention trainable on modern hardware",
+      "A general framework: instantiated on both Mamba-2 and Gated DeltaNet, and reported to perform well against their linear-time versions"
+    ],
+    "costs": [
+      "Memory grows. The entire selling point of linear attention was a state that does not, and logarithmic growth is still growth - at extreme context this loses to a genuinely fixed state",
+      "The hierarchical state is materially more complex to implement than either endpoint it sits between",
+      "Demonstrated as case studies on two existing architectures rather than at frontier scale, so the practical envelope is not yet mapped",
+      "Adds a growth function to choose, which is a new design decision with no established default"
+    ],
+    "pick_when": "When a fixed-size state demonstrably loses too much on your task and quadratic attention costs too much to run - the honest middle that until 2025 did not exist. Its wider significance is that it reframes the choice: efficient attention had been treated as a binary between O(n) and O(n²), and this shows the space in between is real and reachable.",
+    "viz": "curves",
     "confused_with": null
   },
   {

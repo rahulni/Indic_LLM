@@ -24,7 +24,7 @@ assigned around the announcement cycle, so YaRN is `2309.00071` but was submitte
 August 2023, and Titans is `2501.00663` but was submitted 31 December 2024.
 
 
-## Verified against the arXiv API (50)
+## Verified against the arXiv API (56)
 
 | Date (v1) | Mechanism | arXiv | Title as arXiv records it |
 |---|---|---|---|
@@ -53,6 +53,7 @@ August 2023, and Titans is `2501.00663` but was submitted 31 December 2024.
 | 2023-05-31 | NoPE (no positional encoding) | [2305.19466](https://arxiv.org/abs/2305.19466) | The Impact of Positional Encoding on Length Generalization in Transformers |
 | 2023-06-27 | Positional Interpolation (PI) | [2306.15595](https://arxiv.org/abs/2306.15595) | Extending Context Window of Large Language Models via Positional Interpolation |
 | 2023-07-17 | FlashAttention-2 | [2307.08691](https://arxiv.org/abs/2307.08691) | FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning |
+| 2023-07-17 | RetNet (retention) | [2307.08621](https://arxiv.org/abs/2307.08621) | Retentive Network: A Successor to Transformer for Large Language Models |
 | 2023-08-31 | YaRN (Yet another RoPE extensioN) | [2309.00071](https://arxiv.org/abs/2309.00071) | YaRN: Efficient Context Window Extension of Large Language Models |
 | 2023-09-12 | PagedAttention (vLLM) | [2309.06180](https://arxiv.org/abs/2309.06180) | Efficient Memory Management for Large Language Model Serving with PagedAttention |
 | 2023-09-29 | Attention sinks (StreamingLLM) | [2309.17453](https://arxiv.org/abs/2309.17453) | Efficient Streaming Language Models with Attention Sinks |
@@ -62,6 +63,7 @@ August 2023, and Titans is `2501.00663` but was submitted 31 December 2024.
 | 2023-12-11 | Gated Linear Attention (GLA) | [2312.06635](https://arxiv.org/abs/2312.06635) | Gated Linear Attention Transformers with Hardware-Efficient Training |
 | 2024-04-10 | Infini-attention | [2404.07143](https://arxiv.org/abs/2404.07143) | Leave No Context Behind: Efficient Infinite Context Transformers with Infini-attention |
 | 2024-05-07 | Multi-head Latent Attention (MLA) | [2405.04434](https://arxiv.org/abs/2405.04434) | DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model |
+| 2024-05-07 | xLSTM (extended LSTM) | [2405.04517](https://arxiv.org/abs/2405.04517) | xLSTM: Extended Long Short-Term Memory |
 | 2024-05-31 | Mamba-2 (state space duality) | [2405.21060](https://arxiv.org/abs/2405.21060) | Transformers are SSMs: Generalized Models and Efficient Algorithms Through Structured State Space Duality |
 | 2024-06-10 | DeltaNet, parallelised over sequence length | [2406.06484](https://arxiv.org/abs/2406.06484) | Parallelizing Linear Transformers with the Delta Rule over Sequence Length |
 | 2024-07-11 | FlashAttention-3 | [2407.08608](https://arxiv.org/abs/2407.08608) | FlashAttention-3: Fast and Accurate Attention with Asynchrony and Low-precision |
@@ -69,9 +71,13 @@ August 2023, and Titans is `2501.00663` but was submitted 31 December 2024.
 | 2024-10-07 | Differential Transformer | [2410.05258](https://arxiv.org/abs/2410.05258) | Differential Transformer |
 | 2024-12-09 | Gated DeltaNet | [2412.06464](https://arxiv.org/abs/2412.06464) | Gated Delta Networks: Improving Mamba2 with Delta Rule |
 | 2024-12-31 | Titans (test-time memory) | [2501.00663](https://arxiv.org/abs/2501.00663) | Titans: Learning to Memorize at Test Time |
+| 2025-01-11 | Tensor Product Attention (TPA) | [2501.06425](https://arxiv.org/abs/2501.06425) | Tensor Product Attention Is All You Need |
 | 2025-01-14 | Lightning Attention at scale (MiniMax-01) | [2501.08313](https://arxiv.org/abs/2501.08313) | MiniMax-01: Scaling Foundation Models with Lightning Attention |
 | 2025-02-16 | Native Sparse Attention (NSA) | [2502.11089](https://arxiv.org/abs/2502.11089) | Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention |
 | 2025-02-18 | MoBA (Mixture of Block Attention) | [2502.13189](https://arxiv.org/abs/2502.13189) | MoBA: Mixture of Block Attention for Long-Context LLMs |
+| 2025-03-03 | Forgetting Transformer (FoX) | [2503.02130](https://arxiv.org/abs/2503.02130) | Forgetting Transformer: Softmax Attention with a Forget Gate |
+| 2025-04-01 | Multi-Token Attention (MTA) | [2504.00927](https://arxiv.org/abs/2504.00927) | Multi-Token Attention |
+| 2025-06-05 | Log-Linear Attention | [2506.04761](https://arxiv.org/abs/2506.04761) | Log-Linear Attention |
 | 2025-10-30 | Kimi Linear / Kimi Delta Attention (KDA) | [2510.26692](https://arxiv.org/abs/2510.26692) | Kimi Linear: An Expressive, Efficient Attention Architecture |
 | 2025-12-13 | DroPE (dropping positional embeddings) | [2512.12167](https://arxiv.org/abs/2512.12167) | Extending the Context of Pretrained LLMs by Dropping Their Positional Embeddings |
 | 2026-02-03 | HySparse (oracle token selection + KV sharing) | [2602.03560](https://arxiv.org/abs/2602.03560) | HySparse: A Hybrid Sparse Attention Architecture with Oracle Token Selection and KV Cache Sharing |
@@ -99,16 +105,16 @@ These are exempt from the API check because no preprint exists. They are *not* w
 
 | Category | Count |
 |---|---|
-| linear-recurrent | 10 |
+| linear-recurrent | 13 |
 | sparse | 9 |
+| core | 7 |
 | positional | 7 |
-| core | 5 |
 | long-context | 5 |
 | systems | 5 |
+| kv-cache | 4 |
 | compression | 4 |
 | hybrid | 4 |
-| kv-cache | 3 |
 
 ---
 
-52 mechanisms total.
+58 mechanisms total.

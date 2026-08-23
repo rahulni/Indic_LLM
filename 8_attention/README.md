@@ -2,6 +2,7 @@
 
 **Live site:** https://rahulni.github.io/Indic_LLM/8_attention/
 **Repository:** https://github.com/rahulni/Indic_LLM/tree/main/8_attention
+**Submission answers:** [ANSWERS.md](ANSWERS.md)
 
 A web app explaining every attention mechanism from 2014 to 2026, ordered by the date
 each one actually launched, with honest trade-offs for each.
@@ -11,7 +12,7 @@ looking at that bill and trying to pay less of it — and every one of them give
 up to do it. Laid out chronologically you can watch the field change its mind: first it
 wants exactness, then memory, then length, then memory again.
 
-**52 mechanisms. 50 dates verified against the arXiv API. 2 that have no paper at all,
+**58 mechanisms. 56 dates verified against the arXiv API. 2 that have no paper at all,
 and say so.**
 
 ---
@@ -38,9 +39,9 @@ to the wrong paper is still wrong — it is what catches a transposed identifier
 
 ```
 $ python tools/verify_dates.py
-arXiv dates verified against the API : 50
+arXiv dates verified against the API : 56
 non-paper dates with written evidence: 2
-total mechanisms                     : 52
+total mechanisms                     : 58
 
 OK - every date is backed by a primary source.
 ```
@@ -115,7 +116,7 @@ between being published and being adopted.
 
 ## Coverage
 
-All 18 mechanisms named in the assignment are covered, plus 34 more.
+All 18 mechanisms named in the assignment are covered, plus 40 more.
 
 **Required:** standard attention · learned absolute positions · sinusoidal · RoPE ·
 ALiBi · MQA · GQA · sliding window · attention sinks · NTK-aware scaling · YaRN · linear
@@ -127,7 +128,9 @@ DroPE
 Transformer-XL · Longformer · BigBird · Linformer · Performer · FlashAttention 1/2/3 ·
 Positional Interpolation · NoPE · PagedAttention · Ring Attention · RWKV · Mamba /
 Mamba-2 · GLA · **GSA** · Infini-attention · DeltaNet parallelisation · Differential
-Transformer · Titans · Lightning Attention · MoBA · Kimi Linear / KDA
+Transformer · Titans · Lightning Attention · MoBA · Kimi Linear / KDA · **RetNet** ·
+**xLSTM** · **Tensor Product Attention** · **Forgetting Transformer** ·
+**Multi-Token Attention** · **Log-Linear Attention**
 
 **2026 frontier**, all web-verified rather than recalled: HySparse (Feb 2026) · Kwai
 Summary Attention (Apr 2026) · BFLA (May 2026) · FlashMorph (Jun 2026)

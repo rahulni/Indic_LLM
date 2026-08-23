@@ -462,6 +462,34 @@ export default function App() {
               learned selectors turn out not to be worth their overhead.
             </p>
           </div>
+
+          <div className="panel" style={{ marginTop: '1rem', borderLeftWidth: '3px', borderLeftColor: 'var(--buys)' }}>
+            <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>
+              Scored against what 2026 actually shipped
+            </h3>
+            <p style={{ margin: '0 0 0.6rem', color: 'var(--ink-muted)' }}>
+              A prediction is worth nothing until someone checks it, so here is the check.
+              Of the three ideas above, all three are in production: <strong>MLA</strong> in
+              Kimi K2.5, GLM-5 and Ling 2.5; <strong>Gated DeltaNet</strong> continuing
+              through Qwen3.5; and <strong>DeepSeek Sparse Attention</strong> across
+              multiple mid-2026 releases. Grouped-query and sliding-window attention remain
+              the unglamorous default underneath much of it.
+            </p>
+            <p style={{ margin: '0 0 0.6rem', color: 'var(--ink-muted)' }}>
+              So the convergence held. What has <em>not</em> happened is the more
+              interesting half: no frontier model ships a searched layer schedule, and none
+              has dropped positional encoding after pretraining. Those parts of the guess
+              are still open, and FlashMorph and DroPE are still research rather than
+              practice.
+            </p>
+            <p style={{ margin: 0, color: 'var(--ink-muted)' }}>
+              And one genuine miss worth admitting: the timeline would have predicted
+              linear attention keeps closing the gap, yet <strong>xLSTM</strong> published a
+              scaling curve that Pareto-dominates Transformers and{' '}
+              <em>still nobody shipped it</em>. Being better on loss-per-compute turns out
+              not to be sufficient, which none of the three trends above explains.
+            </p>
+          </div>
         </div>
       </Section>
 
