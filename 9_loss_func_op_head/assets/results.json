@@ -7,11 +7,15 @@
     "1. flattened loss matrix": "`(1020, 50257)` vs `(1020,)`",
     "2. shift positions verified": "255/255",
     "3. contributing tokens, pad counted -> masked": "1,020 -> 629 tokens; loss 10.6149 -> 10.8571",
+    "3b. pad counted vs masked, after training": "reported 2.5855 vs 5.2508; on real tokens 5.1296 vs 5.0973; predicts pad 0.0% vs 0.0%",
     "4. loss, boundary kept -> masked": "4.0239 -> 4.0081 (boundary positions average 8.0422, 2.01x the rest)",
+    "4b. doc B loss, cross-document attention on -> off": "4.1568 -> 4.1413 (+0.0155 from attention alone)",
+    "4c. same, with a random-token neighbour": "5.5784 -> 4.1413 (+1.4371)",
     "5. init loss / perplexity": "10.8508 / 51,578  (`ln(50257)` = 10.8249, V = 50,257)",
     "6. tied vs untied parameters": "17,656,576 vs 30,522,368  (difference 12,865,792 = V x D)",
-    "7. peak memory, ordinary -> chunked": "3,100 MB -> 401 MB attributable to the loss (**7.72x** less, 1.13x the time)",
+    "7. peak memory, ordinary -> chunked": "3,100 MB -> 401 MB attributable to the loss (**7.72x** less, 1.18x the time)",
+    "8b. gap, tied head 1 vs both untied": "0.7779 vs 0.8179 - the ordering is not an artifact of weight tying",
     "8. Part 2 - two heads (val)": "head1 4.7829, head2 5.5608, sum 10.3437  (gap 0.7779)",
-    "9. Part 3 - final loss by shift": "correct 3.5257; no 0.0019; reversed 0.0663"
+    "9. Part 3 - final loss by shift": "correct 3.5257; no 0.0019; reversed 0.0659"
   }
 }
