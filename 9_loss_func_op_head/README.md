@@ -22,7 +22,7 @@ Run: **full**, 2000 steps, `cuda`, torch `2.11.0+cu128`.
 | 4 | loss, boundary kept -> masked | 4.0239 -> 4.0081 (boundary positions average 8.0422, 2.01x the rest) |
 | 5 | init loss / perplexity | 10.8508 / 51,578  (`ln(50257)` = 10.8249, V = 50,257) |
 | 6 | tied vs untied parameters | 17,656,576 vs 30,522,368  (difference 12,865,792 = V x D) |
-| 7 | peak memory, ordinary -> chunked | 3,100 MB -> 401 MB attributable to the loss (**7.72x** less, 1.18x the time) |
+| 7 | peak memory, ordinary -> chunked | 3,100 MB -> 401 MB attributable to the loss (**7.72x** less, 1.06x the time) |
 
 Each number is produced by the notebook cell above it and written into a `RESULTS` dict,
 which the final cell renders as this exact table — so the write-up cannot drift from the
@@ -184,9 +184,9 @@ Three models, same data, same seed, same initialisation. Only the target slice d
 
 | variant | slicing | final loss |
 |---|---|---|
-| correct | `logits[:, :-1]` vs `tokens[:, 1:]` | **3.5257** |
+| correct | `logits[:, :-1]` vs `tokens[:, 1:]` | **3.5256** |
 | no shift | `logits` vs `tokens` | 0.0019 |
-| reversed | `logits[:, 1:]` vs `tokens[:, :-1]` | 0.0659 |
+| reversed | `logits[:, 1:]` vs `tokens[:, :-1]` | 0.0656 |
 
 The two runs reaching a *lower* loss are the two that are wrong. No shift asks the model to
 emit the token it already holds — the residual stream carries the embedding straight to the

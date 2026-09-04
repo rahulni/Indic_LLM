@@ -32,6 +32,9 @@
 #
 # Set `QUICK_RUN = True` to read the whole thing end to end in a couple of minutes.
 # Set it to `False` to reproduce the numbers reported in the README.
+#
+# A quick run writes its figures and `results.json` to `assets/quick/`, so running this
+# notebook to look around cannot overwrite the committed full-run artifacts in `assets/`.
 
 # %% [markdown]
 # ## 0 — Setup
@@ -76,6 +79,13 @@ torch.manual_seed(SEED)
 # Every headline number lands here; the last cell renders it as the README table.
 RESULTS = {}
 
+# A quick run writes to assets/quick/, a full run to assets/. The committed figures and
+# results.json come from a full run, and opening this notebook just to read it should not
+# be able to overwrite them - QUICK_RUN is the default, so without this guard a stray
+# "Run All" silently replaces the submitted numbers with 300-step ones.
+ASSET_DIR = os.path.join("assets", "quick") if QUICK_RUN else "assets"
+os.makedirs(ASSET_DIR, exist_ok=True)
+
 # dark charts, to match the rest of the project
 plt.rcParams.update({
     "figure.facecolor": "#0d1117", "axes.facecolor": "#0d1117",
@@ -87,6 +97,7 @@ plt.rcParams.update({
 print(f"torch      : {torch.__version__}")
 print(f"device     : {device}" + (f"  ({torch.cuda.get_device_name(0)})" if device == "cuda" else ""))
 print(f"QUICK_RUN  : {QUICK_RUN}  ->  {STEPS} steps")
+print(f"writing to : {ASSET_DIR}" + ("   (assets/ is left alone)" if QUICK_RUN else ""))
 
 # %% [markdown]
 # ## 1 — The model and the data
@@ -1202,9 +1213,11 @@ ax.plot([h["step"] for h in val2], [h["loss2"] for h in val2],
 ax.set_xlabel("step"); ax.set_ylabel("cross-entropy loss")
 ax.set_title("Two output heads: t+1 and t+2 from the same hidden state", color="#e6edf3")
 ax.grid(alpha=0.3); ax.legend(frameon=False, labelcolor="#e6edf3", fontsize=8)
-fig.tight_layout(); os.makedirs("assets", exist_ok=True)
-fig.savefig("assets/two_heads.png", bbox_inches="tight"); plt.close(fig)
-print("\nsaved assets/two_heads.png")
+fig.tight_layout()
+two_heads_png = os.path.join(ASSET_DIR, "two_heads.png")
+fig.savefig(two_heads_png, bbox_inches="tight"); plt.close(fig)
+print(f"\nsaved {two_heads_png}")
+show_png(two_heads_png)
 
 # %% [markdown]
 # **What you should be seeing, and why.**
@@ -1327,8 +1340,10 @@ ax.set_xlabel("step"); ax.set_ylabel("cross-entropy loss")
 ax.set_title("The same model, three target shifts", color="#e6edf3")
 ax.grid(alpha=0.3); ax.legend(frameon=False, labelcolor="#e6edf3")
 fig.tight_layout()
-fig.savefig("assets/wrong_shift.png", bbox_inches="tight"); plt.close(fig)
-print("\nsaved assets/wrong_shift.png")
+wrong_shift_png = os.path.join(ASSET_DIR, "wrong_shift.png")
+fig.savefig(wrong_shift_png, bbox_inches="tight"); plt.close(fig)
+print(f"\nsaved {wrong_shift_png}")
+show_png(wrong_shift_png)
 
 # %% [markdown]
 # ### And now the strings, which is the only thing that would have caught it
@@ -1473,7 +1488,11 @@ for k, v in RESULTS.items():
     num, _, label = k.partition(". ")
     print(f"| {num} | {label} | {v} |")
 
-with open("assets/results.json", "w", encoding="utf-8") as f:
+results_path = os.path.join(ASSET_DIR, "results.json")
+with open(results_path, "w", encoding="utf-8") as f:
     json.dump({"quick_run": QUICK_RUN, "steps": STEPS, "device": device,
                "torch": torch.__version__, "results": RESULTS}, f, indent=2)
-print("\nsaved assets/results.json")
+print(f"\nsaved {results_path}")
+if QUICK_RUN:
+    print("\nThis was a quick run, so assets/ still holds the committed full-run")
+    print("figures. For the numbers in the README, set QUICK_RUN = False and rerun.")

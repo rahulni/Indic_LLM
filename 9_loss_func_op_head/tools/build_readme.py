@@ -66,6 +66,16 @@ pad_rep = re.search(r"reported ([0-9.]+) vs ([0-9.]+)", get("3b.")).groups()
 pad_real = re.search(r"real tokens ([0-9.]+) vs ([0-9.]+)", get("3b.")).groups()
 gap_tied, gap_untied = re.search(r"([0-9.]+) vs ([0-9.]+)", get("8b.")).groups()
 
+# The tables come from results.json and the quoted blocks from the notebook's own
+# outputs. If those two came from different runs the README would silently mix them, so
+# check the notebook's final cell agrees about which run produced it.
+_stamp = f"Run: {'QUICK' if R['quick_run'] else 'FULL'}  |  {R['steps']} steps"
+_tail = cell_output('print("| # | measurement | value |")')
+assert _stamp in _tail, (
+    f"notebook outputs and results.json disagree - expected {_stamp!r} in the final "
+    "cell. Re-run the notebook end to end before regenerating the README."
+)
+
 shift_table = excerpt(cell_output("seq_in, seq_tgt"), "pos", 7)
 noshift_block = excerpt(cell_output("pairs = {"), "no shift", 10)
 docB_block = excerpt(cell_output("doc_block_mask"), "packed, causal mask only", 5)
