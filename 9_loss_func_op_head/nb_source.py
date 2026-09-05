@@ -1,10 +1,8 @@
 # %% [markdown]
 # # Loss Functions and Output Heads
 #
-# **ERA V5 — Session 9.** One notebook, one loss harness, and one thing you have to get
-# right by reading rather than by guessing.
-#
-# The assignment is not "train a model". It is: take these four lines
+# Four lines sit between a model's hidden states and the scalar it trains on, and they
+# are where a surprising amount goes wrong:
 #
 # ```python
 # hidden = model(tokens)
@@ -13,11 +11,12 @@
 #                        tokens[:, 1:].reshape(-1))
 # ```
 #
-# and make them **correct and observable**. Every serious bug that lives in these lines
-# shares one property: *it does not raise an exception*. A target shift in the wrong
-# direction produces a beautiful loss curve and a worthless model.
+# This makes them **correct and observable**, then adds a second output head that predicts
+# two tokens ahead.
 #
-# So every section below prints evidence, and most of them assert on it.
+# Every serious bug that lives in these lines shares one property: *it does not raise an
+# exception*. A target shift in the wrong direction produces a beautiful loss curve and a
+# worthless model. So every section prints evidence, and most of them assert on it.
 #
 # ---
 #
@@ -82,7 +81,7 @@ RESULTS = {}
 # A quick run writes to assets/quick/, a full run to assets/. The committed figures and
 # results.json come from a full run, and opening this notebook just to read it should not
 # be able to overwrite them - QUICK_RUN is the default, so without this guard a stray
-# "Run All" silently replaces the submitted numbers with 300-step ones.
+# "Run All" silently replaces the committed numbers with 300-step ones.
 ASSET_DIR = os.path.join("assets", "quick") if QUICK_RUN else "assets"
 os.makedirs(ASSET_DIR, exist_ok=True)
 
@@ -401,7 +400,7 @@ if VERBOSE:
 # %% [markdown]
 # ## 3 — Verify the shift by printing the token **strings**
 #
-# This is the check the whole assignment is built around. You will not catch an
+# This is the check everything else rests on. You will not catch an
 # off-by-one in a wall of integers.
 #
 # **One trap worth knowing.** Do not render tokens with `enc.decode([i])`. GPT-2 uses
@@ -493,7 +492,7 @@ RESULTS["3. contributing tokens, pad counted -> masked"] = (
 # %% [markdown]
 # ### 4b — the same thing, demonstrated rather than asserted
 #
-# The count changing is what the assignment asks for, and the section above delivers it.
+# The changing count is the mechanical check, and the section above delivers it.
 # But the *reason* it matters only appears under training, and a claim you can demonstrate
 # is worth more than a claim you assert.
 #
@@ -590,9 +589,9 @@ RESULTS["3b. pad counted vs masked, after training"] = (
 # happens to draw a slightly above-average logit out of a random head, all 391 positions
 # collect the same small discount at once. Real tokens get no such shared luck. Under
 # training the effect stops being luck and becomes a strategy, which is the failure mode
-# the session described: the loss falls, and inference emits pad forever.
+# the classic one: the loss falls, and inference emits pad forever.
 #
-# **A nuance the assignment does not ask for but which matters in practice:** the position
+# **A nuance that matters in practice:** the position
 # that predicts the *first* pad is the one teaching the model to stop. Masking every pad
 # target, as above, throws that lesson away too. Production setups usually keep the first
 # EOS and mask the rest.
@@ -690,9 +689,8 @@ RESULTS["4. loss, boundary kept -> masked"] = (
 # ### 5b — what masking the boundary does *not* fix
 #
 # Masking the boundary fixes the **loss**. It does nothing about **attention**: every token
-# in document B can still read all of document A through the causal mask. The assignment
-# does not ask for this, but stopping at loss masking leaves a reader believing packing is
-# solved when half of it is not.
+# in document B can still read all of document A through the causal mask. Stopping at loss
+# masking leaves you believing packing is solved when half of it is not.
 #
 # Real packing needs a block-diagonal attention mask as well — each token may attend only
 # within its own document. Production setups also reset position ids per document, which
@@ -888,7 +886,7 @@ del m_tied, m_untied
 # **What you should be seeing.** A difference equal to `V * D` to the parameter, and an
 # untied model roughly 73% larger.
 #
-# The session's framing: at production scale (`D = 4096`, `V = 131072`) that same matrix is
+# At production scale (`D = 4096`, `V = 131072`) that same matrix is
 # **half a billion parameters** on the input side and another half billion on the output
 # side - about 1B of an 11B model spent on two lookup tables. Tying is the cheap answer,
 # usually applied to small models and dropped for large ones, where the head is given the
@@ -1053,9 +1051,8 @@ if device == "cuda":
 # in the fourth decimal, you have a reduction bug - almost always averaging the averages
 # instead of summing then dividing once.
 #
-# This is what buys long context. The session's framing: a big vocabulary puts so much
-# pressure on this one tensor that it, not attention, becomes the thing capping your
-# sequence length.
+# This is what buys long context: a big vocabulary puts so much pressure on this one
+# tensor that it, not attention, becomes the thing capping your sequence length.
 
 # %% [markdown]
 # # Part 2 — a second output head
@@ -1107,7 +1104,7 @@ assert (ya[0, 1:] == y2a[0, :-1]).all(), "head 2 targets are not one beyond head
 print("\nOK  head 2's target is head 1's target advanced by one more step")
 
 # get_batch pre-fetches two extra tokens, so no slicing is needed and no position is
-# wasted. That is a departure from the form the brief shows, so assert the two agree:
+# wasted. That differs from the in-sequence slicing form, so assert the two agree:
 assert torch.equal(ya[:, :-1], xa[:, 1:]),  "y  is not tokens[:, 1:]"
 assert torch.equal(y2a[:, :-2], xa[:, 2:]), "y2 is not tokens[:, 2:]"
 print("OK  the pre-fetched targets equal the in-sequence slices tokens[:, 1:] and tokens[:, 2:]")
@@ -1237,7 +1234,7 @@ show_png(two_heads_png)
 # 12.9M parameters cannot repeal it. The gap you measure is roughly the conditional
 # entropy of one token of English - the price of one step of uncertainty.
 #
-# Two practical notes from the session:
+# Two practical notes:
 #
 # - Training uses one token at a time regardless. The extra head changes the loss, never
 #   the input.
@@ -1247,17 +1244,15 @@ show_png(two_heads_png)
 # %% [markdown]
 # # Appendix — the beautiful wrong loss curve
 #
-# > Not required by the assignment. The brief asks for the seven numbers of Part 1 and the
-# > two losses of Part 2; it references a "Part 3" in its submission list but never defines
-# > one. This is inferred from the warning attached to it — *a target shift in the incorrect
-# > direction can produce a beautiful loss curve* — because that warning is worth answering
-# > with evidence.
+# > A demonstration rather than a measurement. The warning is that *a target shift in the
+# > incorrect direction can produce a beautiful loss curve*, and a warning like that is
+# > worth answering with evidence rather than agreement.
 #
 # ## 10 — Three shifts, one of them correct
 #
-# The assignment's warning: *a target shift in the incorrect direction can produce a
-# beautiful loss curve*. This section makes that concrete by training the same model three
-# times, on the same data, from the same seed. The **only** difference is which slice of
+# *A target shift in the incorrect direction can produce a beautiful loss curve.* This
+# section makes that concrete by training the same model three times, on the same data,
+# from the same seed. The **only** difference is which slice of
 # the sequence is used as the target.
 #
 # | variant | slicing | what it asks the model to do |
@@ -1386,12 +1381,12 @@ for name, ps in pairs.items():
 # That is why the instruction is *print the strings*, not *check the loss looks sensible*.
 
 # %% [markdown]
-# ## 11 — The block the session actually described
+# ## 11 — The same harness on a more modern block
 #
 # Everything above used the plain LayerNorm + GELU block, deliberately: you do not debug a
 # loss harness and a new architecture at the same time. Now that every check passes, here
-# is the same model built the way the session described it - **RMSNorm, pre-norm, SwiGLU**
-# - run through the same gate.
+# is the same model built with the components most current models use - **RMSNorm,
+# pre-norm, SwiGLU** - run through the same gate.
 #
 # - **RMSNorm** drops the mean-centering that LayerNorm does and only divides by
 #   `sqrt(mean(x^2))`, projecting the vector onto the unit sphere. One pass instead of two.
