@@ -1,0 +1,330 @@
+{
+  "batch": 32,
+  "window_seconds": 12.0,
+  "settled": {
+    "sm_mhz": 1560.0,
+    "sm_max_mhz": 2100.0,
+    "temp_c": 65.0,
+    "power_w": 51.74,
+    "throttle": "0x0000000000000024"
+  },
+  "forward_pass": [
+    {
+      "mode": "store",
+      "batch": 32,
+      "steps": 39,
+      "tokens_per_sec": 50524.49758810541,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1605.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 65.0,
+        "power_w": 55.05,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1560.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 66.0,
+        "power_w": 53.8,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 32,
+      "steps": 33,
+      "tokens_per_sec": 42047.29625600091,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1665.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 67.0,
+        "power_w": 54.96,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1530.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 68.0,
+        "power_w": 55.39,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "euler",
+      "batch": 32,
+      "steps": 30,
+      "tokens_per_sec": 39806.58882960029,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1755.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 68.0,
+        "power_w": 53.53,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1500.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.94,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "midpoint",
+      "batch": 32,
+      "steps": 30,
+      "tokens_per_sec": 40204.8533474009,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1695.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.5,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1485.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.36,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "coupling",
+      "batch": 32,
+      "steps": 32,
+      "tokens_per_sec": 43560.079356759954,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1530.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 70.0,
+        "power_w": 55.59,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1560.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 70.0,
+        "power_w": 55.82,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "euler_implicit",
+      "batch": 32,
+      "steps": 18,
+      "tokens_per_sec": 24018.99686078166,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1410.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 71.0,
+        "power_w": 55.57,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1545.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.2,
+        "throttle": "0x0000000000000024"
+      }
+    }
+  ],
+  "backward_pass": [
+    {
+      "mode": "euler_implicit",
+      "batch": 32,
+      "steps": 18,
+      "tokens_per_sec": 24159.70057550786,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1455.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.63,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1755.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.15,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "coupling",
+      "batch": 32,
+      "steps": 33,
+      "tokens_per_sec": 44092.9515160836,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1755.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.42,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1560.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 55.48,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "midpoint",
+      "batch": 32,
+      "steps": 30,
+      "tokens_per_sec": 40446.013742444564,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1545.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 55.76,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1485.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 53.86,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "euler",
+      "batch": 32,
+      "steps": 30,
+      "tokens_per_sec": 39753.34743155149,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1575.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 55.65,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1710.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.19,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 32,
+      "steps": 32,
+      "tokens_per_sec": 41237.91519732705,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1710.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 55.63,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1740.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 55.49,
+        "throttle": "0x0000000000000024"
+      }
+    },
+    {
+      "mode": "store",
+      "batch": 32,
+      "steps": 38,
+      "tokens_per_sec": 49122.1608728253,
+      "peak_alloc_gib": 4.185408592224121,
+      "before": {
+        "sm_mhz": 1590.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 54.45,
+        "throttle": "0x0000000000000024"
+      },
+      "after": {
+        "sm_mhz": 1560.0,
+        "sm_max_mhz": 2100.0,
+        "temp_c": 69.0,
+        "power_w": 55.41,
+        "throttle": "0x0000000000000024"
+      }
+    }
+  ],
+  "summary": [
+    {
+      "mode": "store",
+      "tokens_per_sec": 49823.32923046536,
+      "passes": [
+        50524.49758810541,
+        49122.1608728253
+      ],
+      "spread_pct": 2.8146186474079116,
+      "slower_than_baseline": 1.0
+    },
+    {
+      "mode": "checkpoint",
+      "tokens_per_sec": 41642.605726663984,
+      "passes": [
+        42047.29625600091,
+        41237.91519732705
+      ],
+      "spread_pct": 1.9436369183679847,
+      "slower_than_baseline": 1.1964508070772146
+    },
+    {
+      "mode": "euler",
+      "tokens_per_sec": 39779.968130575886,
+      "passes": [
+        39806.58882960029,
+        39753.34743155149
+      ],
+      "spread_pct": 0.1338397202180649,
+      "slower_than_baseline": 1.2524728292119947
+    },
+    {
+      "mode": "midpoint",
+      "tokens_per_sec": 40325.43354492274,
+      "passes": [
+        40204.8533474009,
+        40446.013742444564
+      ],
+      "spread_pct": 0.5980354675542622,
+      "slower_than_baseline": 1.2355311487218585
+    },
+    {
+      "mode": "coupling",
+      "tokens_per_sec": 43826.515436421774,
+      "passes": [
+        43560.079356759954,
+        44092.9515160836
+      ],
+      "spread_pct": 1.2158670476476152,
+      "slower_than_baseline": 1.1368307230070125
+    },
+    {
+      "mode": "euler_implicit",
+      "tokens_per_sec": 24089.34871814476,
+      "passes": [
+        24018.99686078166,
+        24159.70057550786
+      ],
+      "spread_pct": 0.5840909871515946,
+      "slower_than_baseline": 2.068272156853168
+    }
+  ],
+  "design": "ABBA order-balanced; each mode measured once per direction and averaged, after warming to thermal equilibrium"
+}

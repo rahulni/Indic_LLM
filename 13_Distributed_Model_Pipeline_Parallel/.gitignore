@@ -1,0 +1,17 @@
+# The corpus and its derivatives. `*.bin` is already covered by the repository root, but
+# the raw text slice is 350 MB and `data.py` re-fetches it in about two minutes from a
+# public dataset, so there is nothing to preserve by committing it.
+data/tinystories.txt
+data/*.bin
+data/meta.json
+
+# The trained BPE is 400 KB and *is* committed: every loss number in the README is tied to
+# this exact vocabulary, so regenerating it would silently change what the numbers mean.
+!data/tokenizer.json
+
+__pycache__/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# editor/tool droppings, not part of the work
+.vscode/

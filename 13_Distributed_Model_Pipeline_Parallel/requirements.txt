@@ -1,0 +1,18 @@
+torch>=2.1
+numpy>=1.24
+tokenizers>=0.15
+huggingface_hub>=0.20
+matplotlib>=3.7
+pytest>=7.0
+
+# The runs in the README were produced with torch 2.11.0+cu128 on an RTX 3070 Laptop
+# (8.59 GiB), in eager mode - there is no triton wheel for Windows, so torch.compile is
+# off in every run. That is stated rather than hidden: compile would change both the
+# throughput and the memory numbers, and it would change them differently per variant.
+#
+#   python -m pytest tests/ -q             the correctness gates
+#   python -m revlm.ladder                 batch + depth ladders  -> assets/ladder.json
+#   python -m revlm.run_all --quick        the whole matrix in minutes -> assets/quick/
+#   python -m revlm.run_all                the submitted numbers  -> assets/results.json
+#   python tools/build_readme.py           regenerate README.md (refuses if stale)
+#   python tools/build_notebook.py         regenerate the three notebooks

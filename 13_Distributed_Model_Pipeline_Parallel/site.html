@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reversible Transformers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --ground:#0b0b12; --surface:#14141c; --raised:#1c1c26; --line:#2b2b38;
+  --ink:#f4f3f7; --ink2:#a6a4b6; --ink3:#6e6c80;
+  --accent:#f0a830; --accent-dim:#8a5f18;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#008300;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  --serif:"IBM Plex Serif",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --col:68ch; --wide:min(1080px,100%);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ground);color:var(--ink)}
+body{font-family:var(--serif);font-size:17px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;padding-block:0 6rem}
+.wrap{max-width:var(--col);margin-inline:auto;padding-inline:20px}
+.bleed{max-width:var(--wide);margin-inline:auto;padding-inline:20px}
+h1,h2,h3,.ui{font-family:var(--sans)}
+h1{font-size:clamp(2.1rem,6vw,3.4rem);line-height:1.04;font-weight:700;
+  letter-spacing:-.025em;text-wrap:balance;margin:0 0 .6rem}
+h2{font-size:clamp(1.4rem,3.4vw,1.9rem);font-weight:600;letter-spacing:-.015em;
+  text-wrap:balance;margin:3.6rem 0 .4rem}
+h3{font-size:1.06rem;font-weight:600;margin:2.2rem 0 .3rem;letter-spacing:-.005em}
+p{margin:0 0 1.05rem}
+a{color:var(--accent);text-underline-offset:3px}
+code,.mono{font-family:var(--mono);font-size:.88em}
+.eyebrow{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.16em;color:var(--accent);margin:0 0 .9rem}
+.lede{font-size:1.16rem;color:var(--ink2);margin-bottom:1.6rem}
+.sub{color:var(--ink3);font-size:.9rem;font-family:var(--sans)}
+
+/* the trace: a leapfrog stepping across the masthead */
+header.masthead{border-bottom:1px solid var(--line);padding-block:4.5rem 2.2rem;
+  margin-bottom:.5rem;position:relative;overflow:hidden}
+#trace{display:block;width:100%;height:96px;margin-top:1.8rem}
+
+nav.toc{position:sticky;top:0;z-index:20;background:rgba(11,11,18,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line);
+  font-family:var(--sans);font-size:.8rem}
+nav.toc ul{display:flex;gap:1.3rem;list-style:none;margin:0 auto;padding:.7rem 20px;
+  max-width:var(--wide);overflow-x:auto;scrollbar-width:none}
+nav.toc a{color:var(--ink3);text-decoration:none;white-space:nowrap}
+nav.toc a:hover,nav.toc a:focus-visible{color:var(--ink)}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;
+  padding:1.3rem;margin:1.8rem 0}
+.panel h3{margin-top:0}
+figure{margin:2rem 0}
+figcaption{font-family:var(--sans);font-size:.83rem;color:var(--ink3);margin-top:.7rem}
+
+table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:.87rem;
+  font-variant-numeric:tabular-nums}
+.scroll{overflow-x:auto}
+th,td{text-align:right;padding:.5rem .6rem;border-bottom:1px solid var(--line);white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{color:var(--ink3);font-weight:500;font-size:.76rem;text-transform:uppercase;
+  letter-spacing:.07em}
+tbody tr:hover{background:var(--raised)}
+td.win{color:var(--accent);font-weight:600}
+
+.eq{font-family:var(--mono);font-size:.92rem;background:var(--surface);
+  border-left:2px solid var(--accent-dim);padding:.8rem 1rem;margin:1.1rem 0;
+  overflow-x:auto;color:var(--ink2);line-height:1.75}
+.eq b{color:var(--ink);font-weight:500}
+
+.note{border-left:2px solid var(--line);padding-left:1rem;color:var(--ink2);
+  font-size:.95rem;margin:1.4rem 0}
+.note b{color:var(--ink)}
+
+.chips{display:flex;flex-wrap:wrap;gap:.45rem;margin:1.1rem 0}
+.chip{font-family:var(--sans);font-size:.78rem;padding:.3rem .7rem;border-radius:999px;
+  border:1px solid var(--line);color:var(--ink2);background:var(--surface);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--accent);color:var(--ground);
+  background:var(--accent);font-weight:600}
+.chip:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid var(--accent);
+  outline-offset:2px}
+
+/* the machine */
+.machine{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:1.2rem;margin:1.6rem 0}
+.machine-head{display:flex;flex-wrap:wrap;gap:.8rem;align-items:baseline;
+  justify-content:space-between;margin-bottom:.9rem}
+#stage{display:block;width:100%;height:auto}
+.controls{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.9rem}
+button.ctl{font-family:var(--sans);font-size:.83rem;padding:.42rem .9rem;border-radius:7px;
+  border:1px solid var(--line);background:var(--raised);color:var(--ink);cursor:pointer}
+button.ctl:hover{border-color:var(--ink3)}
+button.ctl[disabled]{opacity:.4;cursor:not-allowed}
+.readout{font-family:var(--mono);font-size:.8rem;color:var(--ink2);margin-left:auto;
+  text-align:right;line-height:1.5}
+.readout b{color:var(--accent);font-weight:500}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-family:var(--sans);font-size:.78rem;
+  color:var(--ink3);margin-top:.7rem}
+.swatch{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:.35rem;
+  vertical-align:baseline}
+
+.tip{position:fixed;pointer-events:none;background:var(--raised);border:1px solid var(--line);
+  border-radius:7px;padding:.45rem .6rem;font-family:var(--mono);font-size:.76rem;
+  color:var(--ink);z-index:60;opacity:0;transition:opacity .12s;max-width:60vw}
+.tip.on{opacity:1}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;
+  background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;
+  margin:1.8rem 0}
+.kpi{background:var(--surface);padding:1rem 1.1rem}
+.kpi .n{font-family:var(--sans);font-size:1.75rem;font-weight:600;letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi .l{font-family:var(--sans);font-size:.76rem;color:var(--ink3);margin-top:.25rem}
+
+footer{border-top:1px solid var(--line);margin-top:4rem;padding-top:1.4rem;
+  font-family:var(--sans);font-size:.8rem;color:var(--ink3)}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;
+  transition-duration:.01ms!important}}
+@media (max-width:560px){body{font-size:16px}.readout{margin-left:0;text-align:left}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <p class="eyebrow">ERA V5 &middot; session 13 &middot; distributed training II</p>
+    <h1>A transformer that throws its activations away</h1>
+    <p class="lede">Depth is time, a residual block is an Euler step, and the integrators
+    that can run backwards give you their activations back for free. Here is what that
+    actually costs, measured on one 8&nbsp;GB laptop GPU.</p>
+    <p class="sub">21,057,024 parameters &middot; 50M tokens &middot; 8 runs &middot; NVIDIA GeForce RTX 3070 Laptop GPU</p>
+  </div>
+  <svg id="trace" viewBox="0 0 1200 96" preserveAspectRatio="none" aria-hidden="true"></svg>
+</header>
+
+<nav class="toc"><ul>
+  <li><a href="#problem">The problem</a></li>
+  <li><a href="#hinge">Depth is time</a></li>
+  <li><a href="#machine">The machine</a></li>
+  <li><a href="#trap">The trap</a></li>
+  <li><a href="#results">Results</a></li>
+  <li><a href="#wall">The moving wall</a></li>
+  <li><a href="#take">Takeaways</a></li>
+</ul></nav>
+
+<main>
+<section class="wrap" id="problem">
+<h2>One term in the budget scales with your data</h2>
+<p>Training memory goes on four things. Three of them&nbsp;&mdash; the weights, their
+gradients, and Adam&rsquo;s moments&nbsp;&mdash; cost sixteen bytes per parameter and care
+about nothing else. The fourth cares about nothing but your data.</p>
+
+<div class="eq">
+weights                 2 bytes/param      &mdash;<br>
+gradients               2 bytes/param      &mdash;<br>
+Adam moments + master  12 bytes/param      &mdash;<br>
+<b>activations            ~12 tensors/layer   batch &times; sequence &times; depth</b>
+</div>
+
+<p>ZeRO splits the first three across GPUs and explicitly leaves activations alone. Tensor,
+sequence, pipeline and context parallelism split the computation, which divides activations
+across devices&nbsp;&mdash; the total bill is unchanged, only shared out. Reversibility is
+the only idea here that <b>deletes the term</b>, and it needs no second GPU to do it.</p>
+
+<div class="kpis"><div class="kpi"><div class="n">6.7&times;</div><div class="l">larger batch, same GPU</div></div><div class="kpi"><div class="n">25%</div><div class="l">slower, and that is the whole price</div></div><div class="kpi"><div class="n">3.7&times;</div><div class="l">memory the baseline adds from 4 to 32 layers</div></div><div class="kpi"><div class="n">1.00&times;</div><div class="l">memory reversibility adds over the same range</div></div></div>
+</section>
+
+<section class="wrap" id="hinge">
+<h2>Depth is time</h2>
+<p>A pre-LN transformer block is already an explicit Euler step, with step size one:</p>
+<div class="eq"><b>h<sub>l+1</sub> = h<sub>l</sub> + G<sub>l</sub>(h<sub>l</sub>)</b>
+&nbsp;&nbsp;&larr;&nbsp; dh/dl = G(h), solved by Euler</div>
+<p>where <span class="mono">G<sub>l</sub></span> is the residual <i>branch</i>&nbsp;&mdash;
+layer-norm, attention, layer-norm, MLP, times a learnable scale. Read the depth axis as
+time and &ldquo;make it reversible&rdquo; stops being a trick. It becomes a question about
+integrators: <b>which ones run backwards?</b></p>
+<p>The answer turns out to be about how many states the scheme carries. One state cannot be
+inverted explicitly. Two can&nbsp;&mdash; and it barely matters whether the second state is
+a velocity, a memory of the previous layer, or the other half of the channels.</p>
+</section>
+
+<section class="bleed" id="machine">
+<h2>What is alive, and when</h2>
+<p style="max-width:var(--col);color:var(--ink2)">Pick an integrator and step through a
+forward and backward pass. Filled cells are tensors currently held in memory; hollow ones
+have been freed or not yet built. The counter on the right is what the GPU is actually
+carrying.</p>
+
+<div class="machine">
+  <div class="machine-head">
+    <div class="chips" role="group" aria-label="integrator"><button class="chip" data-mode="store" aria-pressed="false">baseline</button><button class="chip" data-mode="euler" aria-pressed="false">symplectic Euler</button><button class="chip" data-mode="midpoint" aria-pressed="false">midpoint</button><button class="chip" data-mode="coupling" aria-pressed="false">coupling</button></div>
+  </div>
+  <svg id="stage" viewBox="0 0 1000 300" role="img" aria-label="activation lifetime diagram"></svg>
+  <div class="controls">
+    <button class="ctl" id="back">&larr; Step back</button>
+    <button class="ctl" id="play">Play</button>
+    <button class="ctl" id="fwd">Step forward &rarr;</button>
+    <button class="ctl" id="reset">Reset</button>
+    <div class="readout" id="readout"></div>
+  </div>
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--accent)"></span>held in memory</span>
+    <span><span class="swatch" style="background:var(--raised);border:1px solid var(--line)"></span>freed or not yet computed</span>
+    <span><span class="swatch" style="background:var(--s3)"></span>being recomputed now</span>
+  </div>
+</div>
+</section>
+
+<section class="wrap" id="trap">
+<h2>The obvious reading is a trap</h2>
+<p>&ldquo;Reversible Euler&rdquo; most naturally means inverting that equation directly.
+Rearranged, it reads</p>
+<div class="eq">h<sub>l</sub> = h<sub>l+1</sub> &minus; G<sub>l</sub>(<b>h<sub>l</sub></b>)
+&nbsp;&nbsp;&larr;&nbsp; G evaluated at the thing we are solving for</div>
+<p>which is implicit. So you iterate&nbsp;&mdash; and the iteration converges only while
+<span class="mono">Lip(G) = &gamma;&middot;Lip(F) &lt; 1</span>. Measured on this model,
+<span class="mono">Lip(F) &asymp; 10.5</span>, so the default
+<span class="mono">&gamma; = 0.1</span> lands at <b>1.05</b>: almost exactly on the line.
+The iteration neither converges nor explodes. It stalls, at a reconstruction error near
+0.09, however many steps you give it.</p>
+<div class="panel">
+<h3>Why that is worse than it looks</h3>
+<p style="margin-bottom:.6rem"><b>&gamma; is a learnable parameter.</b> Nothing in the
+optimiser knows about the constraint, so a run can start inside the convergent region and
+walk out of it. When it does, the reconstruction silently stops matching, the gradients
+quietly become wrong, and the loss keeps falling anyway.</p>
+<p style="margin:0"><b>The safe region belongs to the model, not the method.</b>
+<span class="mono">Lip</span> scales with width and sequence length. At
+<span class="mono">d=16</span> it reads about 0.04 and everything looks fine&nbsp;&mdash;
+so a unit test on a toy model certifies a method that cannot train at real width.</p>
+</div>
+<p><b>And training makes it worse.</b> Because <span class="mono">&gamma;</span> is
+learned, the run walks steadily further out of the convergent region:
+<span class="mono">Lip(G)</span> climbs from <b>1.71</b> to <b>932</b>, and the
+reconstruction error goes from <span class="mono">0.11</span> to
+<span class="mono">14</span>. The gradients being applied stop being the
+model&rsquo;s gradients, and the run ends at <b>5.67</b> validation loss against the
+baseline&rsquo;s 1.620.</p>
+<div class="note"><b>A measurement trap, kept because it nearly fooled this report.</b>
+Estimating <span class="mono">Lip</span> by finite differences under bf16 returns
+<b>~80</b> instead of ~1.05. At <span class="mono">&epsilon;=10<sup>-3</sup></span> the
+subtraction cancels away every significant bf16 digit, and dividing by
+<span class="mono">&epsilon;</span> turns what is left into a number. A 50&times;
+overestimate, entirely believable, and it would have condemned a method that in fact sits
+right on the boundary. Use exact autograd VJPs.</div>
+</section>
+
+<section class="bleed" id="results">
+<h2>What happened</h2>
+<p style="max-width:var(--col);color:var(--ink2)">Every run: the same seed, the same
+sampler stream, the same schedule, the same 50M-token budget, and no dropout or weight
+decay anywhere&nbsp;&mdash; the two restrictions reversibility imposes, applied to the
+baseline too so it is not quietly given an advantage.</p>
+
+<div class="scroll"><table><thead><tr><th>integrator</th><th>batch</th><th>val loss</th><th>tokens/s</th><th>slower</th><th>peak GiB</th><th>minutes</th></tr></thead><tbody><tr><td>baseline (stores activations)</td><td>48</td><td class="win">1.6196</td><td>49,823</td><td>1.00&times;</td><td>6.13</td><td>9.2</td></tr><tr><td>gradient checkpointing</td><td>48</td><td>1.6219</td><td>41,643</td><td>1.20&times;</td><td>2.93</td><td>11.3</td></tr><tr><td>symplectic Euler</td><td>48</td><td>1.6301</td><td>39,780</td><td>1.25&times;</td><td>2.65</td><td>11.4</td></tr><tr><td>midpoint (leapfrog)</td><td>48</td><td>1.8821</td><td>40,325</td><td>1.24&times;</td><td>2.64</td><td>11.7</td></tr><tr><td>implicit Euler</td><td>48</td><td>5.6652</td><td>24,089</td><td>2.07&times;</td><td>2.61</td><td>20.7</td></tr><tr><td>coupling (RevNet)</td><td>48</td><td>3.6856</td><td>43,827</td><td>1.14&times;</td><td>2.51</td><td>1.1</td></tr><tr><td>symplectic Euler</td><td>320</td><td>3.5980</td><td class="sub">&mdash;</td><td class="sub">&mdash;</td><td>5.76</td><td>12.3</td></tr><tr><td>symplectic Euler</td><td>320</td><td>3.5055</td><td class="sub">&mdash;</td><td class="sub">&mdash;</td><td>5.76</td><td>13.0</td></tr></tbody></table></div>
+
+<p style="max-width:var(--col)"><b>Symplectic Euler won.</b> It lands at 1.6301 against
+midpoint&rsquo;s 1.8821 &mdash; and the baseline&rsquo;s 1.620 &mdash; on identical
+data, seed and batch. That contradicts the session&rsquo;s recommendation of midpoint, and
+the diagnostics say why: midpoint&rsquo;s reconstruction stays accurate, but its parasitic
+odd/even mode grows <b>7.4&times;</b> over training. Damping it (a
+Robert&ndash;Asselin filter) would destroy the exact reversibility that is the whole
+point, so the diagnostic is reported rather than filtered away.</p>
+
+<figure>
+  <svg id="chart-loss" viewBox="0 0 1000 448" role="img" aria-label="training loss against tokens"></svg>
+  <figcaption>Training loss against tokens seen. Hover for values.</figcaption>
+</figure>
+
+<figure>
+  <svg id="chart-batch" viewBox="0 0 1000 448" role="img" aria-label="peak memory against batch size"></svg>
+  <figcaption>Peak memory against batch size. The cross marks the largest batch that ran;
+  the next size up ran out of memory. Dashed: the same walk with a chunked cross entropy.</figcaption>
+</figure>
+
+<figure>
+  <svg id="chart-depth" viewBox="0 0 1000 428" role="img" aria-label="memory against depth"></svg>
+  <figcaption>What one batch costs as the model gets deeper. This is the claim, measured:
+  the stored baseline climbs, the reversible stacks do not.</figcaption>
+</figure>
+</section>
+
+<section class="wrap" id="wall">
+<h2>The wall moves; it does not vanish</h2>
+<p>&ldquo;Reversible networks don&rsquo;t store activations&rdquo; is true and slightly
+misleading. Peak memory is <span class="mono">O(1)</span> <i>in depth</i>, not
+<span class="mono">O(1)</span>. Four things survive, and the third is the one the slogan
+leaves out.</p>
+<div class="eq">
+weights + gradients + Adam states    fixed, 0.25 GiB<br>
+boundary states                      2&ndash;3 tensors, O(batch &times; seq)<br>
+<b>one live layer&rsquo;s graph               O(batch &times; seq)</b> &nbsp;&larr; backward still needs it<br>
+<b>fp32 logits in the LM head          O(batch &times; seq &times; vocab)</b> &nbsp;&larr; the new bottleneck
+</div>
+<p>At batch 128 those logits are <span class="mono">128&times;512&times;8192&times;4 =
+2.1&nbsp;GiB</span>&nbsp;&mdash; on their own, larger than everything reversibility just
+saved. Chunking the loss so only one chunk&rsquo;s logits are ever live moves the ceiling
+from <b>112</b> sequences to <b>320</b>, while the storing baseline
+stays pinned at <b>48</b>, because for it the activations were never the smaller
+problem.</p>
+</section>
+
+<section class="wrap" id="take">
+<h2>What to carry away</h2>
+<ol>
+<li><b>A pre-LN transformer is an Euler integrator.</b> Reversibility is a question about
+which integrators run backwards, not a trick bolted onto attention.</li>
+<li><b>One state cannot be inverted explicitly; two can.</b> Velocity, previous layer, or
+split channels&nbsp;&mdash; all three buy the same thing for one extra evaluation of
+<span class="mono">G</span> per layer.</li>
+<li><b>Inverting Euler directly is conditional</b> on
+<span class="mono">&gamma;&middot;Lip(F) &lt; 1</span>&nbsp;&mdash; unenforced, dependent
+on width and sequence length, and breakable mid-run because <span class="mono">&gamma;</span>
+is learned.</li>
+<li><b>Check the gradients in fp64 against the same recurrence.</b> A reversible backward
+that is subtly wrong has no symptom: the loss still falls.</li>
+<li><b>Exactly reversible on paper is approximately reversible in floating point.</b>
+<span class="mono">(a+b)&minus;b &ne; a</span>, and the error compounds with depth. Keep
+the residual stream in fp32.</li>
+<li><b>Compare against gradient checkpointing,</b> not against storing everything. It buys
+most of the same memory for a similar slowdown and no new mathematics; reversibility&rsquo;s
+edge is roughly <span class="mono">(L&minus;3)</span> stream tensors, so it grows with depth
+and is thin when shallow.</li>
+</ol>
+</section>
+
+<section class="wrap">
+<footer>
+<p>Generated from <span class="mono">assets/results.json</span> &middot; run stamp
+<span class="mono">2026-09-25 09:21:06</span> &middot; NVIDIA GeForce RTX 3070 Laptop GPU &middot; torch 2.11.0+cu128, eager.<br>
+Notebooks, the correctness gates and the full write-up are in the repository beside this
+page.</p>
+</footer>
+</section>
+</main>
+<div class="tip" id="tip"></div>
+<script id="data" type="application/json">{"runs": [{"name": "A_baseline", "mode": "store", "batch": 48, "val": 1.61960466504097, "tps": 49823.32923046536, "peak": 6.133284568786621, "history": [{"tokens": 24576, "loss": 7.784639835357666}, {"tokens": 1007616, "loss": 5.796018123626709}, {"tokens": 1990656, "loss": 4.7778706550598145}, {"tokens": 2973696, "loss": 3.98858904838562}, {"tokens": 3956736, "loss": 3.7416393756866455}, {"tokens": 4939776, "loss": 3.4163808822631836}, {"tokens": 5922816, "loss": 3.2349865436553955}, {"tokens": 6905856, "loss": 3.008904457092285}, {"tokens": 7888896, "loss": 2.8681304454803467}, {"tokens": 8871936, "loss": 2.6691677570343018}, {"tokens": 9854976, "loss": 2.5474536418914795}, {"tokens": 10838016, "loss": 2.4173426628112793}, {"tokens": 11821056, "loss": 2.4461193084716797}, {"tokens": 12804096, "loss": 2.308384895324707}, {"tokens": 13787136, "loss": 2.1704819202423096}, {"tokens": 14770176, "loss": 2.202059507369995}, {"tokens": 15753216, "loss": 2.036259412765503}, {"tokens": 16736256, "loss": 2.097548723220825}, {"tokens": 17719296, "loss": 2.0927021503448486}, {"tokens": 18702336, "loss": 2.0402138233184814}, {"tokens": 19685376, "loss": 1.9493087530136108}, {"tokens": 20668416, "loss": 1.890122413635254}, {"tokens": 21651456, "loss": 1.9420441389083862}, {"tokens": 22634496, "loss": 1.870658278465271}, {"tokens": 23617536, "loss": 1.8921948671340942}, {"tokens": 24600576, "loss": 1.8653310537338257}, {"tokens": 25583616, "loss": 1.7823807001113892}, {"tokens": 26566656, "loss": 1.773654818534851}, {"tokens": 27549696, "loss": 1.8043707609176636}, {"tokens": 28532736, "loss": 1.7039397954940796}, {"tokens": 29515776, "loss": 1.6970735788345337}, {"tokens": 30498816, "loss": 1.7619181871414185}, {"tokens": 31481856, "loss": 1.677699089050293}, {"tokens": 32464896, "loss": 1.767189860343933}, {"tokens": 33447936, "loss": 1.6494275331497192}, {"tokens": 34430976, "loss": 1.6352676153182983}, {"tokens": 35414016, "loss": 1.8050743341445923}, {"tokens": 36397056, "loss": 1.6194251775741577}, {"tokens": 37380096, "loss": 1.7180404663085938}, {"tokens": 38363136, "loss": 1.659335732460022}, {"tokens": 39346176, "loss": 1.6267167329788208}, {"tokens": 40329216, "loss": 1.6082853078842163}, {"tokens": 41312256, "loss": 1.6045433282852173}, {"tokens": 42295296, "loss": 1.6689640283584595}, {"tokens": 43278336, "loss": 1.6512848138809204}, {"tokens": 44261376, "loss": 1.5538673400878906}, {"tokens": 45244416, "loss": 1.5958322286605835}, {"tokens": 46227456, "loss": 1.6134228706359863}, {"tokens": 47210496, "loss": 1.6519492864608765}, {"tokens": 48193536, "loss": 1.6001731157302856}, {"tokens": 49176576, "loss": 1.6116021871566772}, {"tokens": 49987584, "loss": 1.5766617059707642}]}, {"name": "E_checkpoint", "mode": "checkpoint", "batch": 48, "val": 1.6218723356723785, "tps": 41642.605726663984, "peak": 2.925459861755371, "history": [{"tokens": 24576, "loss": 7.784639835357666}, {"tokens": 1007616, "loss": 5.796016693115234}, {"tokens": 1990656, "loss": 4.78040885925293}, {"tokens": 2973696, "loss": 3.985443353652954}, {"tokens": 3956736, "loss": 3.713115692138672}, {"tokens": 4939776, "loss": 3.3981010913848877}, {"tokens": 5922816, "loss": 3.233525514602661}, {"tokens": 6905856, "loss": 3.0180647373199463}, {"tokens": 7888896, "loss": 2.8807430267333984}, {"tokens": 8871936, "loss": 2.6708624362945557}, {"tokens": 9854976, "loss": 2.563128709793091}, {"tokens": 10838016, "loss": 2.4147889614105225}, {"tokens": 11821056, "loss": 2.4506170749664307}, {"tokens": 12804096, "loss": 2.3101396560668945}, {"tokens": 13787136, "loss": 2.178392171859741}, {"tokens": 14770176, "loss": 2.2016541957855225}, {"tokens": 15753216, "loss": 2.0408265590667725}, {"tokens": 16736256, "loss": 2.1045353412628174}, {"tokens": 17719296, "loss": 2.0961403846740723}, {"tokens": 18702336, "loss": 2.0579559803009033}, {"tokens": 19685376, "loss": 1.9657090902328491}, {"tokens": 20668416, "loss": 1.893810749053955}, {"tokens": 21651456, "loss": 1.940779209136963}, {"tokens": 22634496, "loss": 1.8772157430648804}, {"tokens": 23617536, "loss": 1.898900032043457}, {"tokens": 24600576, "loss": 1.8577566146850586}, {"tokens": 25583616, "loss": 1.7819684743881226}, {"tokens": 26566656, "loss": 1.780682921409607}, {"tokens": 27549696, "loss": 1.8179785013198853}, {"tokens": 28532736, "loss": 1.7128106355667114}, {"tokens": 29515776, "loss": 1.7014268636703491}, {"tokens": 30498816, "loss": 1.7589048147201538}, {"tokens": 31481856, "loss": 1.6754013299942017}, {"tokens": 32464896, "loss": 1.7646392583847046}, {"tokens": 33447936, "loss": 1.6459760665893555}, {"tokens": 34430976, "loss": 1.6368964910507202}, {"tokens": 35414016, "loss": 1.8034930229187012}, {"tokens": 36397056, "loss": 1.624538779258728}, {"tokens": 37380096, "loss": 1.7251014709472656}, {"tokens": 38363136, "loss": 1.662095069885254}, {"tokens": 39346176, "loss": 1.624483585357666}, {"tokens": 40329216, "loss": 1.6085401773452759}, {"tokens": 41312256, "loss": 1.6031736135482788}, {"tokens": 42295296, "loss": 1.6702665090560913}, {"tokens": 43278336, "loss": 1.6526707410812378}, {"tokens": 44261376, "loss": 1.5569772720336914}, {"tokens": 45244416, "loss": 1.596185326576233}, {"tokens": 46227456, "loss": 1.618782877922058}, {"tokens": 47210496, "loss": 1.6565839052200317}, {"tokens": 48193536, "loss": 1.6003742218017578}, {"tokens": 49176576, "loss": 1.6190026998519897}, {"tokens": 49987584, "loss": 1.5825356245040894}]}, {"name": "B_euler", "mode": "euler", "batch": 48, "val": 1.63006511926651, "tps": 39779.968130575886, "peak": 2.646040916442871, "history": [{"tokens": 24576, "loss": 7.754862308502197}, {"tokens": 1007616, "loss": 5.619309902191162}, {"tokens": 1990656, "loss": 4.1830315589904785}, {"tokens": 2973696, "loss": 3.7299649715423584}, {"tokens": 3956736, "loss": 3.4499776363372803}, {"tokens": 4939776, "loss": 3.070728302001953}, {"tokens": 5922816, "loss": 2.8842220306396484}, {"tokens": 6905856, "loss": 2.7236690521240234}, {"tokens": 7888896, "loss": 2.6550657749176025}, {"tokens": 8871936, "loss": 2.500373601913452}, {"tokens": 9854976, "loss": 2.4251904487609863}, {"tokens": 10838016, "loss": 2.3020522594451904}, {"tokens": 11821056, "loss": 2.3611865043640137}, {"tokens": 12804096, "loss": 2.2502317428588867}, {"tokens": 13787136, "loss": 2.13773512840271}, {"tokens": 14770176, "loss": 2.172283887863159}, {"tokens": 15753216, "loss": 2.011244773864746}, {"tokens": 16736256, "loss": 2.0794928073883057}, {"tokens": 17719296, "loss": 2.0850741863250732}, {"tokens": 18702336, "loss": 2.0320396423339844}, {"tokens": 19685376, "loss": 1.9565905332565308}, {"tokens": 20668416, "loss": 1.8953243494033813}, {"tokens": 21651456, "loss": 1.9349117279052734}, {"tokens": 22634496, "loss": 1.8813234567642212}, {"tokens": 23617536, "loss": 1.8938102722167969}, {"tokens": 24600576, "loss": 1.868001103401184}, {"tokens": 25583616, "loss": 1.7838996648788452}, {"tokens": 26566656, "loss": 1.7902297973632812}, {"tokens": 27549696, "loss": 1.8285974264144897}, {"tokens": 28532736, "loss": 1.7162160873413086}, {"tokens": 29515776, "loss": 1.708053469657898}, {"tokens": 30498816, "loss": 1.7588542699813843}, {"tokens": 31481856, "loss": 1.690794587135315}, {"tokens": 32464896, "loss": 1.7731170654296875}, {"tokens": 33447936, "loss": 1.6518853902816772}, {"tokens": 34430976, "loss": 1.636926293373108}, {"tokens": 35414016, "loss": 1.8163738250732422}, {"tokens": 36397056, "loss": 1.6257200241088867}, {"tokens": 37380096, "loss": 1.7241703271865845}, {"tokens": 38363136, "loss": 1.667056679725647}, {"tokens": 39346176, "loss": 1.6260160207748413}, {"tokens": 40329216, "loss": 1.61227548122406}, {"tokens": 41312256, "loss": 1.6083437204360962}, {"tokens": 42295296, "loss": 1.6728049516677856}, {"tokens": 43278336, "loss": 1.6580969095230103}, {"tokens": 44261376, "loss": 1.552897334098816}, {"tokens": 45244416, "loss": 1.6031084060668945}, {"tokens": 46227456, "loss": 1.623108983039856}, {"tokens": 47210496, "loss": 1.6637016534805298}, {"tokens": 48193536, "loss": 1.6091808080673218}, {"tokens": 49176576, "loss": 1.61993408203125}, {"tokens": 49987584, "loss": 1.585269570350647}]}, {"name": "C_midpoint", "mode": "midpoint", "batch": 48, "val": 1.8820569396018982, "tps": 40325.43354492274, "peak": 2.644759178161621, "history": [{"tokens": 24576, "loss": 7.79298210144043}, {"tokens": 1007616, "loss": 5.8101372718811035}, {"tokens": 1990656, "loss": 5.43747091293335}, {"tokens": 2973696, "loss": 4.844665050506592}, {"tokens": 3956736, "loss": 4.199855804443359}, {"tokens": 4939776, "loss": 3.8733551502227783}, {"tokens": 5922816, "loss": 3.7722599506378174}, {"tokens": 6905856, "loss": 3.681739568710327}, {"tokens": 7888896, "loss": 3.5676071643829346}, {"tokens": 8871936, "loss": 3.4425227642059326}, {"tokens": 9854976, "loss": 3.2580020427703857}, {"tokens": 10838016, "loss": 3.0990724563598633}, {"tokens": 11821056, "loss": 3.091595411300659}, {"tokens": 12804096, "loss": 2.9077224731445312}, {"tokens": 13787136, "loss": 2.741931676864624}, {"tokens": 14770176, "loss": 2.755629777908325}, {"tokens": 15753216, "loss": 2.570683717727661}, {"tokens": 16736256, "loss": 2.5983426570892334}, {"tokens": 17719296, "loss": 2.564762830734253}, {"tokens": 18702336, "loss": 2.5243289470672607}, {"tokens": 19685376, "loss": 2.401477575302124}, {"tokens": 20668416, "loss": 2.31943678855896}, {"tokens": 21651456, "loss": 2.370093584060669}, {"tokens": 22634496, "loss": 2.2753543853759766}, {"tokens": 23617536, "loss": 2.2852535247802734}, {"tokens": 24600576, "loss": 2.2419345378875732}, {"tokens": 25583616, "loss": 2.1402199268341064}, {"tokens": 26566656, "loss": 2.134528875350952}, {"tokens": 27549696, "loss": 2.144848108291626}, {"tokens": 28532736, "loss": 2.043505907058716}, {"tokens": 29515776, "loss": 2.0309650897979736}, {"tokens": 30498816, "loss": 2.0968031883239746}, {"tokens": 31481856, "loss": 2.00702166557312}, {"tokens": 32464896, "loss": 2.0931873321533203}, {"tokens": 33447936, "loss": 1.9704710245132446}, {"tokens": 34430976, "loss": 1.9382025003433228}, {"tokens": 35414016, "loss": 2.131901741027832}, {"tokens": 36397056, "loss": 1.906197190284729}, {"tokens": 37380096, "loss": 2.0376651287078857}, {"tokens": 38363136, "loss": 1.965260624885559}, {"tokens": 39346176, "loss": 1.9227312803268433}, {"tokens": 40329216, "loss": 1.8766132593154907}, {"tokens": 41312256, "loss": 1.8959258794784546}, {"tokens": 42295296, "loss": 1.9568653106689453}, {"tokens": 43278336, "loss": 1.926741123199463}, {"tokens": 44261376, "loss": 1.8343321084976196}, {"tokens": 45244416, "loss": 1.8661037683486938}, {"tokens": 46227456, "loss": 1.886717438697815}, {"tokens": 47210496, "loss": 1.9405587911605835}, {"tokens": 48193536, "loss": 1.8810218572616577}, {"tokens": 49176576, "loss": 1.8770133256912231}, {"tokens": 49987584, "loss": 1.8481143712997437}]}, {"name": "G_euler_implicit", "mode": "euler_implicit", "batch": 48, "val": 5.665179800987244, "tps": 24089.34871814476, "peak": 2.6097898483276367, "history": [{"tokens": 24576, "loss": 7.758627414703369}, {"tokens": 1007616, "loss": 5.800729274749756}, {"tokens": 1990656, "loss": 5.05084753036499}, {"tokens": 2973696, "loss": 5.821659088134766}, {"tokens": 3956736, "loss": 5.478953838348389}, {"tokens": 4939776, "loss": 5.556781768798828}, {"tokens": 5922816, "loss": 5.508416652679443}, {"tokens": 6905856, "loss": 5.966897487640381}, {"tokens": 7888896, "loss": 5.829190731048584}, {"tokens": 8871936, "loss": 5.771469593048096}, {"tokens": 9854976, "loss": 5.752338886260986}, {"tokens": 10838016, "loss": 5.854681491851807}, {"tokens": 11821056, "loss": 5.774041652679443}, {"tokens": 12804096, "loss": 5.743967056274414}, {"tokens": 13787136, "loss": 5.78950834274292}, {"tokens": 14770176, "loss": 5.838721752166748}, {"tokens": 15753216, "loss": 5.726152420043945}, {"tokens": 16736256, "loss": 5.728878498077393}, {"tokens": 17719296, "loss": 5.834455966949463}, {"tokens": 18702336, "loss": 5.831319332122803}, {"tokens": 19685376, "loss": 5.77274751663208}, {"tokens": 20668416, "loss": 5.726705074310303}, {"tokens": 21651456, "loss": 5.788965225219727}, {"tokens": 22634496, "loss": 5.738039016723633}, {"tokens": 23617536, "loss": 5.77991247177124}, {"tokens": 24600576, "loss": 5.745860576629639}, {"tokens": 25583616, "loss": 5.70669412612915}, {"tokens": 26566656, "loss": 5.700220108032227}, {"tokens": 27549696, "loss": 5.702770233154297}, {"tokens": 28532736, "loss": 5.6870436668396}, {"tokens": 29515776, "loss": 5.665425777435303}, {"tokens": 30498816, "loss": 5.695289134979248}, {"tokens": 31481856, "loss": 5.660412311553955}, {"tokens": 32464896, "loss": 5.7265095710754395}, {"tokens": 33447936, "loss": 5.634986877441406}, {"tokens": 34430976, "loss": 5.62291145324707}, {"tokens": 35414016, "loss": 5.7467803955078125}, {"tokens": 36397056, "loss": 5.6262030601501465}, {"tokens": 37380096, "loss": 5.704503536224365}, {"tokens": 38363136, "loss": 5.713008880615234}, {"tokens": 39346176, "loss": 5.687196731567383}, {"tokens": 40329216, "loss": 5.651965618133545}, {"tokens": 41312256, "loss": 5.694905757904053}, {"tokens": 42295296, "loss": 5.735205173492432}, {"tokens": 43278336, "loss": 5.700673580169678}, {"tokens": 44261376, "loss": 5.690908908843994}, {"tokens": 45244416, "loss": 5.676001071929932}, {"tokens": 46227456, "loss": 5.662001132965088}, {"tokens": 47210496, "loss": 5.7103705406188965}, {"tokens": 48193536, "loss": 5.671596050262451}, {"tokens": 49176576, "loss": 5.827854633331299}, {"tokens": 49987584, "loss": 5.64590311050415}]}, {"name": "F_coupling", "mode": "coupling", "batch": 48, "val": 3.685556960105896, "tps": 43826.515436421774, "peak": 2.5084171295166016, "history": [{"tokens": 24576, "loss": 7.69027853012085}, {"tokens": 122880, "loss": 7.279765605926514}, {"tokens": 221184, "loss": 6.4544677734375}, {"tokens": 319488, "loss": 5.862150192260742}, {"tokens": 417792, "loss": 5.751621246337891}, {"tokens": 516096, "loss": 5.706569671630859}, {"tokens": 614400, "loss": 5.611915111541748}, {"tokens": 712704, "loss": 5.505044460296631}, {"tokens": 811008, "loss": 5.4437432289123535}, {"tokens": 909312, "loss": 5.307631015777588}, {"tokens": 1007616, "loss": 5.229885578155518}, {"tokens": 1105920, "loss": 5.156104564666748}, {"tokens": 1204224, "loss": 4.976407527923584}, {"tokens": 1302528, "loss": 4.880553722381592}, {"tokens": 1400832, "loss": 4.674720764160156}, {"tokens": 1499136, "loss": 4.531574249267578}, {"tokens": 1597440, "loss": 4.489952087402344}, {"tokens": 1695744, "loss": 4.3937225341796875}, {"tokens": 1794048, "loss": 4.22114896774292}, {"tokens": 1892352, "loss": 4.219112873077393}, {"tokens": 1990656, "loss": 4.108328819274902}, {"tokens": 2088960, "loss": 4.0938568115234375}, {"tokens": 2187264, "loss": 3.9322726726531982}, {"tokens": 2285568, "loss": 4.021704196929932}, {"tokens": 2383872, "loss": 3.9083354473114014}, {"tokens": 2482176, "loss": 3.9529612064361572}, {"tokens": 2580480, "loss": 3.9164161682128906}, {"tokens": 2678784, "loss": 3.812640428543091}, {"tokens": 2777088, "loss": 3.8168041706085205}, {"tokens": 2875392, "loss": 3.844503402709961}, {"tokens": 2973696, "loss": 3.823742628097534}, {"tokens": 3072000, "loss": 3.773211717605591}, {"tokens": 3170304, "loss": 3.8098926544189453}, {"tokens": 3268608, "loss": 3.7632362842559814}, {"tokens": 3366912, "loss": 3.8048248291015625}, {"tokens": 3465216, "loss": 3.7733306884765625}, {"tokens": 3563520, "loss": 3.854588270187378}, {"tokens": 3661824, "loss": 3.6990604400634766}, {"tokens": 3760128, "loss": 3.786323308944702}, {"tokens": 3858432, "loss": 3.7289187908172607}, {"tokens": 3956736, "loss": 3.7234909534454346}, {"tokens": 4055040, "loss": 3.7248952388763428}, {"tokens": 4153344, "loss": 3.7493343353271484}, {"tokens": 4251648, "loss": 3.7393810749053955}, {"tokens": 4349952, "loss": 3.6668307781219482}, {"tokens": 4448256, "loss": 3.6746914386749268}, {"tokens": 4546560, "loss": 3.6857707500457764}, {"tokens": 4644864, "loss": 3.6430823802948}, {"tokens": 4743168, "loss": 3.6969735622406006}, {"tokens": 4841472, "loss": 3.6767406463623047}, {"tokens": 4939776, "loss": 3.5798940658569336}, {"tokens": 4988928, "loss": 3.6604175567626953}]}, {"name": "D_maxbatch", "mode": "euler", "batch": 320, "val": 3.5980131030082703, "tps": 39779.968130575886, "peak": 5.7579874992370605, "history": [{"tokens": 163840, "loss": 7.021173000335693}, {"tokens": 1146880, "loss": 6.153926849365234}, {"tokens": 2129920, "loss": 5.944785118103027}, {"tokens": 3112960, "loss": 5.834377765655518}, {"tokens": 4096000, "loss": 5.80100679397583}, {"tokens": 5079040, "loss": 5.734015941619873}, {"tokens": 6062080, "loss": 5.616516590118408}, {"tokens": 7045120, "loss": 5.396968364715576}, {"tokens": 8028160, "loss": 5.204526424407959}, {"tokens": 9011200, "loss": 5.057122707366943}, {"tokens": 9994240, "loss": 4.955288410186768}, {"tokens": 10977280, "loss": 4.8798651695251465}, {"tokens": 11960320, "loss": 4.783231258392334}, {"tokens": 12943360, "loss": 4.73554801940918}, {"tokens": 13926400, "loss": 4.627102851867676}, {"tokens": 14909440, "loss": 4.527205944061279}, {"tokens": 15892480, "loss": 4.436002254486084}, {"tokens": 16875520, "loss": 4.3523783683776855}, {"tokens": 17858560, "loss": 4.248525142669678}, {"tokens": 18841600, "loss": 4.166924953460693}, {"tokens": 19824640, "loss": 4.111659526824951}, {"tokens": 20807680, "loss": 4.057872772216797}, {"tokens": 21790720, "loss": 4.029597759246826}, {"tokens": 22773760, "loss": 4.001263618469238}, {"tokens": 23756800, "loss": 3.947103977203369}, {"tokens": 24739840, "loss": 3.9134960174560547}, {"tokens": 25722880, "loss": 3.895479202270508}, {"tokens": 26705920, "loss": 3.8806655406951904}, {"tokens": 27688960, "loss": 3.837589740753174}, {"tokens": 28672000, "loss": 3.804323673248291}, {"tokens": 29655040, "loss": 3.804260730743408}, {"tokens": 30638080, "loss": 3.797471761703491}, {"tokens": 31621120, "loss": 3.7717933654785156}, {"tokens": 32604160, "loss": 3.745100498199463}, {"tokens": 33587200, "loss": 3.730572462081909}, {"tokens": 34570240, "loss": 3.7262203693389893}, {"tokens": 35553280, "loss": 3.6980836391448975}, {"tokens": 36536320, "loss": 3.678997755050659}, {"tokens": 37519360, "loss": 3.678710699081421}, {"tokens": 38502400, "loss": 3.674809217453003}, {"tokens": 39485440, "loss": 3.6478469371795654}, {"tokens": 40468480, "loss": 3.6198959350585938}, {"tokens": 41451520, "loss": 3.6481895446777344}, {"tokens": 42434560, "loss": 3.606938123703003}, {"tokens": 43417600, "loss": 3.615889310836792}, {"tokens": 44400640, "loss": 3.618502140045166}, {"tokens": 45383680, "loss": 3.5947024822235107}, {"tokens": 46366720, "loss": 3.597360372543335}, {"tokens": 47349760, "loss": 3.5626022815704346}, {"tokens": 48332800, "loss": 3.5600802898406982}, {"tokens": 49315840, "loss": 3.5571060180664062}, {"tokens": 49971200, "loss": 3.572887897491455}]}, {"name": "D2_maxbatch_same_lr", "mode": "euler", "batch": 320, "val": 3.505480194091797, "tps": 39779.968130575886, "peak": 5.7579874992370605, "history": [{"tokens": 163840, "loss": 7.7396559715271}, {"tokens": 1146880, "loss": 7.212127685546875}, {"tokens": 2129920, "loss": 6.190210342407227}, {"tokens": 3112960, "loss": 5.821938514709473}, {"tokens": 4096000, "loss": 5.680488109588623}, {"tokens": 5079040, "loss": 5.4802775382995605}, {"tokens": 6062080, "loss": 5.283860683441162}, {"tokens": 7045120, "loss": 5.180825233459473}, {"tokens": 8028160, "loss": 5.045294761657715}, {"tokens": 9011200, "loss": 4.94857120513916}, {"tokens": 9994240, "loss": 4.864811897277832}, {"tokens": 10977280, "loss": 4.7949137687683105}, {"tokens": 11960320, "loss": 4.699997901916504}, {"tokens": 12943360, "loss": 4.651301860809326}, {"tokens": 13926400, "loss": 4.504212856292725}, {"tokens": 14909440, "loss": 4.40437650680542}, {"tokens": 15892480, "loss": 4.29067325592041}, {"tokens": 16875520, "loss": 4.241133689880371}, {"tokens": 17858560, "loss": 4.1550493240356445}, {"tokens": 18841600, "loss": 4.074635982513428}, {"tokens": 19824640, "loss": 4.027213096618652}, {"tokens": 20807680, "loss": 3.9793355464935303}, {"tokens": 21790720, "loss": 3.9382951259613037}, {"tokens": 22773760, "loss": 3.894292116165161}, {"tokens": 23756800, "loss": 3.8507211208343506}, {"tokens": 24739840, "loss": 3.818415403366089}, {"tokens": 25722880, "loss": 3.797088623046875}, {"tokens": 26705920, "loss": 3.8067479133605957}, {"tokens": 27688960, "loss": 3.7585816383361816}, {"tokens": 28672000, "loss": 3.728299379348755}, {"tokens": 29655040, "loss": 3.725209951400757}, {"tokens": 30638080, "loss": 3.720405340194702}, {"tokens": 31621120, "loss": 3.694108247756958}, {"tokens": 32604160, "loss": 3.672960042953491}, {"tokens": 33587200, "loss": 3.658371686935425}, {"tokens": 34570240, "loss": 3.6509227752685547}, {"tokens": 35553280, "loss": 3.6372506618499756}, {"tokens": 36536320, "loss": 3.6120553016662598}, {"tokens": 37519360, "loss": 3.6016900539398193}, {"tokens": 38502400, "loss": 3.592777729034424}, {"tokens": 39485440, "loss": 3.5699188709259033}, {"tokens": 40468480, "loss": 3.5350759029388428}, {"tokens": 41451520, "loss": 3.56147837638855}, {"tokens": 42434560, "loss": 3.5194931030273438}, {"tokens": 43417600, "loss": 3.5215089321136475}, {"tokens": 44400640, "loss": 3.52647066116333}, {"tokens": 45383680, "loss": 3.508007049560547}, {"tokens": 46366720, "loss": 3.5098793506622314}, {"tokens": 47349760, "loss": 3.4657516479492188}, {"tokens": 48332800, "loss": 3.468531370162964}, {"tokens": 49315840, "loss": 3.464646100997925}, {"tokens": 49971200, "loss": 3.475130558013916}]}], "ladder": [{"mode": "store", "batch": 8, "peak": 1.272841453552246, "tps": 83090.72992242684}, {"mode": "store", "batch": 16, "peak": 2.243575096130371, "tps": 97422.94583730468}, {"mode": "store", "batch": 24, "peak": 3.231032371520996, "tps": 101398.26960025597}, {"mode": "store", "batch": 32, "peak": 4.185530662536621, "tps": 102246.21885344444}, {"mode": "store", "batch": 48, "peak": 6.133284568786621, "tps": 104429.32282232131}, {"mode": "checkpoint", "batch": 8, "peak": 0.6983785629272461, "tps": 70673.32909169319}, {"mode": "checkpoint", "batch": 16, "peak": 1.143599510192871, "tps": 75666.10401596382}, {"mode": "checkpoint", "batch": 24, "peak": 1.590407371520996, "tps": 82649.8471202641}, {"mode": "checkpoint", "batch": 32, "peak": 2.034651756286621, "tps": 82596.88608320187}, {"mode": "checkpoint", "batch": 48, "peak": 2.924910545349121, "tps": 86263.78746610475}, {"mode": "checkpoint", "batch": 64, "peak": 3.815718650817871, "tps": 87104.43157516426}, {"mode": "checkpoint", "batch": 80, "peak": 4.706709861755371, "tps": 89235.00373253082}, {"mode": "checkpoint", "batch": 96, "peak": 5.596236228942871, "tps": 87639.3643977483}, {"mode": "checkpoint", "batch": 112, "peak": 6.489058494567871, "tps": 88596.63084729532}, {"mode": "euler", "batch": 8, "peak": 0.6527853012084961, "tps": 67457.99521459505}, {"mode": "euler", "batch": 16, "peak": 1.048995018005371, "tps": 75138.86748839384}, {"mode": "euler", "batch": 24, "peak": 1.447707176208496, "tps": 77901.87331378387}, {"mode": "euler", "batch": 32, "peak": 1.848555564880371, "tps": 77949.60646941424}, {"mode": "euler", "batch": 48, "peak": 2.643660545349121, "tps": 81290.58805559683}, {"mode": "euler", "batch": 64, "peak": 3.440535545349121, "tps": 82650.1428474191}, {"mode": "euler", "batch": 80, "peak": 4.237959861755371, "tps": 84313.3930382706}, {"mode": "euler", "batch": 96, "peak": 5.033736228942871, "tps": 83319.37042571287}, {"mode": "euler", "batch": 112, "peak": 5.830794334411621, "tps": 84258.50520716074}, {"mode": "midpoint", "batch": 8, "peak": 0.6522970199584961, "tps": 67386.86869394331}, {"mode": "midpoint", "batch": 16, "peak": 1.050093650817871, "tps": 74835.984158211}, {"mode": "midpoint", "batch": 24, "peak": 1.447707176208496, "tps": 78268.4520469351}, {"mode": "midpoint", "batch": 32, "peak": 1.847273826599121, "tps": 78739.38804042444}, {"mode": "midpoint", "batch": 48, "peak": 2.643843650817871, "tps": 81947.96246112428}, {"mode": "midpoint", "batch": 64, "peak": 3.441451072692871, "tps": 83339.35722689002}, {"mode": "midpoint", "batch": 80, "peak": 4.237227439880371, "tps": 85204.53839051446}, {"mode": "midpoint", "batch": 96, "peak": 5.033736228942871, "tps": 84104.56946539276}, {"mode": "coupling", "batch": 16, "peak": 0.9385929107666016, "tps": 77620.33371158825}, {"mode": "coupling", "batch": 24, "peak": 1.3304080963134766, "tps": 85222.74761394503}, {"mode": "coupling", "batch": 32, "peak": 1.7230777740478516, "tps": 87395.36320061178}, {"mode": "coupling", "batch": 48, "peak": 2.5101261138916016, "tps": 88954.8671834575}, {"mode": "coupling", "batch": 64, "peak": 3.2937564849853516, "tps": 91084.7783504389}, {"mode": "coupling", "batch": 80, "peak": 4.079950332641602, "tps": 91755.83846937097}, {"mode": "coupling", "batch": 96, "peak": 4.864435195922852, "tps": 91448.85748378198}, {"mode": "coupling", "batch": 112, "peak": 5.650629043579102, "tps": 93501.04203993714}, {"mode": "coupling", "batch": 128, "peak": 6.435113906860352, "tps": 92183.82375860399}, {"mode": "midpoint", "batch": 112, "peak": 5.831526756286621, "tps": 85496.87437853606}], "ladder_chunked": [{"mode": "euler", "batch": 48, "peak": 1.1679606437683105, "tps": 75292.61568650596}, {"mode": "euler", "batch": 96, "peak": 1.9755167961120605, "tps": 77519.64202485418}, {"mode": "euler", "batch": 128, "peak": 2.5161662101745605, "tps": 78037.7436432538}, {"mode": "euler", "batch": 160, "peak": 3.0586466789245605, "tps": 77889.78190050182}, {"mode": "euler", "batch": 192, "peak": 3.6006388664245605, "tps": 77041.52786576017}, {"mode": "euler", "batch": 224, "peak": 4.1409220695495605, "tps": 75543.06513119975}, {"mode": "euler", "batch": 256, "peak": 4.6766886711120605, "tps": 73367.85052013792}, {"mode": "euler", "batch": 320, "peak": 5.7557291984558105, "tps": 73231.48031129195}, {"mode": "midpoint", "batch": 48, "peak": 1.1594696044921875, "tps": 73258.92796699262}, {"mode": "midpoint", "batch": 96, "peak": 1.9706878662109375, "tps": 75067.9746028601}, {"mode": "midpoint", "batch": 128, "peak": 2.5095672607421875, "tps": 74801.46459633352}, {"mode": "midpoint", "batch": 160, "peak": 3.0518646240234375, "tps": 75394.25911479967}, {"mode": "midpoint", "batch": 192, "peak": 3.5942230224609375, "tps": 74391.3701645572}, {"mode": "midpoint", "batch": 224, "peak": 4.1349945068359375, "tps": 74009.0891643862}, {"mode": "midpoint", "batch": 256, "peak": 4.6687469482421875, "tps": 73211.92774857902}, {"mode": "midpoint", "batch": 320, "peak": 5.7490081787109375, "tps": 73421.95965059623}], "depth": [{"mode": "store", "L": 4, "per": 1.261113166809082}, {"mode": "store", "L": 8, "per": 1.749028205871582}, {"mode": "store", "L": 16, "per": 2.722661018371582}, {"mode": "store", "L": 32, "per": 4.670109748840332}, {"mode": "checkpoint", "L": 4, "per": 0.820378303527832}, {"mode": "checkpoint", "L": 8, "per": 0.867253303527832}, {"mode": "checkpoint", "L": 16, "per": 0.961003303527832}, {"mode": "checkpoint", "L": 32, "per": 1.149235725402832}, {"mode": "euler", "L": 4, "per": 0.796940803527832}, {"mode": "euler", "L": 8, "per": 0.796940803527832}, {"mode": "euler", "L": 16, "per": 0.796940803527832}, {"mode": "euler", "L": 32, "per": 0.797123908996582}, {"mode": "midpoint", "L": 4, "per": 0.796940803527832}, {"mode": "midpoint", "L": 8, "per": 0.796940803527832}, {"mode": "midpoint", "L": 16, "per": 0.796940803527832}, {"mode": "midpoint", "L": 32, "per": 0.796940803527832}], "vram_cap": 6.951171875}</script>
+<script>
+"use strict";
+const DATA = JSON.parse(document.getElementById("data").textContent);
+const C = {store:"#3987e5",checkpoint:"#d95926",euler:"#199e70",midpoint:"#c98500",
+           coupling:"#d55181",euler_implicit:"#008300"};
+const NAME = {store:"baseline",checkpoint:"checkpointing",euler:"symplectic Euler",
+              midpoint:"midpoint",coupling:"coupling",euler_implicit:"implicit Euler"};
+const NS = "http://www.w3.org/2000/svg";
+const el = (t,a={}) => { const n=document.createElementNS(NS,t);
+  for(const k in a) n.setAttribute(k,a[k]); return n; };
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+/* ---------- masthead trace: a leapfrog stepping across ---------- */
+(function(){
+  const s=document.getElementById("trace"), W=1200, H=96;
+  const pts=[]; let h0=48, h1=52;
+  for(let i=0;i<60;i++){ const f=Math.sin(i*0.42)*13 + Math.sin(i*0.17)*5;
+    const h2=h0+0.34*f; pts.push([i*(W/59),h1]); h0=h1; h1=h2; }
+  const d=pts.map((p,i)=>(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" ");
+  const p=el("path",{d,fill:"none",stroke:css("--accent-dim"),"stroke-width":"1.5"});
+  s.appendChild(p);
+  pts.forEach((pt,i)=>{ if(i%4) return;
+    s.appendChild(el("circle",{cx:pt[0],cy:pt[1],r:2.4,
+      fill: i%8 ? css("--accent-dim") : css("--accent"), opacity: 0.35+0.65*(i/60)})); });
+})();
+
+/* ---------- the machine ---------- */
+const SCHEMES = {
+  store:    {label:"baseline",  rows:["h"],      keeps:L=>L+1, blurb:"every layer's activations kept until backward consumes them"},
+  euler:    {label:"symplectic Euler", rows:["h","v"], keeps:()=>2, blurb:"h and v at the boundary; everything else rebuilt"},
+  midpoint: {label:"midpoint",  rows:["h"],      keeps:()=>3, blurb:"two neighbouring states plus h0; everything else rebuilt"},
+  coupling: {label:"coupling",  rows:["x1","x2"],keeps:()=>2, blurb:"the two halves at the boundary; everything else rebuilt"}
+};
+const L = 8;
+let scheme = "midpoint", t = 0;   // t: 0..2L  (0..L forward, then backward)
+const TMAX = 2*L;
+
+function liveSet(mode, t){
+  // which layer indices are held, and which is being recomputed right now
+  const fwd = t <= L;
+  const at = fwd ? t : (2*L - t);
+  let held = [], busy = -1;
+  if (mode === "store"){
+    held = Array.from({length: at+1}, (_,i)=>i);
+    if(!fwd) busy = at;
+  } else if (mode === "midpoint"){
+    if (fwd) held = [0, Math.max(0,at-1), at].filter((v,i,a)=>a.indexOf(v)===i);
+    else { held = [0, at, Math.min(L,at+1)]; busy = at; }
+  } else {
+    if (fwd) held = [at];
+    else { held = [at]; busy = at; }
+    if (mode === "euler" || mode === "coupling") held = [at];
+  }
+  return {held:[...new Set(held)].sort((a,b)=>a-b), busy, at, fwd};
+}
+
+function drawStage(){
+  const s = document.getElementById("stage"); s.innerHTML="";
+  const W=1000, H=300, padL=54, padR=20, top=56;
+  const cw = (W-padL-padR)/(L+1), bw = Math.min(cw-10, 62), bh=40;
+  const st = liveSet(scheme, t);
+  const rows = SCHEMES[scheme].rows;
+
+  s.appendChild(Object.assign(el("text",{x:padL,y:26,fill:css("--ink2"),
+    "font-family":css("--sans"),"font-size":"13"}),
+    {textContent: st.fwd ? "forward  →  keeping only what the inverse will need"
+                         : "backward  ←  rebuilding each layer from the one above"}));
+
+  rows.forEach((rname, ri)=>{
+    const y = top + ri*(bh+34);
+    s.appendChild(Object.assign(el("text",{x:padL-12,y:y+bh/2+4,fill:css("--ink3"),
+      "text-anchor":"end","font-family":css("--mono"),"font-size":"12"}),
+      {textContent:rname}));
+    for(let i=0;i<=L;i++){
+      const x = padL + i*cw + (cw-bw)/2;
+      const held = st.held.includes(i), busy = (st.busy===i);
+      const g = el("g");
+      g.appendChild(el("rect",{x,y,width:bw,height:bh,rx:6,
+        fill: busy ? css("--s3") : (held ? css("--accent") : css("--raised")),
+        stroke: held||busy ? "none" : css("--line"), "stroke-width":"1",
+        opacity: busy?0.95:(held?0.92:1)}));
+      g.appendChild(Object.assign(el("text",{x:x+bw/2,y:y+bh/2+4,"text-anchor":"middle",
+        "font-family":css("--mono"),"font-size":"11",
+        fill: held||busy ? "#14141c" : css("--ink3")}),
+        {textContent: rname+String.fromCharCode(8320+Math.min(i,9))}));
+      s.appendChild(g);
+    }
+  });
+
+  // the pointer
+  const px = padL + st.at*cw + cw/2;
+  const py = top + rows.length*(bh+34) + 4;
+  s.appendChild(el("path",{d:`M${px-7} ${py+14} L${px+7} ${py+14} L${px} ${py+3} Z`,
+    fill:css("--accent")}));
+  s.appendChild(Object.assign(el("text",{x:px,y:py+34,"text-anchor":"middle",
+    fill:css("--ink2"),"font-family":css("--mono"),"font-size":"11.5"}),
+    {textContent:"layer "+st.at}));
+
+  // memory bar
+  const barY = H-52, kept = st.held.length * rows.length;
+  const maxKept = (L+1) * rows.length;
+  s.appendChild(el("rect",{x:padL,y:barY,width:W-padL-padR,height:12,rx:6,
+    fill:css("--raised")}));
+  s.appendChild(el("rect",{x:padL,y:barY,width:Math.max(8,(W-padL-padR)*kept/maxKept),
+    height:12,rx:6,fill:css("--accent")}));
+  s.appendChild(Object.assign(el("text",{x:padL,y:barY+32,fill:css("--ink3"),
+    "font-family":css("--sans"),"font-size":"12"}),
+    {textContent:`${kept} tensor${kept===1?"":"s"} held of a possible ${maxKept}`}));
+
+  document.getElementById("readout").innerHTML =
+    `<b>${kept}</b> tensors held<br>${SCHEMES[scheme].blurb}`;
+}
+
+function setScheme(m){ scheme=m; t=0;
+  document.querySelectorAll(".chip").forEach(c=>
+    c.setAttribute("aria-pressed", String(c.dataset.mode===m)));
+  drawStage(); }
+document.querySelectorAll(".chip").forEach(c=>
+  c.addEventListener("click",()=>setScheme(c.dataset.mode)));
+document.getElementById("fwd").onclick = ()=>{ t=Math.min(TMAX,t+1); drawStage(); };
+document.getElementById("back").onclick= ()=>{ t=Math.max(0,t-1); drawStage(); };
+document.getElementById("reset").onclick=()=>{ t=0; drawStage(); };
+let timer=null;
+document.getElementById("play").onclick = (e)=>{
+  if(timer){ clearInterval(timer); timer=null; e.target.textContent="Play"; return; }
+  e.target.textContent="Pause";
+  timer=setInterval(()=>{ t=(t+1)%(TMAX+1); drawStage(); }, 520);
+};
+
+/* ---------- charts ---------- */
+const tip = document.getElementById("tip");
+function hover(node, html){
+  node.style.cursor="crosshair";
+  node.addEventListener("pointerenter",()=>{ tip.innerHTML=html; tip.classList.add("on"); });
+  node.addEventListener("pointermove",e=>{
+    tip.style.left=Math.min(window.innerWidth-tip.offsetWidth-12,e.clientX+14)+"px";
+    tip.style.top=(e.clientY+16)+"px"; });
+  node.addEventListener("pointerleave",()=>tip.classList.remove("on"));
+}
+
+function tickPow2(a,b){
+  const out=[]; for(let v=Math.pow(2,Math.ceil(Math.log2(a))); v<=b; v*=2) out.push(v);
+  return out;
+}
+function linTicks(a,b,n){
+  const out=[]; for(let i=0;i<=n;i++) out.push(a+(b-a)*i/n); return out;
+}
+
+function gutter(s, items, x, minGap){
+  // Several series land on the same pixel (symplectic Euler and midpoint allocate
+  // identically; three runs finish within 0.7% of each other). Nudge the labels apart
+  // greedily so every one stays readable near what it names.
+  items.sort((a,b)=>b.y-a.y);
+  let placed=[];
+  for(const it of items){
+    let y=it.y;
+    if(placed.length && placed[placed.length-1] - y < minGap) y = placed[placed.length-1]-minGap;
+    placed.push(y);
+    s.appendChild(Object.assign(el("text",{x,y:y+4,fill:it.color,
+      "font-family":css("--sans"),"font-size":"12","font-weight":"500"}),
+      {textContent:it.text}));
+  }
+}
+
+function axes(s,W,H,pad,xs,ys,xlab,ylab,fmtX,fmtY,logX){
+  const [x0,x1]=xs, [y0,y1]=ys;
+  const X = v => logX ? pad.l+(Math.log2(v)-Math.log2(x0))/(Math.log2(x1)-Math.log2(x0))*(W-pad.l-pad.r)
+                      : pad.l+(v-x0)/(x1-x0)*(W-pad.l-pad.r);
+  const Y = v => H-pad.b-(v-y0)/(y1-y0)*(H-pad.t-pad.b);
+  for(let i=0;i<=4;i++){
+    const v=y0+(y1-y0)*i/4, y=Y(v);
+    s.appendChild(el("line",{x1:pad.l,y1:y,x2:W-pad.r,y2:y,stroke:css("--line"),
+      "stroke-width":"1"}));
+    s.appendChild(Object.assign(el("text",{x:pad.l-9,y:y+4,"text-anchor":"end",
+      fill:css("--ink3"),"font-family":css("--mono"),"font-size":"11"}),
+      {textContent:fmtY(v)}));
+  }
+  // x ticks. Without these the chart has a label but names no value it actually reaches,
+  // which is the whole point of an axis.
+  const xticks = logX ? tickPow2(x0,x1) : linTicks(x0,x1,5);
+  xticks.forEach(v=>{
+    const x=X(v);
+    s.appendChild(el("line",{x1:x,y1:H-pad.b,x2:x,y2:H-pad.b+5,stroke:css("--line"),
+      "stroke-width":"1"}));
+    s.appendChild(Object.assign(el("text",{x,y:H-pad.b+19,"text-anchor":"middle",
+      fill:css("--ink3"),"font-family":css("--mono"),"font-size":"11"}),
+      {textContent:fmtX(v)}));
+  });
+  s.appendChild(Object.assign(el("text",{x:pad.l,y:H-12,fill:css("--ink3"),
+    "font-family":css("--sans"),"font-size":"12"}),{textContent:xlab}));
+  // rotated inside the viewBox: anchored at pad.l-9 it ran off the left edge and the
+  // browser clipped the first characters ("aining loss")
+  const yl = el("text",{x:0,y:0,"text-anchor":"middle",fill:css("--ink3"),
+    "font-family":css("--sans"),"font-size":"12",
+    transform:`translate(16 ${(H-pad.b+pad.t)/2}) rotate(-90)`});
+  yl.textContent = ylab; s.appendChild(yl);
+  return {X,Y};
+}
+
+function lossChart(){
+  const s=document.getElementById("chart-loss"); if(!s) return;
+  const W=1000,H=448,pad={l:70,r:232,t:26,b:62};
+  const runs=DATA.runs.filter(r=>!r.name.startsWith("D")&&r.mode!=="coupling");
+  const xmax=Math.max(...runs.flatMap(r=>r.history.map(h=>h.tokens)))/1e6;
+  const all=runs.flatMap(r=>r.history.map(h=>h.loss));
+  const ymin=Math.min(...all)*0.97, ymax=Math.min(Math.max(...all),8);
+  const {X,Y}=axes(s,W,H,pad,[0,xmax],[ymin,ymax],"tokens (millions)","training loss",
+    v=>v.toFixed(0),v=>v.toFixed(2));
+  const marks=[];
+  runs.forEach(r=>{
+    const pts=r.history.filter(h=>h.loss<=ymax);
+    const d=pts.map((h,i)=>(i?"L":"M")+X(h.tokens/1e6).toFixed(1)+" "+Y(h.loss).toFixed(1)).join(" ");
+    const p=el("path",{d,fill:"none",stroke:C[r.mode],"stroke-width":"2",
+      "stroke-linejoin":"round"});
+    s.appendChild(p);
+    const last=pts[pts.length-1];
+    s.appendChild(el("circle",{cx:X(last.tokens/1e6),cy:Y(last.loss),r:4,fill:C[r.mode],
+      stroke:css("--surface"),"stroke-width":"2"}));
+    marks.push({y:Y(last.loss),text:NAME[r.mode]+"  "+r.val.toFixed(3),color:C[r.mode]});
+    hover(p,`<b>${NAME[r.mode]}</b><br>final val ${r.val.toFixed(4)}<br>${Math.round(r.tps).toLocaleString()} tok/s`);
+  });
+  gutter(s, marks, W-pad.r+12, 17);
+  s.appendChild(Object.assign(el("text",{x:pad.l,y:16,fill:css("--ink3"),
+    "font-family":css("--sans"),"font-size":"11.5"}),
+    {textContent:"final validation loss shown at each line's end"}));
+}
+
+function batchChart(){
+  const s=document.getElementById("chart-batch"); if(!s) return;
+  const W=1000,H=448,pad={l:70,r:268,t:26,b:62};
+  const rows=DATA.ladder, ch=DATA.ladder_chunked;
+  const modes=[...new Set(rows.map(r=>r.mode))];
+  const xs=[Math.min(...rows.map(r=>r.batch)),
+            Math.max(...rows.map(r=>r.batch),...ch.map(r=>r.batch))];
+  const ymax=Math.max(...rows.map(r=>r.peak),...ch.map(r=>r.peak))*1.08;
+  const {X,Y}=axes(s,W,H,pad,xs,[0,ymax],"batch size (sequences of 512 tokens)",
+    "peak memory (GiB)",v=>v.toFixed(0),v=>v.toFixed(1),true);
+  if(DATA.vram_cap){
+    s.appendChild(el("line",{x1:pad.l,y1:Y(DATA.vram_cap),x2:W-pad.r,y2:Y(DATA.vram_cap),
+      stroke:css("--ink3"),"stroke-dasharray":"3 4","stroke-width":"1.2"}));
+    s.appendChild(Object.assign(el("text",{x:pad.l+6,y:Y(DATA.vram_cap)-7,fill:css("--ink3"),
+      "font-family":css("--sans"),"font-size":"11.5"}),
+      {textContent:DATA.vram_cap.toFixed(2)+" GiB usable on this GPU"}));
+  }
+  const marks=[];
+  const draw=(data,dash)=>{
+    [...new Set(data.map(r=>r.mode))].forEach(m=>{
+      const pts=data.filter(r=>r.mode===m).sort((a,b)=>a.batch-b.batch);
+      if(!pts.length) return;
+      const d=pts.map((r,i)=>(i?"L":"M")+X(r.batch).toFixed(1)+" "+Y(r.peak).toFixed(1)).join(" ");
+      const p=el("path",{d,fill:"none",stroke:C[m],"stroke-width":"2",
+        "stroke-dasharray":dash?"5 4":""});
+      s.appendChild(p);
+      pts.forEach(r=>{ const c=el("circle",{cx:X(r.batch),cy:Y(r.peak),r:3.4,fill:C[m]});
+        hover(c,`<b>${NAME[m]}</b>${dash?" · chunked CE":""}<br>batch ${r.batch}<br>${r.peak.toFixed(2)} GiB<br>${Math.round(r.tps).toLocaleString()} tok/s`);
+        s.appendChild(c); });
+      const last=pts[pts.length-1];
+      s.appendChild(el("path",{d:`M${X(last.batch)-6} ${Y(last.peak)-6} l12 12 M${X(last.batch)+6} ${Y(last.peak)-6} l-12 12`,
+        stroke:C[m],"stroke-width":"2.6","stroke-linecap":"round"}));
+      marks.push({y:Y(last.peak),color:C[m],
+        text:NAME[m]+(dash?" (chunked CE)":"")+" · max "+last.batch});
+    });
+  };
+  draw(rows,false); draw(ch,true);
+  gutter(s, marks, W-pad.r+14, 17);
+}
+
+function depthChart(){
+  const s=document.getElementById("chart-depth"); if(!s) return;
+  const W=1000,H=428,pad={l:70,r:190,t:26,b:62};
+  const rows=DATA.depth; if(!rows.length) return;
+  const xs=[Math.min(...rows.map(r=>r.L)),Math.max(...rows.map(r=>r.L))];
+  const ymax=Math.max(...rows.map(r=>r.per))*1.12;
+  const {X,Y}=axes(s,W,H,pad,xs,[0,ymax],"layers","memory per batch (GiB)",
+    v=>v.toFixed(0),v=>v.toFixed(2),true);
+  const marks=[];
+  [...new Set(rows.map(r=>r.mode))].forEach(m=>{
+    const pts=rows.filter(r=>r.mode===m).sort((a,b)=>a.L-b.L);
+    const d=pts.map((r,i)=>(i?"L":"M")+X(r.L).toFixed(1)+" "+Y(r.per).toFixed(1)).join(" ");
+    s.appendChild(el("path",{d,fill:"none",stroke:C[m],"stroke-width":"2"}));
+    pts.forEach(r=>{ const c=el("circle",{cx:X(r.L),cy:Y(r.per),r:3.6,fill:C[m]});
+      hover(c,`<b>${NAME[m]}</b><br>${r.L} layers<br>${r.per.toFixed(3)} GiB per batch`);
+      s.appendChild(c); });
+    const last=pts[pts.length-1];
+    marks.push({y:Y(last.per),text:NAME[m],color:C[m]});
+  });
+  gutter(s, marks, W-pad.r+12, 17);
+}
+
+setScheme("midpoint");
+lossChart(); batchChart(); depthChart();
+</script>
+</body>
+</html>

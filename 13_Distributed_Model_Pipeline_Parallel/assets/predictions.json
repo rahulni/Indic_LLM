@@ -1,0 +1,79 @@
+{
+  "registered": "2026-09-24",
+  "why": "Numbers written down before the runs that settle them, and scored afterwards whether they hold or not. Predictions marked source='plan' were fixed in the approved implementation plan before any code existed; those marked source='build' were registered after the engines were written and gate-tested but before any 50M-token run. Provenance is recorded per item because a prediction registered after the measurement is not a prediction.",
+  "predictions": [
+    {
+      "id": "midpoint_slowdown",
+      "source": "plan",
+      "quantity": "midpoint tokens/s vs the storing baseline",
+      "prediction": "30-40% slower",
+      "reasoning": "backward costs one extra evaluation of G per layer: 4 compute units against the baseline's 3. Also the figure the session transcript quotes.",
+      "settled_by": "runs A and C"
+    },
+    {
+      "id": "euler_implicit_slowdown",
+      "source": "plan",
+      "quantity": "implicit-Euler (K=4) tokens/s vs baseline",
+      "prediction": "2.5-3x slower",
+      "reasoning": "1 forward + 4 fixed-point evaluations + 1 graph rebuild + 2 backward ~ 8 units against 3.",
+      "settled_by": "runs A and G"
+    },
+    {
+      "id": "euler_implicit_loss_matches",
+      "source": "plan",
+      "quantity": "implicit-Euler final loss vs baseline final loss",
+      "prediction": "within 1%",
+      "reasoning": "its forward pass is bit-identical to the baseline's (asserted in tests), so the only way they can differ is if the reconstruction drifts and the gradients stop being the true ones.",
+      "settled_by": "runs A and G"
+    },
+    {
+      "id": "midpoint_vs_baseline_loss",
+      "source": "plan",
+      "quantity": "midpoint final loss vs baseline final loss",
+      "prediction": "unknown sign - registered as genuinely open",
+      "reasoning": "leapfrog is a different architecture, not a different backward pass for the same one. There is no a-priori reason it should match.",
+      "settled_by": "runs A and C"
+    },
+    {
+      "id": "max_batch_ratio",
+      "source": "plan",
+      "quantity": "largest reversible batch / largest baseline batch",
+      "prediction": "3-4x",
+      "reasoning": "per-layer activations collapse to a constant; the logits and one live layer survive and do not shrink.",
+      "settled_by": "the batch ladder"
+    },
+    {
+      "id": "checkpointing_wins_at_L10",
+      "source": "plan",
+      "quantity": "does plain gradient checkpointing beat reversibility on memory at L=10?",
+      "prediction": "likely yes",
+      "reasoning": "checkpointing keeps one tensor per layer against a stored block's ~12, so at only ten layers reversibility's remaining edge looked thin.",
+      "settled_by": "the depth sweep",
+      "note": "registered in the plan; contradicted during the build before any training run, and scored as a miss. The reasoning was wrong: checkpointing keeps L stream tensors while reversibility keeps 3, so the crossover is at L=3, not somewhere past 10."
+    },
+    {
+      "id": "midpoint_beats_symplectic",
+      "source": "build",
+      "quantity": "midpoint final validation loss vs symplectic-Euler final validation loss",
+      "prediction": "midpoint is lower (better), by a small margin",
+      "reasoning": "midpoint is second-order accurate as an integrator and symplectic Euler is first-order; the session transcript also reports midpoint winning. Registered before either run.",
+      "settled_by": "runs B and C"
+    },
+    {
+      "id": "implicit_euler_trains_worse",
+      "source": "build",
+      "quantity": "implicit-Euler final loss, given its forward is identical to the baseline's",
+      "prediction": "measurably worse than the baseline despite the identical forward",
+      "reasoning": "Lip(G) was measured at ~1.05 at this configuration, right on the contraction boundary, so the fixed point stalls at a reconstruction error near 0.09 and the gradients it produces are not the true ones. If this prediction fails, the gradient error does not matter as much as the theory says.",
+      "settled_by": "runs A and G"
+    },
+    {
+      "id": "logits_become_the_bottleneck",
+      "source": "build",
+      "quantity": "what limits the maximum batch once activations are gone",
+      "prediction": "the fp32 logits in the LM head, not the residual stream; chunked cross-entropy should raise the maximum batch by a further 1.5x or more",
+      "reasoning": "at batch 128 the logits alone are 128*512*8192*4 = 2.1 GiB, larger than everything reversibility saves.",
+      "settled_by": "the batch ladder, run with and without chunked cross-entropy"
+    }
+  ]
+}

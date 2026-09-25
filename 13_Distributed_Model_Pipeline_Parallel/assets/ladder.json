@@ -1,0 +1,1482 @@
+{
+  "rows": [
+    {
+      "mode": "store",
+      "batch": 8,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.272841453552246,
+      "peak_reserved_gib": 1.396484375,
+      "state_gib": 0.25199317932128906,
+      "per_batch_gib": 1.020848274230957,
+      "tokens_per_sec": 83090.72992242684,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.005859375,
+        "activations_gib": 0.703125,
+        "logits_gib": 0.125,
+        "total_gib": 0.828125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "store",
+      "batch": 16,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 2.243575096130371,
+      "peak_reserved_gib": 2.369140625,
+      "state_gib": 0.25260353088378906,
+      "per_batch_gib": 1.990971565246582,
+      "tokens_per_sec": 97422.94583730468,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 1.40625,
+        "logits_gib": 0.25,
+        "total_gib": 1.65625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "store",
+      "batch": 24,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 3.231032371520996,
+      "peak_reserved_gib": 3.478515625,
+      "state_gib": 0.25315284729003906,
+      "per_batch_gib": 2.977879524230957,
+      "tokens_per_sec": 101398.26960025597,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.017578125,
+        "activations_gib": 2.109375,
+        "logits_gib": 0.375,
+        "total_gib": 2.484375
+      },
+      "degraded": false
+    },
+    {
+      "mode": "store",
+      "batch": 32,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 4.185530662536621,
+      "peak_reserved_gib": 4.546875,
+      "state_gib": 0.25235939025878906,
+      "per_batch_gib": 3.933171272277832,
+      "tokens_per_sec": 102246.21885344444,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0234375,
+        "activations_gib": 2.8125,
+        "logits_gib": 0.5,
+        "total_gib": 3.3125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "store",
+      "batch": 48,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 6.133284568786621,
+      "peak_reserved_gib": 6.75390625,
+      "state_gib": 0.25248146057128906,
+      "per_batch_gib": 5.880803108215332,
+      "tokens_per_sec": 104429.32282232131,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 4.21875,
+        "logits_gib": 0.75,
+        "total_gib": 4.96875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 8,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 0.6983785629272461,
+      "peak_reserved_gib": 0.849609375,
+      "state_gib": 0.25229835510253906,
+      "per_batch_gib": 0.44608020782470703,
+      "tokens_per_sec": 70673.32909169319,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.005859375,
+        "activations_gib": 0.12890625,
+        "logits_gib": 0.125,
+        "total_gib": 0.25390625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 16,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.143599510192871,
+      "peak_reserved_gib": 1.3359375,
+      "state_gib": 0.25290870666503906,
+      "per_batch_gib": 0.890690803527832,
+      "tokens_per_sec": 75666.10401596382,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.2578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.5078125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 24,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.590407371520996,
+      "peak_reserved_gib": 1.919921875,
+      "state_gib": 0.25437355041503906,
+      "per_batch_gib": 1.336033821105957,
+      "tokens_per_sec": 82649.8471202641,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.017578125,
+        "activations_gib": 0.38671875,
+        "logits_gib": 0.375,
+        "total_gib": 0.76171875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 32,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 2.034651756286621,
+      "peak_reserved_gib": 2.521484375,
+      "state_gib": 0.25327491760253906,
+      "per_batch_gib": 1.781376838684082,
+      "tokens_per_sec": 82596.88608320187,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0234375,
+        "activations_gib": 0.515625,
+        "logits_gib": 0.5,
+        "total_gib": 1.015625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 48,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 2.924910545349121,
+      "peak_reserved_gib": 3.70703125,
+      "state_gib": 0.25284767150878906,
+      "per_batch_gib": 2.672062873840332,
+      "tokens_per_sec": 86263.78746610475,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.7734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.5234375
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 64,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 3.815718650817871,
+      "peak_reserved_gib": 3.900390625,
+      "state_gib": 0.25296974182128906,
+      "per_batch_gib": 3.562748908996582,
+      "tokens_per_sec": 87104.43157516426,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.046875,
+        "activations_gib": 1.03125,
+        "logits_gib": 1.0,
+        "total_gib": 2.03125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 80,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 4.706709861755371,
+      "peak_reserved_gib": 6.09375,
+      "state_gib": 0.25327491760253906,
+      "per_batch_gib": 4.453434944152832,
+      "tokens_per_sec": 89235.00373253082,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.05859375,
+        "activations_gib": 1.2890625,
+        "logits_gib": 1.25,
+        "total_gib": 2.5390625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 96,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 5.596236228942871,
+      "peak_reserved_gib": 5.787109375,
+      "state_gib": 0.25211524963378906,
+      "per_batch_gib": 5.344120979309082,
+      "tokens_per_sec": 87639.3643977483,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0703125,
+        "activations_gib": 1.546875,
+        "logits_gib": 1.5,
+        "total_gib": 3.046875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 112,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 6.489058494567871,
+      "peak_reserved_gib": 6.73046875,
+      "state_gib": 0.25425148010253906,
+      "per_batch_gib": 6.234807014465332,
+      "tokens_per_sec": 88596.63084729532,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.08203125,
+        "activations_gib": 1.8046875,
+        "logits_gib": 1.75,
+        "total_gib": 3.5546875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 8,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 0.6527853012084961,
+      "peak_reserved_gib": 0.826171875,
+      "state_gib": 0.25358009338378906,
+      "per_batch_gib": 0.39920520782470703,
+      "tokens_per_sec": 67457.99521459505,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.005859375,
+        "activations_gib": 0.087890625,
+        "logits_gib": 0.125,
+        "total_gib": 0.212890625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 16,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.048995018005371,
+      "peak_reserved_gib": 1.27734375,
+      "state_gib": 0.25205421447753906,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 75138.86748839384,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 24,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.447707176208496,
+      "peak_reserved_gib": 1.83203125,
+      "state_gib": 0.25229835510253906,
+      "per_batch_gib": 1.195408821105957,
+      "tokens_per_sec": 77901.87331378387,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.017578125,
+        "activations_gib": 0.263671875,
+        "logits_gib": 0.375,
+        "total_gib": 0.638671875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 32,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.848555564880371,
+      "peak_reserved_gib": 2.404296875,
+      "state_gib": 0.25467872619628906,
+      "per_batch_gib": 1.593876838684082,
+      "tokens_per_sec": 77949.60646941424,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0234375,
+        "activations_gib": 0.3515625,
+        "logits_gib": 0.5,
+        "total_gib": 0.8515625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 48,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 2.643660545349121,
+      "peak_reserved_gib": 3.53125,
+      "state_gib": 0.25284767150878906,
+      "per_batch_gib": 2.390812873840332,
+      "tokens_per_sec": 81290.58805559683,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.52734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.27734375
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 64,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 3.440535545349121,
+      "peak_reserved_gib": 3.666015625,
+      "state_gib": 0.25278663635253906,
+      "per_batch_gib": 3.187748908996582,
+      "tokens_per_sec": 82650.1428474191,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.046875,
+        "activations_gib": 0.703125,
+        "logits_gib": 1.0,
+        "total_gib": 1.703125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 80,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 4.237959861755371,
+      "peak_reserved_gib": 4.55078125,
+      "state_gib": 0.25327491760253906,
+      "per_batch_gib": 3.984684944152832,
+      "tokens_per_sec": 84313.3930382706,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.05859375,
+        "activations_gib": 0.87890625,
+        "logits_gib": 1.25,
+        "total_gib": 2.12890625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 96,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 5.033736228942871,
+      "peak_reserved_gib": 6.935546875,
+      "state_gib": 0.25211524963378906,
+      "per_batch_gib": 4.781620979309082,
+      "tokens_per_sec": 83319.37042571287,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0703125,
+        "activations_gib": 1.0546875,
+        "logits_gib": 1.5,
+        "total_gib": 2.5546875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "euler",
+      "batch": 112,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 5.830794334411621,
+      "peak_reserved_gib": 6.3203125,
+      "state_gib": 0.25223731994628906,
+      "per_batch_gib": 5.578557014465332,
+      "tokens_per_sec": 84258.50520716074,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.08203125,
+        "activations_gib": 1.23046875,
+        "logits_gib": 1.75,
+        "total_gib": 2.98046875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 8,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 0.6522970199584961,
+      "peak_reserved_gib": 0.814453125,
+      "state_gib": 0.25309181213378906,
+      "per_batch_gib": 0.39920520782470703,
+      "tokens_per_sec": 67386.86869394331,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.005859375,
+        "activations_gib": 0.087890625,
+        "logits_gib": 0.125,
+        "total_gib": 0.212890625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 16,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.050093650817871,
+      "peak_reserved_gib": 1.265625,
+      "state_gib": 0.25315284729003906,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 74835.984158211,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 24,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.447707176208496,
+      "peak_reserved_gib": 1.814453125,
+      "state_gib": 0.25229835510253906,
+      "per_batch_gib": 1.195408821105957,
+      "tokens_per_sec": 78268.4520469351,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.017578125,
+        "activations_gib": 0.263671875,
+        "logits_gib": 0.375,
+        "total_gib": 0.638671875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 32,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.847273826599121,
+      "peak_reserved_gib": 2.380859375,
+      "state_gib": 0.25339698791503906,
+      "per_batch_gib": 1.593876838684082,
+      "tokens_per_sec": 78739.38804042444,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0234375,
+        "activations_gib": 0.3515625,
+        "logits_gib": 0.5,
+        "total_gib": 0.8515625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 48,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 2.643843650817871,
+      "peak_reserved_gib": 3.49609375,
+      "state_gib": 0.25303077697753906,
+      "per_batch_gib": 2.390812873840332,
+      "tokens_per_sec": 81947.96246112428,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.52734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.27734375
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 64,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 3.441451072692871,
+      "peak_reserved_gib": 4.619140625,
+      "state_gib": 0.25370216369628906,
+      "per_batch_gib": 3.187748908996582,
+      "tokens_per_sec": 83339.35722689002,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.046875,
+        "activations_gib": 0.703125,
+        "logits_gib": 1.0,
+        "total_gib": 1.703125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 80,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 4.237227439880371,
+      "peak_reserved_gib": 4.4921875,
+      "state_gib": 0.25254249572753906,
+      "per_batch_gib": 3.984684944152832,
+      "tokens_per_sec": 85204.53839051446,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.05859375,
+        "activations_gib": 0.87890625,
+        "logits_gib": 1.25,
+        "total_gib": 2.12890625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 96,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 5.033736228942871,
+      "peak_reserved_gib": 6.865234375,
+      "state_gib": 0.25211524963378906,
+      "per_batch_gib": 4.781620979309082,
+      "tokens_per_sec": 84104.56946539276,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0703125,
+        "activations_gib": 1.0546875,
+        "logits_gib": 1.5,
+        "total_gib": 2.5546875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 8,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 0.5450687408447266,
+      "peak_reserved_gib": 0.744140625,
+      "state_gib": 0.15245532989501953,
+      "per_batch_gib": 0.39261341094970703,
+      "tokens_per_sec": 49454.310904654674,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.005859375,
+        "activations_gib": 0.087890625,
+        "logits_gib": 0.125,
+        "total_gib": 0.212890625
+      },
+      "degraded": true
+    },
+    {
+      "mode": "coupling",
+      "batch": 16,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 0.9385929107666016,
+      "peak_reserved_gib": 1.263671875,
+      "state_gib": 0.15337085723876953,
+      "per_batch_gib": 0.785222053527832,
+      "tokens_per_sec": 77620.33371158825,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 24,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.3304080963134766,
+      "peak_reserved_gib": 1.431640625,
+      "state_gib": 0.15257740020751953,
+      "per_batch_gib": 1.177830696105957,
+      "tokens_per_sec": 85222.74761394503,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.017578125,
+        "activations_gib": 0.263671875,
+        "logits_gib": 0.375,
+        "total_gib": 0.638671875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 32,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.7230777740478516,
+      "peak_reserved_gib": 1.86328125,
+      "state_gib": 0.15263843536376953,
+      "per_batch_gib": 1.570439338684082,
+      "tokens_per_sec": 87395.36320061178,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0234375,
+        "activations_gib": 0.3515625,
+        "logits_gib": 0.5,
+        "total_gib": 0.8515625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 48,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 2.5101261138916016,
+      "peak_reserved_gib": 2.697265625,
+      "state_gib": 0.15446949005126953,
+      "per_batch_gib": 2.355656623840332,
+      "tokens_per_sec": 88954.8671834575,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.52734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.27734375
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 64,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 3.2937564849853516,
+      "peak_reserved_gib": 3.515625,
+      "state_gib": 0.15288257598876953,
+      "per_batch_gib": 3.140873908996582,
+      "tokens_per_sec": 91084.7783504389,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.046875,
+        "activations_gib": 0.703125,
+        "logits_gib": 1.0,
+        "total_gib": 1.703125
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 80,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 4.079950332641602,
+      "peak_reserved_gib": 4.34765625,
+      "state_gib": 0.15385913848876953,
+      "per_batch_gib": 3.926091194152832,
+      "tokens_per_sec": 91755.83846937097,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.05859375,
+        "activations_gib": 0.87890625,
+        "logits_gib": 1.25,
+        "total_gib": 2.12890625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 96,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 4.864435195922852,
+      "peak_reserved_gib": 5.1796875,
+      "state_gib": 0.15312671661376953,
+      "per_batch_gib": 4.711308479309082,
+      "tokens_per_sec": 91448.85748378198,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.0703125,
+        "activations_gib": 1.0546875,
+        "logits_gib": 1.5,
+        "total_gib": 2.5546875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 112,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 5.650629043579102,
+      "peak_reserved_gib": 6.013671875,
+      "state_gib": 0.15410327911376953,
+      "per_batch_gib": 5.496525764465332,
+      "tokens_per_sec": 93501.04203993714,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.08203125,
+        "activations_gib": 1.23046875,
+        "logits_gib": 1.75,
+        "total_gib": 2.98046875
+      },
+      "degraded": false
+    },
+    {
+      "mode": "coupling",
+      "batch": 128,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 6.435113906860352,
+      "peak_reserved_gib": 6.84375,
+      "state_gib": 0.15337085723876953,
+      "per_batch_gib": 6.281743049621582,
+      "tokens_per_sec": 92183.82375860399,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.09375,
+        "activations_gib": 1.40625,
+        "logits_gib": 2.0,
+        "total_gib": 3.40625
+      },
+      "degraded": false
+    },
+    {
+      "mode": "midpoint",
+      "batch": 112,
+      "n_layer": 10,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 5.831526756286621,
+      "peak_reserved_gib": 6.23828125,
+      "state_gib": 0.25296974182128906,
+      "per_batch_gib": 5.578557014465332,
+      "tokens_per_sec": 85496.87437853606,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.08203125,
+        "activations_gib": 1.23046875,
+        "logits_gib": 1.75,
+        "total_gib": 2.98046875
+      }
+    }
+  ],
+  "max_batch": {
+    "store": 48,
+    "checkpoint": 112,
+    "euler": 112,
+    "midpoint": 112,
+    "coupling": 128
+  },
+  "n_layer": 10,
+  "ce_chunks": 1,
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "gpu_total_gib": 8.0,
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "python": "3.14.5",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "compiled": false
+  },
+  "depth_rows": [
+    {
+      "mode": "store",
+      "batch": 16,
+      "n_layer": 4,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.3947525024414062,
+      "peak_reserved_gib": 1.576171875,
+      "state_gib": 0.13363933563232422,
+      "per_batch_gib": 1.261113166809082,
+      "tokens_per_sec": 171960.8312093146,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.5625,
+        "logits_gib": 0.25,
+        "total_gib": 0.8125
+      }
+    },
+    {
+      "mode": "store",
+      "batch": 16,
+      "n_layer": 8,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.9622211456298828,
+      "peak_reserved_gib": 2.09375,
+      "state_gib": 0.21319293975830078,
+      "per_batch_gib": 1.749028205871582,
+      "tokens_per_sec": 113109.62799825417,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 1.125,
+        "logits_gib": 0.25,
+        "total_gib": 1.375
+      }
+    },
+    {
+      "mode": "store",
+      "batch": 16,
+      "n_layer": 16,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 3.094228744506836,
+      "peak_reserved_gib": 3.130859375,
+      "state_gib": 0.3715677261352539,
+      "per_batch_gib": 2.722661018371582,
+      "tokens_per_sec": 66606.26497088323,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 2.25,
+        "logits_gib": 0.25,
+        "total_gib": 2.5
+      }
+    },
+    {
+      "mode": "store",
+      "batch": 16,
+      "n_layer": 32,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 5.360563278198242,
+      "peak_reserved_gib": 5.4609375,
+      "state_gib": 0.6904535293579102,
+      "per_batch_gib": 4.670109748840332,
+      "tokens_per_sec": 36578.43943633771,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 4.5,
+        "logits_gib": 0.25,
+        "total_gib": 4.75
+      }
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 16,
+      "n_layer": 4,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 0.9537734985351562,
+      "peak_reserved_gib": 1.20703125,
+      "state_gib": 0.13339519500732422,
+      "per_batch_gib": 0.820378303527832,
+      "tokens_per_sec": 149568.96070825311,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.1875,
+        "logits_gib": 0.25,
+        "total_gib": 0.4375
+      }
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 16,
+      "n_layer": 8,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.0820941925048828,
+      "peak_reserved_gib": 1.302734375,
+      "state_gib": 0.21484088897705078,
+      "per_batch_gib": 0.867253303527832,
+      "tokens_per_sec": 93967.95519528887,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.234375,
+        "logits_gib": 0.25,
+        "total_gib": 0.484375
+      }
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 16,
+      "n_layer": 16,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.334524154663086,
+      "peak_reserved_gib": 1.46484375,
+      "state_gib": 0.3735208511352539,
+      "per_batch_gib": 0.961003303527832,
+      "tokens_per_sec": 53541.41826805781,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.328125,
+        "logits_gib": 0.25,
+        "total_gib": 0.578125
+      }
+    },
+    {
+      "mode": "checkpoint",
+      "batch": 16,
+      "n_layer": 32,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.8401165008544922,
+      "peak_reserved_gib": 2.068359375,
+      "state_gib": 0.6908807754516602,
+      "per_batch_gib": 1.149235725402832,
+      "tokens_per_sec": 28749.91226327516,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.515625,
+        "logits_gib": 0.25,
+        "total_gib": 0.765625
+      }
+    },
+    {
+      "mode": "euler",
+      "batch": 16,
+      "n_layer": 4,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 0.9305801391601562,
+      "peak_reserved_gib": 1.21875,
+      "state_gib": 0.13363933563232422,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 142264.86864433752,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      }
+    },
+    {
+      "mode": "euler",
+      "batch": 16,
+      "n_layer": 8,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.0094013214111328,
+      "peak_reserved_gib": 1.244140625,
+      "state_gib": 0.21246051788330078,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 88923.44232913511,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      }
+    },
+    {
+      "mode": "euler",
+      "batch": 16,
+      "n_layer": 16,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.169057846069336,
+      "peak_reserved_gib": 1.3359375,
+      "state_gib": 0.3721170425415039,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 51032.23507458397,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      }
+    },
+    {
+      "mode": "euler",
+      "batch": 16,
+      "n_layer": 32,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.4867839813232422,
+      "peak_reserved_gib": 1.978515625,
+      "state_gib": 0.6896600723266602,
+      "per_batch_gib": 0.797123908996582,
+      "tokens_per_sec": 27511.24640695625,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      }
+    },
+    {
+      "mode": "midpoint",
+      "batch": 16,
+      "n_layer": 4,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 0.9318618774414062,
+      "peak_reserved_gib": 1.20703125,
+      "state_gib": 0.13492107391357422,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 144636.31505271382,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      }
+    },
+    {
+      "mode": "midpoint",
+      "batch": 16,
+      "n_layer": 8,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.0115985870361328,
+      "peak_reserved_gib": 1.255859375,
+      "state_gib": 0.21465778350830078,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 90034.10348203641,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      }
+    },
+    {
+      "mode": "midpoint",
+      "batch": 16,
+      "n_layer": 16,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.169973373413086,
+      "peak_reserved_gib": 1.32421875,
+      "state_gib": 0.3730325698852539,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 51433.16367308688,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      }
+    },
+    {
+      "mode": "midpoint",
+      "batch": 16,
+      "n_layer": 32,
+      "ce_chunks": 1,
+      "peak_alloc_gib": 1.4867229461669922,
+      "peak_reserved_gib": 1.990234375,
+      "state_gib": 0.6897821426391602,
+      "per_batch_gib": 0.796940803527832,
+      "tokens_per_sec": 27855.74676597585,
+      "vram_cap_gib": 6.951171875,
+      "analytic": {
+        "stream_gib": 0.01171875,
+        "activations_gib": 0.17578125,
+        "logits_gib": 0.25,
+        "total_gib": 0.42578125
+      }
+    }
+  ],
+  "boundary_repeats": {
+    "midpoint@112": [
+      false,
+      false,
+      false
+    ],
+    "euler@112": [
+      true,
+      true,
+      true
+    ],
+    "euler@128": [
+      false,
+      false,
+      false
+    ],
+    "midpoint@128": [
+      false,
+      false,
+      false
+    ]
+  },
+  "chunked": {
+    "rows": [
+      {
+        "mode": "store",
+        "batch": 48,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 4.492843151092529,
+        "peak_reserved_gib": 4.69140625,
+        "state_gib": 0.25248146057128906,
+        "per_batch_gib": 4.24036169052124,
+        "tokens_per_sec": 94172.36133843448,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.03515625,
+          "activations_gib": 4.21875,
+          "logits_gib": 0.75,
+          "total_gib": 4.96875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 48,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 1.1679606437683105,
+        "peak_reserved_gib": 1.3046875,
+        "state_gib": 0.25303077697753906,
+        "per_batch_gib": 0.9149298667907715,
+        "tokens_per_sec": 75292.61568650596,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.03515625,
+          "activations_gib": 0.52734375,
+          "logits_gib": 0.75,
+          "total_gib": 1.27734375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 96,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 1.9755167961120605,
+        "peak_reserved_gib": 2.435546875,
+        "state_gib": 0.25211524963378906,
+        "per_batch_gib": 1.7234015464782715,
+        "tokens_per_sec": 77519.64202485418,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0703125,
+          "activations_gib": 1.0546875,
+          "logits_gib": 1.5,
+          "total_gib": 2.5546875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 128,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 2.5161662101745605,
+        "peak_reserved_gib": 2.89453125,
+        "state_gib": 0.25217628479003906,
+        "per_batch_gib": 2.2639899253845215,
+        "tokens_per_sec": 78037.7436432538,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.09375,
+          "activations_gib": 1.40625,
+          "logits_gib": 2.0,
+          "total_gib": 3.40625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 160,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 3.0586466789245605,
+        "peak_reserved_gib": 3.9765625,
+        "state_gib": 0.25412940979003906,
+        "per_batch_gib": 2.8045172691345215,
+        "tokens_per_sec": 77889.78190050182,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.1171875,
+          "activations_gib": 1.7578125,
+          "logits_gib": 2.5,
+          "total_gib": 4.2578125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 192,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 3.6006388664245605,
+        "peak_reserved_gib": 4.744140625,
+        "state_gib": 0.25394630432128906,
+        "per_batch_gib": 3.3466925621032715,
+        "tokens_per_sec": 77041.52786576017,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.140625,
+          "activations_gib": 2.109375,
+          "logits_gib": 3.0,
+          "total_gib": 5.109375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 224,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 4.1409220695495605,
+        "peak_reserved_gib": 5.515625,
+        "state_gib": 0.25394630432128906,
+        "per_batch_gib": 3.8869757652282715,
+        "tokens_per_sec": 75543.06513119975,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.1640625,
+          "activations_gib": 2.4609375,
+          "logits_gib": 3.5,
+          "total_gib": 5.9609375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 256,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 4.6766886711120605,
+        "peak_reserved_gib": 6.28515625,
+        "state_gib": 0.25333595275878906,
+        "per_batch_gib": 4.4233527183532715,
+        "tokens_per_sec": 73367.85052013792,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.1875,
+          "activations_gib": 2.8125,
+          "logits_gib": 4.0,
+          "total_gib": 6.8125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 320,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 5.7557291984558105,
+        "peak_reserved_gib": 6.416015625,
+        "state_gib": 0.25455665588378906,
+        "per_batch_gib": 5.5011725425720215,
+        "tokens_per_sec": 73231.48031129195,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.234375,
+          "activations_gib": 3.515625,
+          "logits_gib": 5.0,
+          "total_gib": 8.515625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 48,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 1.1594696044921875,
+        "peak_reserved_gib": 1.31640625,
+        "state_gib": 0.25229835510253906,
+        "per_batch_gib": 0.9071712493896484,
+        "tokens_per_sec": 73258.92796699262,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.03515625,
+          "activations_gib": 0.52734375,
+          "logits_gib": 0.75,
+          "total_gib": 1.27734375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 96,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 1.9706878662109375,
+        "peak_reserved_gib": 2.365234375,
+        "state_gib": 0.25388526916503906,
+        "per_batch_gib": 1.7168025970458984,
+        "tokens_per_sec": 75067.9746028601,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0703125,
+          "activations_gib": 1.0546875,
+          "logits_gib": 1.5,
+          "total_gib": 2.5546875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 128,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 2.5095672607421875,
+        "peak_reserved_gib": 2.98828125,
+        "state_gib": 0.25217628479003906,
+        "per_batch_gib": 2.2573909759521484,
+        "tokens_per_sec": 74801.46459633352,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.09375,
+          "activations_gib": 1.40625,
+          "logits_gib": 2.0,
+          "total_gib": 3.40625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 160,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 3.0518646240234375,
+        "peak_reserved_gib": 3.859375,
+        "state_gib": 0.25412940979003906,
+        "per_batch_gib": 2.7977352142333984,
+        "tokens_per_sec": 75394.25911479967,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.1171875,
+          "activations_gib": 1.7578125,
+          "logits_gib": 2.5,
+          "total_gib": 4.2578125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 192,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 3.5942230224609375,
+        "peak_reserved_gib": 4.603515625,
+        "state_gib": 0.25339698791503906,
+        "per_batch_gib": 3.3408260345458984,
+        "tokens_per_sec": 74391.3701645572,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.140625,
+          "activations_gib": 2.109375,
+          "logits_gib": 3.0,
+          "total_gib": 5.109375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 224,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 4.1349945068359375,
+        "peak_reserved_gib": 5.3515625,
+        "state_gib": 0.25394630432128906,
+        "per_batch_gib": 3.8810482025146484,
+        "tokens_per_sec": 74009.0891643862,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.1640625,
+          "activations_gib": 2.4609375,
+          "logits_gib": 3.5,
+          "total_gib": 5.9609375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 256,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 4.6687469482421875,
+        "peak_reserved_gib": 6.09765625,
+        "state_gib": 0.25315284729003906,
+        "per_batch_gib": 4.415594100952148,
+        "tokens_per_sec": 73211.92774857902,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.1875,
+          "activations_gib": 2.8125,
+          "logits_gib": 4.0,
+          "total_gib": 6.8125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 320,
+        "n_layer": 10,
+        "ce_chunks": 4,
+        "peak_alloc_gib": 5.7490081787109375,
+        "peak_reserved_gib": 6.650390625,
+        "state_gib": 0.25455665588378906,
+        "per_batch_gib": 5.494451522827148,
+        "tokens_per_sec": 73421.95965059623,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.234375,
+          "activations_gib": 3.515625,
+          "logits_gib": 5.0,
+          "total_gib": 8.515625
+        },
+        "degraded": false
+      }
+    ],
+    "max_batch": {
+      "store": 48,
+      "euler": 320,
+      "midpoint": 320
+    },
+    "n_layer": 10,
+    "ce_chunks": 4
+  },
+  "boundary_repeats_after_fix": {
+    "midpoint@112": [
+      true,
+      true,
+      true
+    ],
+    "midpoint@128": [
+      false,
+      false,
+      false
+    ],
+    "euler@128": [
+      false,
+      false,
+      false
+    ]
+  }
+}

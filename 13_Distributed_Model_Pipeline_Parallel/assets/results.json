@@ -1,0 +1,4539 @@
+{
+  "run_stamp": "2026-09-25 09:21:06",
+  "environment": {
+    "gpu": "NVIDIA GeForce RTX 3070 Laptop GPU",
+    "gpu_total_gib": 8.0,
+    "torch": "2.11.0+cu128",
+    "cuda": "12.8",
+    "python": "3.14.5",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "compiled": false,
+    "allocator_capped": true
+  },
+  "tokens_budget": 50000000,
+  "b_star": 48,
+  "b_max": 320,
+  "data": {
+    "train_tokens": 89865082,
+    "val_tokens": 2000000,
+    "vocab_size": 8192,
+    "source": "roneneldan/TinyStories/TinyStoriesV2-GPT4-train.txt",
+    "train_bin": "data\\train.bin",
+    "val_bin": "data\\val.bin",
+    "tokenizer": "data\\tokenizer.json"
+  },
+  "ladder": {
+    "rows": [
+      {
+        "mode": "store",
+        "batch": 8,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.272841453552246,
+        "peak_reserved_gib": 1.396484375,
+        "state_gib": 0.25199317932128906,
+        "per_batch_gib": 1.020848274230957,
+        "tokens_per_sec": 83090.72992242684,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.005859375,
+          "activations_gib": 0.703125,
+          "logits_gib": 0.125,
+          "total_gib": 0.828125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "store",
+        "batch": 16,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 2.243575096130371,
+        "peak_reserved_gib": 2.369140625,
+        "state_gib": 0.25260353088378906,
+        "per_batch_gib": 1.990971565246582,
+        "tokens_per_sec": 97422.94583730468,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 1.40625,
+          "logits_gib": 0.25,
+          "total_gib": 1.65625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "store",
+        "batch": 24,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 3.231032371520996,
+        "peak_reserved_gib": 3.478515625,
+        "state_gib": 0.25315284729003906,
+        "per_batch_gib": 2.977879524230957,
+        "tokens_per_sec": 101398.26960025597,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.017578125,
+          "activations_gib": 2.109375,
+          "logits_gib": 0.375,
+          "total_gib": 2.484375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "store",
+        "batch": 32,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 4.185530662536621,
+        "peak_reserved_gib": 4.546875,
+        "state_gib": 0.25235939025878906,
+        "per_batch_gib": 3.933171272277832,
+        "tokens_per_sec": 102246.21885344444,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0234375,
+          "activations_gib": 2.8125,
+          "logits_gib": 0.5,
+          "total_gib": 3.3125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "store",
+        "batch": 48,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 6.133284568786621,
+        "peak_reserved_gib": 6.75390625,
+        "state_gib": 0.25248146057128906,
+        "per_batch_gib": 5.880803108215332,
+        "tokens_per_sec": 104429.32282232131,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.03515625,
+          "activations_gib": 4.21875,
+          "logits_gib": 0.75,
+          "total_gib": 4.96875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 8,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 0.6983785629272461,
+        "peak_reserved_gib": 0.849609375,
+        "state_gib": 0.25229835510253906,
+        "per_batch_gib": 0.44608020782470703,
+        "tokens_per_sec": 70673.32909169319,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.005859375,
+          "activations_gib": 0.12890625,
+          "logits_gib": 0.125,
+          "total_gib": 0.25390625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 16,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.143599510192871,
+        "peak_reserved_gib": 1.3359375,
+        "state_gib": 0.25290870666503906,
+        "per_batch_gib": 0.890690803527832,
+        "tokens_per_sec": 75666.10401596382,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.2578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.5078125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 24,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.590407371520996,
+        "peak_reserved_gib": 1.919921875,
+        "state_gib": 0.25437355041503906,
+        "per_batch_gib": 1.336033821105957,
+        "tokens_per_sec": 82649.8471202641,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.017578125,
+          "activations_gib": 0.38671875,
+          "logits_gib": 0.375,
+          "total_gib": 0.76171875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 32,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 2.034651756286621,
+        "peak_reserved_gib": 2.521484375,
+        "state_gib": 0.25327491760253906,
+        "per_batch_gib": 1.781376838684082,
+        "tokens_per_sec": 82596.88608320187,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0234375,
+          "activations_gib": 0.515625,
+          "logits_gib": 0.5,
+          "total_gib": 1.015625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 48,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 2.924910545349121,
+        "peak_reserved_gib": 3.70703125,
+        "state_gib": 0.25284767150878906,
+        "per_batch_gib": 2.672062873840332,
+        "tokens_per_sec": 86263.78746610475,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.03515625,
+          "activations_gib": 0.7734375,
+          "logits_gib": 0.75,
+          "total_gib": 1.5234375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 64,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 3.815718650817871,
+        "peak_reserved_gib": 3.900390625,
+        "state_gib": 0.25296974182128906,
+        "per_batch_gib": 3.562748908996582,
+        "tokens_per_sec": 87104.43157516426,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.046875,
+          "activations_gib": 1.03125,
+          "logits_gib": 1.0,
+          "total_gib": 2.03125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 80,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 4.706709861755371,
+        "peak_reserved_gib": 6.09375,
+        "state_gib": 0.25327491760253906,
+        "per_batch_gib": 4.453434944152832,
+        "tokens_per_sec": 89235.00373253082,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.05859375,
+          "activations_gib": 1.2890625,
+          "logits_gib": 1.25,
+          "total_gib": 2.5390625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 96,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 5.596236228942871,
+        "peak_reserved_gib": 5.787109375,
+        "state_gib": 0.25211524963378906,
+        "per_batch_gib": 5.344120979309082,
+        "tokens_per_sec": 87639.3643977483,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0703125,
+          "activations_gib": 1.546875,
+          "logits_gib": 1.5,
+          "total_gib": 3.046875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 112,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 6.489058494567871,
+        "peak_reserved_gib": 6.73046875,
+        "state_gib": 0.25425148010253906,
+        "per_batch_gib": 6.234807014465332,
+        "tokens_per_sec": 88596.63084729532,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.08203125,
+          "activations_gib": 1.8046875,
+          "logits_gib": 1.75,
+          "total_gib": 3.5546875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 8,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 0.6527853012084961,
+        "peak_reserved_gib": 0.826171875,
+        "state_gib": 0.25358009338378906,
+        "per_batch_gib": 0.39920520782470703,
+        "tokens_per_sec": 67457.99521459505,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.005859375,
+          "activations_gib": 0.087890625,
+          "logits_gib": 0.125,
+          "total_gib": 0.212890625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 16,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.048995018005371,
+        "peak_reserved_gib": 1.27734375,
+        "state_gib": 0.25205421447753906,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 75138.86748839384,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 24,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.447707176208496,
+        "peak_reserved_gib": 1.83203125,
+        "state_gib": 0.25229835510253906,
+        "per_batch_gib": 1.195408821105957,
+        "tokens_per_sec": 77901.87331378387,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.017578125,
+          "activations_gib": 0.263671875,
+          "logits_gib": 0.375,
+          "total_gib": 0.638671875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 32,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.848555564880371,
+        "peak_reserved_gib": 2.404296875,
+        "state_gib": 0.25467872619628906,
+        "per_batch_gib": 1.593876838684082,
+        "tokens_per_sec": 77949.60646941424,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0234375,
+          "activations_gib": 0.3515625,
+          "logits_gib": 0.5,
+          "total_gib": 0.8515625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 48,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 2.643660545349121,
+        "peak_reserved_gib": 3.53125,
+        "state_gib": 0.25284767150878906,
+        "per_batch_gib": 2.390812873840332,
+        "tokens_per_sec": 81290.58805559683,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.03515625,
+          "activations_gib": 0.52734375,
+          "logits_gib": 0.75,
+          "total_gib": 1.27734375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 64,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 3.440535545349121,
+        "peak_reserved_gib": 3.666015625,
+        "state_gib": 0.25278663635253906,
+        "per_batch_gib": 3.187748908996582,
+        "tokens_per_sec": 82650.1428474191,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.046875,
+          "activations_gib": 0.703125,
+          "logits_gib": 1.0,
+          "total_gib": 1.703125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 80,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 4.237959861755371,
+        "peak_reserved_gib": 4.55078125,
+        "state_gib": 0.25327491760253906,
+        "per_batch_gib": 3.984684944152832,
+        "tokens_per_sec": 84313.3930382706,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.05859375,
+          "activations_gib": 0.87890625,
+          "logits_gib": 1.25,
+          "total_gib": 2.12890625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 96,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 5.033736228942871,
+        "peak_reserved_gib": 6.935546875,
+        "state_gib": 0.25211524963378906,
+        "per_batch_gib": 4.781620979309082,
+        "tokens_per_sec": 83319.37042571287,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0703125,
+          "activations_gib": 1.0546875,
+          "logits_gib": 1.5,
+          "total_gib": 2.5546875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "euler",
+        "batch": 112,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 5.830794334411621,
+        "peak_reserved_gib": 6.3203125,
+        "state_gib": 0.25223731994628906,
+        "per_batch_gib": 5.578557014465332,
+        "tokens_per_sec": 84258.50520716074,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.08203125,
+          "activations_gib": 1.23046875,
+          "logits_gib": 1.75,
+          "total_gib": 2.98046875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 8,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 0.6522970199584961,
+        "peak_reserved_gib": 0.814453125,
+        "state_gib": 0.25309181213378906,
+        "per_batch_gib": 0.39920520782470703,
+        "tokens_per_sec": 67386.86869394331,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.005859375,
+          "activations_gib": 0.087890625,
+          "logits_gib": 0.125,
+          "total_gib": 0.212890625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 16,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.050093650817871,
+        "peak_reserved_gib": 1.265625,
+        "state_gib": 0.25315284729003906,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 74835.984158211,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 24,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.447707176208496,
+        "peak_reserved_gib": 1.814453125,
+        "state_gib": 0.25229835510253906,
+        "per_batch_gib": 1.195408821105957,
+        "tokens_per_sec": 78268.4520469351,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.017578125,
+          "activations_gib": 0.263671875,
+          "logits_gib": 0.375,
+          "total_gib": 0.638671875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 32,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.847273826599121,
+        "peak_reserved_gib": 2.380859375,
+        "state_gib": 0.25339698791503906,
+        "per_batch_gib": 1.593876838684082,
+        "tokens_per_sec": 78739.38804042444,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0234375,
+          "activations_gib": 0.3515625,
+          "logits_gib": 0.5,
+          "total_gib": 0.8515625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 48,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 2.643843650817871,
+        "peak_reserved_gib": 3.49609375,
+        "state_gib": 0.25303077697753906,
+        "per_batch_gib": 2.390812873840332,
+        "tokens_per_sec": 81947.96246112428,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.03515625,
+          "activations_gib": 0.52734375,
+          "logits_gib": 0.75,
+          "total_gib": 1.27734375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 64,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 3.441451072692871,
+        "peak_reserved_gib": 4.619140625,
+        "state_gib": 0.25370216369628906,
+        "per_batch_gib": 3.187748908996582,
+        "tokens_per_sec": 83339.35722689002,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.046875,
+          "activations_gib": 0.703125,
+          "logits_gib": 1.0,
+          "total_gib": 1.703125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 80,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 4.237227439880371,
+        "peak_reserved_gib": 4.4921875,
+        "state_gib": 0.25254249572753906,
+        "per_batch_gib": 3.984684944152832,
+        "tokens_per_sec": 85204.53839051446,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.05859375,
+          "activations_gib": 0.87890625,
+          "logits_gib": 1.25,
+          "total_gib": 2.12890625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 96,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 5.033736228942871,
+        "peak_reserved_gib": 6.865234375,
+        "state_gib": 0.25211524963378906,
+        "per_batch_gib": 4.781620979309082,
+        "tokens_per_sec": 84104.56946539276,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0703125,
+          "activations_gib": 1.0546875,
+          "logits_gib": 1.5,
+          "total_gib": 2.5546875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 8,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 0.5450687408447266,
+        "peak_reserved_gib": 0.744140625,
+        "state_gib": 0.15245532989501953,
+        "per_batch_gib": 0.39261341094970703,
+        "tokens_per_sec": 49454.310904654674,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.005859375,
+          "activations_gib": 0.087890625,
+          "logits_gib": 0.125,
+          "total_gib": 0.212890625
+        },
+        "degraded": true
+      },
+      {
+        "mode": "coupling",
+        "batch": 16,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 0.9385929107666016,
+        "peak_reserved_gib": 1.263671875,
+        "state_gib": 0.15337085723876953,
+        "per_batch_gib": 0.785222053527832,
+        "tokens_per_sec": 77620.33371158825,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 24,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.3304080963134766,
+        "peak_reserved_gib": 1.431640625,
+        "state_gib": 0.15257740020751953,
+        "per_batch_gib": 1.177830696105957,
+        "tokens_per_sec": 85222.74761394503,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.017578125,
+          "activations_gib": 0.263671875,
+          "logits_gib": 0.375,
+          "total_gib": 0.638671875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 32,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.7230777740478516,
+        "peak_reserved_gib": 1.86328125,
+        "state_gib": 0.15263843536376953,
+        "per_batch_gib": 1.570439338684082,
+        "tokens_per_sec": 87395.36320061178,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0234375,
+          "activations_gib": 0.3515625,
+          "logits_gib": 0.5,
+          "total_gib": 0.8515625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 48,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 2.5101261138916016,
+        "peak_reserved_gib": 2.697265625,
+        "state_gib": 0.15446949005126953,
+        "per_batch_gib": 2.355656623840332,
+        "tokens_per_sec": 88954.8671834575,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.03515625,
+          "activations_gib": 0.52734375,
+          "logits_gib": 0.75,
+          "total_gib": 1.27734375
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 64,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 3.2937564849853516,
+        "peak_reserved_gib": 3.515625,
+        "state_gib": 0.15288257598876953,
+        "per_batch_gib": 3.140873908996582,
+        "tokens_per_sec": 91084.7783504389,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.046875,
+          "activations_gib": 0.703125,
+          "logits_gib": 1.0,
+          "total_gib": 1.703125
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 80,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 4.079950332641602,
+        "peak_reserved_gib": 4.34765625,
+        "state_gib": 0.15385913848876953,
+        "per_batch_gib": 3.926091194152832,
+        "tokens_per_sec": 91755.83846937097,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.05859375,
+          "activations_gib": 0.87890625,
+          "logits_gib": 1.25,
+          "total_gib": 2.12890625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 96,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 4.864435195922852,
+        "peak_reserved_gib": 5.1796875,
+        "state_gib": 0.15312671661376953,
+        "per_batch_gib": 4.711308479309082,
+        "tokens_per_sec": 91448.85748378198,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.0703125,
+          "activations_gib": 1.0546875,
+          "logits_gib": 1.5,
+          "total_gib": 2.5546875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 112,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 5.650629043579102,
+        "peak_reserved_gib": 6.013671875,
+        "state_gib": 0.15410327911376953,
+        "per_batch_gib": 5.496525764465332,
+        "tokens_per_sec": 93501.04203993714,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.08203125,
+          "activations_gib": 1.23046875,
+          "logits_gib": 1.75,
+          "total_gib": 2.98046875
+        },
+        "degraded": false
+      },
+      {
+        "mode": "coupling",
+        "batch": 128,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 6.435113906860352,
+        "peak_reserved_gib": 6.84375,
+        "state_gib": 0.15337085723876953,
+        "per_batch_gib": 6.281743049621582,
+        "tokens_per_sec": 92183.82375860399,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.09375,
+          "activations_gib": 1.40625,
+          "logits_gib": 2.0,
+          "total_gib": 3.40625
+        },
+        "degraded": false
+      },
+      {
+        "mode": "midpoint",
+        "batch": 112,
+        "n_layer": 10,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 5.831526756286621,
+        "peak_reserved_gib": 6.23828125,
+        "state_gib": 0.25296974182128906,
+        "per_batch_gib": 5.578557014465332,
+        "tokens_per_sec": 85496.87437853606,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.08203125,
+          "activations_gib": 1.23046875,
+          "logits_gib": 1.75,
+          "total_gib": 2.98046875
+        }
+      }
+    ],
+    "max_batch": {
+      "store": 48,
+      "checkpoint": 112,
+      "euler": 112,
+      "midpoint": 112,
+      "coupling": 128
+    },
+    "n_layer": 10,
+    "ce_chunks": 1,
+    "environment": {
+      "gpu": "NVIDIA GeForce RTX 3070 Laptop GPU",
+      "gpu_total_gib": 8.0,
+      "torch": "2.11.0+cu128",
+      "cuda": "12.8",
+      "python": "3.14.5",
+      "platform": "Windows-11-10.0.26200-SP0",
+      "compiled": false
+    },
+    "depth_rows": [
+      {
+        "mode": "store",
+        "batch": 16,
+        "n_layer": 4,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.3947525024414062,
+        "peak_reserved_gib": 1.576171875,
+        "state_gib": 0.13363933563232422,
+        "per_batch_gib": 1.261113166809082,
+        "tokens_per_sec": 171960.8312093146,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.5625,
+          "logits_gib": 0.25,
+          "total_gib": 0.8125
+        }
+      },
+      {
+        "mode": "store",
+        "batch": 16,
+        "n_layer": 8,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.9622211456298828,
+        "peak_reserved_gib": 2.09375,
+        "state_gib": 0.21319293975830078,
+        "per_batch_gib": 1.749028205871582,
+        "tokens_per_sec": 113109.62799825417,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 1.125,
+          "logits_gib": 0.25,
+          "total_gib": 1.375
+        }
+      },
+      {
+        "mode": "store",
+        "batch": 16,
+        "n_layer": 16,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 3.094228744506836,
+        "peak_reserved_gib": 3.130859375,
+        "state_gib": 0.3715677261352539,
+        "per_batch_gib": 2.722661018371582,
+        "tokens_per_sec": 66606.26497088323,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 2.25,
+          "logits_gib": 0.25,
+          "total_gib": 2.5
+        }
+      },
+      {
+        "mode": "store",
+        "batch": 16,
+        "n_layer": 32,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 5.360563278198242,
+        "peak_reserved_gib": 5.4609375,
+        "state_gib": 0.6904535293579102,
+        "per_batch_gib": 4.670109748840332,
+        "tokens_per_sec": 36578.43943633771,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 4.5,
+          "logits_gib": 0.25,
+          "total_gib": 4.75
+        }
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 16,
+        "n_layer": 4,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 0.9537734985351562,
+        "peak_reserved_gib": 1.20703125,
+        "state_gib": 0.13339519500732422,
+        "per_batch_gib": 0.820378303527832,
+        "tokens_per_sec": 149568.96070825311,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.1875,
+          "logits_gib": 0.25,
+          "total_gib": 0.4375
+        }
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 16,
+        "n_layer": 8,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.0820941925048828,
+        "peak_reserved_gib": 1.302734375,
+        "state_gib": 0.21484088897705078,
+        "per_batch_gib": 0.867253303527832,
+        "tokens_per_sec": 93967.95519528887,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.234375,
+          "logits_gib": 0.25,
+          "total_gib": 0.484375
+        }
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 16,
+        "n_layer": 16,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.334524154663086,
+        "peak_reserved_gib": 1.46484375,
+        "state_gib": 0.3735208511352539,
+        "per_batch_gib": 0.961003303527832,
+        "tokens_per_sec": 53541.41826805781,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.328125,
+          "logits_gib": 0.25,
+          "total_gib": 0.578125
+        }
+      },
+      {
+        "mode": "checkpoint",
+        "batch": 16,
+        "n_layer": 32,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.8401165008544922,
+        "peak_reserved_gib": 2.068359375,
+        "state_gib": 0.6908807754516602,
+        "per_batch_gib": 1.149235725402832,
+        "tokens_per_sec": 28749.91226327516,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.515625,
+          "logits_gib": 0.25,
+          "total_gib": 0.765625
+        }
+      },
+      {
+        "mode": "euler",
+        "batch": 16,
+        "n_layer": 4,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 0.9305801391601562,
+        "peak_reserved_gib": 1.21875,
+        "state_gib": 0.13363933563232422,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 142264.86864433752,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        }
+      },
+      {
+        "mode": "euler",
+        "batch": 16,
+        "n_layer": 8,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.0094013214111328,
+        "peak_reserved_gib": 1.244140625,
+        "state_gib": 0.21246051788330078,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 88923.44232913511,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        }
+      },
+      {
+        "mode": "euler",
+        "batch": 16,
+        "n_layer": 16,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.169057846069336,
+        "peak_reserved_gib": 1.3359375,
+        "state_gib": 0.3721170425415039,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 51032.23507458397,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        }
+      },
+      {
+        "mode": "euler",
+        "batch": 16,
+        "n_layer": 32,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.4867839813232422,
+        "peak_reserved_gib": 1.978515625,
+        "state_gib": 0.6896600723266602,
+        "per_batch_gib": 0.797123908996582,
+        "tokens_per_sec": 27511.24640695625,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        }
+      },
+      {
+        "mode": "midpoint",
+        "batch": 16,
+        "n_layer": 4,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 0.9318618774414062,
+        "peak_reserved_gib": 1.20703125,
+        "state_gib": 0.13492107391357422,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 144636.31505271382,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        }
+      },
+      {
+        "mode": "midpoint",
+        "batch": 16,
+        "n_layer": 8,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.0115985870361328,
+        "peak_reserved_gib": 1.255859375,
+        "state_gib": 0.21465778350830078,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 90034.10348203641,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        }
+      },
+      {
+        "mode": "midpoint",
+        "batch": 16,
+        "n_layer": 16,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.169973373413086,
+        "peak_reserved_gib": 1.32421875,
+        "state_gib": 0.3730325698852539,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 51433.16367308688,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        }
+      },
+      {
+        "mode": "midpoint",
+        "batch": 16,
+        "n_layer": 32,
+        "ce_chunks": 1,
+        "peak_alloc_gib": 1.4867229461669922,
+        "peak_reserved_gib": 1.990234375,
+        "state_gib": 0.6897821426391602,
+        "per_batch_gib": 0.796940803527832,
+        "tokens_per_sec": 27855.74676597585,
+        "vram_cap_gib": 6.951171875,
+        "analytic": {
+          "stream_gib": 0.01171875,
+          "activations_gib": 0.17578125,
+          "logits_gib": 0.25,
+          "total_gib": 0.42578125
+        }
+      }
+    ],
+    "boundary_repeats": {
+      "midpoint@112": [
+        false,
+        false,
+        false
+      ],
+      "euler@112": [
+        true,
+        true,
+        true
+      ],
+      "euler@128": [
+        false,
+        false,
+        false
+      ],
+      "midpoint@128": [
+        false,
+        false,
+        false
+      ]
+    },
+    "chunked": {
+      "rows": [
+        {
+          "mode": "store",
+          "batch": 48,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 4.492843151092529,
+          "peak_reserved_gib": 4.69140625,
+          "state_gib": 0.25248146057128906,
+          "per_batch_gib": 4.24036169052124,
+          "tokens_per_sec": 94172.36133843448,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.03515625,
+            "activations_gib": 4.21875,
+            "logits_gib": 0.75,
+            "total_gib": 4.96875
+          },
+          "degraded": false
+        },
+        {
+          "mode": "euler",
+          "batch": 48,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 1.1679606437683105,
+          "peak_reserved_gib": 1.3046875,
+          "state_gib": 0.25303077697753906,
+          "per_batch_gib": 0.9149298667907715,
+          "tokens_per_sec": 75292.61568650596,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.03515625,
+            "activations_gib": 0.52734375,
+            "logits_gib": 0.75,
+            "total_gib": 1.27734375
+          },
+          "degraded": false
+        },
+        {
+          "mode": "euler",
+          "batch": 96,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 1.9755167961120605,
+          "peak_reserved_gib": 2.435546875,
+          "state_gib": 0.25211524963378906,
+          "per_batch_gib": 1.7234015464782715,
+          "tokens_per_sec": 77519.64202485418,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.0703125,
+            "activations_gib": 1.0546875,
+            "logits_gib": 1.5,
+            "total_gib": 2.5546875
+          },
+          "degraded": false
+        },
+        {
+          "mode": "euler",
+          "batch": 128,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 2.5161662101745605,
+          "peak_reserved_gib": 2.89453125,
+          "state_gib": 0.25217628479003906,
+          "per_batch_gib": 2.2639899253845215,
+          "tokens_per_sec": 78037.7436432538,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.09375,
+            "activations_gib": 1.40625,
+            "logits_gib": 2.0,
+            "total_gib": 3.40625
+          },
+          "degraded": false
+        },
+        {
+          "mode": "euler",
+          "batch": 160,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 3.0586466789245605,
+          "peak_reserved_gib": 3.9765625,
+          "state_gib": 0.25412940979003906,
+          "per_batch_gib": 2.8045172691345215,
+          "tokens_per_sec": 77889.78190050182,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.1171875,
+            "activations_gib": 1.7578125,
+            "logits_gib": 2.5,
+            "total_gib": 4.2578125
+          },
+          "degraded": false
+        },
+        {
+          "mode": "euler",
+          "batch": 192,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 3.6006388664245605,
+          "peak_reserved_gib": 4.744140625,
+          "state_gib": 0.25394630432128906,
+          "per_batch_gib": 3.3466925621032715,
+          "tokens_per_sec": 77041.52786576017,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.140625,
+            "activations_gib": 2.109375,
+            "logits_gib": 3.0,
+            "total_gib": 5.109375
+          },
+          "degraded": false
+        },
+        {
+          "mode": "euler",
+          "batch": 224,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 4.1409220695495605,
+          "peak_reserved_gib": 5.515625,
+          "state_gib": 0.25394630432128906,
+          "per_batch_gib": 3.8869757652282715,
+          "tokens_per_sec": 75543.06513119975,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.1640625,
+            "activations_gib": 2.4609375,
+            "logits_gib": 3.5,
+            "total_gib": 5.9609375
+          },
+          "degraded": false
+        },
+        {
+          "mode": "euler",
+          "batch": 256,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 4.6766886711120605,
+          "peak_reserved_gib": 6.28515625,
+          "state_gib": 0.25333595275878906,
+          "per_batch_gib": 4.4233527183532715,
+          "tokens_per_sec": 73367.85052013792,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.1875,
+            "activations_gib": 2.8125,
+            "logits_gib": 4.0,
+            "total_gib": 6.8125
+          },
+          "degraded": false
+        },
+        {
+          "mode": "euler",
+          "batch": 320,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 5.7557291984558105,
+          "peak_reserved_gib": 6.416015625,
+          "state_gib": 0.25455665588378906,
+          "per_batch_gib": 5.5011725425720215,
+          "tokens_per_sec": 73231.48031129195,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.234375,
+            "activations_gib": 3.515625,
+            "logits_gib": 5.0,
+            "total_gib": 8.515625
+          },
+          "degraded": false
+        },
+        {
+          "mode": "midpoint",
+          "batch": 48,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 1.1594696044921875,
+          "peak_reserved_gib": 1.31640625,
+          "state_gib": 0.25229835510253906,
+          "per_batch_gib": 0.9071712493896484,
+          "tokens_per_sec": 73258.92796699262,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.03515625,
+            "activations_gib": 0.52734375,
+            "logits_gib": 0.75,
+            "total_gib": 1.27734375
+          },
+          "degraded": false
+        },
+        {
+          "mode": "midpoint",
+          "batch": 96,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 1.9706878662109375,
+          "peak_reserved_gib": 2.365234375,
+          "state_gib": 0.25388526916503906,
+          "per_batch_gib": 1.7168025970458984,
+          "tokens_per_sec": 75067.9746028601,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.0703125,
+            "activations_gib": 1.0546875,
+            "logits_gib": 1.5,
+            "total_gib": 2.5546875
+          },
+          "degraded": false
+        },
+        {
+          "mode": "midpoint",
+          "batch": 128,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 2.5095672607421875,
+          "peak_reserved_gib": 2.98828125,
+          "state_gib": 0.25217628479003906,
+          "per_batch_gib": 2.2573909759521484,
+          "tokens_per_sec": 74801.46459633352,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.09375,
+            "activations_gib": 1.40625,
+            "logits_gib": 2.0,
+            "total_gib": 3.40625
+          },
+          "degraded": false
+        },
+        {
+          "mode": "midpoint",
+          "batch": 160,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 3.0518646240234375,
+          "peak_reserved_gib": 3.859375,
+          "state_gib": 0.25412940979003906,
+          "per_batch_gib": 2.7977352142333984,
+          "tokens_per_sec": 75394.25911479967,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.1171875,
+            "activations_gib": 1.7578125,
+            "logits_gib": 2.5,
+            "total_gib": 4.2578125
+          },
+          "degraded": false
+        },
+        {
+          "mode": "midpoint",
+          "batch": 192,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 3.5942230224609375,
+          "peak_reserved_gib": 4.603515625,
+          "state_gib": 0.25339698791503906,
+          "per_batch_gib": 3.3408260345458984,
+          "tokens_per_sec": 74391.3701645572,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.140625,
+            "activations_gib": 2.109375,
+            "logits_gib": 3.0,
+            "total_gib": 5.109375
+          },
+          "degraded": false
+        },
+        {
+          "mode": "midpoint",
+          "batch": 224,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 4.1349945068359375,
+          "peak_reserved_gib": 5.3515625,
+          "state_gib": 0.25394630432128906,
+          "per_batch_gib": 3.8810482025146484,
+          "tokens_per_sec": 74009.0891643862,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.1640625,
+            "activations_gib": 2.4609375,
+            "logits_gib": 3.5,
+            "total_gib": 5.9609375
+          },
+          "degraded": false
+        },
+        {
+          "mode": "midpoint",
+          "batch": 256,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 4.6687469482421875,
+          "peak_reserved_gib": 6.09765625,
+          "state_gib": 0.25315284729003906,
+          "per_batch_gib": 4.415594100952148,
+          "tokens_per_sec": 73211.92774857902,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.1875,
+            "activations_gib": 2.8125,
+            "logits_gib": 4.0,
+            "total_gib": 6.8125
+          },
+          "degraded": false
+        },
+        {
+          "mode": "midpoint",
+          "batch": 320,
+          "n_layer": 10,
+          "ce_chunks": 4,
+          "peak_alloc_gib": 5.7490081787109375,
+          "peak_reserved_gib": 6.650390625,
+          "state_gib": 0.25455665588378906,
+          "per_batch_gib": 5.494451522827148,
+          "tokens_per_sec": 73421.95965059623,
+          "vram_cap_gib": 6.951171875,
+          "analytic": {
+            "stream_gib": 0.234375,
+            "activations_gib": 3.515625,
+            "logits_gib": 5.0,
+            "total_gib": 8.515625
+          },
+          "degraded": false
+        }
+      ],
+      "max_batch": {
+        "store": 48,
+        "euler": 320,
+        "midpoint": 320
+      },
+      "n_layer": 10,
+      "ce_chunks": 4
+    },
+    "boundary_repeats_after_fix": {
+      "midpoint@112": [
+        true,
+        true,
+        true
+      ],
+      "midpoint@128": [
+        false,
+        false,
+        false
+      ],
+      "euler@128": [
+        false,
+        false,
+        false
+      ]
+    }
+  },
+  "runs": [
+    {
+      "spec": {
+        "name": "A_baseline",
+        "mode": "store",
+        "batch_size": 48,
+        "tokens": 50000000,
+        "lr": 0.001,
+        "min_lr_frac": 0.1,
+        "warmup_frac": 0.05,
+        "grad_clip": 1.0,
+        "euler_iters": 4,
+        "ce_chunks": 1,
+        "seed": 1234,
+        "gamma_init": 0.1,
+        "n_layer": 10,
+        "note": "activations stored, the ordinary pre-LN GPT",
+        "tags": [
+          "baseline"
+        ]
+      },
+      "params": 21057024,
+      "steps": 2034,
+      "tokens_seen": 49987584,
+      "final_train_loss": 1.5766617059707642,
+      "final_val_loss": 1.61960466504097,
+      "tokens_per_sec": 91021.76431410966,
+      "timed_steps": 2029,
+      "peak_alloc_gib": 6.133284568786621,
+      "peak_reserved_gib": 6.75390625,
+      "state_gib": 0.25248146057128906,
+      "per_batch_gib": 5.880803108215332,
+      "wall_seconds": 549.243082523346,
+      "vram_cap_gib": 6.951171875,
+      "history": [
+        {
+          "step": 0,
+          "tokens": 24576,
+          "loss": 7.784639835357666,
+          "lr": 9.900990099009901e-06
+        },
+        {
+          "step": 40,
+          "tokens": 1007616,
+          "loss": 5.796018123626709,
+          "lr": 0.000405940594059406
+        },
+        {
+          "step": 80,
+          "tokens": 1990656,
+          "loss": 4.7778706550598145,
+          "lr": 0.000801980198019802
+        },
+        {
+          "step": 120,
+          "tokens": 2973696,
+          "loss": 3.98858904838562,
+          "lr": 0.000999785468412261
+        },
+        {
+          "step": 160,
+          "tokens": 3956736,
+          "loss": 3.7416393756866455,
+          "lr": 0.0009979327653109197
+        },
+        {
+          "step": 200,
+          "tokens": 4939776,
+          "loss": 3.4163808822631836,
+          "lr": 0.0009941876493414538
+        },
+        {
+          "step": 240,
+          "tokens": 5922816,
+          "loss": 3.2349865436553955,
+          "lr": 0.000988565942757116
+        },
+        {
+          "step": 280,
+          "tokens": 6905856,
+          "loss": 3.008904457092285,
+          "lr": 0.000981091395974721
+        },
+        {
+          "step": 320,
+          "tokens": 7888896,
+          "loss": 2.8681304454803467,
+          "lr": 0.0009717955872345989
+        },
+        {
+          "step": 360,
+          "tokens": 8871936,
+          "loss": 2.6691677570343018,
+          "lr": 0.0009607177891897936
+        },
+        {
+          "step": 400,
+          "tokens": 9854976,
+          "loss": 2.5474536418914795,
+          "lr": 0.0009479048029881428
+        },
+        {
+          "step": 440,
+          "tokens": 10838016,
+          "loss": 2.4173426628112793,
+          "lr": 0.0009334107605481951
+        },
+        {
+          "step": 480,
+          "tokens": 11821056,
+          "loss": 2.4461193084716797,
+          "lr": 0.0009172968958643102
+        },
+        {
+          "step": 520,
+          "tokens": 12804096,
+          "loss": 2.308384895324707,
+          "lr": 0.0008996312863071216
+        },
+        {
+          "step": 560,
+          "tokens": 13787136,
+          "loss": 2.1704819202423096,
+          "lr": 0.00088048856501231
+        },
+        {
+          "step": 600,
+          "tokens": 14770176,
+          "loss": 2.202059507369995,
+          "lr": 0.0008599496055727773
+        },
+        {
+          "step": 640,
+          "tokens": 15753216,
+          "loss": 2.036259412765503,
+          "lr": 0.0008381011803663254
+        },
+        {
+          "step": 680,
+          "tokens": 16736256,
+          "loss": 2.097548723220825,
+          "lr": 0.0008150355939623246
+        },
+        {
+          "step": 720,
+          "tokens": 17719296,
+          "loss": 2.0927021503448486,
+          "lr": 0.0007908502931561471
+        },
+        {
+          "step": 760,
+          "tokens": 18702336,
+          "loss": 2.0402138233184814,
+          "lr": 0.0007656474552788783
+        },
+        {
+          "step": 800,
+          "tokens": 19685376,
+          "loss": 1.9493087530136108,
+          "lr": 0.0007395335565216025
+        },
+        {
+          "step": 840,
+          "tokens": 20668416,
+          "loss": 1.890122413635254,
+          "lr": 0.000712618922097995
+        },
+        {
+          "step": 880,
+          "tokens": 21651456,
+          "loss": 1.9420441389083862,
+          "lr": 0.0006850172601456795
+        },
+        {
+          "step": 920,
+          "tokens": 22634496,
+          "loss": 1.870658278465271,
+          "lr": 0.00065684518133551
+        },
+        {
+          "step": 960,
+          "tokens": 23617536,
+          "loss": 1.8921948671340942,
+          "lr": 0.0006282217062183161
+        },
+        {
+          "step": 1000,
+          "tokens": 24600576,
+          "loss": 1.8653310537338257,
+          "lr": 0.0005992677623904633
+        },
+        {
+          "step": 1040,
+          "tokens": 25583616,
+          "loss": 1.7823807001113892,
+          "lr": 0.0005701056736025812
+        },
+        {
+          "step": 1080,
+          "tokens": 26566656,
+          "loss": 1.773654818534851,
+          "lr": 0.0005408586429698634
+        },
+        {
+          "step": 1120,
+          "tokens": 27549696,
+          "loss": 1.8043707609176636,
+          "lr": 0.0005116502324672537
+        },
+        {
+          "step": 1160,
+          "tokens": 28532736,
+          "loss": 1.7039397954940796,
+          "lr": 0.00048260384090853206
+        },
+        {
+          "step": 1200,
+          "tokens": 29515776,
+          "loss": 1.6970735788345337,
+          "lr": 0.0004538421826147199
+        },
+        {
+          "step": 1240,
+          "tokens": 30498816,
+          "loss": 1.7619181871414185,
+          "lr": 0.00042548676897430896
+        },
+        {
+          "step": 1280,
+          "tokens": 31481856,
+          "loss": 1.677699089050293,
+          "lr": 0.00039765739508560317
+        },
+        {
+          "step": 1320,
+          "tokens": 32464896,
+          "loss": 1.767189860343933,
+          "lr": 0.00037047163364999303
+        },
+        {
+          "step": 1360,
+          "tokens": 33447936,
+          "loss": 1.6494275331497192,
+          "lr": 0.00034404433825434397
+        },
+        {
+          "step": 1400,
+          "tokens": 34430976,
+          "loss": 1.6352676153182983,
+          "lr": 0.00031848715814101895
+        },
+        {
+          "step": 1440,
+          "tokens": 35414016,
+          "loss": 1.8050743341445923,
+          "lr": 0.0002939080665155186
+        },
+        {
+          "step": 1480,
+          "tokens": 36397056,
+          "loss": 1.6194251775741577,
+          "lr": 0.0002704109043845321
+        },
+        {
+          "step": 1520,
+          "tokens": 37380096,
+          "loss": 1.7180404663085938,
+          "lr": 0.0002480949418515767
+        },
+        {
+          "step": 1560,
+          "tokens": 38363136,
+          "loss": 1.659335732460022,
+          "lr": 0.00022705445872365094
+        },
+        {
+          "step": 1600,
+          "tokens": 39346176,
+          "loss": 1.6267167329788208,
+          "lr": 0.0002073783462007437
+        },
+        {
+          "step": 1640,
+          "tokens": 40329216,
+          "loss": 1.6082853078842163,
+          "lr": 0.00018914973133096736
+        },
+        {
+          "step": 1680,
+          "tokens": 41312256,
+          "loss": 1.6045433282852173,
+          "lr": 0.00017244562581790574
+        },
+        {
+          "step": 1720,
+          "tokens": 42295296,
+          "loss": 1.6689640283584595,
+          "lr": 0.00015733660066388666
+        },
+        {
+          "step": 1760,
+          "tokens": 43278336,
+          "loss": 1.6512848138809204,
+          "lr": 0.00014388648802373468
+        },
+        {
+          "step": 1800,
+          "tokens": 44261376,
+          "loss": 1.5538673400878906,
+          "lr": 0.00013215211152860397
+        },
+        {
+          "step": 1840,
+          "tokens": 45244416,
+          "loss": 1.5958322286605835,
+          "lr": 0.00012218304621921172
+        },
+        {
+          "step": 1880,
+          "tokens": 46227456,
+          "loss": 1.6134228706359863,
+          "lr": 0.0001140214091026975
+        },
+        {
+          "step": 1920,
+          "tokens": 47210496,
+          "loss": 1.6519492864608765,
+          "lr": 0.00010770168121795904
+        },
+        {
+          "step": 1960,
+          "tokens": 48193536,
+          "loss": 1.6001731157302856,
+          "lr": 0.00010325056196119664
+        },
+        {
+          "step": 2000,
+          "tokens": 49176576,
+          "loss": 1.6116021871566772,
+          "lr": 0.00010068685628710752
+        },
+        {
+          "step": 2033,
+          "tokens": 49987584,
+          "loss": 1.5766617059707642,
+          "lr": 0.00010000059431741979
+        }
+      ],
+      "diagnostics": [],
+      "sample": "\n\nLily and Ben are twins. They like to play with their toys and read books. But sometimes they fight over the same toy car. One day, their mom is in the kitchen. She is making lunch and they get to the kitchen. Mom says they have to pack their things.\n\"But it is so cold and I want to go to the fridge. Can we have the bag of food, please?\" Lily says.\n\"No, Lily. I want to get the food and put the food in the fridge. And the fridge is too far.",
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 4.21875,
+        "logits_gib": 0.75,
+        "total_gib": 4.96875
+      }
+    },
+    {
+      "spec": {
+        "name": "E_checkpoint",
+        "mode": "checkpoint",
+        "batch_size": 48,
+        "tokens": 50000000,
+        "lr": 0.001,
+        "min_lr_frac": 0.1,
+        "warmup_frac": 0.05,
+        "grad_clip": 1.0,
+        "euler_iters": 4,
+        "ce_chunks": 1,
+        "seed": 1234,
+        "gamma_init": 0.1,
+        "n_layer": 10,
+        "note": "recomputation without reversibility - the honest rival",
+        "tags": [
+          "rival"
+        ]
+      },
+      "params": 21057024,
+      "steps": 2034,
+      "tokens_seen": 49987584,
+      "final_train_loss": 1.5825356245040894,
+      "final_val_loss": 1.6218723356723785,
+      "tokens_per_sec": 73971.8483069552,
+      "timed_steps": 2029,
+      "peak_alloc_gib": 2.925459861755371,
+      "peak_reserved_gib": 3.126953125,
+      "state_gib": 0.25339698791503906,
+      "per_batch_gib": 2.672062873840332,
+      "wall_seconds": 675.9179248809814,
+      "vram_cap_gib": 6.05078125,
+      "history": [
+        {
+          "step": 0,
+          "tokens": 24576,
+          "loss": 7.784639835357666,
+          "lr": 9.900990099009901e-06
+        },
+        {
+          "step": 40,
+          "tokens": 1007616,
+          "loss": 5.796016693115234,
+          "lr": 0.000405940594059406
+        },
+        {
+          "step": 80,
+          "tokens": 1990656,
+          "loss": 4.78040885925293,
+          "lr": 0.000801980198019802
+        },
+        {
+          "step": 120,
+          "tokens": 2973696,
+          "loss": 3.985443353652954,
+          "lr": 0.000999785468412261
+        },
+        {
+          "step": 160,
+          "tokens": 3956736,
+          "loss": 3.713115692138672,
+          "lr": 0.0009979327653109197
+        },
+        {
+          "step": 200,
+          "tokens": 4939776,
+          "loss": 3.3981010913848877,
+          "lr": 0.0009941876493414538
+        },
+        {
+          "step": 240,
+          "tokens": 5922816,
+          "loss": 3.233525514602661,
+          "lr": 0.000988565942757116
+        },
+        {
+          "step": 280,
+          "tokens": 6905856,
+          "loss": 3.0180647373199463,
+          "lr": 0.000981091395974721
+        },
+        {
+          "step": 320,
+          "tokens": 7888896,
+          "loss": 2.8807430267333984,
+          "lr": 0.0009717955872345989
+        },
+        {
+          "step": 360,
+          "tokens": 8871936,
+          "loss": 2.6708624362945557,
+          "lr": 0.0009607177891897936
+        },
+        {
+          "step": 400,
+          "tokens": 9854976,
+          "loss": 2.563128709793091,
+          "lr": 0.0009479048029881428
+        },
+        {
+          "step": 440,
+          "tokens": 10838016,
+          "loss": 2.4147889614105225,
+          "lr": 0.0009334107605481951
+        },
+        {
+          "step": 480,
+          "tokens": 11821056,
+          "loss": 2.4506170749664307,
+          "lr": 0.0009172968958643102
+        },
+        {
+          "step": 520,
+          "tokens": 12804096,
+          "loss": 2.3101396560668945,
+          "lr": 0.0008996312863071216
+        },
+        {
+          "step": 560,
+          "tokens": 13787136,
+          "loss": 2.178392171859741,
+          "lr": 0.00088048856501231
+        },
+        {
+          "step": 600,
+          "tokens": 14770176,
+          "loss": 2.2016541957855225,
+          "lr": 0.0008599496055727773
+        },
+        {
+          "step": 640,
+          "tokens": 15753216,
+          "loss": 2.0408265590667725,
+          "lr": 0.0008381011803663254
+        },
+        {
+          "step": 680,
+          "tokens": 16736256,
+          "loss": 2.1045353412628174,
+          "lr": 0.0008150355939623246
+        },
+        {
+          "step": 720,
+          "tokens": 17719296,
+          "loss": 2.0961403846740723,
+          "lr": 0.0007908502931561471
+        },
+        {
+          "step": 760,
+          "tokens": 18702336,
+          "loss": 2.0579559803009033,
+          "lr": 0.0007656474552788783
+        },
+        {
+          "step": 800,
+          "tokens": 19685376,
+          "loss": 1.9657090902328491,
+          "lr": 0.0007395335565216025
+        },
+        {
+          "step": 840,
+          "tokens": 20668416,
+          "loss": 1.893810749053955,
+          "lr": 0.000712618922097995
+        },
+        {
+          "step": 880,
+          "tokens": 21651456,
+          "loss": 1.940779209136963,
+          "lr": 0.0006850172601456795
+        },
+        {
+          "step": 920,
+          "tokens": 22634496,
+          "loss": 1.8772157430648804,
+          "lr": 0.00065684518133551
+        },
+        {
+          "step": 960,
+          "tokens": 23617536,
+          "loss": 1.898900032043457,
+          "lr": 0.0006282217062183161
+        },
+        {
+          "step": 1000,
+          "tokens": 24600576,
+          "loss": 1.8577566146850586,
+          "lr": 0.0005992677623904633
+        },
+        {
+          "step": 1040,
+          "tokens": 25583616,
+          "loss": 1.7819684743881226,
+          "lr": 0.0005701056736025812
+        },
+        {
+          "step": 1080,
+          "tokens": 26566656,
+          "loss": 1.780682921409607,
+          "lr": 0.0005408586429698634
+        },
+        {
+          "step": 1120,
+          "tokens": 27549696,
+          "loss": 1.8179785013198853,
+          "lr": 0.0005116502324672537
+        },
+        {
+          "step": 1160,
+          "tokens": 28532736,
+          "loss": 1.7128106355667114,
+          "lr": 0.00048260384090853206
+        },
+        {
+          "step": 1200,
+          "tokens": 29515776,
+          "loss": 1.7014268636703491,
+          "lr": 0.0004538421826147199
+        },
+        {
+          "step": 1240,
+          "tokens": 30498816,
+          "loss": 1.7589048147201538,
+          "lr": 0.00042548676897430896
+        },
+        {
+          "step": 1280,
+          "tokens": 31481856,
+          "loss": 1.6754013299942017,
+          "lr": 0.00039765739508560317
+        },
+        {
+          "step": 1320,
+          "tokens": 32464896,
+          "loss": 1.7646392583847046,
+          "lr": 0.00037047163364999303
+        },
+        {
+          "step": 1360,
+          "tokens": 33447936,
+          "loss": 1.6459760665893555,
+          "lr": 0.00034404433825434397
+        },
+        {
+          "step": 1400,
+          "tokens": 34430976,
+          "loss": 1.6368964910507202,
+          "lr": 0.00031848715814101895
+        },
+        {
+          "step": 1440,
+          "tokens": 35414016,
+          "loss": 1.8034930229187012,
+          "lr": 0.0002939080665155186
+        },
+        {
+          "step": 1480,
+          "tokens": 36397056,
+          "loss": 1.624538779258728,
+          "lr": 0.0002704109043845321
+        },
+        {
+          "step": 1520,
+          "tokens": 37380096,
+          "loss": 1.7251014709472656,
+          "lr": 0.0002480949418515767
+        },
+        {
+          "step": 1560,
+          "tokens": 38363136,
+          "loss": 1.662095069885254,
+          "lr": 0.00022705445872365094
+        },
+        {
+          "step": 1600,
+          "tokens": 39346176,
+          "loss": 1.624483585357666,
+          "lr": 0.0002073783462007437
+        },
+        {
+          "step": 1640,
+          "tokens": 40329216,
+          "loss": 1.6085401773452759,
+          "lr": 0.00018914973133096736
+        },
+        {
+          "step": 1680,
+          "tokens": 41312256,
+          "loss": 1.6031736135482788,
+          "lr": 0.00017244562581790574
+        },
+        {
+          "step": 1720,
+          "tokens": 42295296,
+          "loss": 1.6702665090560913,
+          "lr": 0.00015733660066388666
+        },
+        {
+          "step": 1760,
+          "tokens": 43278336,
+          "loss": 1.6526707410812378,
+          "lr": 0.00014388648802373468
+        },
+        {
+          "step": 1800,
+          "tokens": 44261376,
+          "loss": 1.5569772720336914,
+          "lr": 0.00013215211152860397
+        },
+        {
+          "step": 1840,
+          "tokens": 45244416,
+          "loss": 1.596185326576233,
+          "lr": 0.00012218304621921172
+        },
+        {
+          "step": 1880,
+          "tokens": 46227456,
+          "loss": 1.618782877922058,
+          "lr": 0.0001140214091026975
+        },
+        {
+          "step": 1920,
+          "tokens": 47210496,
+          "loss": 1.6565839052200317,
+          "lr": 0.00010770168121795904
+        },
+        {
+          "step": 1960,
+          "tokens": 48193536,
+          "loss": 1.6003742218017578,
+          "lr": 0.00010325056196119664
+        },
+        {
+          "step": 2000,
+          "tokens": 49176576,
+          "loss": 1.6190026998519897,
+          "lr": 0.00010068685628710752
+        },
+        {
+          "step": 2033,
+          "tokens": 49987584,
+          "loss": 1.5825356245040894,
+          "lr": 0.00010000059431741979
+        }
+      ],
+      "diagnostics": [],
+      "sample": "\n\nOnce upon a time there was a very adventurous little girl. She loved to explore and learn new things.\nOne day, she was walking in the forest when she noticed something strange. It was an ambulance. She looked up and saw a big, friendly bear! The bear was wearing a shiny hat and wanted to join them. \nThe little girl was scared, but she was also excited. The bear was very kind and she said to the bear, \"It's okay. We can change if we work together.\" She took a deep breath and said, \"",
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.7734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.5234375
+      }
+    },
+    {
+      "spec": {
+        "name": "B_euler",
+        "mode": "euler",
+        "batch_size": 48,
+        "tokens": 50000000,
+        "lr": 0.001,
+        "min_lr_frac": 0.1,
+        "warmup_frac": 0.05,
+        "grad_clip": 1.0,
+        "euler_iters": 4,
+        "ce_chunks": 1,
+        "seed": 1234,
+        "gamma_init": 0.1,
+        "n_layer": 10,
+        "note": "symplectic Euler: velocity stream, exactly invertible",
+        "tags": [
+          "reversible",
+          "variant"
+        ]
+      },
+      "params": 21057024,
+      "steps": 2034,
+      "tokens_seen": 49987584,
+      "final_train_loss": 1.585269570350647,
+      "final_val_loss": 1.63006511926651,
+      "tokens_per_sec": 73271.6163624834,
+      "timed_steps": 2029,
+      "peak_alloc_gib": 2.646040916442871,
+      "peak_reserved_gib": 3.126953125,
+      "state_gib": 0.25522804260253906,
+      "per_batch_gib": 2.390812873840332,
+      "wall_seconds": 682.2766025066376,
+      "vram_cap_gib": 6.05078125,
+      "history": [
+        {
+          "step": 0,
+          "tokens": 24576,
+          "loss": 7.754862308502197,
+          "lr": 9.900990099009901e-06
+        },
+        {
+          "step": 40,
+          "tokens": 1007616,
+          "loss": 5.619309902191162,
+          "lr": 0.000405940594059406
+        },
+        {
+          "step": 80,
+          "tokens": 1990656,
+          "loss": 4.1830315589904785,
+          "lr": 0.000801980198019802
+        },
+        {
+          "step": 120,
+          "tokens": 2973696,
+          "loss": 3.7299649715423584,
+          "lr": 0.000999785468412261
+        },
+        {
+          "step": 160,
+          "tokens": 3956736,
+          "loss": 3.4499776363372803,
+          "lr": 0.0009979327653109197
+        },
+        {
+          "step": 200,
+          "tokens": 4939776,
+          "loss": 3.070728302001953,
+          "lr": 0.0009941876493414538
+        },
+        {
+          "step": 240,
+          "tokens": 5922816,
+          "loss": 2.8842220306396484,
+          "lr": 0.000988565942757116
+        },
+        {
+          "step": 280,
+          "tokens": 6905856,
+          "loss": 2.7236690521240234,
+          "lr": 0.000981091395974721
+        },
+        {
+          "step": 320,
+          "tokens": 7888896,
+          "loss": 2.6550657749176025,
+          "lr": 0.0009717955872345989
+        },
+        {
+          "step": 360,
+          "tokens": 8871936,
+          "loss": 2.500373601913452,
+          "lr": 0.0009607177891897936
+        },
+        {
+          "step": 400,
+          "tokens": 9854976,
+          "loss": 2.4251904487609863,
+          "lr": 0.0009479048029881428
+        },
+        {
+          "step": 440,
+          "tokens": 10838016,
+          "loss": 2.3020522594451904,
+          "lr": 0.0009334107605481951
+        },
+        {
+          "step": 480,
+          "tokens": 11821056,
+          "loss": 2.3611865043640137,
+          "lr": 0.0009172968958643102
+        },
+        {
+          "step": 520,
+          "tokens": 12804096,
+          "loss": 2.2502317428588867,
+          "lr": 0.0008996312863071216
+        },
+        {
+          "step": 560,
+          "tokens": 13787136,
+          "loss": 2.13773512840271,
+          "lr": 0.00088048856501231
+        },
+        {
+          "step": 600,
+          "tokens": 14770176,
+          "loss": 2.172283887863159,
+          "lr": 0.0008599496055727773
+        },
+        {
+          "step": 640,
+          "tokens": 15753216,
+          "loss": 2.011244773864746,
+          "lr": 0.0008381011803663254
+        },
+        {
+          "step": 680,
+          "tokens": 16736256,
+          "loss": 2.0794928073883057,
+          "lr": 0.0008150355939623246
+        },
+        {
+          "step": 720,
+          "tokens": 17719296,
+          "loss": 2.0850741863250732,
+          "lr": 0.0007908502931561471
+        },
+        {
+          "step": 760,
+          "tokens": 18702336,
+          "loss": 2.0320396423339844,
+          "lr": 0.0007656474552788783
+        },
+        {
+          "step": 800,
+          "tokens": 19685376,
+          "loss": 1.9565905332565308,
+          "lr": 0.0007395335565216025
+        },
+        {
+          "step": 840,
+          "tokens": 20668416,
+          "loss": 1.8953243494033813,
+          "lr": 0.000712618922097995
+        },
+        {
+          "step": 880,
+          "tokens": 21651456,
+          "loss": 1.9349117279052734,
+          "lr": 0.0006850172601456795
+        },
+        {
+          "step": 920,
+          "tokens": 22634496,
+          "loss": 1.8813234567642212,
+          "lr": 0.00065684518133551
+        },
+        {
+          "step": 960,
+          "tokens": 23617536,
+          "loss": 1.8938102722167969,
+          "lr": 0.0006282217062183161
+        },
+        {
+          "step": 1000,
+          "tokens": 24600576,
+          "loss": 1.868001103401184,
+          "lr": 0.0005992677623904633
+        },
+        {
+          "step": 1040,
+          "tokens": 25583616,
+          "loss": 1.7838996648788452,
+          "lr": 0.0005701056736025812
+        },
+        {
+          "step": 1080,
+          "tokens": 26566656,
+          "loss": 1.7902297973632812,
+          "lr": 0.0005408586429698634
+        },
+        {
+          "step": 1120,
+          "tokens": 27549696,
+          "loss": 1.8285974264144897,
+          "lr": 0.0005116502324672537
+        },
+        {
+          "step": 1160,
+          "tokens": 28532736,
+          "loss": 1.7162160873413086,
+          "lr": 0.00048260384090853206
+        },
+        {
+          "step": 1200,
+          "tokens": 29515776,
+          "loss": 1.708053469657898,
+          "lr": 0.0004538421826147199
+        },
+        {
+          "step": 1240,
+          "tokens": 30498816,
+          "loss": 1.7588542699813843,
+          "lr": 0.00042548676897430896
+        },
+        {
+          "step": 1280,
+          "tokens": 31481856,
+          "loss": 1.690794587135315,
+          "lr": 0.00039765739508560317
+        },
+        {
+          "step": 1320,
+          "tokens": 32464896,
+          "loss": 1.7731170654296875,
+          "lr": 0.00037047163364999303
+        },
+        {
+          "step": 1360,
+          "tokens": 33447936,
+          "loss": 1.6518853902816772,
+          "lr": 0.00034404433825434397
+        },
+        {
+          "step": 1400,
+          "tokens": 34430976,
+          "loss": 1.636926293373108,
+          "lr": 0.00031848715814101895
+        },
+        {
+          "step": 1440,
+          "tokens": 35414016,
+          "loss": 1.8163738250732422,
+          "lr": 0.0002939080665155186
+        },
+        {
+          "step": 1480,
+          "tokens": 36397056,
+          "loss": 1.6257200241088867,
+          "lr": 0.0002704109043845321
+        },
+        {
+          "step": 1520,
+          "tokens": 37380096,
+          "loss": 1.7241703271865845,
+          "lr": 0.0002480949418515767
+        },
+        {
+          "step": 1560,
+          "tokens": 38363136,
+          "loss": 1.667056679725647,
+          "lr": 0.00022705445872365094
+        },
+        {
+          "step": 1600,
+          "tokens": 39346176,
+          "loss": 1.6260160207748413,
+          "lr": 0.0002073783462007437
+        },
+        {
+          "step": 1640,
+          "tokens": 40329216,
+          "loss": 1.61227548122406,
+          "lr": 0.00018914973133096736
+        },
+        {
+          "step": 1680,
+          "tokens": 41312256,
+          "loss": 1.6083437204360962,
+          "lr": 0.00017244562581790574
+        },
+        {
+          "step": 1720,
+          "tokens": 42295296,
+          "loss": 1.6728049516677856,
+          "lr": 0.00015733660066388666
+        },
+        {
+          "step": 1760,
+          "tokens": 43278336,
+          "loss": 1.6580969095230103,
+          "lr": 0.00014388648802373468
+        },
+        {
+          "step": 1800,
+          "tokens": 44261376,
+          "loss": 1.552897334098816,
+          "lr": 0.00013215211152860397
+        },
+        {
+          "step": 1840,
+          "tokens": 45244416,
+          "loss": 1.6031084060668945,
+          "lr": 0.00012218304621921172
+        },
+        {
+          "step": 1880,
+          "tokens": 46227456,
+          "loss": 1.623108983039856,
+          "lr": 0.0001140214091026975
+        },
+        {
+          "step": 1920,
+          "tokens": 47210496,
+          "loss": 1.6637016534805298,
+          "lr": 0.00010770168121795904
+        },
+        {
+          "step": 1960,
+          "tokens": 48193536,
+          "loss": 1.6091808080673218,
+          "lr": 0.00010325056196119664
+        },
+        {
+          "step": 2000,
+          "tokens": 49176576,
+          "loss": 1.61993408203125,
+          "lr": 0.00010068685628710752
+        },
+        {
+          "step": 2033,
+          "tokens": 49987584,
+          "loss": 1.585269570350647,
+          "lr": 0.00010000059431741979
+        }
+      ],
+      "diagnostics": [
+        {
+          "recon_h0": 0.01831844262778759,
+          "velocity_norm": 0.00046780105913057923,
+          "step": 0
+        }
+      ],
+      "sample": "\n\nOnce upon a time there was a very adventurous little girl. She loved to explore and explore and explore. One day, she went out to explore and saw a beautiful lake. She wanted to go closer and explore. Suddenly she saw something shiny and sparkly. She reached out to touch it, but it was a deep, deep hole. \nThe little girl was scared, but she was determined to find out. She held out her hand and walked towards the edge. The end she did not want to go, so she stepped closer and closer to the edge.\n",
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.52734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.27734375
+      }
+    },
+    {
+      "spec": {
+        "name": "C_midpoint",
+        "mode": "midpoint",
+        "batch_size": 48,
+        "tokens": 50000000,
+        "lr": 0.001,
+        "min_lr_frac": 0.1,
+        "warmup_frac": 0.05,
+        "grad_clip": 1.0,
+        "euler_iters": 4,
+        "ce_chunks": 1,
+        "seed": 1234,
+        "gamma_init": 0.1,
+        "n_layer": 10,
+        "note": "leapfrog: h_{l+1} = h_{l-1} + 2 G(h_l), exactly invertible",
+        "tags": [
+          "reversible",
+          "variant"
+        ]
+      },
+      "params": 21057024,
+      "steps": 2034,
+      "tokens_seen": 49987584,
+      "final_train_loss": 1.8481143712997437,
+      "final_val_loss": 1.8820569396018982,
+      "tokens_per_sec": 71388.53584457233,
+      "timed_steps": 2029,
+      "peak_alloc_gib": 2.644759178161621,
+      "peak_reserved_gib": 3.49609375,
+      "state_gib": 0.25394630432128906,
+      "per_batch_gib": 2.390812873840332,
+      "wall_seconds": 700.14941573143,
+      "vram_cap_gib": 6.951171875,
+      "history": [
+        {
+          "step": 0,
+          "tokens": 24576,
+          "loss": 7.79298210144043,
+          "lr": 9.900990099009901e-06
+        },
+        {
+          "step": 40,
+          "tokens": 1007616,
+          "loss": 5.8101372718811035,
+          "lr": 0.000405940594059406
+        },
+        {
+          "step": 80,
+          "tokens": 1990656,
+          "loss": 5.43747091293335,
+          "lr": 0.000801980198019802
+        },
+        {
+          "step": 120,
+          "tokens": 2973696,
+          "loss": 4.844665050506592,
+          "lr": 0.000999785468412261
+        },
+        {
+          "step": 160,
+          "tokens": 3956736,
+          "loss": 4.199855804443359,
+          "lr": 0.0009979327653109197
+        },
+        {
+          "step": 200,
+          "tokens": 4939776,
+          "loss": 3.8733551502227783,
+          "lr": 0.0009941876493414538
+        },
+        {
+          "step": 240,
+          "tokens": 5922816,
+          "loss": 3.7722599506378174,
+          "lr": 0.000988565942757116
+        },
+        {
+          "step": 280,
+          "tokens": 6905856,
+          "loss": 3.681739568710327,
+          "lr": 0.000981091395974721
+        },
+        {
+          "step": 320,
+          "tokens": 7888896,
+          "loss": 3.5676071643829346,
+          "lr": 0.0009717955872345989
+        },
+        {
+          "step": 360,
+          "tokens": 8871936,
+          "loss": 3.4425227642059326,
+          "lr": 0.0009607177891897936
+        },
+        {
+          "step": 400,
+          "tokens": 9854976,
+          "loss": 3.2580020427703857,
+          "lr": 0.0009479048029881428
+        },
+        {
+          "step": 440,
+          "tokens": 10838016,
+          "loss": 3.0990724563598633,
+          "lr": 0.0009334107605481951
+        },
+        {
+          "step": 480,
+          "tokens": 11821056,
+          "loss": 3.091595411300659,
+          "lr": 0.0009172968958643102
+        },
+        {
+          "step": 520,
+          "tokens": 12804096,
+          "loss": 2.9077224731445312,
+          "lr": 0.0008996312863071216
+        },
+        {
+          "step": 560,
+          "tokens": 13787136,
+          "loss": 2.741931676864624,
+          "lr": 0.00088048856501231
+        },
+        {
+          "step": 600,
+          "tokens": 14770176,
+          "loss": 2.755629777908325,
+          "lr": 0.0008599496055727773
+        },
+        {
+          "step": 640,
+          "tokens": 15753216,
+          "loss": 2.570683717727661,
+          "lr": 0.0008381011803663254
+        },
+        {
+          "step": 680,
+          "tokens": 16736256,
+          "loss": 2.5983426570892334,
+          "lr": 0.0008150355939623246
+        },
+        {
+          "step": 720,
+          "tokens": 17719296,
+          "loss": 2.564762830734253,
+          "lr": 0.0007908502931561471
+        },
+        {
+          "step": 760,
+          "tokens": 18702336,
+          "loss": 2.5243289470672607,
+          "lr": 0.0007656474552788783
+        },
+        {
+          "step": 800,
+          "tokens": 19685376,
+          "loss": 2.401477575302124,
+          "lr": 0.0007395335565216025
+        },
+        {
+          "step": 840,
+          "tokens": 20668416,
+          "loss": 2.31943678855896,
+          "lr": 0.000712618922097995
+        },
+        {
+          "step": 880,
+          "tokens": 21651456,
+          "loss": 2.370093584060669,
+          "lr": 0.0006850172601456795
+        },
+        {
+          "step": 920,
+          "tokens": 22634496,
+          "loss": 2.2753543853759766,
+          "lr": 0.00065684518133551
+        },
+        {
+          "step": 960,
+          "tokens": 23617536,
+          "loss": 2.2852535247802734,
+          "lr": 0.0006282217062183161
+        },
+        {
+          "step": 1000,
+          "tokens": 24600576,
+          "loss": 2.2419345378875732,
+          "lr": 0.0005992677623904633
+        },
+        {
+          "step": 1040,
+          "tokens": 25583616,
+          "loss": 2.1402199268341064,
+          "lr": 0.0005701056736025812
+        },
+        {
+          "step": 1080,
+          "tokens": 26566656,
+          "loss": 2.134528875350952,
+          "lr": 0.0005408586429698634
+        },
+        {
+          "step": 1120,
+          "tokens": 27549696,
+          "loss": 2.144848108291626,
+          "lr": 0.0005116502324672537
+        },
+        {
+          "step": 1160,
+          "tokens": 28532736,
+          "loss": 2.043505907058716,
+          "lr": 0.00048260384090853206
+        },
+        {
+          "step": 1200,
+          "tokens": 29515776,
+          "loss": 2.0309650897979736,
+          "lr": 0.0004538421826147199
+        },
+        {
+          "step": 1240,
+          "tokens": 30498816,
+          "loss": 2.0968031883239746,
+          "lr": 0.00042548676897430896
+        },
+        {
+          "step": 1280,
+          "tokens": 31481856,
+          "loss": 2.00702166557312,
+          "lr": 0.00039765739508560317
+        },
+        {
+          "step": 1320,
+          "tokens": 32464896,
+          "loss": 2.0931873321533203,
+          "lr": 0.00037047163364999303
+        },
+        {
+          "step": 1360,
+          "tokens": 33447936,
+          "loss": 1.9704710245132446,
+          "lr": 0.00034404433825434397
+        },
+        {
+          "step": 1400,
+          "tokens": 34430976,
+          "loss": 1.9382025003433228,
+          "lr": 0.00031848715814101895
+        },
+        {
+          "step": 1440,
+          "tokens": 35414016,
+          "loss": 2.131901741027832,
+          "lr": 0.0002939080665155186
+        },
+        {
+          "step": 1480,
+          "tokens": 36397056,
+          "loss": 1.906197190284729,
+          "lr": 0.0002704109043845321
+        },
+        {
+          "step": 1520,
+          "tokens": 37380096,
+          "loss": 2.0376651287078857,
+          "lr": 0.0002480949418515767
+        },
+        {
+          "step": 1560,
+          "tokens": 38363136,
+          "loss": 1.965260624885559,
+          "lr": 0.00022705445872365094
+        },
+        {
+          "step": 1600,
+          "tokens": 39346176,
+          "loss": 1.9227312803268433,
+          "lr": 0.0002073783462007437
+        },
+        {
+          "step": 1640,
+          "tokens": 40329216,
+          "loss": 1.8766132593154907,
+          "lr": 0.00018914973133096736
+        },
+        {
+          "step": 1680,
+          "tokens": 41312256,
+          "loss": 1.8959258794784546,
+          "lr": 0.00017244562581790574
+        },
+        {
+          "step": 1720,
+          "tokens": 42295296,
+          "loss": 1.9568653106689453,
+          "lr": 0.00015733660066388666
+        },
+        {
+          "step": 1760,
+          "tokens": 43278336,
+          "loss": 1.926741123199463,
+          "lr": 0.00014388648802373468
+        },
+        {
+          "step": 1800,
+          "tokens": 44261376,
+          "loss": 1.8343321084976196,
+          "lr": 0.00013215211152860397
+        },
+        {
+          "step": 1840,
+          "tokens": 45244416,
+          "loss": 1.8661037683486938,
+          "lr": 0.00012218304621921172
+        },
+        {
+          "step": 1880,
+          "tokens": 46227456,
+          "loss": 1.886717438697815,
+          "lr": 0.0001140214091026975
+        },
+        {
+          "step": 1920,
+          "tokens": 47210496,
+          "loss": 1.9405587911605835,
+          "lr": 0.00010770168121795904
+        },
+        {
+          "step": 1960,
+          "tokens": 48193536,
+          "loss": 1.8810218572616577,
+          "lr": 0.00010325056196119664
+        },
+        {
+          "step": 2000,
+          "tokens": 49176576,
+          "loss": 1.8770133256912231,
+          "lr": 0.00010068685628710752
+        },
+        {
+          "step": 2033,
+          "tokens": 49987584,
+          "loss": 1.8481143712997437,
+          "lr": 0.00010000059431741979
+        }
+      ],
+      "diagnostics": [
+        {
+          "recon_h0": 0.007144175469875336,
+          "parasitic": 0.03470687195658684,
+          "step": 0
+        }
+      ],
+      "sample": "\nThe two friends were friends who liked to play together. They wanted to find treasure and see one would grow bigger and bigger. One day, they found a big box. The box had a picture of a bird with many other.\n\"Let's open the box,\" said the box. \"Maybe we can find and find out there.\"\n\"OK,\" said a little voice. \"Let's go find one.\"\nBut when they opened the box, there were many things. There was a big tree with a lock on it. A small, mean lion wanted to",
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.52734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.27734375
+      }
+    },
+    {
+      "spec": {
+        "name": "G_euler_implicit",
+        "mode": "euler_implicit",
+        "batch_size": 48,
+        "tokens": 50000000,
+        "lr": 0.001,
+        "min_lr_frac": 0.1,
+        "warmup_frac": 0.05,
+        "grad_clip": 1.0,
+        "euler_iters": 4,
+        "ce_chunks": 1,
+        "seed": 1234,
+        "gamma_init": 0.1,
+        "n_layer": 10,
+        "note": "the obvious reading of Euler: invert by fixed point. Only conditionally a contraction; trained to price the wrong gradient.",
+        "tags": [
+          "reversible",
+          "variant",
+          "negative"
+        ]
+      },
+      "params": 21057024,
+      "steps": 2034,
+      "tokens_seen": 49987584,
+      "final_train_loss": 5.64590311050415,
+      "final_val_loss": 5.665179800987244,
+      "tokens_per_sec": 40315.333839433915,
+      "timed_steps": 2029,
+      "peak_alloc_gib": 2.6097898483276367,
+      "peak_reserved_gib": 2.763671875,
+      "state_gib": 0.25199317932128906,
+      "per_batch_gib": 2.3577966690063477,
+      "wall_seconds": 1240.0378952026367,
+      "vram_cap_gib": 6.78515625,
+      "history": [
+        {
+          "step": 0,
+          "tokens": 24576,
+          "loss": 7.758627414703369,
+          "lr": 9.900990099009901e-06
+        },
+        {
+          "step": 40,
+          "tokens": 1007616,
+          "loss": 5.800729274749756,
+          "lr": 0.000405940594059406
+        },
+        {
+          "step": 80,
+          "tokens": 1990656,
+          "loss": 5.05084753036499,
+          "lr": 0.000801980198019802
+        },
+        {
+          "step": 120,
+          "tokens": 2973696,
+          "loss": 5.821659088134766,
+          "lr": 0.000999785468412261
+        },
+        {
+          "step": 160,
+          "tokens": 3956736,
+          "loss": 5.478953838348389,
+          "lr": 0.0009979327653109197
+        },
+        {
+          "step": 200,
+          "tokens": 4939776,
+          "loss": 5.556781768798828,
+          "lr": 0.0009941876493414538
+        },
+        {
+          "step": 240,
+          "tokens": 5922816,
+          "loss": 5.508416652679443,
+          "lr": 0.000988565942757116
+        },
+        {
+          "step": 280,
+          "tokens": 6905856,
+          "loss": 5.966897487640381,
+          "lr": 0.000981091395974721
+        },
+        {
+          "step": 320,
+          "tokens": 7888896,
+          "loss": 5.829190731048584,
+          "lr": 0.0009717955872345989
+        },
+        {
+          "step": 360,
+          "tokens": 8871936,
+          "loss": 5.771469593048096,
+          "lr": 0.0009607177891897936
+        },
+        {
+          "step": 400,
+          "tokens": 9854976,
+          "loss": 5.752338886260986,
+          "lr": 0.0009479048029881428
+        },
+        {
+          "step": 440,
+          "tokens": 10838016,
+          "loss": 5.854681491851807,
+          "lr": 0.0009334107605481951
+        },
+        {
+          "step": 480,
+          "tokens": 11821056,
+          "loss": 5.774041652679443,
+          "lr": 0.0009172968958643102
+        },
+        {
+          "step": 520,
+          "tokens": 12804096,
+          "loss": 5.743967056274414,
+          "lr": 0.0008996312863071216
+        },
+        {
+          "step": 560,
+          "tokens": 13787136,
+          "loss": 5.78950834274292,
+          "lr": 0.00088048856501231
+        },
+        {
+          "step": 600,
+          "tokens": 14770176,
+          "loss": 5.838721752166748,
+          "lr": 0.0008599496055727773
+        },
+        {
+          "step": 640,
+          "tokens": 15753216,
+          "loss": 5.726152420043945,
+          "lr": 0.0008381011803663254
+        },
+        {
+          "step": 680,
+          "tokens": 16736256,
+          "loss": 5.728878498077393,
+          "lr": 0.0008150355939623246
+        },
+        {
+          "step": 720,
+          "tokens": 17719296,
+          "loss": 5.834455966949463,
+          "lr": 0.0007908502931561471
+        },
+        {
+          "step": 760,
+          "tokens": 18702336,
+          "loss": 5.831319332122803,
+          "lr": 0.0007656474552788783
+        },
+        {
+          "step": 800,
+          "tokens": 19685376,
+          "loss": 5.77274751663208,
+          "lr": 0.0007395335565216025
+        },
+        {
+          "step": 840,
+          "tokens": 20668416,
+          "loss": 5.726705074310303,
+          "lr": 0.000712618922097995
+        },
+        {
+          "step": 880,
+          "tokens": 21651456,
+          "loss": 5.788965225219727,
+          "lr": 0.0006850172601456795
+        },
+        {
+          "step": 920,
+          "tokens": 22634496,
+          "loss": 5.738039016723633,
+          "lr": 0.00065684518133551
+        },
+        {
+          "step": 960,
+          "tokens": 23617536,
+          "loss": 5.77991247177124,
+          "lr": 0.0006282217062183161
+        },
+        {
+          "step": 1000,
+          "tokens": 24600576,
+          "loss": 5.745860576629639,
+          "lr": 0.0005992677623904633
+        },
+        {
+          "step": 1040,
+          "tokens": 25583616,
+          "loss": 5.70669412612915,
+          "lr": 0.0005701056736025812
+        },
+        {
+          "step": 1080,
+          "tokens": 26566656,
+          "loss": 5.700220108032227,
+          "lr": 0.0005408586429698634
+        },
+        {
+          "step": 1120,
+          "tokens": 27549696,
+          "loss": 5.702770233154297,
+          "lr": 0.0005116502324672537
+        },
+        {
+          "step": 1160,
+          "tokens": 28532736,
+          "loss": 5.6870436668396,
+          "lr": 0.00048260384090853206
+        },
+        {
+          "step": 1200,
+          "tokens": 29515776,
+          "loss": 5.665425777435303,
+          "lr": 0.0004538421826147199
+        },
+        {
+          "step": 1240,
+          "tokens": 30498816,
+          "loss": 5.695289134979248,
+          "lr": 0.00042548676897430896
+        },
+        {
+          "step": 1280,
+          "tokens": 31481856,
+          "loss": 5.660412311553955,
+          "lr": 0.00039765739508560317
+        },
+        {
+          "step": 1320,
+          "tokens": 32464896,
+          "loss": 5.7265095710754395,
+          "lr": 0.00037047163364999303
+        },
+        {
+          "step": 1360,
+          "tokens": 33447936,
+          "loss": 5.634986877441406,
+          "lr": 0.00034404433825434397
+        },
+        {
+          "step": 1400,
+          "tokens": 34430976,
+          "loss": 5.62291145324707,
+          "lr": 0.00031848715814101895
+        },
+        {
+          "step": 1440,
+          "tokens": 35414016,
+          "loss": 5.7467803955078125,
+          "lr": 0.0002939080665155186
+        },
+        {
+          "step": 1480,
+          "tokens": 36397056,
+          "loss": 5.6262030601501465,
+          "lr": 0.0002704109043845321
+        },
+        {
+          "step": 1520,
+          "tokens": 37380096,
+          "loss": 5.704503536224365,
+          "lr": 0.0002480949418515767
+        },
+        {
+          "step": 1560,
+          "tokens": 38363136,
+          "loss": 5.713008880615234,
+          "lr": 0.00022705445872365094
+        },
+        {
+          "step": 1600,
+          "tokens": 39346176,
+          "loss": 5.687196731567383,
+          "lr": 0.0002073783462007437
+        },
+        {
+          "step": 1640,
+          "tokens": 40329216,
+          "loss": 5.651965618133545,
+          "lr": 0.00018914973133096736
+        },
+        {
+          "step": 1680,
+          "tokens": 41312256,
+          "loss": 5.694905757904053,
+          "lr": 0.00017244562581790574
+        },
+        {
+          "step": 1720,
+          "tokens": 42295296,
+          "loss": 5.735205173492432,
+          "lr": 0.00015733660066388666
+        },
+        {
+          "step": 1760,
+          "tokens": 43278336,
+          "loss": 5.700673580169678,
+          "lr": 0.00014388648802373468
+        },
+        {
+          "step": 1800,
+          "tokens": 44261376,
+          "loss": 5.690908908843994,
+          "lr": 0.00013215211152860397
+        },
+        {
+          "step": 1840,
+          "tokens": 45244416,
+          "loss": 5.676001071929932,
+          "lr": 0.00012218304621921172
+        },
+        {
+          "step": 1880,
+          "tokens": 46227456,
+          "loss": 5.662001132965088,
+          "lr": 0.0001140214091026975
+        },
+        {
+          "step": 1920,
+          "tokens": 47210496,
+          "loss": 5.7103705406188965,
+          "lr": 0.00010770168121795904
+        },
+        {
+          "step": 1960,
+          "tokens": 48193536,
+          "loss": 5.671596050262451,
+          "lr": 0.00010325056196119664
+        },
+        {
+          "step": 2000,
+          "tokens": 49176576,
+          "loss": 5.827854633331299,
+          "lr": 0.00010068685628710752
+        },
+        {
+          "step": 2033,
+          "tokens": 49987584,
+          "loss": 5.64590311050415,
+          "lr": 0.00010000059431741979
+        }
+      ],
+      "diagnostics": [
+        {
+          "recon_h0": 0.11409200727939606,
+          "euler_residual": 0.09054355323314667,
+          "step": 0,
+          "lipschitz": 1.6284701824188232
+        }
+      ],
+      "sample": " a named a to with the the She Tim it day very\n saw to to day. there said, the and the bird. the,\n a was,, It to. it, the, the, the her.\n big the a. the.\n. was to Tim. The to and \" to. I it to the to a.\n. the and there, The. Lily to,, named\n was said Tom Tom. she's she had was the and\n the the to She a the.. The a.",
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.52734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.27734375
+      }
+    },
+    {
+      "spec": {
+        "name": "F_coupling",
+        "mode": "coupling",
+        "batch_size": 48,
+        "tokens": 5000000,
+        "lr": 0.001,
+        "min_lr_frac": 0.1,
+        "warmup_frac": 0.05,
+        "grad_clip": 1.0,
+        "euler_iters": 4,
+        "ce_chunks": 1,
+        "seed": 1234,
+        "gamma_init": 0.1,
+        "n_layer": 10,
+        "note": "RevNet additive coupling - a probe, not a full run",
+        "tags": [
+          "probe"
+        ]
+      },
+      "params": 12209664,
+      "steps": 203,
+      "tokens_seen": 4988928,
+      "final_train_loss": 3.6604175567626953,
+      "final_val_loss": 3.685556960105896,
+      "tokens_per_sec": 72405.2404017483,
+      "timed_steps": 198,
+      "peak_alloc_gib": 2.5084171295166016,
+      "peak_reserved_gib": 2.7109375,
+      "state_gib": 0.15276050567626953,
+      "per_batch_gib": 2.355656623840332,
+      "wall_seconds": 68.93428468704224,
+      "vram_cap_gib": 6.783203125,
+      "history": [
+        {
+          "step": 0,
+          "tokens": 24576,
+          "loss": 7.69027853012085,
+          "lr": 0.0001
+        },
+        {
+          "step": 4,
+          "tokens": 122880,
+          "loss": 7.279765605926514,
+          "lr": 0.0005
+        },
+        {
+          "step": 8,
+          "tokens": 221184,
+          "loss": 6.4544677734375,
+          "lr": 0.0009000000000000001
+        },
+        {
+          "step": 12,
+          "tokens": 319488,
+          "loss": 5.862150192260742,
+          "lr": 0.000999761554418511
+        },
+        {
+          "step": 16,
+          "tokens": 417792,
+          "loss": 5.751621246337891,
+          "lr": 0.0009978555056666782
+        },
+        {
+          "step": 20,
+          "tokens": 516096,
+          "loss": 5.706569671630859,
+          "lr": 0.0009940514858250732
+        },
+        {
+          "step": 24,
+          "tokens": 614400,
+          "loss": 5.611915111541748,
+          "lr": 0.0009883656159854165
+        },
+        {
+          "step": 28,
+          "tokens": 712704,
+          "loss": 5.505044460296631,
+          "lr": 0.0009808219923493604
+        },
+        {
+          "step": 32,
+          "tokens": 811008,
+          "loss": 5.4437432289123535,
+          "lr": 0.0009714525841109696
+        },
+        {
+          "step": 36,
+          "tokens": 909312,
+          "loss": 5.307631015777588,
+          "lr": 0.0009602970979741689
+        },
+        {
+          "step": 40,
+          "tokens": 1007616,
+          "loss": 5.229885578155518,
+          "lr": 0.0009474028098793275
+        },
+        {
+          "step": 44,
+          "tokens": 1105920,
+          "loss": 5.156104564666748,
+          "lr": 0.0009328243646521042
+        },
+        {
+          "step": 48,
+          "tokens": 1204224,
+          "loss": 4.976407527923584,
+          "lr": 0.0009166235444236209
+        },
+        {
+          "step": 52,
+          "tokens": 1302528,
+          "loss": 4.880553722381592,
+          "lr": 0.0008988690068033865
+        },
+        {
+          "step": 56,
+          "tokens": 1400832,
+          "loss": 4.674720764160156,
+          "lr": 0.0008796359939145614
+        },
+        {
+          "step": 60,
+          "tokens": 1499136,
+          "loss": 4.531574249267578,
+          "lr": 0.0008590060135246516
+        },
+        {
+          "step": 64,
+          "tokens": 1597440,
+          "loss": 4.489952087402344,
+          "lr": 0.0008370664936229688
+        },
+        {
+          "step": 68,
+          "tokens": 1695744,
+          "loss": 4.3937225341796875,
+          "lr": 0.0008139104119087265
+        },
+        {
+          "step": 72,
+          "tokens": 1794048,
+          "loss": 4.22114896774292,
+          "lr": 0.000789635901759967
+        },
+        {
+          "step": 76,
+          "tokens": 1892352,
+          "loss": 4.219112873077393,
+          "lr": 0.00076434583635319
+        },
+        {
+          "step": 80,
+          "tokens": 1990656,
+          "loss": 4.108328819274902,
+          "lr": 0.0007381473926961426
+        },
+        {
+          "step": 84,
+          "tokens": 2088960,
+          "loss": 4.0938568115234375,
+          "lr": 0.0007111515974213638
+        },
+        {
+          "step": 88,
+          "tokens": 2187264,
+          "loss": 3.9322726726531982,
+          "lr": 0.0006834728562653659
+        },
+        {
+          "step": 92,
+          "tokens": 2285568,
+          "loss": 4.021704196929932,
+          "lr": 0.0006552284692274803
+        },
+        {
+          "step": 96,
+          "tokens": 2383872,
+          "loss": 3.9083354473114014,
+          "lr": 0.00062653813346308
+        },
+        {
+          "step": 100,
+          "tokens": 2482176,
+          "loss": 3.9529612064361572,
+          "lr": 0.0005975234360178697
+        },
+        {
+          "step": 104,
+          "tokens": 2580480,
+          "loss": 3.9164161682128906,
+          "lr": 0.0005683073385529938
+        },
+        {
+          "step": 108,
+          "tokens": 2678784,
+          "loss": 3.812640428543091,
+          "lr": 0.0005390136562446481
+        },
+        {
+          "step": 112,
+          "tokens": 2777088,
+          "loss": 3.8168041706085205,
+          "lr": 0.0005097665330665714
+        },
+        {
+          "step": 116,
+          "tokens": 2875392,
+          "loss": 3.844503402709961,
+          "lr": 0.00048068991567912293
+        },
+        {
+          "step": 120,
+          "tokens": 2973696,
+          "loss": 3.823742628097534,
+          "lr": 0.000451907028154557
+        },
+        {
+          "step": 124,
+          "tokens": 3072000,
+          "loss": 3.773211717605591,
+          "lr": 0.0004235398497645599
+        },
+        {
+          "step": 128,
+          "tokens": 3170304,
+          "loss": 3.8098926544189453,
+          "lr": 0.00039570859804313816
+        },
+        {
+          "step": 132,
+          "tokens": 3268608,
+          "loss": 3.7632362842559814,
+          "lr": 0.00036853121931559326
+        },
+        {
+          "step": 136,
+          "tokens": 3366912,
+          "loss": 3.8048248291015625,
+          "lr": 0.00034212288885267244
+        },
+        {
+          "step": 140,
+          "tokens": 3465216,
+          "loss": 3.7733306884765625,
+          "lr": 0.0003165955227681969
+        },
+        {
+          "step": 144,
+          "tokens": 3563520,
+          "loss": 3.854588270187378,
+          "lr": 0.00029205730372870394
+        },
+        {
+          "step": 148,
+          "tokens": 3661824,
+          "loss": 3.6990604400634766,
+          "lr": 0.00026861222248509924
+        },
+        {
+          "step": 152,
+          "tokens": 3760128,
+          "loss": 3.786323308944702,
+          "lr": 0.0002463596371692681
+        },
+        {
+          "step": 156,
+          "tokens": 3858432,
+          "loss": 3.7289187908172607,
+          "lr": 0.00022539385222330793
+        },
+        {
+          "step": 160,
+          "tokens": 3956736,
+          "loss": 3.7234909534454346,
+          "lr": 0.0002058037187458398
+        },
+        {
+          "step": 164,
+          "tokens": 4055040,
+          "loss": 3.7248952388763428,
+          "lr": 0.0001876722579490948
+        },
+        {
+          "step": 168,
+          "tokens": 4153344,
+          "loss": 3.7493343353271484,
+          "lr": 0.0001710763093225338
+        },
+        {
+          "step": 172,
+          "tokens": 4251648,
+          "loss": 3.7393810749053955,
+          "lr": 0.00015608620499404626
+        },
+        {
+          "step": 176,
+          "tokens": 4349952,
+          "loss": 3.6668307781219482,
+          "lr": 0.00014276547166875944
+        },
+        {
+          "step": 180,
+          "tokens": 4448256,
+          "loss": 3.6746914386749268,
+          "lr": 0.00013117056140861318
+        },
+        {
+          "step": 184,
+          "tokens": 4546560,
+          "loss": 3.6857707500457764,
+          "lr": 0.0001213506123936316
+        },
+        {
+          "step": 188,
+          "tokens": 4644864,
+          "loss": 3.6430823802948,
+          "lr": 0.00011334724067876464
+        },
+        {
+          "step": 192,
+          "tokens": 4743168,
+          "loss": 3.6969735622406006,
+          "lr": 0.00010719436382881464
+        },
+        {
+          "step": 196,
+          "tokens": 4841472,
+          "loss": 3.6767406463623047,
+          "lr": 0.00010291805717886718
+        },
+        {
+          "step": 200,
+          "tokens": 4939776,
+          "loss": 3.5798940658569336,
+          "lr": 0.00010053644332938117
+        },
+        {
+          "step": 202,
+          "tokens": 4988928,
+          "loss": 3.6604175567626953,
+          "lr": 0.00010005961534424924
+        }
+      ],
+      "diagnostics": [
+        {
+          "recon_h0": 0.001488231122493744,
+          "step": 0
+        },
+        {
+          "recon_h0": 0.004556042142212391,
+          "step": 20
+        },
+        {
+          "recon_h0": 0.007701873779296875,
+          "step": 40
+        },
+        {
+          "recon_h0": 0.00850699096918106,
+          "step": 60
+        },
+        {
+          "recon_h0": 0.00797753781080246,
+          "step": 80
+        },
+        {
+          "recon_h0": 0.00764048658311367,
+          "step": 100
+        },
+        {
+          "recon_h0": 0.006484598852694035,
+          "step": 120
+        },
+        {
+          "recon_h0": 0.007936917245388031,
+          "step": 140
+        },
+        {
+          "recon_h0": 0.005068264901638031,
+          "step": 160
+        },
+        {
+          "recon_h0": 0.007407978177070618,
+          "step": 180
+        },
+        {
+          "recon_h0": 0.004762173630297184,
+          "step": 200
+        }
+      ],
+      "sample": "\nThe a a time, Lucy. Tim was very very happy.\nOne day, a time, there was a little bug was a little fish was surprised! The cat named Tim loved to play with the day, he was very big tree.\n\nThe dog was a time, there was a little boy named Tim. The tree. He wanted to keep a big red ball. Tim was excited. The bird named Tim had fun.\nOne day, there was gone. One day, and wanted to the dog named She loved to the ball. The dog.",
+      "analytic": {
+        "stream_gib": 0.03515625,
+        "activations_gib": 0.52734375,
+        "logits_gib": 0.75,
+        "total_gib": 1.27734375
+      }
+    },
+    {
+      "spec": {
+        "name": "D_maxbatch",
+        "mode": "euler",
+        "batch_size": 320,
+        "tokens": 50000000,
+        "lr": 0.0025819888974716113,
+        "min_lr_frac": 0.1,
+        "warmup_frac": 0.05,
+        "grad_clip": 1.0,
+        "euler_iters": 4,
+        "ce_chunks": 4,
+        "seed": 1234,
+        "gamma_init": 0.1,
+        "n_layer": 10,
+        "note": "euler pushed to the largest batch that fits, learning rate scaled by sqrt(320/48) = 2.58",
+        "tags": [
+          "maxbatch"
+        ]
+      },
+      "params": 21057024,
+      "steps": 305,
+      "tokens_seen": 49971200,
+      "final_train_loss": 3.572887897491455,
+      "final_val_loss": 3.5980131030082703,
+      "tokens_per_sec": 67874.52692307706,
+      "timed_steps": 300,
+      "peak_alloc_gib": 5.7579874992370605,
+      "peak_reserved_gib": 6.58984375,
+      "state_gib": 0.25596046447753906,
+      "per_batch_gib": 5.5020270347595215,
+      "wall_seconds": 736.5676493644714,
+      "vram_cap_gib": 6.8203125,
+      "history": [
+        {
+          "step": 0,
+          "tokens": 163840,
+          "loss": 7.021173000335693,
+          "lr": 0.00017213259316477408
+        },
+        {
+          "step": 6,
+          "tokens": 1146880,
+          "loss": 6.153926849365234,
+          "lr": 0.0012049281521534186
+        },
+        {
+          "step": 12,
+          "tokens": 2129920,
+          "loss": 5.944785118103027,
+          "lr": 0.0022377237111420633
+        },
+        {
+          "step": 18,
+          "tokens": 3112960,
+          "loss": 5.834377765655518,
+          "lr": 0.0025813753545894736
+        },
+        {
+          "step": 24,
+          "tokens": 4096000,
+          "loss": 5.80100679397583,
+          "lr": 0.0025764708986506534
+        },
+        {
+          "step": 30,
+          "tokens": 5079040,
+          "loss": 5.734015941619873,
+          "lr": 0.002566682699829119
+        },
+        {
+          "step": 36,
+          "tokens": 6062080,
+          "loss": 5.616516590118408,
+          "lr": 0.002552052096759347
+        },
+        {
+          "step": 42,
+          "tokens": 7045120,
+          "loss": 5.396968364715576,
+          "lr": 0.0025326408790681634
+        },
+        {
+          "step": 48,
+          "tokens": 8028160,
+          "loss": 5.204526424407959,
+          "lr": 0.0025085310264177647
+        },
+        {
+          "step": 54,
+          "tokens": 9011200,
+          "loss": 5.057122707366943,
+          "lr": 0.002479824362279883
+        },
+        {
+          "step": 60,
+          "tokens": 9994240,
+          "loss": 4.955288410186768,
+          "lr": 0.0024466421239033205
+        },
+        {
+          "step": 66,
+          "tokens": 10977280,
+          "loss": 4.8798651695251465,
+          "lr": 0.0024091244502910127
+        },
+        {
+          "step": 72,
+          "tokens": 11960320,
+          "loss": 4.783231258392334,
+          "lr": 0.0023674297903490535
+        },
+        {
+          "step": 78,
+          "tokens": 12943360,
+          "loss": 4.73554801940918,
+          "lr": 0.0023217342337072525
+        },
+        {
+          "step": 84,
+          "tokens": 13926400,
+          "loss": 4.627102851867676,
+          "lr": 0.002272230767037386
+        },
+        {
+          "step": 90,
+          "tokens": 14909440,
+          "loss": 4.527205944061279,
+          "lr": 0.0022191284590099346
+        },
+        {
+          "step": 96,
+          "tokens": 15892480,
+          "loss": 4.436002254486084,
+          "lr": 0.0021626515773314975
+        },
+        {
+          "step": 102,
+          "tokens": 16875520,
+          "loss": 4.3523783683776855,
+          "lr": 0.0021030386415919083
+        },
+        {
+          "step": 108,
+          "tokens": 17858560,
+          "loss": 4.248525142669678,
+          "lr": 0.002040541415921175
+        },
+        {
+          "step": 114,
+          "tokens": 18841600,
+          "loss": 4.166924953460693,
+          "lr": 0.001975423845710574
+        },
+        {
+          "step": 120,
+          "tokens": 19824640,
+          "loss": 4.111659526824951,
+          "lr": 0.0019079609428884561
+        },
+        {
+          "step": 126,
+          "tokens": 20807680,
+          "loss": 4.057872772216797,
+          "lr": 0.0018384376244585901
+        },
+        {
+          "step": 132,
+          "tokens": 21790720,
+          "loss": 4.029597759246826,
+          "lr": 0.0017671475092062726
+        },
+        {
+          "step": 138,
+          "tokens": 22773760,
+          "loss": 4.001263618469238,
+          "lr": 0.001694391677654078
+        },
+        {
+          "step": 144,
+          "tokens": 23756800,
+          "loss": 3.947103977203369,
+          "lr": 0.001620477400504356
+        },
+        {
+          "step": 150,
+          "tokens": 24739840,
+          "loss": 3.9134960174560547,
+          "lr": 0.001545716840938652
+        },
+        {
+          "step": 156,
+          "tokens": 25722880,
+          "loss": 3.895479202270508,
+          "lr": 0.0014704257362546606
+        },
+        {
+          "step": 162,
+          "tokens": 26705920,
+          "loss": 3.8806655406951904,
+          "lr": 0.0013949220644085573
+        },
+        {
+          "step": 168,
+          "tokens": 27688960,
+          "loss": 3.837589740753174,
+          "lr": 0.0013195247010943329
+        },
+        {
+          "step": 174,
+          "tokens": 28672000,
+          "loss": 3.804323673248291,
+          "lr": 0.001244552073031696
+        },
+        {
+          "step": 180,
+          "tokens": 29655040,
+          "loss": 3.804260730743408,
+          "lr": 0.0011703208131501341
+        },
+        {
+          "step": 186,
+          "tokens": 30638080,
+          "loss": 3.797471761703491,
+          "lr": 0.0010971444233487185
+        },
+        {
+          "step": 192,
+          "tokens": 31621120,
+          "loss": 3.7717933654785156,
+          "lr": 0.0010253319504792253
+        },
+        {
+          "step": 198,
+          "tokens": 32604160,
+          "loss": 3.745100498199463,
+          "lr": 0.0009551866811443265
+        },
+        {
+          "step": 204,
+          "tokens": 33587200,
+          "loss": 3.730572462081909,
+          "lr": 0.0008870048608231153
+        },
+        {
+          "step": 210,
+          "tokens": 34570240,
+          "loss": 3.7262203693389893,
+          "lr": 0.0008210744427335054
+        },
+        {
+          "step": 216,
+          "tokens": 35553280,
+          "loss": 3.6980836391448975,
+          "lr": 0.0007576738717154556
+        },
+        {
+          "step": 222,
+          "tokens": 36536320,
+          "loss": 3.678997755050659,
+          "lr": 0.0006970709082710506
+        },
+        {
+          "step": 228,
+          "tokens": 37519360,
+          "loss": 3.678710699081421,
+          "lr": 0.0006395214977278978
+        },
+        {
+          "step": 234,
+          "tokens": 38502400,
+          "loss": 3.674809217453003,
+          "lr": 0.000585268689301711
+        },
+        {
+          "step": 240,
+          "tokens": 39485440,
+          "loss": 3.6478469371795654,
+          "lr": 0.0005345416096232198
+        },
+        {
+          "step": 246,
+          "tokens": 40468480,
+          "loss": 3.6198959350585938,
+          "lr": 0.00048755449506452465
+        },
+        {
+          "step": 252,
+          "tokens": 41451520,
+          "loss": 3.6481895446777344,
+          "lr": 0.0004445057869516864
+        },
+        {
+          "step": 258,
+          "tokens": 42434560,
+          "loss": 3.606938123703003,
+          "lr": 0.00040557729348474536
+        },
+        {
+          "step": 264,
+          "tokens": 43417600,
+          "loss": 3.615889310836792,
+          "lr": 0.0003709334219046585
+        },
+        {
+          "step": 270,
+          "tokens": 44400640,
+          "loss": 3.618502140045166,
+          "lr": 0.0003407204841499382
+        },
+        {
+          "step": 276,
+          "tokens": 45383680,
+          "loss": 3.5947024822235107,
+          "lr": 0.0003150660789354345
+        },
+        {
+          "step": 282,
+          "tokens": 46366720,
+          "loss": 3.597360372543335,
+          "lr": 0.0002940785528629308
+        },
+        {
+          "step": 288,
+          "tokens": 47349760,
+          "loss": 3.5626022815704346,
+          "lr": 0.0002778465428394526
+        },
+        {
+          "step": 294,
+          "tokens": 48332800,
+          "loss": 3.5600802898406982,
+          "lr": 0.0002664386017358013
+        },
+        {
+          "step": 300,
+          "tokens": 49315840,
+          "loss": 3.5571060180664062,
+          "lr": 0.0002599029088662739
+        },
+        {
+          "step": 304,
+          "tokens": 49971200,
+          "loss": 3.572887897491455,
+          "lr": 0.00025826706651230257
+        }
+      ],
+      "diagnostics": [
+        {
+          "recon_h0": 0.06224513053894043,
+          "velocity_norm": 0.0006857762928120792,
+          "step": 0
+        },
+        {
+          "recon_h0": 0.7858837842941284,
+          "velocity_norm": 0.014713558368384838,
+          "step": 30
+        },
+        {
+          "recon_h0": 0.2379259318113327,
+          "velocity_norm": 0.01422150619328022,
+          "step": 60
+        },
+        {
+          "recon_h0": 0.3353290259838104,
+          "velocity_norm": 0.02427004650235176,
+          "step": 90
+        },
+        {
+          "recon_h0": 0.34479665756225586,
+          "velocity_norm": 0.026793435215950012,
+          "step": 120
+        },
+        {
+          "recon_h0": 0.4088100790977478,
+          "velocity_norm": 0.032926589250564575,
+          "step": 150
+        },
+        {
+          "recon_h0": 0.44042301177978516,
+          "velocity_norm": 0.03423573076725006,
+          "step": 180
+        },
+        {
+          "recon_h0": 0.6937866806983948,
+          "velocity_norm": 0.035825058817863464,
+          "step": 210
+        },
+        {
+          "recon_h0": 1.1596629619598389,
+          "velocity_norm": 0.036617979407310486,
+          "step": 240
+        },
+        {
+          "recon_h0": 0.7578328251838684,
+          "velocity_norm": 0.04097919538617134,
+          "step": 270
+        },
+        {
+          "recon_h0": 0.7605264186859131,
+          "velocity_norm": 0.04009484127163887,
+          "step": 300
+        }
+      ],
+      "sample": "\"The ball was a friends. She wanted to be very happy.\nOnce upon a time, there was a little girl named Tim. The fish was a small dog named Mia was a little bird, there was gone and her room.\nOne day, the rock.\nTim and started to see a big rock was a big tree. He asked the bird was a long tail. Tim was there was a big tree. He played with his friends. Tom's friends.\n\"Thank you to the dog, \"Can we will fly around and said, \"",
+      "analytic": {
+        "stream_gib": 0.234375,
+        "activations_gib": 3.515625,
+        "logits_gib": 5.0,
+        "total_gib": 8.515625
+      }
+    },
+    {
+      "spec": {
+        "name": "D2_maxbatch_same_lr",
+        "mode": "euler",
+        "batch_size": 320,
+        "tokens": 50000000,
+        "lr": 0.001,
+        "min_lr_frac": 0.1,
+        "warmup_frac": 0.05,
+        "grad_clip": 1.0,
+        "euler_iters": 4,
+        "ce_chunks": 4,
+        "seed": 1234,
+        "gamma_init": 0.1,
+        "n_layer": 10,
+        "note": "the same run at the unscaled learning rate, so the batch-size confound can be read off rather than argued about",
+        "tags": [
+          "maxbatch",
+          "control"
+        ]
+      },
+      "params": 21057024,
+      "steps": 305,
+      "tokens_seen": 49971200,
+      "final_train_loss": 3.475130558013916,
+      "final_val_loss": 3.505480194091797,
+      "tokens_per_sec": 64088.70164209815,
+      "timed_steps": 300,
+      "peak_alloc_gib": 5.7579874992370605,
+      "peak_reserved_gib": 6.58984375,
+      "state_gib": 0.25596046447753906,
+      "per_batch_gib": 5.5020270347595215,
+      "wall_seconds": 778.5471251010895,
+      "vram_cap_gib": 6.7890625,
+      "history": [
+        {
+          "step": 0,
+          "tokens": 163840,
+          "loss": 7.7396559715271,
+          "lr": 6.666666666666667e-05
+        },
+        {
+          "step": 6,
+          "tokens": 1146880,
+          "loss": 7.212127685546875,
+          "lr": 0.00046666666666666666
+        },
+        {
+          "step": 12,
+          "tokens": 2129920,
+          "loss": 6.190210342407227,
+          "lr": 0.0008666666666666667
+        },
+        {
+          "step": 18,
+          "tokens": 3112960,
+          "loss": 5.821938514709473,
+          "lr": 0.0009997623758635297
+        },
+        {
+          "step": 24,
+          "tokens": 4096000,
+          "loss": 5.680488109588623,
+          "lr": 0.0009978628882462038
+        },
+        {
+          "step": 30,
+          "tokens": 5079040,
+          "loss": 5.4802775382995605,
+          "lr": 0.0009940719351436867
+        },
+        {
+          "step": 36,
+          "tokens": 6062080,
+          "loss": 5.283860683441162,
+          "lr": 0.000988405526940267
+        },
+        {
+          "step": 42,
+          "tokens": 7045120,
+          "loss": 5.180825233459473,
+          "lr": 0.000980887594655511
+        },
+        {
+          "step": 48,
+          "tokens": 8028160,
+          "loss": 5.045294761657715,
+          "lr": 0.00097154988887606
+        },
+        {
+          "step": 54,
+          "tokens": 9011200,
+          "loss": 4.94857120513916,
+          "lr": 0.0009604318456629415
+        },
+        {
+          "step": 60,
+          "tokens": 9994240,
+          "loss": 4.864811897277832,
+          "lr": 0.0009475804200007104
+        },
+        {
+          "step": 66,
+          "tokens": 10977280,
+          "loss": 4.7949137687683105,
+          "lr": 0.0009330498874918191
+        },
+        {
+          "step": 72,
+          "tokens": 11960320,
+          "loss": 4.699997901916504,
+          "lr": 0.0009169016151337201
+        },
+        {
+          "step": 78,
+          "tokens": 12943360,
+          "loss": 4.651301860809326,
+          "lr": 0.0008992038021467828
+        },
+        {
+          "step": 84,
+          "tokens": 13926400,
+          "loss": 4.504212856292725,
+          "lr": 0.0008800311919475901
+        },
+        {
+          "step": 90,
+          "tokens": 14909440,
+          "loss": 4.40437650680542,
+          "lr": 0.0008594647564840406
+        },
+        {
+          "step": 96,
+          "tokens": 15892480,
+          "loss": 4.29067325592041,
+          "lr": 0.0008375913542654092
+        },
+        {
+          "step": 102,
+          "tokens": 16875520,
+          "loss": 4.241133689880371,
+          "lr": 0.000814503363531613
+        },
+        {
+          "step": 108,
+          "tokens": 17858560,
+          "loss": 4.1550493240356445,
+          "lr": 0.0007902982921109214
+        },
+        {
+          "step": 114,
+          "tokens": 18841600,
+          "loss": 4.074635982513428,
+          "lr": 0.0007650783656138064
+        },
+        {
+          "step": 120,
+          "tokens": 19824640,
+          "loss": 4.027213096618652,
+          "lr": 0.0007389500957021191
+        },
+        {
+          "step": 126,
+          "tokens": 20807680,
+          "loss": 3.9793355464935303,
+          "lr": 0.0007120238302569245
+        },
+        {
+          "step": 132,
+          "tokens": 21790720,
+          "loss": 3.9382951259613037,
+          "lr": 0.0006844132873447811
+        },
+        {
+          "step": 138,
+          "tokens": 22773760,
+          "loss": 3.894292116165161,
+          "lr": 0.0006562350749506691
+        },
+        {
+          "step": 144,
+          "tokens": 23756800,
+          "loss": 3.8507211208343506,
+          "lr": 0.0006276081985058857
+        },
+        {
+          "step": 150,
+          "tokens": 24739840,
+          "loss": 3.818415403366089,
+          "lr": 0.0005986535582907738
+        },
+        {
+          "step": 156,
+          "tokens": 25722880,
+          "loss": 3.797088623046875,
+          "lr": 0.000569493438834908
+        },
+        {
+          "step": 162,
+          "tokens": 26705920,
+          "loss": 3.8067479133605957,
+          "lr": 0.0005402509924711612
+        },
+        {
+          "step": 168,
+          "tokens": 27688960,
+          "loss": 3.7585816383361816,
+          "lr": 0.0005110497192247671
+        },
+        {
+          "step": 174,
+          "tokens": 28672000,
+          "loss": 3.728299379348755,
+          "lr": 0.0004820129452339675
+        },
+        {
+          "step": 180,
+          "tokens": 29655040,
+          "loss": 3.725209951400757,
+          "lr": 0.00045326330190503914
+        },
+        {
+          "step": 186,
+          "tokens": 30638080,
+          "loss": 3.720405340194702,
+          "lr": 0.00042492220800139263
+        },
+        {
+          "step": 192,
+          "tokens": 31621120,
+          "loss": 3.694108247756958,
+          "lr": 0.0003971093568540407
+        },
+        {
+          "step": 198,
+          "tokens": 32604160,
+          "loss": 3.672960042953491,
+          "lr": 0.000369942210859111
+        },
+        {
+          "step": 204,
+          "tokens": 33587200,
+          "loss": 3.658371686935425,
+          "lr": 0.00034353550539729526
+        },
+        {
+          "step": 210,
+          "tokens": 34570240,
+          "loss": 3.6509227752685547,
+          "lr": 0.0003180007642703402
+        },
+        {
+          "step": 216,
+          "tokens": 35553280,
+          "loss": 3.6372506618499756,
+          "lr": 0.00029344582870104543
+        },
+        {
+          "step": 222,
+          "tokens": 36536320,
+          "loss": 3.6120553016662598,
+          "lr": 0.0002699744018859457
+        },
+        {
+          "step": 228,
+          "tokens": 37519360,
+          "loss": 3.6016900539398193,
+          "lr": 0.0002476856110241773
+        },
+        {
+          "step": 234,
+          "tokens": 38502400,
+          "loss": 3.592777729034424,
+          "lr": 0.00022667358867221697
+        },
+        {
+          "step": 240,
+          "tokens": 39485440,
+          "loss": 3.5699188709259033,
+          "lr": 0.00020702707519256364
+        },
+        {
+          "step": 246,
+          "tokens": 40468480,
+          "loss": 3.5350759029388428,
+          "lr": 0.00018882904397534702
+        },
+        {
+          "step": 252,
+          "tokens": 41451520,
+          "loss": 3.56147837638855,
+          "lr": 0.00017215635101567038
+        },
+        {
+          "step": 258,
+          "tokens": 42434560,
+          "loss": 3.5194931030273438,
+          "lr": 0.00015707941032662965
+        },
+        {
+          "step": 264,
+          "tokens": 43417600,
+          "loss": 3.5215089321136475,
+          "lr": 0.0001436618965588472
+        },
+        {
+          "step": 270,
+          "tokens": 44400640,
+          "loss": 3.52647066116333,
+          "lr": 0.00013196047608244387
+        },
+        {
+          "step": 276,
+          "tokens": 45383680,
+          "loss": 3.508007049560547,
+          "lr": 0.00012202456766718092
+        },
+        {
+          "step": 282,
+          "tokens": 46366720,
+          "loss": 3.5098793506622314,
+          "lr": 0.00011389613377149084
+        },
+        {
+          "step": 288,
+          "tokens": 47349760,
+          "loss": 3.4657516479492188,
+          "lr": 0.00010760950332185054
+        },
+        {
+          "step": 294,
+          "tokens": 48332800,
+          "loss": 3.468531370162964,
+          "lr": 0.00010319122673095489
+        },
+        {
+          "step": 300,
+          "tokens": 49315840,
+          "loss": 3.464646100997925,
+          "lr": 0.00010065996376699428
+        },
+        {
+          "step": 304,
+          "tokens": 49971200,
+          "loss": 3.475130558013916,
+          "lr": 0.0001000264047475991
+        }
+      ],
+      "diagnostics": [
+        {
+          "recon_h0": 0.024119313806295395,
+          "velocity_norm": 0.00047646701568737626,
+          "step": 0
+        },
+        {
+          "recon_h0": 0.05412674695253372,
+          "velocity_norm": 0.0022145232651382685,
+          "step": 30
+        },
+        {
+          "recon_h0": 0.054615963250398636,
+          "velocity_norm": 0.004090843256562948,
+          "step": 60
+        },
+        {
+          "recon_h0": 0.053269483149051666,
+          "velocity_norm": 0.0044036926701664925,
+          "step": 90
+        },
+        {
+          "recon_h0": 0.07967329770326614,
+          "velocity_norm": 0.004485615529119968,
+          "step": 120
+        },
+        {
+          "recon_h0": 0.06609804183244705,
+          "velocity_norm": 0.0046891216188669205,
+          "step": 150
+        },
+        {
+          "recon_h0": 0.11451099812984467,
+          "velocity_norm": 0.004604606423527002,
+          "step": 180
+        },
+        {
+          "recon_h0": 0.10490527749061584,
+          "velocity_norm": 0.004253740888088942,
+          "step": 210
+        },
+        {
+          "recon_h0": 0.08482813090085983,
+          "velocity_norm": 0.003985581453889608,
+          "step": 240
+        },
+        {
+          "recon_h0": 0.08002886176109314,
+          "velocity_norm": 0.0037590099964290857,
+          "step": 270
+        },
+        {
+          "recon_h0": 0.08366305381059647,
+          "velocity_norm": 0.0035967968869954348,
+          "step": 300
+        }
+      ],
+      "sample": "OnceThe a sunny time, Lucy. Tim's house.\n\nOnce upon a big town, there was a little bug.\nBut then, there was a little boy named Tim loved to play with his mom. Suddenly, there was a walk together. She liked to have fun. The bird was very happy. The bird saw a great day, \"Yes, Tim!\" Tim was a big, \"Yes, Lily. I'm sorry, and said, Tom. I am you need to the cat!\" The dog, \"I'm a big, I can a new",
+      "analytic": {
+        "stream_gib": 0.234375,
+        "activations_gib": 3.515625,
+        "logits_gib": 5.0,
+        "total_gib": 8.515625
+      }
+    }
+  ],
+  "winner": "B_euler"
+}
