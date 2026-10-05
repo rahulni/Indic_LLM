@@ -1,0 +1,14 @@
+data/
+ckpt/
+ckpt-quick/
+runs-quick/
+assets-quick/
+*.pt
+*.part
+hotplug.json
+__pycache__/
+.ipynb_checkpoints/
+
+# course sources and editor settings stay local
+instruct*.md
+.vscode/
