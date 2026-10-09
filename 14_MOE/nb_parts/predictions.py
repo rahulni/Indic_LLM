@@ -1,0 +1,54 @@
+"""Predictions registered before the full run. The notebook's last part marks each HELD or MISSED.
+Do not edit these after the full run has started; a miss is a result."""
+
+REGISTERED = "2026-10-05, before the first full run"
+
+DEFINITIONS = {
+    "nearly_dead": "an expert whose share of tokens over the last 20% of a run is below 10% of its fair share k/E",
+    "middle_layers": "layers 3-6 of 8 (1-based)",
+    "chance_agreement": "sum over experts of p_i^2, where p_i is the expert's share of first choices in that layer",
+}
+
+PREDICTIONS = [
+    dict(id="P1", claim="MoE-8 is back below the dense model's T1 val loss within the first 25% of Stage 2.",
+         why="Partition preserves the dense output on average; the jump should be small and the extra capacity should recover it fast."),
+    dict(id="P2", claim="CORE CRITERION: every MoE stage ends below its own conversion-point val loss, and MoE-32 at T3 is below dense at T1.",
+         why="This is the core requirement: after each conversion the model keeps training and the loss keeps falling."),
+    dict(id="P3", claim="At T3 MoE-32 beats the dense control: paired per-batch mean difference < 0 and its 95% bootstrap CI excludes 0.",
+         why="Same active compute per token, 3.6x the parameters, and the dense model is far from saturated on TinyStories."),
+    dict(id="P4", claim="Balancing lab: with no balancing some layer ends with >= 1 nearly-dead expert; with the bias method no layer does, and its mean MaxVio is the lowest of the three.",
+         why="Routing collapse (section 10) needs no special trigger, and the bias method is the standard fix."),
+    dict(id="P5", claim="At the start of Stage 3 (hard top-k, router tiled with small noise) more than 50% of tokens put all 4 picks inside one clone family.",
+         why="Tied router scores within a family make top-k take the whole best family: the Lightning LM failure."),
+    dict(id="P6", claim="Growth lab: copy + hard top-k ends with more nearly-dead experts (summed over layers) than drop + Gumbel top-k.",
+         why="Identical clones under hard routing cannot be told apart; redrawn halves plus sampling give every clone gradient."),
+    dict(id="P7", claim="Growth lab: staggered-bias copy ends the lab window at a val loss at or below drop + Gumbel.",
+         why="It starts with zero loss jump and hands tokens to clones gradually. Untested idea; may fail."),
+    dict(id="P8", claim="Router lab: sigmoid ends with a lower mean MaxVio than softmax under the same bias balancing.",
+         why="A study of balancing methods found sigmoid less sensitive to uneven load."),
+    dict(id="P9", claim="Consecutive tokens share their first-choice expert more often than chance in every middle layer.",
+         why="Mixtral: 24-28% vs 12.5% chance; routing follows local syntax."),
+    dict(id="P10", claim="Masking the least-used half of the routed experts in every layer raises MoE-32 val loss by less than 5% (relative).",
+         why="REAP: half the experts can be removed with < 2% loss of accuracy; the shared expert carries the common load."),
+    dict(id="P11", claim="Removing the 3 most-used routed experts raises val loss more than the mean of 5 random triples.",
+         why="Super Experts: a few experts matter far more than the rest."),
+    dict(id="P12", claim="Capacity factor 1.0 (tokens dropped) gives a higher val loss than dropless routing.",
+         why="MegaBlocks: dropping costs quality; current models are dropless."),
+]
+
+# Post-hoc predictions: written after the first full run (P3 missed: MoE-32 lost to the dense control
+# by 0.020 nats) and BEFORE the two post-hoc branches below were run. P1-P12 above are unchanged.
+POSTHOC_REGISTERED = "2026-10-05, after the first full run, before the post-hoc runs"
+
+PREDICTIONS += [
+    dict(id="P13", posthoc=True, registered=POSTHOC_REGISTERED,
+         claim="Post-hoc: growing 8 -> 32 by plain copies (hard top-k) beats the registered MoE-32 (drop + Gumbel) at T3: "
+               "paired mean difference < 0 and its 95% CI excludes 0.",
+         why="Plain copies came first in the growth lab and drop + Gumbel last; copies keep each expert's full function."),
+    dict(id="P14", posthoc=True, registered=POSTHOC_REGISTERED,
+         claim="Post-hoc: MoE-8 simply continued to T3 (no growth) beats the registered MoE-32 at T3.",
+         why="The registered growth cost 0.17 nats at T2 and 12M tokens did not repay it; 4x the experts may not be worth that."),
+    dict(id="P15", posthoc=True, registered=POSTHOC_REGISTERED,
+         claim="Post-hoc: neither post-hoc MoE beats the dense control at T3 (paired mean difference >= 0 for both).",
+         why="Even MoE-8 trailed the dense control at T2, before any growth; the conversion cost itself is not repaid at this budget."),
+]
