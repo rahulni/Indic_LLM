@@ -1434,7 +1434,6 @@ seed 1337, 12.2 minutes end to end, stamped `2026-09-20 00:26:06`.
 │   └── test_zero_theory.py      paper Figure 1; formulas; activations; hardware; hybrid; decision guide
 ├── assets/                      results.json and the figures of the committed run
 ├── references.md                sources, and what was checked against each
-├── PLAN.md                      the design plan written before the build
 └── requirements.txt
 ```
 

@@ -34,7 +34,7 @@ class TestPaperNumbers(unittest.TestCase):
         self.assertEqual(round(t["per_gpu_gb"], 1), 15.6)
 
     def test_plan_section5_toy_model_bytes(self):
-        # PLAN.md section 5: padded Ψ' = 823,296 on N = 32, to the byte.
+        # padded Ψ' = 823,296 on N = 32, to the byte.
         psi, n = 823_296, 32
         want = {0: 13_172_736, 1: 3_601_920, 2: 2_006_784, 3: 411_648}
         for stage, b in want.items():

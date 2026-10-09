@@ -2044,7 +2044,6 @@ def sec_files(C: Ctx) -> str:
 │   └── test_zero_theory.py      paper Figure 1; formulas; activations; hardware; hybrid; decision guide
 ├── assets/                      results.json and the figures of the committed run
 ├── references.md                sources, and what was checked against each
-├── PLAN.md                      the design plan written before the build
 └── requirements.txt"""
     return "## What is in here\n\n" + details("File map", f"```text\n{tree}\n```\n\n"
                                               "`data/` (tiny Shakespeare, downloaded on first run) and `assets/quick/` "
