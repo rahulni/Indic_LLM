@@ -1,0 +1,5 @@
+torch>=2.1
+matplotlib>=3.7
+psutil>=5.9
+# to execute the notebook headless:
+# jupyter nbconvert --to notebook --execute --inplace zero_32_virtual_gpus.ipynb
