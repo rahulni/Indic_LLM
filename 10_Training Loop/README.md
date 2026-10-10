@@ -2,7 +2,7 @@
 
 *Making a small language model tell the truth about itself.*
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rahulni/Indic_LLM/blob/main/10_Training%20Loop/inside_the_training_loop.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rahulni/Indic_LLM/blob/10-training-loop/10_Training%20Loop/inside_the_training_loop.ipynb)
 
 One notebook, [`inside_the_training_loop.ipynb`](inside_the_training_loop.ipynb), takes a real training loop apart and checks every piece with a measurement. It doubles as study notes: each section gives the intuition, the math, the code, and an `assert` that fails loudly if the claim is wrong.
 
@@ -68,7 +68,25 @@ Model A, one micro-batch of B=8 × T=512, layer 0 in full (layers 1–7 repeat i
 | logits | 8×512×49152 | float32 | 768.0 MiB | B×T×V: the biggest tensor in the step |
 | loss | () scalar | float32 | 4 B | a single number: the mean of B×T per-token losses |
 
-Every gradient and both AdamW states have exactly their weight's shape: 31,463,808 weights → 31,463,808 gradients + 2 × 31,463,808 optimizer numbers. The tied output head is the embedding matrix, so it gets one gradient, accumulated from two uses.
+**Parameters, layer by layer.** Every one is trainable (`requires_grad=True`):
+
+| parameter | shape | numbers | trainable |
+|---|---|---|---|
+| embed_tokens.weight (also the output head) | 49152×384 | 18,874,368 | yes |
+| layers.0.input_layernorm.weight | 384 | 384 | yes |
+| layers.0.self_attn.q_proj.weight | 384×384 | 147,456 | yes |
+| layers.0.self_attn.k_proj.weight | 128×384 | 49,152 | yes |
+| layers.0.self_attn.v_proj.weight | 128×384 | 49,152 | yes |
+| layers.0.self_attn.o_proj.weight | 384×384 | 147,456 | yes |
+| layers.0.post_attention_layernorm.weight | 384 | 384 | yes |
+| layers.0.mlp.gate_proj.weight | 1024×384 | 393,216 | yes |
+| layers.0.mlp.up_proj.weight | 1024×384 | 393,216 | yes |
+| layers.0.mlp.down_proj.weight | 384×1024 | 393,216 | yes |
+| one whole layer (× 8 layers) |  | 1,573,632 (× 8 = 12,589,056) | yes |
+| norm.weight (final) | 384 | 384 | yes |
+| **total** |  | **31,463,808** |  |
+
+Every gradient and both AdamW states have exactly their weight's shape: 31,463,808 weights → 31,463,808 gradients + 2 × 31,463,808 optimizer numbers. The tied output head is the embedding matrix, so it gets one gradient, accumulated from two uses. Freezing it (`requires_grad_(False)`) removes 18,874,368 weights from the gradient and the optimizer state, 216 MiB, while the layers keep training; the notebook checks this.
 
 ## 2. One gradient, checked by hand
 
@@ -122,6 +140,10 @@ With packed batches (every micro-batch exactly B×T tokens) the two methods are 
 
 The norm is logged at every step (before clipping). The detection rule was fixed in code before any run was looked at: a trace "moves" at step $t$ when $\log(\text{trace})$ sits more than 4 robust standard deviations above the median of the previous 50 steps, for 3 steps in a row. In the healthy baseline run the rule found no departure at all, in either trace: a healthy run has no step where the norm visibly moves first, so the lead is measured on an instability created on purpose.
 
+**Logged at every step.** Here is the baseline training run, with the gradient norm (before clipping) next to the loss, tokens/s, MFU and the GPU clock, all logged every step:
+
+![baseline run: loss, gradient norm, tokens per second, MFU and SM clock at every step](assets/dashboard.png)
+
 **Stress test.** Starting from the trained Model A, the learning rate was raised geometrically, with no clipping, until training broke. This was repeated over 3 seeds (batch orders):
 
 | seed | pre-registered rule: norm departs at step | loss departs at step | lead (steps) |
@@ -142,7 +164,11 @@ That rule compares each step with the 50 before it, so a slow drift keeps raisin
 | 1 | 159 / 203 (lead 44) | 187 / 215 (lead 28) | 195 / 238 (lead 43) |
 | 2 | 172 / 205 (lead 33) | 197 / 221 (lead 24) | 204 / 224 (lead 20) |
 
-Across all seeds and thresholds the norm led by 20–44 steps (median 33). Why: near a minimum $\mathcal{L} \approx \mathcal{L}^* + \tfrac12\lambda x^2$ while $\lVert g\rVert = \lambda|x|$. An instability multiplies the norm from its own small baseline, but the loss changes on top of a large constant $\mathcal{L}^*$. The per-step loss is also measured on different text every step, so it is the noisier trace, and a real change stands out later in it.
+Across all seeds and thresholds the norm led by 20–44 steps (median 33).
+
+**The step:** seed 0, step **197**. Here the gradient norm, at 1.23× its pre-ramp median, had moved more than 4 robust standard deviations out of its band, and stayed out for 3 steps. The loss, at 1.09× its own pre-ramp median, had not yet left its band. It crossed the same threshold only at step 226, 29 steps later.
+
+Why: near a minimum $\mathcal{L} \approx \mathcal{L}^* + \tfrac12\lambda x^2$ while $\lVert g\rVert = \lambda|x|$. An instability multiplies the norm from its own small baseline, but the loss changes on top of a large constant $\mathcal{L}^*$. The per-step loss is also measured on different text every step, so it is the noisier trace, and a real change stands out later in it.
 
 **Does clipping rescue a learning rate that is too high?** Every stress run was repeated with clipping at 1.0. The breaking point (the first step after the ramp starts where the loss exceeds 1.5× its pre-ramp median) was defined before any clipped run was looked at:
 
@@ -163,9 +189,13 @@ Clipping moved the breaking point by +2.7 steps on average (per seed: [0, 8, 0])
 | 2 | 99.6 (typical 1.09) | +0.0042 | +0.0077 | 1.7950 | 1.7933 |
 | mean ± sd |  | +0.0052 ± 0.0019 | +0.0087 ± 0.0010 | 1.7949 ± 0.0030 | 1.7924 ± 0.0036 |
 
+![gradient norm and held-out loss around three noise batches, with and without clipping](assets/bad_batch_clip.png)
+
 Clipping reduced the worst damage in 3 of 3 seeds. AdamW already limits how far one batch can move the weights, so the benefit is bounded here; it grows with how big and how frequent the spikes are, which is the case for having it on from step one. By the end, though, the unclipped run was slightly *lower* in 3 of 3 seeds (by 0.0025 on average). One untested explanation: the noise spike inflates AdamW's second-moment estimate, which shrinks the following steps like a brief learning-rate cut.
 
 Baseline gradient norms after warmup: median 0.551, 99th percentile 1.059, max 1.419. A threshold should sit above ordinary steps and below spikes.
+
+![distribution of the baseline's gradient norms against the clip threshold](assets/gradnorm_hist.png)
 
 ## 5. MFU, reported honestly
 
@@ -234,6 +264,18 @@ $0.1 = 1.6 \times 2^{-4}$, and $0.6$ in binary is $0.1001\,1001\,1001\ldots$ (th
 
 These bit patterns were computed with exact rational arithmetic, then checked against PyTorch's own conversions, which agree bit-for-bit. The same encoder matches PyTorch on 560,000 random values and every rounding tie.
 
+**And 1.0**, which every format stores exactly (exponent field = bias, mantissa all zero), also checked against PyTorch:
+
+| format | sign exponent mantissa | hex |
+|---|---|---|
+| fp32 | `0 01111111 00000000000000000000000` | `0x3F800000` |
+| fp16 | `0 01111 0000000000` | `0x3C00` |
+| bf16 | `0 01111111 0000000` | `0x3F80` |
+| fp8 E4M3 | `0 0111 000` | `0x38` |
+| fp8 E5M2 | `0 01111 00` | `0x3C` |
+
+![relative spacing of representable numbers vs magnitude, per format](assets/format_resolution.png)
+
 **Which would I train in? bf16 mixed precision**: bf16 matmuls and activations, with fp32 master weights, AdamW state and reductions.
 
 - **Range like fp32.** fp16's 5-bit exponent flushes anything below ~3e-8 to zero. Measured on Model A's real gradients:
@@ -242,6 +284,8 @@ These bit patterns were computed with exact rational arithmetic, then checked ag
 |---|---|---|---|---|---|
 | weights | 3.6e-08 | 49.515% | 21.0% | 0.1981% | 0.0000% |
 | activations | 6.5e-06 | 0.806% | 98.7% | 0.0019% | 0.0000% |
+
+![Model A's real gradient magnitudes against fp16's underflow floor](assets/grad_magnitudes_vs_fp16.png)
 
 - **Speed and memory.** bf16 runs on the tensor cores at full rate, with half the bytes per activation. The same model and data in five precisions, three seeds each:
 
@@ -252,6 +296,10 @@ These bit patterns were computed with exact rational arithmetic, then checked ag
 | bf16 autocast | 8×1 | 2.9418 ± 0.0170 | 2.9520, 2.9222, 2.9513 | 42.0K | 3.60 GiB |
 | fp16 + loss scaling | 8×1 | 2.9454 ± 0.0279 | 2.9635, 2.9132, 2.9594 | 41.5K | 3.60 GiB |
 | fp16, no scaling | 8×1 | 3.0850 ± 0.0454 | 3.0522, 3.0661, 3.1368 | 41.9K | 3.60 GiB |
+
+![training loss in five precisions, mean of three seeds with min-max band](assets/precision_curves.png)
+
+fp16 without loss scaling was the worst precision in 3 of 3 seeds. The other four are within each other's seed-to-seed spread, and bf16 moved 1.6× as many tokens per second as fp32.
 
 - **Master weights must stay fp32.** Near 1.0, bf16 numbers are 0.0078 apart, so an update of 0.001 rounds away completely: a weight of 1.0 plus a hundred such updates stays exactly 1.0 in bf16 (and reaches 1.1 in fp32).
 - **fp8 E4M3** stores 0.1 with a 1.6% error. It needs a per-tensor or per-block scale (unscaled, a gradient-sized tensor is flushed to zero entirely) and hardware with fp8 tensor cores (Hopper or Blackwell, not this Ampere GPU). It is the right choice for the big matmuls there, not for everything.

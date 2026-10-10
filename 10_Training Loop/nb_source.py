@@ -3,7 +3,7 @@ r"""
 # Inside the Training Loop
 ### Making a small language model tell the truth about itself
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rahulni/Indic_LLM/blob/main/10_Training%20Loop/inside_the_training_loop.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rahulni/Indic_LLM/blob/10-training-loop/10_Training%20Loop/inside_the_training_loop.ipynb)
 
 A language model reads a batch of text and hands back **one number**, the loss. One backward pass turns that number into a gradient for every weight, and one optimizer step moves every weight. Repeat that a few thousand times and a pile of random numbers learns to write stories.
 
@@ -118,7 +118,7 @@ CKPT = HERE / "checkpoints" / ("quick" if MODE == "quick" else "")
 for _d in (DATA, ASSETS, CKPT):
     _d.mkdir(parents=True, exist_ok=True)
 
-REPO_RAW = "https://raw.githubusercontent.com/rahulni/Indic_LLM/main/10_Training%20Loop"
+REPO_RAW = "https://raw.githubusercontent.com/rahulni/Indic_LLM/10-training-loop/10_Training%20Loop"
 
 DEV, CAP = "cpu", (0, 0)
 try:                                                    # a GPU that is reported but not usable counts as no GPU

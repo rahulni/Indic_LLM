@@ -11,7 +11,8 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 R = json.loads((HERE / "assets" / "results.json").read_text(encoding="utf-8"))
 NB = "inside_the_training_loop.ipynb"
-COLAB = f"https://colab.research.google.com/github/rahulni/Indic_LLM/blob/main/10_Training%20Loop/{NB}"
+BRANCH = "10-training-loop"
+COLAB = f"https://colab.research.google.com/github/rahulni/Indic_LLM/blob/{BRANCH}/10_Training%20Loop/{NB}"
 
 
 def g(path, default=None):
@@ -134,6 +135,18 @@ if ta:
     def size(n):
         return f"{n / 2**20:.1f} MiB" if n >= 2**20 else (f"{n / 1024:.0f} KiB" if n >= 1024 else f"{n} B")
     rows = [(r[0], r[1], r[2], size(r[3]), r[4]) for r in ta["rows"]]
+    C_, L_, H_, KV_, D_, F_, V_ = 384, 8, 6, 2, 64, 1024, 49152
+    per_layer = [("input_layernorm.weight", f"{C_}", C_), ("self_attn.q_proj.weight", f"{H_ * D_}×{C_}", H_ * D_ * C_),
+                 ("self_attn.k_proj.weight", f"{KV_ * D_}×{C_}", KV_ * D_ * C_), ("self_attn.v_proj.weight", f"{KV_ * D_}×{C_}", KV_ * D_ * C_),
+                 ("self_attn.o_proj.weight", f"{C_}×{H_ * D_}", C_ * H_ * D_), ("post_attention_layernorm.weight", f"{C_}", C_),
+                 ("mlp.gate_proj.weight", f"{F_}×{C_}", F_ * C_), ("mlp.up_proj.weight", f"{F_}×{C_}", F_ * C_), ("mlp.down_proj.weight", f"{C_}×{F_}", C_ * F_)]
+    layer_total = sum(n for _, _, n in per_layer)
+    total = V_ * C_ + L_ * layer_total + C_
+    param_rows = [("embed_tokens.weight (also the output head)", f"{V_}×{C_}", f"{V_ * C_:,}", "yes")]
+    param_rows += [(f"layers.0.{n}", s, f"{k:,}", "yes") for n, s, k in per_layer]
+    param_rows += [(f"one whole layer (× {L_} layers)", "", f"{layer_total:,} (× {L_} = {L_ * layer_total:,})", "yes"),
+                   ("norm.weight (final)", f"{C_}", f"{C_:,}", "yes"), ("**total**", "", f"**{total:,}**", "")]
+    assert total == 31_463_808
     parts.append(f"""## 1. Every tensor in one step
 
 {table(dims, ["symbol", "meaning", "Model A", "SmolLM2-135M"])}
@@ -142,7 +155,11 @@ Model A, one micro-batch of B={ta['B']} × T={ta['T']}, layer 0 in full (layers 
 
 {table(rows, ["tensor", "shape", "dtype", "size", "what the dimensions mean"])}
 
-Every gradient and both AdamW states have exactly their weight's shape: 31,463,808 weights → 31,463,808 gradients + 2 × 31,463,808 optimizer numbers. The tied output head is the embedding matrix, so it gets one gradient, accumulated from two uses.""")
+**Parameters, layer by layer.** Every one is trainable (`requires_grad=True`):
+
+{table(param_rows, ["parameter", "shape", "numbers", "trainable"])}
+
+Every gradient and both AdamW states have exactly their weight's shape: 31,463,808 weights → 31,463,808 gradients + 2 × 31,463,808 optimizer numbers. The tied output head is the embedding matrix, so it gets one gradient, accumulated from two uses. Freezing it (`requires_grad_(False)`) removes {49152 * 384:,} weights from the gradient and the optimizer state, {49152 * 384 * 12 / 2**20:.0f} MiB, while the layers keep training; the notebook checks this.""")
 
 # ---------------------------------------------------------------- 2. gradient check
 if gc:
@@ -220,10 +237,24 @@ if st and det:
         bt_rows.append(("mean ± sd", "", mean_sd([r["damage_clip"] for r in bt]), mean_sd([r["damage_none"] for r in bt]),
                         mean_sd([r["end_clip"] for r in bt], "{:.4f}"), mean_sd([r["end_none"] for r in bt], "{:.4f}")))
     delays = [int(r[3]) - int(r[2]) for r in (sct or []) if r[2] != "never" and r[3] != "never"]
+    step_line = ""
+    sd0 = sorted(fxs, key=int)[0] if fxs else None
+    v4 = fxs.get(sd0, {}).get("4.0", {}) if sd0 is not None else {}
+    tn, tl = v4.get("norm_step"), v4.get("loss_step")
+    if tn is not None and tl is not None and tl > tn:
+        n_, l_ = arr(st["noclip"][sd0]["gnorm"]), arr(st["noclip"][sd0]["loss"])
+        bn, bl = np.nanmedian(n_[50:100]), np.nanmedian(l_[50:100])
+        step_line = (f"**The step:** seed {sd0}, step **{tn}**. Here the gradient norm, at {n_[tn] / bn:.2f}× its pre-ramp median, had moved more than "
+                     f"4 robust standard deviations out of its band, and stayed out for 3 steps. The loss, at {l_[tn] / bl:.2f}× its own pre-ramp "
+                     f"median, had not yet left its band. It crossed the same threshold only at step {tl}, {tl - tn} steps later.")
     first_ = sum(d["norm_step"] is not None and (d["loss_step"] is None or d["norm_step"] < d["loss_step"]) for d in det.values())
     parts.append(f"""## 4. Does the gradient norm move before the loss?
 
 The norm is logged at every step (before clipping). The detection rule was fixed in code before any run was looked at: a trace "moves" at step $t$ when $\\log(\\text{{trace}})$ sits more than 4 robust standard deviations above the median of the previous 50 steps, for 3 steps in a row. {nat_txt}
+
+**Logged at every step.** Here is the baseline training run, with the gradient norm (before clipping) next to the loss, tokens/s, MFU and the GPU clock, all logged every step:
+
+{fig("dashboard", "baseline run: loss, gradient norm, tokens per second, MFU and SM clock at every step")}
 
 **Stress test.** Starting from the trained Model A, the learning rate was raised geometrically, with no clipping, until training broke. This was repeated over {len(det)} seeds (batch orders):
 
@@ -237,7 +268,11 @@ That rule compares each step with the 50 before it, so a slow drift keeps raisin
 
 {table(fx_rows, ["seed", "z > 3: norm / loss", "z > 4", "z > 6"])}
 
-{f"Across all seeds and thresholds the norm led by {min(lds)}–{max(lds)} steps (median {np.median(lds):.0f})." if lds else ""} Why: near a minimum $\\mathcal{{L}} \\approx \\mathcal{{L}}^* + \\tfrac12\\lambda x^2$ while $\\lVert g\\rVert = \\lambda|x|$. An instability multiplies the norm from its own small baseline, but the loss changes on top of a large constant $\\mathcal{{L}}^*$. The per-step loss is also measured on different text every step, so it is the noisier trace, and a real change stands out later in it.
+{f"Across all seeds and thresholds the norm led by {min(lds)}–{max(lds)} steps (median {np.median(lds):.0f})." if lds else ""}
+
+{step_line}
+
+Why: near a minimum $\\mathcal{{L}} \\approx \\mathcal{{L}}^* + \\tfrac12\\lambda x^2$ while $\\lVert g\\rVert = \\lambda|x|$. An instability multiplies the norm from its own small baseline, but the loss changes on top of a large constant $\\mathcal{{L}}^*$. The per-step loss is also measured on different text every step, so it is the noisier trace, and a real change stands out later in it.
 
 **Does clipping rescue a learning rate that is too high?** Every stress run was repeated with clipping at 1.0. The breaking point (the first step after the ramp starts where the loss exceeds 1.5× its pre-ramp median) was defined before any clipped run was looked at:
 
@@ -249,9 +284,13 @@ That rule compares each step with the 50 before it, so a slow drift keeps raisin
 
 {table(bt_rows, ["seed", "grad norm on the noise", "worst damage: clip at 1.0", "no clipping", "held-out at end: clip at 1.0", "no clipping"]) if bt_rows else ""}
 
+{fig("bad_batch_clip", "gradient norm and held-out loss around three noise batches, with and without clipping")}
+
 {f"Clipping reduced the worst damage in {sum(r['damage_clip'] < r['damage_none'] for r in bt)} of {len(bt)} seeds. AdamW already limits how far one batch can move the weights, so the benefit is bounded here; it grows with how big and how frequent the spikes are, which is the case for having it on from step one." if bt else ""}{(f" By the end, though, the unclipped run was slightly *lower* in {sum(r['end_none'] < r['end_clip'] for r in bt)} of {len(bt)} seeds (by {np.mean([r['end_clip'] - r['end_none'] for r in bt]):.4f} on average). One untested explanation: the noise spike inflates AdamW's second-moment estimate, which shrinks the following steps like a brief learning-rate cut." if bt and sum(r['end_none'] < r['end_clip'] for r in bt) > len(bt) / 2 else "")}
 
-{f"Baseline gradient norms after warmup: median {cs['p50']:.3f}, 99th percentile {cs['p99']:.3f}, max {cs['max']:.3f}. A threshold should sit above ordinary steps and below spikes." if cs else ""}""")
+{f"Baseline gradient norms after warmup: median {cs['p50']:.3f}, 99th percentile {cs['p99']:.3f}, max {cs['max']:.3f}. A threshold should sit above ordinary steps and below spikes." if cs else ""}
+
+{fig("gradnorm_hist", "distribution of the baseline's gradient norms against the clip threshold")}""")
 
 # ---------------------------------------------------------------- 5. MFU
 mfu, wf, prof = g("mfu"), g("mfu_waterfall"), g("profile")
@@ -330,6 +369,14 @@ if bits:
                       ", ".join(f"{s_['val']['loss'][-1]:.4f}" for s_ in r["seeds"]),
                       f"{np.mean([s_['tok_s'] for s_ in r['seeds']]) / 1e3:.1f}K", f"{max(s_['peak_mem_gib'] for s_ in r['seeds']):.2f} GiB")
                      for p, r in prec.items()]
+    prec_verdict = ""
+    if prec and "fp16_noscale" in prec:
+        fin_ = {p: [s_["val"]["loss"][-1] for s_ in r["seeds"]] for p, r in prec.items()}
+        oth = [p for p in fin_ if p != "fp16_noscale"]
+        worst = sum(fin_["fp16_noscale"][i] > max(fin_[p][i] for p in oth) for i in range(len(fin_["fp16_noscale"])))
+        prec_verdict = (f"fp16 without loss scaling was the worst precision in {worst} of {len(fin_['fp16_noscale'])} seeds. The other four are within each "
+                        f"other's seed-to-seed spread, and bf16 moved {np.mean([s_['tok_s'] for s_ in prec['bf16']['seeds']]) / np.mean([s_['tok_s'] for s_ in prec['fp32']['seeds']]):.1f}× "
+                        "as many tokens per second as fp32." if "bf16" in prec else "")
     gm_rows = []
     if gm:
         for kind in ("weights", "activations"):
@@ -345,15 +392,29 @@ $0.1 = 1.6 \\times 2^{{-4}}$, and $0.6$ in binary is $0.1001\\,1001\\,1001\\ldot
 
 These bit patterns were computed with exact rational arithmetic, then checked against PyTorch's own conversions, which agree bit-for-bit. The same encoder matches PyTorch on 560,000 random values and every rounding tie.
 
+**And 1.0**, which every format stores exactly (exponent field = bias, mantissa all zero), also checked against PyTorch:
+
+{table([("fp32", "`0 01111111 00000000000000000000000`", "`0x3F800000`"), ("fp16", "`0 01111 0000000000`", "`0x3C00`"),
+        ("bf16", "`0 01111111 0000000`", "`0x3F80`"), ("fp8 E4M3", "`0 0111 000`", "`0x38`"), ("fp8 E5M2", "`0 01111 00`", "`0x3C`")],
+       ["format", "sign exponent mantissa", "hex"])}
+
+{fig("format_resolution", "relative spacing of representable numbers vs magnitude, per format")}
+
 **Which would I train in? bf16 mixed precision**: bf16 matmuls and activations, with fp32 master weights, AdamW state and reductions.
 
 - **Range like fp32.** fp16's 5-bit exponent flushes anything below ~3e-8 to zero. Measured on Model A's real gradients:
 
 {table(gm_rows, ["gradient", "median magnitude", "fp16: becomes 0", "fp16: subnormal (digits lost)", "fp16 ×1024: becomes 0", "bf16: becomes 0"]) if gm_rows else ""}
 
+{fig("grad_magnitudes_vs_fp16", "Model A's real gradient magnitudes against fp16's underflow floor")}
+
 - **Speed and memory.** bf16 runs on the tensor cores at full rate, with half the bytes per activation. The same model and data in five precisions, three seeds each:
 
 {table(prec_rows, ["precision", "micro-batch × accumulation", "final held-out loss, mean ± sd", "per seed", "tokens/s", "peak memory"]) if prec_rows else ""}
+
+{fig("precision_curves", "training loss in five precisions, mean of three seeds with min-max band")}
+
+{prec_verdict}
 
 - **Master weights must stay fp32.** Near 1.0, bf16 numbers are 0.0078 apart, so an update of 0.001 rounds away completely: a weight of 1.0 plus a hundred such updates stays exactly 1.0 in bf16 (and reaches 1.1 in fp32).
 - **fp8 E4M3** stores 0.1 with a 1.6% error. It needs a per-tensor or per-block scale (unscaled, a gradient-sized tensor is flushed to zero entirely) and hardware with fp8 tensor cores (Hopper or Blackwell, not this Ampere GPU). It is the right choice for the big matmuls there, not for everything.""")
