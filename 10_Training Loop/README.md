@@ -2,7 +2,7 @@
 
 *Making a small language model tell the truth about itself.*
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rahulni/Indic_LLM/blob/10-training-loop/10_Training%20Loop/inside_the_training_loop.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/rahulni/Indic_LLM/blob/main/10_Training%20Loop/inside_the_training_loop.ipynb)
 
 One notebook, [`inside_the_training_loop.ipynb`](inside_the_training_loop.ipynb), takes a real training loop apart and checks every piece with a measurement. It doubles as study notes: each section gives the intuition, the math, the code, and an `assert` that fails loudly if the claim is wrong.
 

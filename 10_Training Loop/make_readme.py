@@ -11,7 +11,7 @@ import numpy as np
 HERE = Path(__file__).resolve().parent
 R = json.loads((HERE / "assets" / "results.json").read_text(encoding="utf-8"))
 NB = "inside_the_training_loop.ipynb"
-BRANCH = "10-training-loop"
+BRANCH = "main"
 COLAB = f"https://colab.research.google.com/github/rahulni/Indic_LLM/blob/{BRANCH}/10_Training%20Loop/{NB}"
 
 
