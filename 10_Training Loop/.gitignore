@@ -1,0 +1,21 @@
+# Source notes stay local. The repository root already ignores the saved page, its
+# _files folder and the transcript; these two note files are the rest.
+assigen_instruction.md
+The a*.md
+
+# Downloads and their derivatives. The 270 MB SmolLM2 weights alone exceed GitHub's
+# 100 MB limit, and everything here is re-fetched by the notebook in a few minutes.
+data/
+
+# Trained weights from the full run (126 MB each). The numbers they produced are in
+# assets/results.json, which is what the README and the replay mode read.
+checkpoints/
+
+__pycache__/
+.ipynb_checkpoints/
+.vscode/
+*.part
+run_*.log
+
+# Quick-mode outputs are a smoke test, regenerated on demand; the submitted results live in assets/
+assets/quick/
