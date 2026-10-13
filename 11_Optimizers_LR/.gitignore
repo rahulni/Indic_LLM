@@ -1,0 +1,26 @@
+# Source notes stay local. The repository root already ignores the saved page and its
+# _files folder; the written brief is the remaining one.
+/a*.txt
+
+# Downloads and their derivatives (TinyStories slices, tokenizer, token caches).
+# The notebook re-fetches everything here in about a minute.
+data/
+
+# Nothing is checkpointed to disk by design (branches run from in-memory copies),
+# but keep the folder out of git in case a debugging run writes one.
+checkpoints/
+
+__pycache__/
+.ipynb_checkpoints/
+.vscode/
+*.part
+run_*.log
+
+# Quick-mode outputs are a smoke test, regenerated on demand; the measured results live in assets/
+assets/quick/
+
+# build_notebook.py --script output, for debugging
+_notebook_as_script.py
+
+# make_readme.py --quick output (smoke test)
+README.quick.md
