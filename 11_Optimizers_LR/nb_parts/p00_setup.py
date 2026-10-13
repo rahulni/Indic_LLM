@@ -163,6 +163,12 @@ def save_results():
         return
     tmp = RESULTS_FILE.with_suffix(".tmp")
     tmp.write_text(json.dumps(R, separators=(",", ":")), encoding="utf-8")
+    for attempt in range(20):                     # Windows: an editor or virus scan can hold the file for a moment
+        try:
+            tmp.replace(RESULTS_FILE)
+            return
+        except PermissionError:
+            time.sleep(0.5)
     tmp.replace(RESULTS_FILE)
 
 

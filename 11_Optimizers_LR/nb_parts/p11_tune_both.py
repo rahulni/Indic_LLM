@@ -12,8 +12,8 @@ tuned, and the baseline is not. No new training is needed.
   apparent advantage is partly a tuning artifact.
 - **Right:** the baseline's *own knob* is off. This happened in this very notebook. Cosine's floor was
   first tried only at 0, 10 and 20%, and the best sat at the edge. Extending the grid by the same edge
-  rule used for learning rates moved cosine's best floor to 50%, and WSD's advantage shrank
-  accordingly.
+  rule used for learning rates moved cosine's best floor all the way to 100% (no decay), and
+  WSD's advantage shrank accordingly.
 """
 
 # %%

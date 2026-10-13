@@ -99,6 +99,12 @@ def main():
         r = {k: float(x) for k, x in r.items()}
         print(f"{t:>2} {g:5.2f} {r['m']:8.4f} {r['v']:9.6f} {r['m_hat']:7.4f} {r['v_hat']:7.4f} "
               f"{r['step']:10.6f} {r['w']:9.6f}")
+    print("\nstep by step: by hand (float64) and PyTorch's own numbers (float32, read from optimizer.state):")
+    hand, pt = adam_by_hand(), adam_torch(dtype=torch.float32, foreach=False)
+    print(f"{'t':>2} {'':<8}" + "".join(f"{f:>13}" for f in FIELDS))
+    for t, (h, p) in enumerate(zip(hand, pt), 1):
+        print(f"{t:>2} {'by hand':<8}" + "".join(f"{h[f]:13.8f}" for f in FIELDS))
+        print(f"{'':>2} {'PyTorch':<8}" + "".join(f"{p[f]:13.8f}" for f in FIELDS))
     print("\nlargest |difference| from the 50-digit reference, per quantity:")
     print(f"{'implementation':<28}" + "".join(f"{f:>10}" for f in FIELDS) + "   tolerance  ok")
     ok_all = True

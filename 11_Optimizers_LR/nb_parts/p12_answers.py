@@ -75,9 +75,11 @@ r"""
   length.
 - **Reuse of the validation set.** The EMA decay and each schedule's extra knob were chosen on the
   same validation set used to compare them, which flatters both sides a little.
-- **Cosine's floor is unbracketed.** It was still improving at 50% after three extensions.
-  Constant LR, the end of that road, still loses to tuned WSD (§6), so the verdict stands, but the
-  cosine numbers are not fully tuned.
+- **Tuned cosine is constant LR.** Cosine's best floor was 100%, so the tuned "cosine" arm never
+  decays. The comparison WSD wins is therefore "decay at the end" against "no decay". The same holds
+  for a genuine cosine decay at any floor, which loses by more (§6).
+- **Learning rate and knob were tuned one after the other**, not jointly. A no-decay schedule might
+  prefer a slightly different peak learning rate than the cosine grid found.
 - **Width 2,048 used one seed**, and the bootstrap interval at 4,096 sees only seed noise. The
   stated band uses the held-out error instead.
 - **The machine slept during one run.** That run's result is unaffected but its wall time is not, so

@@ -120,7 +120,8 @@ if wu:
     st = wu.get("stop", {})
     W = str(wu.get("warm", 30))
     ans_rows.append(("When does warmup stop changing the update-to-weight ratio?",
-                     "Compared with no warmup at all (the rule fixed in advance): "
+                     "Warmup changes the ratio from **step 1** by construction (its learning rate is smaller), so the step "
+                     "where it *starts* changing it is 1. Where it *stops*, compared with no warmup at all (the rule fixed in advance): "
                      + "; ".join(f"warmup {w}: " + (f"step **{v.get('10%')}**" if stp(v.get('10%')).isdigit() else f"**{stp(v.get('10%'))}**")
                                  for w, v in st.items())
                      + ". Skipping warmup leaves a lasting mark: the largest ratio is "
@@ -133,10 +134,17 @@ if sc:
     t = sc["table"]
     c_ = t.get(f"cosine-{TOTAL}, stopped at {STOP}", {})
     w_ = t.get(f"WSD-{TOTAL}, stopped at {STOP}", {})
+    bf = sc.get("by_floor", {})
+    prog = ("; ".join(f"floor {float(k):.0%}: {v['diff']:+.3f}" for k, v in bf.items()) if bf else "")
+    degenerate = sc.get("cos_variant", "").endswith("100%")
     ans_rows.append((f"Cosine vs WSD, both stopped at {STOP} of {TOTAL}: which to keep?",
                      f"At step {STOP}: cosine **{f(c_.get('mean'))}** ± {f(c_.get('sd'))}, WSD **{f(w_.get('mean'))}** ± {f(w_.get('sd'))} "
-                     f"(3 seeds). Keep **{sc['keep']}**: its best option within +20% compute ({sc['best_wsd']}) vs cosine's ({sc['best_cos']}) "
-                     f"differs by {sc['diff']:+.4f} ± {sc['se']:.4f}.",
+                     f"(3 seeds)"
+                     + (". Tuned on its own floor, cosine's best is **no decay at all**, so up to step "
+                        f"{STOP} it is the same run as WSD's flat phase, and the as-stopped losses tie exactly" if degenerate else "")
+                     + f". Keep **{sc['keep']}**: its best option within +20% compute ({sc['best_wsd']}) beats cosine's ({sc['best_cos']}) "
+                     f"by {sc['diff']:+.4f} ± {sc['se']:.4f}."
+                     + (f" The margin shrank as cosine's floor was tuned ({prog}); it never flipped." if prog else ""),
                      "[§6](#6-cosine-vs-wsd-stopped-at-200)"))
 if wd:
     a = wd["answer"]
@@ -167,6 +175,17 @@ if ad:
     rows = [(i + 1, f"{gr:.2f}", f"{r['m']:.4f}", f"{r['v']:.6f}", f"{r['m_hat']:.4f}", f"{r['v_hat']:.4f}", f"{r['step']:.6f}", f"{r['w']:.6f}")
             for i, (gr, r) in enumerate(zip(ad["grads"], ad["table"]))]
     drows = [(k,) + tuple(f"{v[q]:.1e}" for q in ("m", "v", "m_hat", "v_hat", "step", "w")) for k, v in ad["diffs"].items()]
+    srows = []
+    for i, (h, p) in enumerate(zip(ad["table"], ad.get("torch_rows", []))):
+        srows.append((i + 1, "by hand") + tuple(f"{h[q]:.8f}" for q in ("m", "v", "m_hat", "v_hat", "step")))
+        srows.append(("", "PyTorch") + tuple(f"{p[q]:.8f}" for q in ("m", "v", "m_hat", "v_hat", "step")))
+    side = (f"""Step by step, side by side. PyTorch's numbers are read from `optimizer.state` after each step
+(float32, the default dtype). They agree with the hand computation to at least
+**{ad.get('agree_decimals')} decimal places**:
+
+{table(['t', '', 'm', 'v', 'm̂', 'v̂', 'step'], srows)}
+
+""") if srows else ""
     blocks.append(f"""## 1. Adam by hand
 
 One weight at w = 1, lr = 1e-3, β = (0.9, 0.999), ε = 1e-8, five gradients. The values below are the
@@ -174,7 +193,7 @@ exact (50-digit) computation:
 
 {table(['t', 'g', 'm', 'v', 'm̂', 'v̂', 'step', 'w'], rows)}
 
-Largest |difference| from the exact values. PyTorch stores m (`exp_avg`) and v (`exp_avg_sq`); m̂ and v̂
+{side}Largest |difference| from the exact values, for each implementation. PyTorch stores m (`exp_avg`) and v (`exp_avg_sq`); m̂ and v̂
 are derived from them:
 
 {table(['implementation', 'm', 'v', 'm̂', 'v̂', 'step', 'w'], drows)}
@@ -249,9 +268,12 @@ if wu:
     blocks.append(f"""## 5. Update-to-weight ratio and warmup
 
 Each matrix's $\\lVert\\Delta W\\rVert/\\lVert W\\rVert$ is logged on every step. Runs warmed up over W steps
-are compared with one that is not, at the same constant peak learning rate. "Warmup stops changing the
-ratio" is the step after which every later step stays within the threshold of the no-warmup run
-(9-step rolling median, median over matrices):
+are compared with one that is not, at the same constant peak learning rate.
+
+Warmup changes the ratio from step 1, because its learning rate is smaller by construction, so the
+informative question is where that influence **ends**. "Warmup stops changing the ratio" is the step
+after which every later step stays within the threshold of the no-warmup run (9-step rolling median,
+median over matrices):
 
 {table(['warmup W', '5%', '10% (headline)', '20%', 'ratio settles by', 'range over matrices (10%)'], srows)}
 
@@ -290,9 +312,18 @@ Each schedule was tuned with the same trial budget ({sc['budget']}). The chosen 
 - cosine: {sc['cos_variant']}, peak learning rate {sc['lr_cos']:.0e}
 - WSD: {sc['wsd_variant']}, peak learning rate {sc['lr_wsd']:.0e}
 
+Cosine's floor was tuned by the same edge rule as every learning rate. It kept improving all the way
+to 100%, which means no decay. So the tuned cosine arm is a constant learning rate, the same run as
+WSD's flat phase, and the rows below that coincide do so because they are the same model.
+
 Three paired seeds. Compute is in steps:
 
 {table(['model', 'compute', 'val loss', 's.d.'], trows)}
+
+How the keep decision moved as cosine's floor was tuned (WSD's best option − cosine's best option
+within +20% compute, 3 paired seeds):
+
+{table(['cosine floor', 'WSD − cosine', 'SE', 'keep'], [(f"{float(k):.0%}", f"{v['diff']:+.4f}", f"{v['se']:.4f}", v['keep'] + (' (tie)' if v.get('tie') else '')) for k, v in sc.get('by_floor', {}).items()])}
 
 {fig('cosine_vs_wsd', 'cosine vs WSD loss and schedules')}
 
@@ -396,8 +427,8 @@ if tb:
     fl_txt = (f"The baseline's own knob matters as much as its learning rate. Against cosine at its tuned floor "
               f"({fl.get('tuned_floor', 0):.0%}), tuned WSD is ahead by {f(fl.get('fair'), '.4f')} at step {TOTAL}. Against cosine at the usual "
               f"10% default floor, the same WSD run looks {f(fl.get('at_default_floor'), '.4f')} ahead. This notebook's own first pass "
-              f"made that mistake: cosine's floor grid stopped at the edge (20%), and extending it by the same edge rule shrank "
-              f"WSD's step-{STOP} margin to the value in §6.") if fl else ""
+              f"made that mistake: cosine's floor grid stopped at the edge (20%). Extending it by the same edge rule, all the "
+              f"way to no decay, shrank WSD's step-{STOP} margin about threefold (§6).") if fl else ""
     blocks.append(f"""## 8. Tune both sides
 
 The same tuned challenger is set against baselines run at learning rates away from their own best.
@@ -449,8 +480,10 @@ blocks.append("""## Limitations
 - **Weight decay.** ηλT ≈ 0.06, so decay barely acts within these runs.
 - **Validation reuse.** The extra schedule knobs and the EMA decay were chosen on the validation set
   used for the comparison.
-- **Cosine floor.** Cosine's floor was still improving at 50% after three extensions. Constant LR,
-  its limit, still loses to tuned WSD, so the verdict stands.
+- **Tuned cosine is constant LR.** Cosine's best floor was 100%, so the tuned cosine arm never
+  decays. The win is "decay at the end" over "no decay", and a genuine cosine decay at any floor
+  loses by more.
+- **Sequential tuning.** Learning rate and knob were tuned one after the other, not jointly.
 - **Width 2,048** used one seed. The width-4,096 band uses that held-out error rather than the
   seed-only bootstrap.
 - **Timing.** One run's wall time includes the machine sleeping, so it is excluded from the timing

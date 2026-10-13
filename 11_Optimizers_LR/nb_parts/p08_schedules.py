@@ -37,7 +37,7 @@ LR_WSD = min((lr for lr in wsd_grid if math.isfinite(final_loss(wsd_grid[lr]))),
 check(LR_WSD not in (min(wsd_grid), max(wsd_grid)), f"WSD's best peak learning rate ({LR_WSD:.0e}) is bracketed by its grid")
 
 # Each schedule's own knob gets the same edge rule as the learning rate: if the best value sits at the edge of
-# what was tried, try the next value out, up to three times.
+# what was tried, try the next value out, until it is bracketed or the knob's feasible range ends.
 def cos_cfg(fl):
     return base_cfg(LR_BASE) if fl == 0.1 else base_cfg(LR_BASE, floor=fl)       # floor 10% is the default
 
@@ -46,13 +46,14 @@ def wsd_cfg(df, shape="linear"):
     return base_cfg(LR_WSD, kind="wsd", decay_frac=df, **({} if shape == "linear" else dict(shape=shape)))
 
 
-def knob_sweep(make, values, step_out, lo_lim, hi_lim, max_ext=3):
+def knob_sweep(make, values, step_out, lo_lim, hi_lim, max_ext=8):
+    """Extend at an edge until the best value is bracketed or the knob's feasible range ends."""
     res = {v: final_loss(run(make(v))) for v in values}
     for _ in range(max_ext):
         best = min(res, key=res.get)
-        if best == max(res) and step_out(best, +1) <= hi_lim:
+        if best == max(res) and step_out(best, +1) <= hi_lim + 1e-9:
             new = step_out(best, +1)
-        elif best == min(res) and step_out(best, -1) >= lo_lim:
+        elif best == min(res) and step_out(best, -1) >= lo_lim - 1e-9:
             new = step_out(best, -1)
         else:
             break
@@ -60,12 +61,16 @@ def knob_sweep(make, values, step_out, lo_lim, hi_lim, max_ext=3):
     return dict(sorted(res.items()))
 
 
-cos_floor = knob_sweep(cos_cfg, [0.0, 0.1, 0.2], lambda v, d: round(v + 0.1 * d, 2), 0.0, 0.9)
-wsd_decay = knob_sweep(wsd_cfg, [0.2, 0.3], lambda v, d: round(v * 2, 3) if d > 0 else round(v / 2, 3), 0.05, 0.6)
+# Feasible ranges: a cosine floor of 1.0 means no decay at all; WSD's decay length runs from 5% to 60% of the run.
+LIMITS = {"cosine floor": (0.0, 1.0), "WSD decay length": (0.05, 0.6)}
+cos_floor = knob_sweep(cos_cfg, [0.0, 0.1, 0.2], lambda v, d: round(v + 0.1 * d, 2), *LIMITS["cosine floor"])
+wsd_decay = knob_sweep(wsd_cfg, [0.2, 0.3], lambda v, d: round(v * 2, 3) if d > 0 else round(v / 2, 3), *LIMITS["WSD decay length"])
 for lab, sw in (("cosine floor", cos_floor), ("WSD decay length", wsd_decay)):
     b = min(sw, key=sw.get)
-    observe(f"knob_bracketed_{lab.split()[0].lower()}", b not in (min(sw), max(sw)),
-            f"the {lab} is bracketed: its best value ({b:g}) is not at the edge of the values tried ({min(sw):g}–{max(sw):g})")
+    at_limit = b in LIMITS[lab]
+    observe(f"knob_bracketed_{lab.split()[0].lower()}", b not in (min(sw), max(sw)) or at_limit,
+            f"the {lab} is bracketed: its best value ({b:g}) is inside the values tried ({min(sw):g}–{max(sw):g})"
+            + (" or at the end of its feasible range" if at_limit else ""))
 cos_variants = {f"cosine, floor {fl:.0%}": cos_cfg(fl) for fl in cos_floor}
 wsd_variants = {f"WSD, last {df:.0%} linear": wsd_cfg(df) for df in wsd_decay}
 wsd_variants["WSD, last 20% 1−√"] = wsd_cfg(0.2, "sqrt")
@@ -210,6 +215,22 @@ d3, s3 = paired(ema200, arm_loss("cos200", STOP))
 observe("ema_matches_cosine200", d3 <= 2 * s3,
         f"averaging WSD's flat-phase weights (EMA {best_ema}) vs a cosine run planned for {STOP}: {d3:+.4f} ± {s3:.4f} (within 2 SE or better)")
 
+# How the verdict moved as cosine's own knob was tuned. Every floor below has three seeds already measured.
+VERDICT_BY_FLOOR = {}
+for fl in sorted(cos_floor):
+    runs = {s: R.get(cfg_name(dict(cos_cfg(fl), seed=s))) for s in SEEDS}
+    if not all(runs.values()):
+        continue
+    c200 = np.array([final_loss(runs[s], STOP) for s in SEEDS])
+    c240 = np.array([final_loss(runs[s], STOP + COOL) for s in SEEDS])
+    opt = c240 if c240.mean() < c200.mean() else c200
+    dd, ee = paired(arm_loss(*opt_wsd[best_w]), opt)
+    VERDICT_BY_FLOOR[fl] = dict(diff=dd, se=ee, keep="WSD" if (dd < 0 or abs(dd) <= RULES["keep_at_200"]["tie_se"] * ee) else "cosine",
+                                tie=abs(dd) <= RULES["keep_at_200"]["tie_se"] * ee)
+print(f"\nthe keep decision as cosine's floor is tuned (WSD's best option − cosine's best option, 3 paired seeds):")
+for fl, v in VERDICT_BY_FLOOR.items():
+    print(f"  cosine floor {fl:>4.0%}: {v['diff']:+.4f} ± {v['se']:.4f}  →  keep {v['keep']}{' (tie)' if v['tie'] else ''}")
+
 # %%
 fig, axs = plt.subplots(2, 1, figsize=(8.6, 5.4), sharex=True, gridspec_kw=dict(height_ratios=[2.2, 1]))
 ax = axs[0]
@@ -252,35 +273,33 @@ if MODE != "learn":
         table={k: dict(compute=c, mean=float(v.mean()), sd=float(v.std(ddof=1)), seeds=v.tolist()) for k, (c, v) in TABLE.items()},
         state=STATE, raw_diff=raw, raw_se=raw_se, cooldown_vs_cos300=[d1, s1], cooldown_vs_cos240=[d2, s2], ema_vs_cos200=[d3, s3],
         best_cos=best_c, best_wsd=best_w, diff=diff, se=se, se_eval=se_eval, tie=bool(tie), keep=KEEP,
-        best_ema=best_ema, samples={a: (arms[SEEDS[0]][a] or {}).get("samples", {}).get(str(STOP)) for a in ("cos300", "wsd300", "wsd_cool160")}))
+        best_ema=best_ema, by_floor={f"{k:g}": v for k, v in VERDICT_BY_FLOOR.items()}, cos_floor_grid={f"{k:g}": v for k, v in cos_floor.items()},
+        samples={a: (arms[SEEDS[0]][a] or {}).get("samples", {}).get(str(STOP)) for a in ("cos300", "wsd300", "wsd_cool160")}))
     save_results()
 
 # %% [markdown]
 r"""
-**What the measurements say.** Keep the WSD run, and not only because it can continue.
+**What the measurements say.** Keep the WSD run.
 
-- **At step 200, as stopped**, WSD is already slightly *ahead*, although its learning rate is still
-  at the peak. The intuition at the top of this section expected the opposite.
-- **With a 40-step cooldown**, WSD's checkpoint beats everything cosine can produce for the same
-  compute.
+- **Tuned on its own knob, cosine stopped decaying.** Every step up in cosine's floor improved the
+  loss at 300, from 0% to 100%. Its best floor is 100%, which means no decay at all. So in this regime
+  the tuned "cosine" run is a constant learning rate, the same run as WSD's flat phase. At step 200
+  the two models are therefore *identical*, as the state table shows, and the as-stopped comparison
+  is an exact tie.
+- **What separates them is WSD's ability to decay late.** A 40-step cooldown from WSD's step-200
+  checkpoint beats simply continuing for the same compute, by a small but clear margin over 3 paired
+  seeds. At the planned 300 steps WSD's final 10% decay wins as well.
 - **Averaging WSD's flat-phase weights (EMA)** gives the best model of all at 200 steps of compute.
-- **Every decay came too early in this regime** (0.16 tokens per parameter, still far from
-  convergence):
-  - a cosine run planned for 200 loses to a 300-step cosine stopped at 200
-  - cosine's best floor was 50%
-  - WSD's best decay was the last 10%
-
-  Longer runs are where decay is expected to pay off, and they are not tested here.
-- **Procedure.** The first pass of this comparison tried cosine floors only up to 20%, and the best
-  sat at that edge. Extending the grid by the same edge rule used for learning rates shrank WSD's
-  advantage by about a third (§8).
-- **Cosine's floor is still not bracketed.** After three extensions, 50% was still the best value
-  tried. The verdict survives anyway. Raising the floor all the way gives no decay at all, the
-  constant-learning-rate run of §5, which ends at 2.454 (seed 0). That is still above tuned WSD at
-  2.406 (seed 0).
+- **Every decay that starts early hurts here** (0.16 tokens per parameter, still far from
+  convergence). Cosine's floor wanted to go to 100%, and WSD's best decay was only the last 10%.
+  Longer runs are where earlier decay is expected to pay off, and they are not tested here.
+- **Procedure, measured.** The first pass tried cosine floors only up to 20%, and the best sat at that
+  edge. Extending the floor grid by the same edge rule used for learning rates, until it hit the
+  floor's physical limit, shrank WSD's margin roughly threefold. The verdict never flipped (table
+  above). This is the "tune both sides" principle at work inside this notebook.
 
 > **Carry forward:** compare schedules by what you can *do* with the model when the run is cut
-> short, compute-matched and tuned on both sides. WSD keeps the decision about when to stop open,
-> while cosine makes it before the first step. In short runs, decaying late (or averaging weights)
-> beats decaying early.
+> short, compute-matched and tuned on both sides. Here, tuning the baseline properly turned "cosine
+> vs WSD" into "constant vs decay-at-the-end". WSD's real advantage is the option to decay late, from
+> any checkpoint.
 """

@@ -14,7 +14,7 @@ distance. This notebook checks those rules one at a time:
 Every comparison is tuned on both sides and paired by seed. Every threshold used to call a result
 was written down before the first measurement.
 
-The measured run took 282 minutes on an NVIDIA GeForce RTX 3070 Laptop GPU:
+The measured run took 311 minutes on an NVIDIA GeForce RTX 3070 Laptop GPU:
 - precision: bf16
 - software: torch 2.11.0+cu128, Python 3.14.5
 - date: 2026-10-11
@@ -30,8 +30,8 @@ The notebook opens in **learn** mode, which replays these results on a CPU in ab
 |---|---|---|
 | Does Adam by hand match PyTorch? | Yes. Every quantity matches the 50-digit reference to 3e-15 in float64 and 2e-08 in float32. The fused float32 kernel's v̂ is off by 3.3e-06, because it rounds 1−β2 in float32; its step agrees to 1e-08. | [§1](#1-adam-by-hand) |
 | Bias correction off: when does the difference stop mattering? | The first step is **3.16×** too large, and the gap *grows* to 6.57× at step 12 (6.24× at step 20). It is within 1% only after **3,925 steps** at β2=0.999, or **76** at β2=0.95. In the 31.5M model the loss gap leaves seed noise at: β2=0.95,warmup=0: never in 300; β2=0.95,warmup=30: step 16; β2=0.999,warmup=0: never in 300; β2=0.999,warmup=30: never in 300. | [§2](#2-bias-correction), [§4](#4-bias-correction-in-a-real-model) |
-| When does warmup stop changing the update-to-weight ratio? | Compared with no warmup at all (the rule fixed in advance): warmup 6: **never in 300**; warmup 30: **never in 300**; warmup 100: **never in 300**. Skipping warmup leaves a lasting mark: the largest ratio is 2.0e-01 without warmup vs 4.3e-02 with 30 steps, and the loss never catches up. Among warmed-up runs, the warmup *length* stops mattering at step 148 (6 vs 30), 138 (30 vs 100) (exploratory). | [§5](#5-update-to-weight-ratio-and-warmup) |
-| Cosine vs WSD, both stopped at 200 of 300: which to keep? | At step 200: cosine **2.7710** ± 0.0233, WSD **2.7544** ± 0.0185 (3 seeds). Keep **WSD**: its best option within +20% compute (WSD 200 + 40-step cooldown) vs cosine's (cosine-300 continued to 240) differs by -0.0563 ± 0.0018. | [§6](#6-cosine-vs-wsd-stopped-at-200) |
+| When does warmup stop changing the update-to-weight ratio? | Warmup changes the ratio from **step 1** by construction (its learning rate is smaller), so the step where it *starts* changing it is 1. Where it *stops*, compared with no warmup at all (the rule fixed in advance): warmup 6: **never in 300**; warmup 30: **never in 300**; warmup 100: **never in 300**. Skipping warmup leaves a lasting mark: the largest ratio is 2.0e-01 without warmup vs 4.3e-02 with 30 steps, and the loss never catches up. Among warmed-up runs, the warmup *length* stops mattering at step 148 (6 vs 30), 138 (30 vs 100) (exploratory). | [§5](#5-update-to-weight-ratio-and-warmup) |
+| Cosine vs WSD, both stopped at 200 of 300: which to keep? | At step 200: cosine **2.7544** ± 0.0185, WSD **2.7544** ± 0.0185 (3 seeds). Tuned on its own floor, cosine's best is **no decay at all**, so up to step 200 it is the same run as WSD's flat phase, and the as-stopped losses tie exactly. Keep **WSD**: its best option within +20% compute (WSD 200 + 40-step cooldown) beats cosine's (cosine-300 continued to 240) by -0.0274 ± 0.0019. The margin shrank as cosine's floor was tuned (floor 10%: -0.104; floor 20%: -0.086; floor 50%: -0.056; floor 100%: -0.027); it never flipped. | [§6](#6-cosine-vs-wsd-stopped-at-200) |
 | Best learning rate at width 4,096, and how confident? | Minima: 256: 5.6e-03, 512: 2.5e-03, 1024: 1.2e-03. The fitted slope is -1.08 (inverse-width scaling would be −1). The held-out width 2048 was predicted to within +0.10 octaves. Use **2.7e-04**, expected within 2.5e-04–2.9e-04 (the error the same fit made one octave out); confidence **high** by the stated rule, for this depth, batch and step count. | [§7](#7-learning-rate-vs-width-and-mup) |
 | Tune both sides: does Muon beat AdamW here? | Tuned vs tuned: -0.2255 ± 0.0154, speedup **1.43×** (1.37–1.48× across seeds). A speedup is claimed. Against a mis-tuned AdamW the same run looks 1.59× faster. | [§M](#muon-vs-adamw), [§8](#8-tune-both-sides) |
 
@@ -59,7 +59,24 @@ exact (50-digit) computation:
 | 4 | 0.45 | 0.1678 | 0.000971 | 0.4881 | 0.2431 | -0.000990 | 0.996028 |
 | 5 | 0.55 | 0.2061 | 0.001273 | 0.5032 | 0.2550 | -0.000996 | 0.995031 |
 
-Largest |difference| from the exact values. PyTorch stores m (`exp_avg`) and v (`exp_avg_sq`); m̂ and v̂
+Step by step, side by side. PyTorch's numbers are read from `optimizer.state` after each step
+(float32, the default dtype). They agree with the hand computation to at least
+**7 decimal places**:
+
+| t |  | m | v | m̂ | v̂ | step |
+|---|---|---|---|---|---|---|
+| 1 | by hand | 0.05000000 | 0.00025000 | 0.50000000 | 0.25000000 | -0.00100000 |
+|  | PyTorch | 0.05000000 | 0.00025000 | 0.50000001 | 0.25000001 | -0.00099999 |
+| 2 | by hand | 0.08500000 | 0.00040975 | 0.44736842 | 0.20497749 | -0.00098813 |
+|  | PyTorch | 0.08500000 | 0.00040975 | 0.44736843 | 0.20497751 | -0.00098813 |
+| 3 | by hand | 0.13650000 | 0.00076934 | 0.50369004 | 0.25670337 | -0.00099414 |
+|  | PyTorch | 0.13650000 | 0.00076934 | 0.50369004 | 0.25670339 | -0.00099415 |
+| 4 | by hand | 0.16785000 | 0.00097107 | 0.48807793 | 0.24313218 | -0.00098985 |
+|  | PyTorch | 0.16785000 | 0.00097107 | 0.48807794 | 0.24313219 | -0.00098985 |
+| 5 | by hand | 0.20606500 | 0.00127260 | 0.50319895 | 0.25502952 | -0.00099642 |
+|  | PyTorch | 0.20606500 | 0.00127260 | 0.50319894 | 0.25502953 | -0.00099641 |
+
+Largest |difference| from the exact values, for each implementation. PyTorch stores m (`exp_avg`) and v (`exp_avg_sq`); m̂ and v̂
 are derived from them:
 
 | implementation | m | v | m̂ | v̂ | step | w |
@@ -141,9 +158,12 @@ closed form to within 3.7%:
 ## 5. Update-to-weight ratio and warmup
 
 Each matrix's $\lVert\Delta W\rVert/\lVert W\rVert$ is logged on every step. Runs warmed up over W steps
-are compared with one that is not, at the same constant peak learning rate. "Warmup stops changing the
-ratio" is the step after which every later step stays within the threshold of the no-warmup run
-(9-step rolling median, median over matrices):
+are compared with one that is not, at the same constant peak learning rate.
+
+Warmup changes the ratio from step 1, because its learning rate is smaller by construction, so the
+informative question is where that influence **ends**. "Warmup stops changing the ratio" is the step
+after which every later step stays within the threshold of the no-warmup run (9-step rolling median,
+median over matrices):
 
 | warmup W | 5% | 10% (headline) | 20% | ratio settles by | range over matrices (10%) |
 |---|---|---|---|---|---|
@@ -176,24 +196,38 @@ warmup 0: 3.1002, warmup 6: 2.5163, warmup 30: 2.4540, warmup 100: 2.4345 (one s
 ## 6. Cosine vs WSD, stopped at 200
 
 The same model is planned for 300 steps under each schedule, and both are stopped at step 200.
-Each schedule was tuned with the same trial budget ({'cosine': 10, 'WSD': 9}). The chosen variants:
-- cosine: cosine, floor 50%, peak learning rate 1e-03
+Each schedule was tuned with the same trial budget ({'cosine': 15, 'WSD': 9}). The chosen variants:
+- cosine: cosine, floor 100%, peak learning rate 1e-03
 - WSD: WSD, last 10% linear, peak learning rate 1e-03
+
+Cosine's floor was tuned by the same edge rule as every learning rate. It kept improving all the way
+to 100%, which means no decay. So the tuned cosine arm is a constant learning rate, the same run as
+WSD's flat phase, and the rows below that coincide do so because they are the same model.
 
 Three paired seeds. Compute is in steps:
 
 | model | compute | val loss | s.d. |
 |---|---|---|---|
-| cosine-300, stopped at 200 | 200 | 2.7710 | 0.0233 |
+| cosine-300, stopped at 200 | 200 | 2.7544 | 0.0185 |
 | WSD-300, stopped at 200 | 200 | 2.7544 | 0.0185 |
-| cosine planned for 200 | 200 | 2.8116 | 0.0281 |
+| cosine planned for 200 | 200 | 2.7544 | 0.0185 |
 | WSD checkpoint 160 + 40-step cooldown | 200 | 2.7431 | 0.0234 |
 | WSD flat phase, weight EMA 0.9 (constant lr + EMA) | 200 | 2.7169 | 0.0217 |
-| cosine-300, continued to 240 | 240 | 2.6464 | 0.0194 |
+| cosine-300, continued to 240 | 240 | 2.6175 | 0.0136 |
 | WSD checkpoint 200 + 40-step cooldown | 240 | 2.5901 | 0.0163 |
-| cosine planned for 240 | 240 | 2.6675 | 0.0209 |
-| cosine-300, completed | 300 | 2.5025 | 0.0118 |
+| cosine planned for 240 | 240 | 2.6175 | 0.0136 |
+| cosine-300, completed | 300 | 2.4641 | 0.0091 |
 | WSD-300, completed | 300 | 2.4183 | 0.0110 |
+
+How the keep decision moved as cosine's floor was tuned (WSD's best option − cosine's best option
+within +20% compute, 3 paired seeds):
+
+| cosine floor | WSD − cosine | SE | keep |
+|---|---|---|---|
+| 10% | -0.1039 | 0.0050 | WSD |
+| 20% | -0.0862 | 0.0039 | WSD |
+| 50% | -0.0563 | 0.0018 | WSD |
+| 100% | -0.0274 | 0.0019 | WSD |
 
 ![cosine vs WSD loss and schedules](assets/cosine_vs_wsd.png)
 
@@ -203,16 +237,16 @@ The state of each model at step 200:
 
 |  | val loss | train loss | lr now | grad norm | clipped | update/weight |
 |---|---|---|---|---|---|---|
-| cosine-300 at step 200 | 2.7710 | 2.8180 | 6.5e-04 | 0.688 | 0% | 6.2e-03 |
+| cosine-300 at step 200 | 2.7544 | 2.8001 | 1.0e-03 | 0.726 | 3% | 8.9e-03 |
 | WSD-300 at step 200 | 2.7544 | 2.8001 | 1.0e-03 | 0.726 | 3% | 8.9e-03 |
 
 **Decision (rule fixed in advance): keep the WSD run.**
 - Best option within +20% compute: cosine → cosine-300 continued to 240, WSD → WSD 200 + 40-step cooldown.
-- Paired difference WSD − cosine: -0.0563 ± 0.0018 (SE over seeds; eval-sampling SE 0.0006).
-- As stopped, without any cooldown: WSD − cosine = -0.0166 ± 0.0029.
+- Paired difference WSD − cosine: -0.0274 ± 0.0019 (SE over seeds; eval-sampling SE 0.0007).
+- As stopped, without any cooldown: WSD − cosine = +0.0000 ± 0.0000.
 
 Samples at step 200 (seed 0):
-- cosine: *Once upon a time, there was a little boy named Tim. Tim was very curious, so he decided to help his friend, Tim. One day, Tim found the broken toy on the ground. He showed it to his mom, "Why do you play*
+- cosine: *Once upon a time, there was a little boy named Tim. Tim had a favorite toy. It loved to run and play outside. One day, Tim and his friend, Sam, came to play. It was a big mess! Tim told Sam, "*
 - WSD: *Once upon a time, there was a little boy named Tim. Tim had a favorite toy. It loved to run and play outside. One day, Tim and his friend, Sam, came to play. It was a big mess! Tim told Sam, "*
 - WSD 160 + cooldown: *Once upon a time, there was a little boy named Tim. Tim was a very special boy. He had many friends who loved to play with. One day, Tim found a small toy that was very small. He wanted to see what made.
 Tim*
@@ -312,7 +346,7 @@ use their default knobs:
 | Muon vs AdamW | +0.1989 | +1.5684 | +3 |
 | cosine vs WSD (default knobs) | -0.1704 | +1.3040 | +3 |
 
-The baseline's own knob matters as much as its learning rate. Against cosine at its tuned floor (50%), tuned WSD is ahead by 0.0832 at step 300. Against cosine at the usual 10% default floor, the same WSD run looks 0.1739 ahead. This notebook's own first pass made that mistake: cosine's floor grid stopped at the edge (20%), and extending it by the same edge rule shrank WSD's step-200 margin to the value in §6.
+The baseline's own knob matters as much as its learning rate. Against cosine at its tuned floor (100%), tuned WSD is ahead by 0.0483 at step 300. Against cosine at the usual 10% default floor, the same WSD run looks 0.1739 ahead. This notebook's own first pass made that mistake: cosine's floor grid stopped at the edge (20%). Extending it by the same edge rule, all the way to no decay, shrank WSD's step-200 margin about threefold (§6).
 
 ![apparent advantage vs baseline tuning](assets/tune_both_sides.png)
 
@@ -320,7 +354,7 @@ Tuning budget per side:
 
 | comparison | trials | tuned | held fixed |
 |---|---|---|---|
-| cosine vs WSD | 10 vs 9 trials | lr grid + own knob, edge-extended (floor | decay length) | warmup, β, weight decay, batch, data, seeds |
+| cosine vs WSD | 15 vs 9 trials | lr grid + own knob, edge-extended (floor | decay length) | warmup, β, weight decay, batch, data, seeds |
 | Muon vs AdamW | 5 vs 5 lr points, 3 seeds each | Muon's lr; AdamW's lr | momentum 0.95 / β (0.9, 0.95), decay 0.1, schedule |
 | SP vs muP (width) | 30 vs 24 runs | lr grid per width | depth, batch, steps, schedule |
 
@@ -355,17 +389,17 @@ The notebook records each of these as `observe(...)`. They are measured, not gua
 - ✅ at a decayed learning rate most updates are smaller than half a bf16 spacing: without an fp32 copy they would vanish
 - ✅ with a tied head, rare-token rows still move every step (the output softmax gives every row a gradient)
 - ❌ as stopped at step 200, the cosine model has the lower loss
-- ✅ a 40-step cooldown from WSD's step-200 checkpoint vs cosine-300 at the same compute: -0.0563 ± 0.0018
-- ✅ …and vs a cosine run planned for 240 from the start: -0.0774 ± 0.0027 (within 2 SE or better)
-- ✅ averaging WSD's flat-phase weights (EMA 0.9) vs a cosine run planned for 200: -0.0946 ± 0.0039 (within 2 SE or better)
+- ✅ a 40-step cooldown from WSD's step-200 checkpoint vs cosine-300 at the same compute: -0.0274 ± 0.0019
+- ✅ …and vs a cosine run planned for 240 from the start: -0.0274 ± 0.0019 (within 2 SE or better)
+- ✅ averaging WSD's flat-phase weights (EMA 0.9) vs a cosine run planned for 200: -0.0375 ± 0.0021 (within 2 SE or better)
 - ✅ a mis-tuned AdamW baseline inflates Muon's apparent speedup from 1.37x to 1.59x
 - ✅ the best achievable loss falls as width grows (wider is better at its own best learning rate)
 - ✅ width 2048: the best learning rate is bracketed by the points measured around the prediction
 - ✅ muP keeps the output logits flatter across width than SP does
 - ✅ muP narrows the spread of best learning rates (2.19 → 0.27 octaves)
 - ✅ carrying width 256's learning rate to width 2048 works better under muP than under SP
-- ❌ the cosine floor is bracketed: its best value (0.5) is not at the edge of the values tried (0–0.5)
-- ✅ the WSD decay length is bracketed: its best value (0.1) is not at the edge of the values tried (0.05–0.3)
+- ✅ the cosine floor is bracketed: its best value (1) is inside the values tried (0–1) or at the end of its feasible range
+- ✅ the WSD decay length is bracketed: its best value (0.1) is inside the values tried (0.05–0.3)
 
 ## Limitations
 
@@ -380,8 +414,10 @@ The notebook records each of these as `observe(...)`. They are measured, not gua
 - **Weight decay.** ηλT ≈ 0.06, so decay barely acts within these runs.
 - **Validation reuse.** The extra schedule knobs and the EMA decay were chosen on the validation set
   used for the comparison.
-- **Cosine floor.** Cosine's floor was still improving at 50% after three extensions. Constant LR,
-  its limit, still loses to tuned WSD, so the verdict stands.
+- **Tuned cosine is constant LR.** Cosine's best floor was 100%, so the tuned cosine arm never
+  decays. The win is "decay at the end" over "no decay", and a genuine cosine decay at any floor
+  loses by more.
+- **Sequential tuning.** Learning rate and knob were tuned one after the other, not jointly.
 - **Width 2,048** used one seed. The width-4,096 band uses that held-out error rather than the
   seed-only bootstrap.
 - **Timing.** One run's wall time includes the machine sleeping, so it is excluded from the timing
@@ -393,7 +429,7 @@ The notebook records each of these as `observe(...)`. They are measured, not gua
 |---|---|---|
 | `learn` (default) | the arithmetic sections live on a CPU; every training result is replayed from `assets/results.json` | ~1 min |
 | `quick` | tiny models through every code path; writes `assets/quick/` | ~10 min on a GPU |
-| `full` | every measured run | 282 min on the RTX 3070 Laptop above; a Colab T4 is roughly 2–3× slower (estimate) |
+| `full` | every measured run | 311 min on the RTX 3070 Laptop above; a Colab T4 is roughly 2–3× slower (estimate) |
 
 ```bash
 pip install -r requirements.txt

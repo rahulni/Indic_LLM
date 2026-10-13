@@ -81,11 +81,14 @@ from `assets/results.json`; the README has the full tables.
 - Compare schedules by what you can do when the run is cut short, compute-matched and tuned on both
   sides.
 - *Measured* (planned for 300, stopped at 200, 3 paired seeds): **keep WSD**.
-  - Already slightly ahead as stopped: 2.754 vs 2.771.
-  - 2.590 after a 40-step cooldown, vs 2.646 for cosine at the same compute.
+  - As stopped, the two tie exactly (2.754), because tuned cosine never decays and so matches WSD's
+    flat phase.
+  - 2.590 after a 40-step cooldown, vs 2.618 for continuing at the same compute.
   - Weight EMA in the flat phase was the best model at 200 steps of compute.
-  - In this early-training regime, every decay came too early: cosine's best floor was 50%.
-- *Measured.* Tuning cosine's floor properly cut WSD's apparent margin by about a third. Tune the
+  - In this early-training regime, every decay that starts early hurts. Tuned on its own floor,
+    cosine's best was **100%**, no decay at all, so "tuned cosine" here is constant LR.
+- *Measured.* Tuning cosine's floor properly cut WSD's apparent margin about threefold (−0.086 at a
+  20% floor to −0.027 at 100%), and the verdict never flipped. Tune the
   baseline's own knobs, not just its learning rate.
 
 ## Batch and width (§R.5, §7)

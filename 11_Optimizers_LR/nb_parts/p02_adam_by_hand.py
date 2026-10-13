@@ -129,6 +129,16 @@ if DEV == "cuda":
     IMPLS += [("torch float64, fused CUDA", lambda: adam_torch(device="cuda", fused=True), 1e-12),
               ("torch float32, fused CUDA", lambda: adam_torch(dtype=torch.float32, device="cuda", fused=True), 1e-5)]
 
+# Step by step, side by side: the hand computation and PyTorch's own numbers (float32, the default dtype).
+torch_rows = adam_torch(dtype=torch.float32, foreach=False)
+print(f"{'t':>2} {'':<8}" + "".join(f"{f:>13}" for f in FIELDS))
+for t, (h, p) in enumerate(zip(hand, torch_rows), 1):
+    print(f"{t:>2} {'by hand':<8}" + "".join(f"{h[f]:13.8f}" for f in FIELDS))
+    print(f"{'':>2} {'PyTorch':<8}" + "".join(f"{p[f]:13.8f}" for f in FIELDS))
+agree = min(int(-math.log10(max(abs(h[f] - p[f]) for h, p in zip(hand, torch_rows)) + 1e-30)) for f in FIELDS)
+print(f"every quantity at every step agrees to at least {agree} decimal places (float32 PyTorch vs float64 by hand)\n")
+check(agree >= 6, f"hand and PyTorch agree to {agree} decimal places on m, v, m̂, v̂, the step and w at every step")
+
 diffs = {}
 print("largest |difference| from the 50-digit reference over the five steps:")
 print(f"{'implementation':<27}" + "".join(f"{f:>9}" for f in FIELDS) + "  tolerance")
@@ -140,6 +150,7 @@ for name, _, tol in IMPLS:
     check(max(diffs[name].values()) <= tol, f"{name}: every quantity within {tol:.0e} of the exact value")
 if MODE != "learn":
     ANS["adam_by_hand"] = _clean(dict(table=[{k: float(v) for k, v in r.items()} for r in ref], grads=GRADS,
+                                      torch_rows=torch_rows, agree_decimals=agree,
                                       diffs=diffs, tolerances={n: t for n, _, t in IMPLS}), sig=8)
     save_results()
 
