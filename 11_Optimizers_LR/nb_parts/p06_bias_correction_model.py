@@ -52,9 +52,11 @@ d = {k: v[1] - v[0] for k, v in VAL_TABLE.items()}
 observe("bc_off_hurts_0999_no_warmup", d[(0.999, 0)] > 2 * val_sd,
         f"β2=0.999 without warmup: switching bias correction off costs {d[(0.999, 0)]:+.3f} in final loss (seed s.d. {val_sd:.3f})")
 observe("warmup_hides_bc_0999", abs(d[(0.999, WARM)]) < abs(d[(0.999, 0)]),
-        f"warmup shrinks that cost to {d[(0.999, WARM)]:+.3f}: it scales down exactly the steps the correction acts on")
+        f"expected warmup to shrink that cost (β2=0.999); measured {d[(0.999, 0)]:+.3f} without warmup and "
+        f"{d[(0.999, WARM)]:+.3f} with it")
 observe("bc_negligible_095", max(abs(d[(0.95, 0)]), abs(d[(0.95, WARM)])) < 2 * val_sd,
-        f"β2=0.95: the final-loss difference ({d[(0.95, 0)]:+.3f}, {d[(0.95, WARM)]:+.3f}) is inside seed noise")
+        f"expected switching bias correction off to be harmless at β2=0.95 (within 2 seed s.d. = {2 * val_sd:.3f}); "
+        f"measured {d[(0.95, 0)]:+.3f} without warmup and {d[(0.95, WARM)]:+.3f} with it")
 
 # %%
 fig, axs = plt.subplots(2, 2, figsize=(10, 6))

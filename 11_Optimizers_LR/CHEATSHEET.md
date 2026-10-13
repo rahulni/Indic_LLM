@@ -87,9 +87,9 @@ from `assets/results.json`; the README has the full tables.
   - Weight EMA in the flat phase was the best model at 200 steps of compute.
   - In this early-training regime, every decay that starts early hurts. Tuned on its own floor,
     cosine's best was **100%**, no decay at all, so "tuned cosine" here is constant LR.
-- *Measured.* Tuning cosine's floor properly cut WSD's apparent margin about threefold (−0.086 at a
-  20% floor to −0.027 at 100%), and the verdict never flipped. Tune the
-  baseline's own knobs, not just its learning rate.
+- *Measured.* Tuning cosine's floor properly cut WSD's apparent margin about fourfold (−0.104 at the
+  usual 10% floor, −0.027 at 100%), and the verdict never flipped. Tune the baseline's own knobs, not
+  just its learning rate.
 
 ## Batch and width (§R.5, §7)
 

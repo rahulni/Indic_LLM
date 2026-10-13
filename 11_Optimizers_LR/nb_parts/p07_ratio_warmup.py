@@ -83,7 +83,8 @@ first = {w: float(np.median(ratio_matrix(ratio_runs[w])[0, MATS])) for w in WARM
 print("\nlargest ratio any matrix sees in the run: " + ", ".join(f"warmup {w}: {mx[w]:.2e}" for w in WARMUPS))
 print("median ratio at step 1:                  " + ", ".join(f"warmup {w}: {first[w]:.2e}" for w in WARMUPS))
 observe("warmup_effect_ends_in_run", all(np.median(WSTOP[w][0.10]) <= n_steps for w in WARMUPS[1:]),
-        f"for every warmup length, warmup's effect on the median matrix's ratio ends within the {n_steps}-step run")
+        f"expected warmup's effect on the update/weight ratio (against no warmup) to end within the {n_steps}-step run, "
+        f"for every warmup length")
 observe("warmup_lowers_max_ratio", mx[WARM] < mx[0], f"warmup over {WARM} steps lowers the largest ratio from {mx[0]:.2e} to {mx[WARM]:.2e}")
 observe("warmup_stop_after_warmup", all(np.median(WSTOP[w][0.10]) >= w for w in WARMUPS[1:]),
         "for every warmup length, the ratio stops being affected only after the warmup itself has ended")

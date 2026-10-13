@@ -68,7 +68,7 @@ print(f"the step-{STOP} keep decision itself: with cosine's floor at its default
 
 print("\ntuning budget per side, and what was held fixed:")
 PARITY = [
-    ("cosine vs WSD", f"{BUDGET['cosine']} vs {BUDGET['WSD']} trials", "lr grid + own knob, edge-extended (floor | decay length)", "warmup, β, weight decay, batch, data, seeds"),
+    ("cosine vs WSD", f"{BUDGET['cosine']} vs {BUDGET['WSD']} trials", "lr grid + own knob, edge-extended (floor / decay length)", "warmup, β, weight decay, batch, data, seeds"),
     ("Muon vs AdamW", f"{len(muon_grid)} vs {len(cos_grid)} lr points, {len(SEEDS)} seeds each", "Muon's lr; AdamW's lr", "momentum 0.95 / β (0.9, 0.95), decay 0.1, schedule"),
     ("SP vs muP (width)", f"{sum(len(SP[w]['points']) for w in WIDTHS)} vs {sum(len(MUP[w]['points']) for w in WIDTHS)} runs", "lr grid per width", "depth, batch, steps, schedule"),
 ]
