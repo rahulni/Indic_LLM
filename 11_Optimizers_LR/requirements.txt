@@ -1,0 +1,8 @@
+# The notebook installs anything missing on first run; this is the same list for a local venv.
+torch>=2.9          # torch.optim.Muon, fused AdamW, scaled_dot_product_attention(enable_gqa=...)
+numpy
+matplotlib
+tokenizers>=0.19    # SmolLM2's tokenizer.json (preinstalled on Colab)
+nbformat            # build_notebook.py
+nbconvert           # executing the notebook headless
+ipykernel
