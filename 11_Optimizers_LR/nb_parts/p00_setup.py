@@ -30,14 +30,27 @@ held. Each section ends with one line to carry forward.
 
 | `MODE` | what runs | time |
 |---|---|---|
-| `learn` (default) | §R–§2 run live on a CPU; every training result is replayed from `assets/results.json` | about a minute |
+| `learn` (default) | §R–§2 run live; every training result is replayed from `assets/results.json` (fetched once from GitHub, ~10 MB, if missing) | about a minute |
 | `quick` | tiny models and short runs through every code path; writes `assets/quick/` | ~10 min on a GPU |
-| `full` | the measured runs behind every number in this notebook | ~4.7 h of training on an RTX 3070 Laptop (resumable) |
+| `full` | the measured runs behind every number in this notebook | ~5 h of training on an RTX 3070 Laptop (resumable) |
 
-Contents: §0 setup and decision rules · §R the rules before Adam · §1 Adam by hand ·
-§2 bias correction · §3 the testbed · §4 bias correction in a real model ·
-§5 update-to-weight ratio and warmup · §6 cosine vs WSD · §M Muon vs AdamW ·
-§7 learning rate vs width, and muP · §8 tuning both sides · §9 answers, limitations, references
+**Contents.**
+
+| part | sections |
+|---|---|
+| setup | §0 setup and decision rules |
+| the arithmetic | §R the rules before Adam · §1 Adam by hand · §2 bias correction |
+| training-time choices | §3 the testbed · §4 bias correction in a real model · §5 update-to-weight ratio and warmup · §6 cosine vs WSD · §M Muon vs AdamW |
+| scaling | §7 learning rate vs width, and muP |
+| method | §8 tuning both sides · §9 answers, limitations, references |
+"""
+
+# %% [markdown]
+r"""
+## §0 Setup and decision rules
+
+The mode switch, the device and precision, a results store that makes long runs resumable, the plot
+style, and the thresholds every later section uses to call a result.
 """
 
 # %%
@@ -256,7 +269,12 @@ if MODE != "learn":
     R.setdefault("env", _clean(env_info()))         # the environment of the first (measuring) run is kept
     R["env_last"] = _clean(env_info())              # and the latest session's is recorded next to it
     save_results()
-print("environment of the stored run:" if MODE == "learn" else "environment:", R.get("env"))
+def show_env(env, title):
+    keys = ("date", "gpu", "precision", "torch", "python", "driver", "on_ac_power", "power_plan", "git_commit")
+    print(title + ("  " + "  ·  ".join(f"{k}: {env[k]}" for k in keys if env and k in env) if env else "  (none stored)"))
+
+
+show_env(R.get("env"), "environment of the measured run:" if MODE == "learn" else "environment:")
 
 # %%
 # Plot style: dark surface, one y-axis per panel, direct labels instead of legends where possible.

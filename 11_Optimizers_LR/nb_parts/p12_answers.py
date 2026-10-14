@@ -15,33 +15,45 @@ if bc:
                  "all five steps match the 50-digit reference: float64 to ~1e-16, float32 to ~1e-8; the fused float32 kernel's v differs "
                  "by 1.3e-5 relative (its 1−β2 is rounded in float32), the step itself by ~1e-8"))
     cf = bc["closed_form_stop"]
+
+    def bc_setting(k):                        # "b2=0.95,warmup=0" -> "β2 0.95, no warmup"
+        b2, w = (x.split("=")[1] for x in k.split(","))
+        return f"β2 {b2}, " + ("no warmup" if w == "0" else f"warmup {w}")
+
     rows.append(("2. Bias correction off",
                  f"first step {bc['first_step']:.2f}× too large, peaking at {bc['peak']:.2f}× (step {bc['peak_t']}), still {bc['at20']:.2f}× at step 20. "
                  f"Within 1% after {cf['0.999']['1%']:,} steps (β2=0.999) or {cf['0.95']['1%']} steps (β2=0.95). "
-                 f"In the model: " + "; ".join(f"{k}: {'step ' + str(v) if v else 'never within ' + str(TOTAL)}" for k, v in bc["model_stop"].items())))
+                 f"In the 31.5M model the loss gap re-enters seed noise at: "
+                 + "; ".join(f"{bc_setting(k)}: {'step ' + str(v) if v else 'never within ' + str(TOTAL)}" for k, v in bc["model_stop"].items())))
 if wu:
     st = wu["stop"]
     rows.append(("3. When warmup stops changing the update/weight ratio",
-                 "; ".join(f"warmup {w}: " + (f"step {v['10%']}" if v['10%'] <= TOTAL else f"never within {TOTAL}") + " (median over matrices)"
-                           for w, v in st.items())
-                 + f". Largest ratio {wu['max_ratio']['0']:.1e} without warmup vs {wu['max_ratio'][str(WARM)]:.1e} with {WARM} steps"))
+                 "it changes the ratio from step 1 by construction. Against no warmup at all (the rule fixed in §0) its effect "
+                 + ("never ends within the run" if all(v['10%'] > TOTAL for v in st.values()) else
+                    "ends at " + "; ".join(f"warmup {w}: step {v['10%']}" for w, v in st.items()))
+                 + f": the largest ratio is {wu['max_ratio']['0']:.1e} without warmup vs {wu['max_ratio'][str(WARM)]:.1e} with {WARM} steps, "
+                 f"and the loss never catches up. Among warmed-up runs the warmup length stops mattering at step "
+                 + ", ".join(f"{v} ({k})" for k, v in wu.get("pairwise", {}).items()) + " (exploratory)"))
 if sc:
     t = sc["table"]
     c_ = t[f"cosine-{TOTAL}, stopped at {STOP}"]; w_ = t[f"WSD-{TOTAL}, stopped at {STOP}"]
+    degenerate = sc.get("cos_variant", "").endswith("100%")
     rows.append((f"4. Cosine vs WSD, stopped at {STOP}",
-                 f"cosine {c_['mean']:.4f} ± {c_['sd']:.4f}, WSD {w_['mean']:.4f} ± {w_['sd']:.4f} (3 seeds). "
-                 f"Keep: **{sc['keep']}** (best option within +20% compute: WSD − cosine = {sc['diff']:+.4f} ± {sc['se']:.4f})"))
+                 f"cosine {c_['mean']:.4f} ± {c_['sd']:.4f}, WSD {w_['mean']:.4f} ± {w_['sd']:.4f} (3 seeds)"
+                 + (" — the same run, because tuned cosine never decays" if degenerate else "")
+                 + f". Keep {sc['keep']}: best option within +20% compute, WSD − cosine = {sc['diff']:+.4f} ± {sc['se']:.4f}"))
 if wd_:
     a = wd_["answer"]
     rows.append((f"5. Learning rate at width {a['width']}",
                  "minima " + ", ".join(f"{w}: {v['lr']:.1e}" for w, v in wd_["sp"].items())
                  + f"; slope {wd_['slope4']:.2f}; held-out {wd_['hold']['width']} off by {wd_['hold']['err_oct']:+.2f} octaves. "
-                 f"Use **{a['lr']:.1e}**, expected within {a.get('band', a['ci'])[0]:.1e}–{a.get('band', a['ci'])[1]:.1e} "
-                 f"(the error the same fit made one octave out); confidence **{a['confidence']}** by the stated rule"))
+                 f"Use {a['lr']:.1e}, expected within {a.get('band', a['ci'])[0]:.1e}–{a.get('band', a['ci'])[1]:.1e} "
+                 f"(the error the same fit made one octave out); confidence {a['confidence']} by the stated rule"))
 if mu:
     rows.append(("Tune both sides: Muon vs AdamW",
-                 f"tuned vs tuned {mu['diff']:+.4f} ± {mu['se']:.4f}, speedup {np.mean(mu['speedup']):.2f}×; "
-                 f"{'claimed' if mu['claim'] else 'not claimed (within 2 SE)'}"))
+                 f"tuned vs tuned {mu['diff']:+.4f} ± {mu['se']:.4f}, speedup {np.mean(mu['speedup']):.2f}× "
+                 f"({'claimed' if mu['claim'] else 'not claimed: within 2 SE'}); against a mis-tuned AdamW the same run looks "
+                 f"{max(v[1] for v in mu['apparent'].values()):.2f}× faster"))
 for q, a_ in rows:
     print(f"{q}\n    {a_}\n")
 
@@ -134,7 +146,7 @@ print(f"\neach base-model run: {tok_base / 1e6:.1f}M tokens, ≈ {6 * N_BASE * t
 if MODE != "learn":
     R["env_end"] = _clean(env_info())
     save_results()
-print("environment at the start of the run:", R.get("env"))
-print("environment at the end:            ", R.get("env_end"))
+show_env(R.get("env"), "environment of the measured run:")
+show_env(R.get("env_end"), "environment at the latest run's end:")
 if MODE == "full" and _RAN:
     print(f"\nthis session ran {len(_RAN)} experiments; everything else was reused from {RESULTS_FILE}")

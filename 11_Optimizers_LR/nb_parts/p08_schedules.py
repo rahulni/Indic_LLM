@@ -204,13 +204,16 @@ print(f"paired difference WSD − cosine: {diff:+.4f} ± {se:.4f} (SE over seeds
       f"  →  {'within 2 SE, a tie, so ' if tie else ''}keep the {KEEP} run")
 raw, raw_se = paired(arm_loss("wsd300", STOP), arm_loss("cos300", STOP))
 print(f"as stopped, at step {STOP}: WSD − cosine = {raw:+.4f} ± {raw_se:.4f}")
-observe("cosine_lower_at_stop", raw > 0, f"as stopped at step {STOP}, the cosine model has the lower loss")   # raw = WSD − cosine
+observe("cosine_lower_at_stop", raw > 0,                                                         # raw = WSD − cosine
+        f"expected the cosine model to have the lower loss as stopped at step {STOP}; measured WSD − cosine = {raw:+.4f}"
+        + (" (the same run: tuned cosine never decays)" if raw == 0 else ""))
 d1, s1 = paired(arm_loss("wsd_cool200", STOP + COOL), arm_loss("cos300", STOP + COOL))
 observe("wsd_cooldown_beats_cosine", d1 < 0,
         f"a {COOL}-step cooldown from WSD's step-{STOP} checkpoint vs cosine-{TOTAL} at the same compute: {d1:+.4f} ± {s1:.4f}")
 d2, s2 = paired(arm_loss("wsd_cool200", STOP + COOL), arm_loss("cos240", STOP + COOL))
 observe("wsd_cooldown_vs_cos240", d2 <= 2 * s2,
-        f"…and vs a cosine run planned for {STOP + COOL} from the start: {d2:+.4f} ± {s2:.4f} (within 2 SE or better)")
+        f"a {COOL}-step cooldown from WSD's step-{STOP} checkpoint vs a cosine run planned for {STOP + COOL} from the start: "
+        f"{d2:+.4f} ± {s2:.4f} (within 2 SE or better)")
 d3, s3 = paired(ema200, arm_loss("cos200", STOP))
 observe("ema_matches_cosine200", d3 <= 2 * s3,
         f"averaging WSD's flat-phase weights (EMA {best_ema}) vs a cosine run planned for {STOP}: {d3:+.4f} ± {s3:.4f} (within 2 SE or better)")
